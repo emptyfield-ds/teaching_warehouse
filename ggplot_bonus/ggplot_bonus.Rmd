@@ -1,0 +1,143 @@
+---
+title: "<span style='color:#E69F00'>Data Visualization in R</span>"
+subtitle: "<span style='color:#56B4E9'>ggplot2 fun & plotting in base R</span> <br>"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+library(tidyverse)
+```
+
+# Plots in Base R
+
+```{r}
+as_tibble(mtcars)
+```
+
+---
+
+# `hist()`
+
+```{r, fig.height=4}
+hist(mtcars$mpg, breaks = 20)
+```
+
+---
+
+# `plot()`
+
+```{r, fig.height=4}
+plot(mtcars$hp, mtcars$mpg)
+```
+
+---
+
+# `plot()`
+
+```{r, fig.height=4, eval=FALSE}
+plot(mtcars$hp, mtcars$mpg)
+
+model <- lm(mpg ~ hp, data = mtcars)
+abline(model, lty = "dashed")
+```
+
+---
+
+```{r, fig.height=4, echo=FALSE}
+plot(mtcars$hp, mtcars$mpg)
+
+model <- lm(mpg ~ hp, data = mtcars)
+abline(model, lty = "dashed")
+```
+
+---
+
+class: inverse, center
+
+# Data Visualization Principles
+
+---
+class: inverse, center
+
+# Data Visualization Principles
+
+## **Simplify and focus**
+
+---
+class: inverse, center
+
+# Data Visualization Principles
+
+## ~~Simplify and focus~~
+## **Increase your text size**
+
+---
+class: inverse, center
+
+# Data Visualization Principles
+
+## ~~Simplify and focus~~
+## ~~Increase your text size~~
+## **Avoid pie charts (use bar charts)**
+
+---
+
+class: inverse, center
+
+# Data Visualization Principles
+
+## ~~Simplify and focus~~
+## ~~Increase your text size~~
+## ~~Avoid pie charts (use bar charts)~~
+## **Avoid line drawings (use fill/color)**
+
+---
+
+class: inverse, center
+
+# Data Visualization Principles
+
+## ~~Simplify and focus~~
+## ~~Increase your text size~~
+## ~~Avoid pie charts (use bar charts)~~
+## ~~Avoid line drawings (use fill/color)~~
+## **Stay 2D**
+
+---
+class: inverse
+
+## **Bonus!**
+
+--
+
+1. Arranging plots
+
+--
+
+2. Spatial plots
+
+--
+
+3. Interactive plots
+
+--
+
+4. Animated plots
+
+---
+
+class: inverse, takeaway
+
+## **`plot()`, `hist()`, and friends are useful for quick plots and sometimes working with packages**
+
+## **ggplot2 is a powerful, extensible plotting system.**

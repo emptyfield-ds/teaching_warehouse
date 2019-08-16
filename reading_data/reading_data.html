@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Reading and Writing Data</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-14" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reading and Writing Data
+## <span style="color:#56B4E9">readr and haven</span> <br>
+### 2019-08-14
+
+---
+
+
+
+
+background-image: url(http://hexb.in/hexagons/readr.png)
+background-position: 93% 10%
+
+## **readr**
+
+Function       | Reads
+-------------- | --------------------------
+`read_csv()`   | Comma separated values
+`read_csv2()`  | Semi-colon separate values
+`read_delim()` | General delimited files
+`read_fwf()`   | Fixed width files
+`read_log()`   | Apache log files
+`read_table()` | Space separated files
+`read_tsv()`   | Tab delimited values
+
+---
+## Importing Data
+
+
+```r
+dataset &lt;- read_csv("file_name.csv")
+dataset
+```
+
+---
+
+## R functions
+
+&lt;img src="function_call.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## R functions
+
+&lt;img src="function_call_fname.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## R functions
+
+&lt;img src="function_call_assignment.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 1
+
+### Find diabetes.csv on your computer. Then read it into an object. Then view the results.
+
+---
+
+## Your Turn 1
+
+### Find diabetes.csv on your computer. Then read it into an object. Then view the results.
+
+
+```r
+diabetes &lt;- read_csv("diabetes.csv")
+```
+
+---
+class: middle
+
+&lt;img src="new_data_alert_diabetes.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diabetes
+```
+
+```
+## # A tibble: 403 x 19
+##       id  chol stab.glu   hdl ratio glyhb location   age
+##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1  1000   203       82    56  3.60  4.31 Bucking…    46
+##  2  1001   165       97    24  6.90  4.44 Bucking…    29
+##  3  1002   228       92    37  6.20  4.64 Bucking…    58
+##  4  1003    78       93    12  6.5   4.63 Bucking…    67
+##  5  1005   249       90    28  8.90  7.72 Bucking…    64
+##  6  1008   248       94    69  3.60  4.81 Bucking…    34
+##  7  1011   195       92    41  4.80  4.84 Bucking…    30
+##  8  1015   227       75    44  5.20  3.94 Bucking…    37
+##  9  1016   177       87    49  3.60  4.84 Bucking…    45
+## 10  1022   263       89    40  6.60  5.78 Bucking…    55
+## # … with 393 more rows, and 11 more variables:
+## #   gender &lt;chr&gt;, height &lt;dbl&gt;, weight &lt;dbl&gt;, frame &lt;chr&gt;,
+## #   bp.1s &lt;dbl&gt;, bp.1d &lt;dbl&gt;, …
+```
+
+---
+
+## Tibbles
+
+## **`data.frames`** are the basic form of rectangular data in R (columns of variables, rows of observations)
+
+---
+
+## Tibbles
+
+## ~~`data.frames` are the basic form of rectangular data in R (columns of variables, rows of observations"~~
+
+## `read_csv()` reads the data into a **`tibble`**, a modern version of the data frame. 
+
+---
+
+## Tibbles
+
+## ~~`data.frames` are the basic form of rectangular data in R (columns of variables, rows of observations"~~
+
+## ~~`read_csv()` reads the data into a `tibble`, a modern version of the data frame.~~
+
+## a tibble **is** a data frame
+---
+
+## Missing values
+
+## It's common to use codes for **missing values** (-99, 8888)
+
+---
+
+## Missing values
+
+## ~~It's common to use codes for missing values (-99, 8888)~~
+
+## The **`na`** option can change these values to `NA` 
+
+---
+
+
+```r
+read_csv(
+  "a,b,c,d
+  1,-99,3,4
+  5,6,-99,8", 
+* na = "-99"
+)
+```
+
+```
+## # A tibble: 2 x 4
+##       a     b     c     d
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+*## 1     1    NA     3     4
+*## 2     5     6    NA     8
+```
+
+---
+
+## Parsing data types
+
+## The read functions in readr try to *guess* each data type, but sometimes it's *wrong* 
+
+---
+
+## Parsing data types
+
+## ~~The read functions in readr try to guess each data type, but sometimes it's wrong~~
+
+## To tell readr how to parse the columns, add the argument **`col_types`** to `read_csv()`
+
+---
+
+## Parsing data types
+
+## ~~The read functions in readr try to guess each data type, but sometimes it's wrong~~
+
+## To tell readr how to parse the columns, add the argument **`col_types`** to `read_csv()`
+
+
+```r
+diabetes &lt;- read_csv(
+  "diabetes.csv",
+* col_types = list(id = col_character())
+)
+```
+
+---
+
+## Parsing data types
+.pull-left[
+## Or use a string for each variable type: **`col_type = "cci"`**
+]
+
+---
+
+## Parsing data types
+.pull-left[
+## ~~Or use a string for each variable type: `col_type = "cci"`~~
+]
+
+.pull-right[
+ letter |  type
+:--|:--
+`c` | character 
+`i` | integer
+`n` | number
+`d` | double
+`l` | logical
+`D` | date
+`T` | date time
+`t` | time
+`?` | guess the type
+`_` or `-` | skip the column
+]
+---
+
+# Your Turn 2
+
+## Set the 4 column types to be: double, integer, character, and unknown (guess)
+
+
+```r
+read_csv(
+  "a,b,c,d
+  1,2,3,4
+  5,6,7,8", 
+  col_types = ""
+)
+```
+
+---
+
+# Your Turn 2
+
+## Set the 4 column types to be: integer, double, character, and unknown (guess)
+
+
+```r
+read_csv(
+  "a,b,c,d
+  1,2,3,4
+  5,6,7,8", 
+  col_types = "idc?"
+)
+```
+
+```
+## # A tibble: 2 x 4
+##       a     b c         d
+##   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1     1     2 3         4
+## 2     5     6 7         8
+```
+
+---
+background-image: url(http://hexb.in/hexagons/haven.png)
+background-position: 90% 10%
+
+## **haven**
+
+Function       | Software
+-------------- | --------------------------
+`read_sas()`   | SAS
+`read_xpt()`   | SAS
+`read_spss()`  | SPSS
+`read_sav()`   | SPSS
+`read_por()`   | SPSS
+`read_stata()` | Stata
+`read_dta()`   | Stata
+
+---
+background-image: url(http://hexb.in/hexagons/haven.png)
+background-position: 90% 10%
+
+## ~~haven~~
+
+~~Function~~       | ~~Software~~
+-------------- | --------------------------
+~~`read_sas()`~~ | ~~SAS~~
+~~`read_xpt()`~~ | ~~SAS~~
+~~`read_spss()`~~ | ~~SPSS~~
+~~`read_sav()`~~ | ~~SPSS~~
+~~`read_por()`~~ | ~~SPSS~~
+~~`read_stata()`~~ | ~~Stata~~
+~~`read_dta()`~~ | ~~Stata~~
+
+## **haven is *not* a core member of the tidyverse. That means you need to load it with `library(haven)`**.
+
+---
+
+## Your Turn 3
+
+### There are several versions of the diabetes file besides CSV. Pick a file format you or your colleagues use and import them using the corresponding function from haven.
+
+---
+
+## Your Turn 3
+
+
+```r
+library(haven)
+diabetes &lt;- read_sas("diabetes.sas7bdat")
+```
+
+---
+
+## Your Turn 3
+
+
+```r
+diabetes
+```
+
+```
+## # A tibble: 403 x 19
+##       id  chol stab_glu   hdl ratio glyhb location   age
+##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1  1000   203       82    56  3.60  4.31 Bucking…    46
+##  2  1001   165       97    24  6.90  4.44 Bucking…    29
+##  3  1002   228       92    37  6.20  4.64 Bucking…    58
+##  4  1003    78       93    12  6.5   4.63 Bucking…    67
+##  5  1005   249       90    28  8.90  7.72 Bucking…    64
+##  6  1008   248       94    69  3.60  4.81 Bucking…    34
+##  7  1011   195       92    41  4.80  4.84 Bucking…    30
+##  8  1015   227       75    44  5.20  3.94 Bucking…    37
+##  9  1016   177       87    49  3.60  4.84 Bucking…    45
+## 10  1022   263       89    40  6.60  5.78 Bucking…    55
+## # … with 393 more rows, and 11 more variables:
+## #   gender &lt;chr&gt;, height &lt;dbl&gt;, weight &lt;dbl&gt;, frame &lt;chr&gt;,
+## #   bp_1s &lt;dbl&gt;, bp_1d &lt;dbl&gt;, …
+```
+
+---
+
+## Writing data
+
+Function            | Writes
+------------------- | ----------------------------------------
+`write_csv()`       | Comma separated values
+`write_excel_csv()` | CSV that you plan to open in Excel
+`write_delim()`     | General delimited files
+`write_file()`      | A single string, written as is
+`write_lines()`     | A vector of strings, one string per line
+`write_tsv()`       | Tab delimited values
+`write_rds()`       | A data type used by R to save objects
+`write_sas()`       | SAS .sas7bdat files
+`write_xpt()`       | SAS transport format, .xpt
+`write_sav()`       | SPSS .sav files
+`write_stata()`     | Stata .dta files
+
+---
+
+## Writing data
+
+Function            | Writes
+------------------- | ----------------------------------------
+`write_csv()`       | Comma separated values
+`write_excel_csv()` | CSV that you plan to open in Excel
+`write_delim()`     | General delimited files
+`write_file()`      | A single string, written as is
+`write_lines()`     | A vector of strings, one string per line
+`write_tsv()`       | Tab delimited values
+`write_rds()`       | A data type used by R to save objects
+`write_sas()`       | SAS .sas7bdat files
+`write_xpt()`       | SAS transport format, .xpt
+`write_sav()`       | SPSS .sav files
+`write_stata()`     | Stata .dta files
+
+
+```r
+*write_csv(diabetes, path = "diabetes-clean.csv")
+```
+---
+# Your Turn 4
+
+## R has a few data file types, such as RDS and .Rdata. Save `diabetes` as "diabetes.Rds".
+
+---
+# Your Turn 4
+
+## R has a few data file types, such as RDS and .Rdata. Save `diabetes` as "diabetes.Rds".
+
+
+```r
+write_rds(diabetes, "diabetes.Rds")
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

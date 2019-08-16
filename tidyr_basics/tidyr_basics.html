@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Tidying Data</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-15" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tidying Data
+## <span style="color:#56B4E9">tidyr</span> <br>
+### 2019-08-15
+
+---
+
+
+
+
+
+&lt;img src="tidyr_spread_gather.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+.pull-right[Art by Allison Horst]
+
+---
+background-image: url(http://hexb.in/hexagons/tidyr.png)
+background-position: 90% 10%
+
+## **tidyr**
+
+## Functions for tidying data. 
+## What is tidy data?
+.large[
+&gt; “Tidy datasets are all alike, but every messy dataset is messy in its own way.” –– Hadley Wickham
+]
+---
+
+# Tidy Data
+![](http://garrettgman.github.io/images/tidy-1.png)&lt;/div&gt;
+
+---
+
+# Tidy Data 
+![](http://garrettgman.github.io/images/tidy-1.png)&lt;/div&gt;
+### .medium[Each **column** is a single *variable*]
+
+---
+
+# Tidy Data
+![](http://garrettgman.github.io/images/tidy-1.png)&lt;/div&gt;
+### ~~.medium[Each column is a single variable]~~
+### .medium[Each **row** is a single *observation*]
+
+---
+
+# Tidy Data 
+![](http://garrettgman.github.io/images/tidy-1.png)&lt;/div&gt;
+### ~~.medium[Each column is a single variable]~~
+### ~~.medium[Each row is a single observation]~~
+### .medium[Each **cell** is a *value*]
+
+---
+
+
+## `gather()`
+
+
+```r
+gather(&lt;DATA&gt;, "&lt;KEY&gt;", "&lt;VALUE&gt;", &lt;VARIABLES&gt;)
+```
+
+---
+
+## Lord of the Rings
+
+
+```r
+lotr &lt;- tribble(
+                         ~film,    ~race, ~female, ~male,
+  "The Fellowship Of The Ring",    "Elf",   1229L,  971L,
+  "The Fellowship Of The Ring", "Hobbit",     14L, 3644L,
+  "The Fellowship Of The Ring",    "Man",      0L, 1995L,
+              "The Two Towers",    "Elf",    331L,  513L,
+              "The Two Towers", "Hobbit",      0L, 2463L,
+              "The Two Towers",    "Man",    401L, 3589L,
+      "The Return Of The King",    "Elf",    183L,  510L,
+      "The Return Of The King", "Hobbit",      2L, 2673L,
+      "The Return Of The King",    "Man",    268L, 2459L
+)
+```
+
+---
+
+## Lord of the Rings
+
+
+```r
+lotr
+```
+
+```
+## # A tibble: 9 x 4
+##   film                       race   female  male
+##   &lt;chr&gt;                      &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
+## 1 The Fellowship Of The Ring Elf      1229   971
+## 2 The Fellowship Of The Ring Hobbit     14  3644
+## 3 The Fellowship Of The Ring Man         0  1995
+## 4 The Two Towers             Elf       331   513
+## 5 The Two Towers             Hobbit      0  2463
+## 6 The Two Towers             Man       401  3589
+## 7 The Return Of The King     Elf       183   510
+## 8 The Return Of The King     Hobbit      2  2673
+## 9 The Return Of The King     Man       268  2459
+```
+
+---
+
+&lt;img src="new_data_alert_lotr.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `gather()`
+
+
+```r
+lotr %&gt;% 
+* gather("sex", "words", female:male)
+```
+
+---
+
+## `gather()`
+
+
+```r
+lotr %&gt;% 
+  gather("sex", "words", female:male)
+```
+
+```
+## # A tibble: 18 x 4
+*##    film                       race   sex    words
+##    &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;
+##  1 The Fellowship Of The Ring Elf    female  1229
+##  2 The Fellowship Of The Ring Hobbit female    14
+##  3 The Fellowship Of The Ring Man    female     0
+##  4 The Two Towers             Elf    female   331
+##  5 The Two Towers             Hobbit female     0
+##  6 The Two Towers             Man    female   401
+##  7 The Return Of The King     Elf    female   183
+##  8 The Return Of The King     Hobbit female     2
+##  9 The Return Of The King     Man    female   268
+## 10 The Fellowship Of The Ring Elf    male     971
+## # … with 8 more rows
+```
+
+---
+
+&lt;img src="new_data_alert_tidyr.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 1
+
+
+### Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+
+---
+
+## Your Turn 1
+
+
+### Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+
+
+```r
+table4a %&gt;% 
+  gather("year", "cases", -country)
+```
+
+```
+## # A tibble: 6 x 3
+##   country     year   cases
+##   &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+## 1 Afghanistan 1999     745
+## 2 Brazil      1999   37737
+## 3 China       1999  212258
+## 4 Afghanistan 2000    2666
+## 5 Brazil      2000   80488
+## 6 China       2000  213766
+```
+
+---
+
+## `spread()`
+
+
+```r
+spread(&lt;DATA&gt;, &lt;KEY&gt;, &lt;VALUE&gt;)
+```
+
+---
+
+## `spread()`
+
+
+```r
+lotr %&gt;% 
+* gather("sex", "words", female:male) %&gt;%
+  spread(race, words)
+```
+
+---
+
+## `spread()`
+
+
+```r
+lotr %&gt;% 
+  gather("sex", "words", female:male) %&gt;% 
+* spread(race, words)
+```
+
+---
+
+## `spread()`
+
+
+```r
+lotr %&gt;% 
+  gather("sex", "words", female:male) %&gt;% 
+  spread(race, words)
+```
+
+```
+## # A tibble: 6 x 5
+*##   film                       sex      Elf Hobbit   Man
+##   &lt;chr&gt;                      &lt;chr&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+## 1 The Fellowship Of The Ring female  1229     14     0
+## 2 The Fellowship Of The Ring male     971   3644  1995
+## 3 The Return Of The King     female   183      2   268
+## 4 The Return Of The King     male     510   2673  2459
+## 5 The Two Towers             female   331      0   401
+## 6 The Two Towers             male     513   2463  3589
+```
+
+---
+
+## Your Turn 2
+
+### Use `spread()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
+### Create a new variable called `prevalence` that divides `cases` by `population` multiplied by 100000.
+###  Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom. 
+
+
+```r
+table2
+```
+
+---
+
+## Your Turn 2
+
+
+```r
+table2 %&gt;% 
+* spread(type, count) %&gt;%
+* mutate(prevalence = (cases/population) * 100000)
+```
+
+```
+## # A tibble: 6 x 5
+##   country      year  cases population prevalence
+##   &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;
+## 1 Afghanistan  1999    745   19987071       3.73
+## 2 Afghanistan  2000   2666   20595360      12.9 
+## 3 Brazil       1999  37737  172006362      21.9 
+## 4 Brazil       2000  80488  174504898      46.1 
+## 5 China        1999 212258 1272915272      16.7 
+## 6 China        2000 213766 1280428583      16.7
+```
+
+---
+
+## Your Turn 2
+
+
+```r
+table2 %&gt;% 
+  spread(type, count) %&gt;% 
+  mutate(prevalence = (cases/population) * 100000) %&gt;% 
+* ggplot(aes(x = year, y = prevalence, color = country)) +
+*   geom_point(size = 2) +
+*   geom_line() +
+*   scale_x_continuous(breaks = c(1999L, 2000L))
+```
+
+---
+
+## Your Turn 2
+
+&lt;img src="tidyr_basics_files/figure-html/unnamed-chunk-16-1.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center, middle
+
+## `gather()` and `spread()`
+
+![](https://github.com/gadenbuie/tidyexplain/raw/master/images/tidyr-spread-gather.gif)
+.pull-right[Animation: Garrick Aden-Buie]
+
+---
+
+## Your Turn 3
+
+### Gather the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
+
+
+```r
+who
+```
+
+---
+
+## Your Turn 3
+
+
+```r
+who %&gt;% 
+* gather("codes", "n", 5:60) %&gt;%
+  select(country, year, codes, n)
+```
+
+---
+
+## Your Turn 3
+
+
+```r
+who %&gt;%
+  gather("codes", "n", 5:60) %&gt;% 
+  select(country, year, codes, n)
+```
+
+```
+## # A tibble: 405,440 x 4
+##    country      year codes           n
+##    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;
+##  1 Afghanistan  1980 new_sp_m014    NA
+##  2 Afghanistan  1981 new_sp_m014    NA
+##  3 Afghanistan  1982 new_sp_m014    NA
+##  4 Afghanistan  1983 new_sp_m014    NA
+##  5 Afghanistan  1984 new_sp_m014    NA
+##  6 Afghanistan  1985 new_sp_m014    NA
+##  7 Afghanistan  1986 new_sp_m014    NA
+##  8 Afghanistan  1987 new_sp_m014    NA
+##  9 Afghanistan  1988 new_sp_m014    NA
+## 10 Afghanistan  1989 new_sp_m014    NA
+## # … with 405,430 more rows
+```
+
+---
+
+## `separate()`/`unite()`
+
+
+```r
+separate(&lt;DATA&gt;, &lt;VARIABLE&gt;, into = c("&lt;VARIABLE1&gt;", "&lt;VARIABLE2&gt;"))
+
+unite(&lt;DATA&gt;, &lt;VARIABLES&gt;)
+```
+
+---
+
+## Your Turn 4
+
+### Use the `cases` data below. Separate the `sex_age` column into **sex** and **age** columns.
+
+
+```r
+cases &lt;- tribble(
+   ~id,     ~sex_age,
+   "1",    "male_56",
+   "2",  "female_77",    
+   "3",  "female_49"
+)
+separate(_______, _______, into = c("_______", "_______"))
+```
+
+---
+
+## Your Turn 4
+
+
+```r
+cases &lt;- tribble(
+   ~id,     ~sex_age,
+   "1",    "male_56",
+   "2",  "female_77",    
+   "3",  "female_49"
+)
+*separate(cases, sex_age, into = c("sex", "age"))
+```
+
+---
+
+## Your Turn 4
+
+
+```r
+cases &lt;- tribble(
+   ~id,     ~sex_age,
+   "1",    "male_56",
+   "2",  "female_77",    
+   "3",  "female_49"
+)
+separate(cases, sex_age, into = c("sex", "age"))
+```
+
+```
+## # A tibble: 3 x 3
+##   id    sex    age  
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
+## 1 1     male   56   
+## 2 2     female 77   
+## 3 3     female 49
+```
+
+---
+
+## Your Turn 4
+
+
+```r
+cases &lt;- tribble(
+   ~id,     ~sex_age,
+   "1",    "male_56",
+   "2",  "female_77",    
+   "3",  "female_49"
+)
+separate(cases, sex_age, into = c("sex", "age"))
+```
+
+```
+## # A tibble: 3 x 3
+##   id    sex    age  
+*##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
+## 1 1     male   56   
+## 2 2     female 77   
+## 3 3     female 49
+```
+
+---
+
+## Your Turn 4
+
+
+```r
+cases &lt;- tribble(
+   ~id,     ~sex_age,
+   "1",    "male_56",
+   "2",  "female_77",    
+   "3",  "female_49"
+)
+*separate(cases, sex_age, into = c("sex", "age"), convert = TRUE)
+```
+
+```
+## # A tibble: 3 x 3
+##   id    sex      age
+*##   &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;
+## 1 1     male      56
+## 2 2     female    77
+## 3 3     female    49
+```
+
+---
+
+## Your Turn 6: Challenge!
+
+#### There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
+
+#### Import the data
+#### Gather the columns into 2 new columns called `year` and `incidence`
+#### Add a new variable called `race`. Remember that each data set corresponds to a single race.
+#### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
+#### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
+
+---
+
+# Other neat tidyr tools
+## Uncounting frequency tables
+
+
+```r
+lotr %&gt;% 
+* gather("sex", "count", female, male) %&gt;%
+* uncount(count)
+```
+
+---
+
+# Other neat tidyr tools
+## Uncounting frequency tables
+
+
+```
+*## # A tibble: 21,245 x 3
+*##    film                       race  sex   
+##    &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt; 
+##  1 The Fellowship Of The Ring Elf   female
+##  2 The Fellowship Of The Ring Elf   female
+##  3 The Fellowship Of The Ring Elf   female
+##  4 The Fellowship Of The Ring Elf   female
+##  5 The Fellowship Of The Ring Elf   female
+##  6 The Fellowship Of The Ring Elf   female
+##  7 The Fellowship Of The Ring Elf   female
+##  8 The Fellowship Of The Ring Elf   female
+##  9 The Fellowship Of The Ring Elf   female
+## 10 The Fellowship Of The Ring Elf   female
+## # … with 21,235 more rows
+```
+
+
+---
+
+# Other neat tidyr tools
+## Work with data frames
+## **`crossing()`** and **`expand()`**
+## **`nest()`** and **`unnest()`**
+
+---
+
+# Other neat tidyr tools
+## Work with missing data
+## **`complete()`**
+## **`drop_na()`** and **`replace_na()`**
+
+---
+ 
+# In development: `pivot_longer()`, `pivot_wider()`
+
+&lt;img src="pivot.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+
+## https://tidyr.tidyverse.org/dev/
+
+---
+
+class: inverse
+
+# Resources
+## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

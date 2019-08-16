@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Data Visualization in R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-14" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <span style="color:#E69F00">Data Visualization in R</span>
+## <span style="color:#56B4E9">cutomizing ggplot2</span> <br>
+### 2019-08-14
+
+---
+
+
+
+
+## Scales
+
+--
+
+## *position scales*
+
+--
+
+### **`scale_x_continuous()`**
+### **`scale_y_date()`**
+### **`scale_x_log10()`**
+
+---
+
+## Scales
+
+## *aesthetic scales*
+
+--
+
+### **`scale_color_hue()`**
+### **`scale_fill_brewer()`**
+### **`scale_shape_manual()`**
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point() + 
+  scale_x_log10() + 
+  scale_colour_brewer(palette = "Set2")
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point() + 
+* scale_x_log10() +
+  scale_color_brewer(palette = "Set2")
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point() + 
+  scale_x_log10() +
+* scale_color_brewer(palette = "Set2")
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point() + 
+  scale_x_log10() + 
+  scale_color_brewer(palette = "Set2")
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 10
+
+#### 1. Change the color scale by adding a scale layer. Experiment with `scale_color_distiller()` and `scale_color_viridis_c()`. Check the help pages for different palette options.
+#### 2. Set the color aesthetic to `gender`. Try `scale_color_brewer()`.
+#### 3. Set the colors manually with `scale_color_manual()`. Use `values = c("#E69F00", "#56B4E9")` in the function call.
+#### 4. Change the legend title for the color legend. Use the `name` argument in whatever scale function you're using.
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = weight)) + 
+  geom_point() 
+```
+
+---
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = weight)) + 
+  geom_point() + 
+  scale_color_viridis_c()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = gender)) + 
+  geom_point() + 
+  scale_color_brewer()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = gender)) + 
+  geom_point() + 
+  scale_color_manual(values = c("#E69F00", "#56B4E9"))
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = gender)) + 
+  geom_point() + 
+  scale_color_manual(name = "Sex", values = c("#E69F00", "#56B4E9"))
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Color Palettes
+
+## [https://github.com/EmilHvitfeldt/r-color-palettes](https://github.com/EmilHvitfeldt/r-color-palettes)
+
+---
+
+## Themes
+
+--
+
+## *Non-data ink* (text, background, etc)
+
+---
+
+## Themes
+
+## ~~Non-data ink (text, background, etc)~~
+## *Pre-specified themes*: **`theme_gray()`** (default), **`theme_minimal()`**, **`theme_light()`**, etc.
+
+---
+
+## Themes
+
+## ~~Non-data ink (text, background, etc)~~
+## ~~Pre-specified themes: `theme_gray()` (default), `theme_minimal()`, `theme_light()`, etc.~~
+## **`theme()`**
+
+---
+
+
+```r
+*mtcars %&gt;%
+*ggplot(aes(hp, mpg, col = factor(cyl))) +
+* geom_point(size = 3) +
+  scale_x_log10() + 
+  scale_colour_brewer(name = "Cylinders", palette = "Set2") + 
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.direction = "horizontal"
+  )
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point(size = 3) + 
+* scale_x_log10() +
+* scale_colour_brewer(name = "Cylinders", palette = "Set2") +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.direction = "horizontal"
+  )
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point(size = 3) + 
+  scale_x_log10() + 
+  scale_colour_brewer(name = "Cylinders", palette = "Set2") +
+* theme_minimal() +
+  theme(
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.direction = "horizontal"
+  )
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point(size = 3) + 
+  scale_x_log10() + 
+  scale_colour_brewer(name = "Cylinders", palette = "Set2") +
+  theme_minimal() +
+* theme(
+*   axis.text = element_text(size = 16),
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.direction = "horizontal"
+  )
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point(size = 3) + 
+  scale_x_log10() + 
+  scale_colour_brewer(name = "Cylinders", palette = "Set2") +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 16),
+*   legend.text = element_text(size = 8, face = "bold"),
+    legend.direction = "horizontal"
+  )
+```
+
+---
+
+
+```r
+mtcars %&gt;% 
+ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  geom_point(size = 3) + 
+  scale_x_log10() + 
+  scale_colour_brewer(name = "Cylinders", palette = "Set2") +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 8, face = "bold"),
+*   legend.direction = "horizontal"
+  )
+```
+---
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# theme elements
+
+|  element |  draws |
+|:--|:--|
+|  element_blank() |  nothing (remove element) |
+|  element_line() |  lines |
+|  element_rect() |  borders and backgrounds |
+|  element_text() |  text |
+
+---
+
+## Your Turn 11
+
+#### 1. Change the theme using one of the built-in theme functions. 
+#### 2. Use `theme()` to change the legend to the bottom with `legend.position = "bottom"`.
+#### 3. Remove the axis ticks by setting the `axis.ticks` argument to `element_blank()`
+#### 4. Change the font size for the axis titles. Use `element_text()`. Check the help page if you don't know what option to change.
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = weight)) + 
+  geom_point() +
+  scale_color_viridis_c()
+```
+
+---
+
+
+```r
+diabetes %&gt;% 
+  ggplot(aes(waist, hip, col = weight)) + 
+  geom_point() +
+  scale_color_viridis_c() +
+  theme_minimal() +
+  theme(
+*   legend.position = "bottom",
+*   axis.ticks = element_blank(),
+*   axis.title = element_text(size = 16)
+  )
+```
+
+---
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### High-density plots
+
+#### `?rnorm`, `?Distributions`
+
+
+```r
+big_data &lt;- tibble(x = rnorm(10000), y = rnorm(10000)) 
+```
+
+---
+
+### High-density plots
+
+
+```r
+big_data %&gt;% 
+  ggplot(aes(x, y)) + 
+  geom_point()
+```
+
+---
+
+### High-density plots
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse
+
+## High-density plots
+
+1. Transparency
+
+2. Binning
+
+---
+
+
+```r
+big_data %&gt;% 
+  ggplot(aes(x, y)) + 
+* geom_point(alpha = .05)
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+big_data %&gt;% 
+  ggplot(aes(x, y)) + 
+* geom_bin2d()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+big_data %&gt;% 
+  ggplot(aes(x, y)) + 
+* geom_hex()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 12
+
+#### Take a look at the `diamonds` data set from ggplot2. How many rows does it have?
+
+```r
+diamonds
+```
+
+#### 1. Make a scatterplot of `carat` vs. `price`. How's it look?
+#### 2. Try adjusting the transparency. 
+#### 3. Replace `geom_point()` with 2d bins.
+#### 4. Try hex bins.
+
+---
+
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = carat, price)) + 
+  geom_point()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = carat, price)) + 
+* geom_point(alpha = .05)
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = carat, price)) + 
+* geom_bin2d()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = carat, price)) + 
+* geom_hex()
+```
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Labels, titles, and legends
+
+---
+
+## Labels, titles, and legends
+
+## *Add a title:*
+## **`ggtitle()`**
+## **`labs(title = "My Awesome Plot")`**
+
+---
+
+## Labels, titles, and legends
+
+## *Change a label:* 
+## **`xlab()`, `ylab()`**
+## **`labs(x = "X Label", y = "Y Label")`**
+
+---
+
+## Labels, titles, and legends
+
+## *Change a legend:* 
+## **`scale_*()`** functions
+## **`labs(color = "Wow, labs does everything", fill = "Yup")`**
+
+---
+
+## Labels, titles, and legends
+
+## ~~Change a legend:~~
+## ~~`scale_*()` functions~~
+## ~~`labs(color = "Wow, labs does everything", fill = "Yup")`~~
+## Remove the legend: **`theme(legend.position = "none")`**
+
+---
+
+## Your Turn 13
+
+#### 1. Add a title. 
+#### 2. Change the x and y axis labels to include the unites (inches for `hip` and pounds for `weight`). You can use either `labs()` or `xlab()` and `ylab()`
+#### 3. Add `scale_linetype()` and set the `name` argument to "Sex".
+
+
+```r
+ggplot(diabetes, aes(weight, hip, linetype = gender)) +
+  geom_jitter(alpha = .2, size = 2.5) +
+  geom_smooth(color = "black", se = FALSE) + 
+  theme_bw(base_size = 12)
+```
+
+---
+
+
+```r
+ggplot(diabetes, aes(weight, hip, linetype = gender)) +
+  geom_jitter(alpha = .2, size = 2.5) +
+  geom_smooth(color = "black", se = FALSE) + 
+  theme_bw(base_size = 12) +
+* labs(x = "Weight (lbs)", y = "Hip (inches)") +
+* ggtitle("Hip and Weight by Sex") +
+* scale_linetype(name = "Sex")
+```
+---
+
+&lt;img src="ggplot_customizing_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+ggplot(diabetes, aes(weight, hip, linetype = gender)) +
+  geom_jitter(alpha = .2, size = 2.5) +
+  geom_smooth(color = "black", se = FALSE) + 
+  theme_bw(base_size = 12) +
+* labs(
+*   title = "Hip and Weight by Sex",
+*   x = "Weight (lbs)",
+*   y = "Hip (inches)",
+*   linetype = "Sex"
+* )
+```
+
+---
+
+## Saving plots
+
+--
+
+## **`ggsave(p, path = "figure_name.png", dpi = 320)`**
+
+---
+
+## Your Turn 14
+
+## Save the last plot and then locate it in the files pane.
+
+
+
+---
+
+class: inverse, center
+
+# Take aways:
+
+## You can use this code template to make thousands of graphs with ggplot2.
+
+
+```r
+ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
+  &lt;GEOM_FUNCTION&gt;() +
+  &lt;SCALE_FUNCTION&gt;() + 
+  &lt;THEME_FUNCTION&gt;()
+```
+
+---
+
+class: inverse, center
+
+![](https://media.giphy.com/media/OWefeMtyJex4A/giphy.gif)
+
+---
+
+class: inverse, center
+
+# Resources
+## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
+## [Data Visualization: A Practical Introduction](https://socviz.co/): Mostly free online; great ggplot2 intro
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

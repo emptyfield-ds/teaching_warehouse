@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Dynamic documents in R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-15" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Dynamic documents in R
+## reproducible research with R Markdown
+### 2019-08-15
+
+---
+
+
+
+
+
+&lt;img src="rmarkdown_wizards.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+.pull-right[Artwork by @allison_horst]
+
+---
+
+background-image: url(http://hexb.in/hexagons/rmarkdown.png)
+background-position: 93% 10%
+
+## *R Markdown*
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+--
+
+## Authoring framework: code and text in same document
+
+--
+
+## Reproducible: re-run your analysis
+
+--
+
+## Flexible: Output to different formats easily
+
+---
+
+background-image: url(https://lovecrafts.cdn.prismic.io/lovecrafts/01ed5aac2502cbbc4a262429747693741283bb8e_handsknitting6.jpg)
+background-position: 50% 50%
+
+class: middle, center
+&lt;br&gt;
+# &lt;span style="color:#474747"&gt;knitting&lt;/span&gt;
+
+---
+
+## Your turn 1
+
+## Create a new R Markdown file. Go to File &gt; New File &gt; R Markdown. Press OK. Save the file and press the "Knit" button above.
+
+---
+
+class: middle
+
+&lt;img src="rmarkdown_components.png" width="130%" height="130%" style="display: block; margin: auto;" /&gt;
+
+---
+
+background-image: url(http://hexb.in/hexagons/rmarkdown.png)
+background-position: 93% 10%
+
+## R Markdown
+
+## Prose
+## Code
+## Metadata
+
+---
+background-image: url(http://hexb.in/hexagons/rmarkdown.png)
+background-position: 93% 10%
+
+## R Markdown
+
+## **Prose** = *Markdown*
+## ~~Code~~
+## ~~Metadata~~
+
+---
+
+
+# Basic Markdown Syntax
+
+```
+*italic*   **bold**
+
+_italic_   __bold__
+```
+
+---
+
+# Basic Markdown Syntax
+
+```
+# Header 1
+
+## Header 2
+
+### Header 3
+
+```
+
+---
+
+# Basic Markdown Syntax
+
+```
+* Item 1
+* Item 2
+    + Item 2a
+    + Item 2b
+    
+1. Item 1
+2. Item 2
+```
+
+---
+
+# Basic Markdown Syntax
+
+```
+http://example.com
+
+[linked phrase](http://example.com)
+
+```
+
+---
+
+# Basic Markdown Syntax
+
+```
+![](http://example.com/logo.png)
+
+![optional caption text](figures/img.png)
+```
+
+---
+
+# Basic Markdown Syntax
+
+```
+$equation$
+
+$$ equation $$
+```
+
+---
+
+# Basic Markdown Syntax
+
+```
+superscript^2^
+
+~~strikethrough~~
+```
+
+---
+
+## Your turn 2
+
+## Do the ten minute tutorial on markdown at https://commonmark.org/help/tutorial. Let us know if you need help!
+
+---
+
+## Your turn 3
+
+## Use Markdown syntax to stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below. Experiment with bolding, italicizing, making lists, etc.
+
+---
+
+background-image: url(http://hexb.in/hexagons/rmarkdown.png)
+background-position: 93% 10%
+
+## R Markdown
+
+## ~~Prose~~
+## **Code** = *R code chunks*
+## ~~Metadata~~
+
+---
+
+### Code chunks
+
+&lt;img src="code_chunk.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Code chunks
+
+&lt;img src="code_chunk_fences.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Code chunks
+
+&lt;img src="code_chunk_opts.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Chunk options
+
+Option       | Effect
+-------------- | --------------------------
+`include = FALSE`   | run the code but don't print it or results
+`eval = FALSE`   | don't evaluate the code
+`echo = FALSE`  | run the code and output but don't print code
+`message = FALSE` | don't print messages (e.g. from a function)
+`warning = FALSE`   | don't print warnings
+`fig.cap = "Figure 1`   | caption output plot with "Figure 1"
+
+--
+
+## See the [knitr web page](https://yihui.name/knitr/options/)
+
+---
+
+## Engines
+
+## 52! Including **Python**, **Julia**, **C++**, **SQL**, **SAS**, and **Stata**
+
+---
+
+## Insert code chunks with **`cmd/ctrl + alt/option + I`**
+
+
+&lt;img src="rmarkdown_knit.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Edit code chunk options
+
+&lt;img src="chunk_setup_gui.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your turn 4 (open **`exercises.Rmd`**)
+
+### Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above. Put the following code in it:
+
+```r
+gapminder %&gt;% 
+  slice(1:5) %&gt;% 
+  knitr::kable()
+```
+### Knit the document
+
+---
+
+## Your turn 5
+  
+### Add `echo = FALSE` to the code chunk above and re-knit
+
+### Remove `echo = FALSE` from the code chunk and move it to `knitr::opts_chunk$set()` in the `setup` code chunk. Re-knit. What's different about this?
+
+
+--
+
+### **Make sure to remove `knitr::opts_chunk$set(echo = FALSE)`**
+
+---
+
+### Inline Code
+
+&lt;img src="inline_code.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Inline Code
+
+&lt;img src="inline_code_highlight.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Your turn 6
+
+### Remove `eval = FALSE` so that R Markdown evaluates the code.
+### Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
+### Use inline code to describe the data set in the text below the code chunk and re-knit.
+
+---
+
+background-image: url(http://hexb.in/hexagons/rmarkdown.png)
+background-position: 93% 10%
+
+## R Markdown
+
+## ~~Prose~~
+## ~~Code~~
+## **Metadata** = *YAML*
+
+---
+
+# YAML Metadata
+
+```yaml
+---
+author: Malcolm Barrett
+title: Quarterly Report
+output: 
+  html_document: default
+  pdf_document:
+    toc: true
+---
+```
+
+---
+
+
+&lt;img src="yaml_example.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="yaml_example_noted.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="yaml_example_noted2.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="yaml_example_noted3.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="yaml_example_noted4.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Output formats
+
+Function       | Outputs
+-------------- | --------------------------
+`html_document()`   | HTML
+`pdf_document()`  | PDF
+`word_document()` | Word .docx
+`odt_document()`   | .odt
+`rtf_document()`   | .rtf
+`md_document()`   | Markdown
+`slidy_presentation()`   | Slidy Slides (HTML)
+`beamer_presentation()`   | Beamer Slides (PDF)
+`ioslides_presentation()`   | ioslides (HTML)
+`powerpoint_presentation()`   | Powerpoint Slides
+
+---
+
+## Your turn 7
+
+### Set figure chunk options such as `dpi`, `fig.width`, and `fig.height`.  Run `knitr::opts_chunk$get()` in the console to see the defaults.
+### Change the YAML header above from `output: html_document` to another output type like `pdf_document` or `word_document`.
+### Add your name to the YAML header using `author: Your Name`.
+
+---
+
+# ymlthis
+
+## check out the ymlthis package for tools and documentation for working with YAML
+## https://r-lib.github.io/ymlthis/
+
+---
+
+# Parameters
+
+```yaml
+---
+params: 
+  param1: x
+  param2: y
+  data: df
+---
+```
+
+--
+
+
+```r
+params$param1
+params$param2
+params$data
+```
+
+---
+
+### Your turn 8
+
+###  Change the `params` option in the YAML header to use a different continent. Re-knit
+
+
+```r
+gapminder %&gt;% 
+  filter(continent == params$continent) %&gt;% 
+  ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+  geom_line(lwd = 1, show.legend = FALSE) + 
+  scale_color_manual(values = country_colors) +
+  theme_minimal(14) + 
+  theme(strip.text = element_text(size = rel(1.1))) +
+  ggtitle(paste("Continent:", params$continent))
+```
+
+---
+
+## Bibliographies and citations
+
+---
+
+## Bibliographies and citations
+
+## *Bibliography files*: **`.bib`**, **End Note**, **others**
+
+---
+
+## Bibliographies and citations
+
+## ~~Bibliography files: `.bib`, End Note, others~~
+## *Citation styles*: **`.csl`**
+
+
+---
+
+## Bibliographies and citations
+
+## ~~Bibliography files: `.bib`, End Note, others~~
+## ~~Citation styles: `.csl`~~
+
+## **`[@citation-label]`**
+
+---
+
+## Including bibliography files in YAML
+
+```yaml
+---
+bibliography: file.bib
+csl: file.csl
+---
+```
+
+---
+
+### Your turn 9
+
+### Cite the Causal Inference book in text below in the format ```[@citation-label]```. The label for the citation is `hernan_causal_2019`
+
+###  Add the American Journal of Epidemiology CSL to the YAML using `csl: aje.csl`
+
+---
+
+class: middle
+
+# Check out the citr package for easy citation insertion and .bib management
+
+---
+
+# Make cool stuff in R Markdown!
+
+## bookdown
+## blogdown
+## these slides!
+
+---
+
+class: inverse, center
+
+# Resources
+## [R Markdown](https://bookdown.org/yihui/rmarkdown/): A comprehensive but friendly introduction to R Markdown and friends. Free online.
+## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+## [R Markdown for Scientists](https://rmd4sci.njtierney.com/): R Markdown for Scientists workshop material.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": false,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
