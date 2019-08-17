@@ -165,12 +165,11 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
 
 ## Write and run the code from this slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
-.large[
 ```{r, eval = FALSE}
 ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
   geom_point()
 ```
-]
+
 ---
 
 ```{r}
