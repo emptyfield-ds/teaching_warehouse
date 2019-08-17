@@ -28,9 +28,9 @@ install.packages(c("tidyverse", "remotes"))
 This code installs two R packages named `tidyverse` and `remotes`. The `tidyverse` packages is a package
 of packages! It includes the several that we highlight in detail during the workshop, including `dplyr` and `ggplot2`. Each package is a library of functions that are used for data science. 
 
-`remotes` is not part of the Tidyverse but will help us install other materials we will be using.
+`remotes` is not part of the Tidyverse but will help us install other materials closer to the course.
 
-```{r, eval=F}
+```{r, eval=F, include=FALSE}
 remotes::install_github("USCbiostats/uscrbootcamp")
 uscrbootcamp::install_bootcamp()
 ```
@@ -87,7 +87,7 @@ knitr::include_graphics("Source-code-chunk-description2.png")
 - **Exercise 4:** Read the text in the Practice script you created. Push the button labeled **Knit**. Save the file as "Practice Script". Compare the file that is generated when you hit "Knit" (it should open in a pop-up window) with the script shown in the code editor.
     - See Figure 2.1 on this website: http://socviz.co/gettingstarted.html. From Figure 2.1, notice what is typed in markdown vs. what the output looks like.
 - **Exercise 5:** Delete lines 5 through 28 of the practice script markdown file. This should leave only the header information (the top four lines including the "---" at the top and bottom). Knit your file and see what appears in the Viewer window. 
-- **Exercise 6:** Update the title of your file (line 1) to "Report on wages" by typing into the source. Then, starting on line 6 write: "To calculate my monthly wage, I multiplied the hourly rate by the number of hours worked and multiplied this product by the number of weeks in a month. Finally, I multiplied by 80% to account for taxes. Now, Knit your file again.
+- **Exercise 6:** Update the title of your file (line 1) to "Report on wages" by typing into the source. Then, starting on line 6 write: "To calculate my monthly wage, I multiplied the hourly rate by the number of hours worked and multiplied this product by the number of weeks in a month. Finally, I multiplied by 80% to account for taxes." Now, Knit your file again.
 - **Exercise 7:** Add a code chunk to the file at line 10. To do this, click the place in the template you'd like to add your chunk, and then click the **Insert** button and choose R from the dropdown menu. The keyboard shortcut for this is `option + cmd + i` on Mac OS and `Ctrl + Alt + i` on PC. 
 - **Exercise 8:** Write the code `monthly_wage <- 20 * 15 * 4 * 0.8` inside the code chunk. Name the code chunk "calculate wage" (see the second figure to remind yourself how to title the chunk). 
 - **Exercise 9:** On the next line (inside the code chunk) write `monthly_wage`. When we execute this line, we are asking R to display the value that we assigned to the monthly wage variable. Execute the code chunk by pressing its green arrow or placing your cursor on the line of code and hitting `cmd + enter` on Mac or `Ctrl + enter` on PC.

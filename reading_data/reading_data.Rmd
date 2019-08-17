@@ -203,7 +203,7 @@ diabetes <- read_csv(
 
 # Your Turn 2
 
-## Set the 4 column types to be: double, integer, character, and unknown (guess)
+## Set the 4 column types to be: integer, double, character, and unknown (guess)
 
 ```{r, eval = FALSE}
 read_csv(
