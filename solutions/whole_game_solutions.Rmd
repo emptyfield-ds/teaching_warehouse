@@ -35,39 +35,39 @@ The Titanic data is in the folder in a Stata file (.dta). Load the data, saving 
 
 ```{r}
 # import the data
-
+titanic <- read_dta("titanic3.dta")
 ```
 
 Let's look at how many people survived. `survived` and `pclass` are stored as integers, so let's first transform them to factors (see the chapter on factors in [R for Data Science](https://r4ds.had.co.nz/factors.html)). Then, summarize how many people survived and how many died. You can use dplyr to group by survival and then summarize with `n()` or use the `table()` function on `titanic$survived`. 
 
 ```{r}
 titanic <- titanic %>% 
-  ______(
+  mutate(
     survived = factor(survived, labels = c("Died", "Survived")),
     pclass = factor(pclass)
   )
 
 # fill in the code below or use table()
 titanic %>% 
-  ______(______) %>% 
-  ______(n = n())
+  group_by(survived) %>% 
+  summarize(n = n())
 ```
 
 Take a look at the names of the columns in `titanic` with the `names()` function. 
 
 ```{r}
 # look at the names
-
+names(titanic)
 ```
 
 The `name` variable also contains information on the passenger's title. We're going to use a what are called regular expressions (a way of searching and manipulating strings) to find the title. You don't need to edit that part of the code, but we'll be using a core tidyverse package called stringr to work with it (see the [chapter on strings in R for Data Science](https://r4ds.had.co.nz/strings.html)). Call the new variable `title`. We'll also clean up a few titles that mean the same thing.
 
 ```{r}
 # pass the data set to `mutate()` and save the results.
-______ ___ _______ ___
+titanic <- titanic %>% 
   #  take titles from name
   mutate(
-    ______ = str_replace_all(name, "(.*, )|(\\..*)", ""),
+    title = str_replace_all(name, "(.*, )|(\\..*)", ""),
     # match abbreviations and French titles to miss and mrs
     title = case_when(
       title %in% c("Mlle", "Ms") ~ "Miss",
@@ -83,6 +83,7 @@ Look at how many titles there are. Like above, you can use dplyr or `table()`.
 
 ```{r}
 # look at the count of titles with dplyr or table
+table(titanic$title)
 ```
 
 There are a lot of unusual and uncommon titles. Since this is a categorical variable, let's collapse those rare ones into a single category called "Other". 
@@ -95,9 +96,12 @@ Make sure you save the results of `mutate()` to `titanic`.
 
 ```{r}
 # collapse uncommon titles into a single category with fct_lump()
+titanic <- titanic %>% 
+  mutate(title = fct_lump(title, 4))
 
 # look at the counts for title again
- 
+ table(titanic$title)
+
 ```
 
 ## Missing data
@@ -110,7 +114,7 @@ What do you see?
 
 ```{r}
 # visualize the missing data
-
+vis_miss(titanic)
 ```
 
 R has many tools for working with missing data. One of the most popular tools for multiple imputation of missing data is the mice package. Let's impute for the `age` and `embarked` variables. We won't be including `body` (the body identification number) in the model, so we don't need to impute it.
@@ -125,8 +129,8 @@ We'll save the imputed variables to the data as `mice_age` and `mice_embarked`, 
 This chunk can take a while to run. Set the code chunk option `cache = TRUE` for this one. `cache` saves the results so you don't need to keep re-knitting the document.
 
 ```{r}
-_______ <- titanic %>% 
-  ______ ___
+imputed_titanic <- titanic %>% 
+  select(age, pclass, sex, sibsp, parch, embarked, title) %>% 
   mice(method = "norm") %>% 
   complete() 
 
@@ -143,11 +147,12 @@ Are they different?
 
 ```{r}
 
-______(survived ~ age, data = titanic, family = binomial()) %>% 
-  ______()
+glm(survived ~ age, data = titanic, family = binomial()) %>% 
+  tidy()
 
 # Do the same for `mice_age`
-
+glm(survived ~ mice_age, data = titanic, family = binomial()) %>% 
+  tidy()
 
 ```
 
@@ -160,9 +165,9 @@ It might also be useful to visualize their distributions.
 ```{r}
 # 
 titanic %>% 
-  ______ ___ 
-  ______() %>% 
-  ggplot(aes(x = value, color = ______, fill = ______)) +
+  select(mice_age, age) %>%  
+  gather() %>% 
+  ggplot(aes(x = value, color = key, fill = key)) +
     geom_density(alpha = .7)
 ```
 
@@ -176,14 +181,14 @@ There are many ways to go about exploring your data, but let's use a simple one:
 It may take a little bit of time for `ggpairs()` to plot everything.
 
 ```{r}
-______ ___
-  ______ ___
+titanic  %>% 
+  select(survived, mice_age, pclass, sex, title) %>% 
   # ggpairs doesn't like that the variables are labelled.
   # remove them with haven::zap_labels()
   zap_labels() %>% 
   #  color by survival status.
   #  only show age, class, sex, and title.
-  ggpairs(mapping = aes(color = _______), columns = 2:5, legend = 1) + 
+  ggpairs(mapping = aes(color = survived), columns = 2:5, legend = 1) + 
     theme_minimal() +
     #  put the legend at the bottom
     #  make the column/row text bold
@@ -202,25 +207,28 @@ We'll use a a logistic regression to predict survival. Remember that `survival=1
 3. Pass the results to `mutate_if()`. This function takes a predicate function (one that produces a `TRUE`/`FALSE` answer) and applies a function to any variables that result in `TRUE`. Here, we're going to round all variables that are numeric to 2 digits. 
 
 ```{r}
-_______ ___ glm(_______, data = titanic, family = binomial)
+survived_model <-  glm(survived ~ mice_age + sex + pclass + sibsp + parch + mice_embarked + title, data = titanic, family = binomial)
 
 survived_model %>% 
-  _______() %>% 
+  tidy() %>% 
   #  round all numeric variables to 2 digits
-  _______(is.numeric, round, digits = 2)
+  mutate_if(is.numeric, round, digits = 2)
 ```
 
-What's going on with this model? Something looks wrong. Try to fix it. Hint: when variables on the right hand side of the formula are highly correlated with each other (collinear), it can sometimes mess up the model fit. This often shows itself through extremely high standard errors. 
+What's going on with this model? Something looks wrong. Try to fix it. Hint: when variables on the right hand side of the formula are highly correlated with each other (collinear), it can sometimes mess up the model fit. 
 
 1. Save the new model as `survived_model2`
 2. Tidy the results and round the numeric variables.
 
 ```{r}
 #  fit a new model
-
+survived_model2 <-  glm(survived ~ mice_age + pclass + sibsp + parch + mice_embarked + title, data = titanic, family = binomial)
 
 #  tidy the results
-
+survived_model2 %>% 
+  tidy() %>% 
+  #  round all numeric variables to 2 digits
+  mutate_if(is.numeric, round, digits = 2)
 
 ```
 
@@ -237,12 +245,12 @@ Let's save a cleaned up table of the model results. We'll get the estimates and 
 
 ```{r}
 model_table <- survived_model2 %>% 
-  ______ ___
+  tidy(conf.int = TRUE) %>% 
   #  filter out the intercept. no need to change this line.
   filter(term != "(Intercept)") %>% 
-  ______(term, estimate, _______) %>% 
-  ______(______, exp) %>%
-  mutate_if(is.numeric, ______, digits = ___)
+  select(term, estimate, starts_with("conf")) %>% 
+  mutate_if(is.numeric, exp) %>%
+  mutate_if(is.numeric, round, digits = 2)
 
 model_table
 ```
@@ -257,11 +265,11 @@ How do the results look? Let's plot the odds ratios and CIs in a forest plot.
 ```{r}
 ## Forest Plot
 model_table %>% 
-  ______ %>% 
-  mutate(term = ________(term)) %>% 
-  ggplot(aes(x = ______, y = ______)) + 
+  arrange(estimate) %>% 
+  mutate(term = fct_inorder(term)) %>% 
+  ggplot(aes(x = estimate, y = term)) + 
     geom_point(size = 2) +
-    geom_errorbarh(aes(xmin = ______, xmax = ______), height = 0) +
+    geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0) +
     geom_vline(xintercept = 1)
 ```
 
@@ -278,16 +286,16 @@ First, we need to re-tidy `survived_model2` because we got rid of `statistic`. T
 
 ```{r}
 ## Variable importance (abs(statistic))
-_______ %>% 
+survived_model2 %>% 
   tidy() %>% 
-  _______(abs(_______)) %>% 
+  arrange(abs(statistic)) %>% 
   # don't plot the intercept value, since it's not a variable
   filter(term != "(Intercept)") %>% 
   mutate(
-    importance = abs(_______),
+    importance = abs(statistic),
     term = fct_inorder(term)
   ) %>% 
-  ggplot(aes(x = _______, y = _______)) + 
+  ggplot(aes(x = term, y = importance)) + 
     geom_col() +
     coord_flip()
 ```

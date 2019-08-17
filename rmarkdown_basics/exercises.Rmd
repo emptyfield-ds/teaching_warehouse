@@ -3,7 +3,7 @@ title: "Reproduce Reports"
 output: html_document
 params: 
   continent: Americas
-bibiliography: citations.bib
+bibliography: citations.bib
 ---
 
 Chunks named "setup" are a little special. They will always run first in R Notebooks and interactively if they haven't been run yet.

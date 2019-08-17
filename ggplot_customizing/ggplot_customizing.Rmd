@@ -1,6 +1,6 @@
 ---
 title: "<span style='color:#E69F00'>Data Visualization in R</span>"
-subtitle: "<span style='color:#56B4E9'>cutomizing ggplot2</span> <br>"
+subtitle: "<span style='color:#56B4E9'>customizing ggplot2</span> <br>"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:

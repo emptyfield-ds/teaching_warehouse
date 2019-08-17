@@ -54,3 +54,8 @@ knitr::include_graphics("running_code_chunks.png")
 knitr::include_graphics("console_code_chunks.png")
 ```
 
+---
+
+class: inverse, middle, center
+
+# Let's head to https://rstudio.cloud/

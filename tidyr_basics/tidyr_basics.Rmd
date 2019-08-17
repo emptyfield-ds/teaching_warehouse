@@ -357,7 +357,7 @@ separate(cases, sex_age, into = c("sex", "age"), convert = TRUE) #<<
 
 ---
 
-## Your Turn 6: Challenge!
+## Your Turn 5: Challenge!
 
 #### There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
 

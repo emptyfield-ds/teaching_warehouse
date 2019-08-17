@@ -6,8 +6,25 @@ output: html_document
 ```{r setup, message=FALSE}
 library(tidyverse)
 library(haven)
+library(mice)
 titanic <- read_dta("titanic3.dta")
-
+titanic <- titanic %>% 
+  mutate(
+    survived = factor(survived, labels = c("Died", "Survived")),
+    pclass = factor(pclass)
+  )
+titanic <- titanic %>% 
+  mutate(
+    title = str_replace_all(name, "(.*, )|(\\..*)", ""),
+    title = case_when(
+      title %in% c("Mlle", "Ms") ~ "Miss",
+      title == "Mme" ~ "Mrs",
+      TRUE ~ title
+    ),
+    title = factor(title)
+  )
+titanic <- titanic %>% 
+  mutate(title = fct_lump(title, 4))
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -28,6 +45,18 @@ You can save formulas directly so that you don't need to keep re-entering them. 
 ```{r}
 fmla <- survived ~ mice_age + pclass + sibsp + parch + mice_embarked + title
 fmla_spline <- survived ~ rcs(mice_age) + pclass + sibsp + I(sibsp^2) + parch + I(parch^2) + mice_embarked + title
+```
+
+We need to re-impute age first.
+
+```{r}
+imputed_titanic <- titanic %>% 
+  select(age, pclass, sex, sibsp, parch, embarked, title) %>% 
+  mice(method = "norm") %>% 
+  complete() 
+
+titanic$mice_age <- imputed_titanic$age
+titanic$mice_embarked <- imputed_titanic$embarked
 ```
 
 We'll also create a function so we don't have to keep entering arguments. We'll cover functions in more depth tomorrow. This one wraps around the `train()` function from the caret package, which fits many types of models. Our custom function is called `ml()`. You can use it to set the formula or method, as well as pass any other arguments to `train` that you want. 
@@ -81,6 +110,7 @@ boosted
 The caret package also has a built-in function for variable importance, `varImp()`. It returns a data frame. Run the code below to sort it. Which is the most important variable? Is the highest ranking variable different than from the logistic model?
 
 ```{r}
+library(gbm)
 boosted$finalModel %>% 
   varImp() %>% 
   rownames_to_column("variable") %>% 

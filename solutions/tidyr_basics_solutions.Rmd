@@ -32,22 +32,22 @@ lotr <- tribble(
 Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
 
 ```{r}
-
+gather(table4a, "year", "cases", -country)
 ```
 
 ## Your Turn 2
 
-1. Use `spread()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
+1. Use `spread()` to reorganize `table2` into four columns: country**, **year**, **cases**, and **population**. 
 2. Create a new variable called `prevalence` that divides `cases` by `population` multiplied by 100000.
 3. Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom. 
 
 ```{r}
 table2 %>% 
-  ________ %>% 
-  ________ %>% 
-  ggplot(________) + 
-     ________(size = 2) +
-     ________ + 
+  spread(type, count) %>% 
+  mutate(prevalence = cases / population) %>% 
+  ggplot(aes(year, prevalence, color = country)) + 
+     geom_point(size = 2) +
+     geom_line() + 
      scale_x_continuous(breaks = c(1999L, 2000L))
 ```
 
@@ -56,7 +56,9 @@ table2 %>%
 Gather the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `country`, `year`, `codes` and `n` variables.
 
 ```{r}
-who
+who %>% 
+  gather("codes", "n", 5:60) %>% 
+  select(country, year, codes, n)
 ```
 
 ## Your Turn 4
@@ -70,10 +72,14 @@ cases <- tribble(
    "2",  "female_77",    
    "3",  "female_49"
 )
-separate(_______, _______, into = c("_______", "_______"))
+separate(cases, sex_age, into = c("sex", "age"))
 ```
 
-## Your Turn 5: Challenge!
+## Your Turn 5
+
+
+
+## Your Turn 6: Challenge!
 
 There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
 
@@ -84,10 +90,20 @@ There are two CSV files in this folder containing SEER data in breast cancer inc
 5. Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
 
 ```{r}
+breast_ca_black <- read_csv("breast_ca_black.csv")
+breast_ca_white <- read_csv("breast_ca_white.csv")
+breast_ca_black <- breast_ca_black %>% 
+  gather("year", "incidence") %>% 
+  mutate(race = "black")
 
+breast_ca_white <- breast_ca_white %>% 
+  gather("year", "incidence") %>% 
+  mutate(race = "white")
 
-______ %>% 
-  ggplot(aes(x = ______, y = ______, color = ______, group = race)) + 
+breast_ca <- bind_rows(breast_ca_black, breast_ca_white)
+
+breast_ca %>% 
+  ggplot(aes(x = year, y = incidence, color = race, group = race)) + 
     geom_point() +
     geom_line() + 
     scale_x_discrete(breaks = seq(1975, 2011, by = 5)) # show years by fives

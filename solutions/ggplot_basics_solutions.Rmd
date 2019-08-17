@@ -14,13 +14,14 @@ library(tidyverse)
 Read in the `diabetes` data.
 
 ```{r}
-
+diabetes <- read_csv("diabetes.csv")
 ```
 
 Run the code on the slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
 ```{r}
-
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+  geom_point()
 ```
 
 ## Your Turn 2
@@ -28,8 +29,17 @@ Run the code on the slide to make a graph. Pay strict attention to spelling, cap
 Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph using the `gender` variable. Experiment.  
 
 ```{r}
-ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip, color = gender)) +
   geom_point()
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip, size = gender)) +
+  geom_point()
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip, alpha = gender)) +
+  geom_point()
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip, shape = gender)) +
+  geom_point()
+
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+  geom_point(aes(color = gender, shape = gender))
 ```
 
 Try moving the mapping argument to `geom_point()`. Add in any aesthetics you found helpful.
@@ -44,7 +54,7 @@ ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
 Replace this scatterplot with one that draws boxplots. Try typing "geom_" and hitting the tab button to see the functions that start with "geom_". Try to guess which one to use. If you need help, there's a copy of the cheatsheet in this folder.
 
 ```{r}
-ggplot(diabetes, aes(gender, chol)) + geom_point()
+ggplot(diabetes, aes(gender, chol)) + geom_boxplot()
 ```
 
 ## Your Turn 4
@@ -52,12 +62,13 @@ ggplot(diabetes, aes(gender, chol)) + geom_point()
 Make a histogram of the `glyhb` variable in `diabetes`.
 
 ```{r}
-
+ggplot(diabetes, aes(x = glyhb)) + geom_histogram()
 ```
 
 Redo the `glyhb` plot as a density plot.
 
 ```{r}
+ggplot(diabetes, aes(x = glyhb)) + geom_density()
 
 ```
 
@@ -70,8 +81,13 @@ Make a bar chart `frame` colored by `gender`. Then, try it with the `fill` aesth
 ```{r}
 diabetes %>% 
   drop_na() %>% 
-  ______() + 
-  ______()
+  ggplot(aes(frame, color = gender)) + 
+    geom_bar()
+
+diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(frame, fill = gender)) + 
+    geom_bar()
 ```
 
 ## Your Turn 6
@@ -79,7 +95,20 @@ diabetes %>%
 Take your code for the bar chart above (using the `fill` aesthetic). Experiment with different `position` values: "dodge", "fill", "stack"
 
 ```{r}
+diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(frame, fill = gender)) + 
+    geom_bar(position = "dodge")
 
+diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(frame, fill = gender)) + 
+    geom_bar(position = "fill")
+
+diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(frame, fill = gender)) + 
+    geom_bar(position = "stack")
 ```
 
 ## Your Turn 7
@@ -95,9 +124,10 @@ Run the code after every change you make.
 7. Add another layer, `theme_bw()`. Remember to use `+`.
 
 ```{r}
-ggplot(diabetes, aes(weight, hip)) + 
-  geom_point() +
-  geom_smooth()
+ggplot(diabetes, aes(weight, hip, linetype = gender)) + 
+  geom_point(alpha = .2, position = "jitter") +
+  geom_smooth(color = "black", se = FALSE) +
+  theme_bw()
 ```
 
 ## Your Turn 8
@@ -107,7 +137,8 @@ Use a facet grid by `gender` and `location`
 ```{r}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
-  geom_smooth()
+  geom_smooth() +
+  facet_grid(vars(gender), vars(location))
 ```
 
 ## Your Turn 9: Challenge!
@@ -118,7 +149,18 @@ ggplot(diabetes, aes(weight, hip)) +
 4. Save the summary data frame as `corrs`.
 
 ```{r}
+library(datasauRus)
+corrs <- datasaurus_dozen %>% 
+  group_by(dataset) %>% 
+  summarize(
+    corr = cor(x, y)
+  ) %>% 
+  mutate(
+    corr = round(corr, 2),
+    corr = paste("corr:", corr)
+  )
 
+corrs
 ```
 
 5. Pass `datasaurus_dozen` to `ggplot()` and add a point geom
@@ -126,6 +168,11 @@ ggplot(diabetes, aes(weight, hip)) +
 7. Add a text geom. For this geom, set `data = corrs`. You also need to use `aes()` in this call to set `label = corr`, `x = 50`, and `y = 110`.
 
 ```{r}
-datasaurus_dozen 
+datasaurus_dozen %>% 
+  ggplot(aes(x, y)) +
+    geom_point() + 
+    facet_wrap(vars(dataset)) +
+    geom_text(data = corrs, aes(label = corr, x = 50, y = 110))
 
 ```
+
