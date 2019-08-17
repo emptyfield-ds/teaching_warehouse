@@ -28,7 +28,7 @@ install.packages(c("tidyverse", "remotes"))
 This code installs two R packages named `tidyverse` and `remotes`. The `tidyverse` packages is a package
 of packages! It includes the several that we highlight in detail during the workshop, including `dplyr` and `ggplot2`. Each package is a library of functions that are used for data science. 
 
-`remotes` is not part of the Tidyverse but includes a data set we will be using.
+`remotes` is not part of the Tidyverse but will help us install other materials we will be using.
 
 ```{r, eval=F}
 remotes::install_github("USCbiostats/uscrbootcamp")
