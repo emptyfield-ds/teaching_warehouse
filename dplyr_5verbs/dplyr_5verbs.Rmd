@@ -721,6 +721,19 @@ gapminder %>%
 
 ---
 
+class: center, middle
+
+```{r, echo = FALSE, fig.height=4.5}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarize(mean_le = mean(lifeExp)) %>% 
+  ggplot(aes(x = year, y = mean_le, col = continent)) +
+    geom_line() + 
+    scale_color_manual(values = continent_colors)
+```
+
+---
+
 ## `mutate_if/all/at()`
 ## `summarize_if/all/at()`
 
