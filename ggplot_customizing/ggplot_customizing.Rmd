@@ -51,7 +51,7 @@ mtcars %>%
 ggplot(aes(hp, mpg, col = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() + 
-  scale_colour_brewer(palette = "Set2")
+  scale_color_brewer(palette = "Set2")
 ```
 
 ---
@@ -539,7 +539,7 @@ ggplot(diabetes, aes(weight, hip, linetype = gender)) +
 
 --
 
-## **`ggsave(p, path = "figure_name.png", dpi = 320)`**
+## **`ggsave(filename = "figure_name.png", plot = last_plot(), dpi = 320)`**
 
 ---
 
@@ -551,6 +551,15 @@ ggplot(diabetes, aes(weight, hip, linetype = gender)) +
 
 ```
 
+---
+
+## Your Turn 14
+
+## Save the last plot and then locate it in the files pane.
+
+```{r, eval=FALSE}
+ggsave("diabetes_weight_hip.png", dpi = 320)
+```
 ---
 
 class: inverse, center

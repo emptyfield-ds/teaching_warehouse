@@ -362,7 +362,7 @@ diabetes %>%
 
 ## Your Turn 5
 
-## Make a bar chart `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
+## Make a bar chart of `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
 
 ```{r, eval=FALSE}
 diabetes %>% 
