@@ -1,0 +1,71 @@
+---
+title: "ggplot2: Plot replication challenge!"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+# Load your packages!
+library(tidyverse)
+library(ggrepel)
+```
+
+# Exercise
+
+The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open the journal article "Riddell_Annals_Hom-Sui-Disparities.pdf". Read the abstract and have a look at Figure 3. The data you need is "CDC_Males.csv". You'll have 1 hour to see what you can come up with in groups or individually!
+
+You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
+
+I'll leave these here:
+
+* https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+* http://colorbrewer2.org
+
+Hint: You may need to use some `dplyr` skills from the first session
+
+```{r}
+# Replicate Figure 3
+CDC_firearm_only <- read_csv("CDC_Males.csv") %>% 
+  filter(
+    type == "Firearm",
+    !ST %in% c("US", "HI", "DC")
+  )
+
+corr <- cor.test(
+  x = CDC_firearm_only$adjusted.homicide.White,
+  y = CDC_firearm_only$adjusted.suicide.White,
+  method = "spearman"
+)
+
+rho <- corr$estimate
+
+ggplot(
+  data = CDC_firearm_only, 
+  aes(x = adjusted.suicide.White, y = adjusted.homicide.White)
+) +
+  geom_point(
+    aes(fill = gun.house.prev.category, size = average.pop.white), 
+    shape = 21
+  ) + 
+  scale_fill_manual(values = c("#fef0d9", "#fdcc8a", "#fc8d59", "#d7301f")) + 
+  scale_size_area(
+    breaks = c(200000, 500000, 1500000, 3000000, 7000000),
+    labels = c("200k", "500k", "1.5m", "3m", "7m"), 
+    max_size = 15
+  ) +
+  theme_bw() +
+  labs(
+    x = "White suicide rate (per 100,000 per year)",
+    y = "White homicide rate (per 100,000 per year)"
+  ) +
+  geom_text_repel(aes(label = ST)) +
+  geom_text(
+    aes(x = 25, y = 0.75, label = paste("Spearman's rho:", round(rho, 2))), 
+    check_overlap = TRUE) + 
+  guides(
+    fill = guide_legend(title = "Gun ownership", override.aes = list(size = 5), order = 1),
+    size = guide_legend(title = "White population"), order = 2
+  )
+```
+
