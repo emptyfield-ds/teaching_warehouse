@@ -61,12 +61,12 @@ _______ %>%
 Next, we need to get the predicted probabilities and turn them into weights. 
 
 1. Add the predictions to the data frame using broom. Give `augment()` the arguments `type.predict = "response"` and `data = nhefs_complete`. The first will give us probabilities (instead of linear combinations). This makes sure we keep all the variables in our data that weren't in the model.
-2. Create a new variable called `weights`. Use `ifelse()` to check the value of `qsmk`: if it equals 0, the weights should be `1 / (1 - .fitted)`, otherwise it should be `1 / .fitted`
+2. Create a new variable called `wts`. Use `ifelse()` to check the value of `qsmk`: if it equals 0, the weights should be `1 / (1 - .fitted)`, otherwise it should be `1 / .fitted`
 
-Save the results back to `nhefs_complete`
+Save the results back to `nhefs_complete_wts`
 
 ```{r}
-nhefs_complete <- propensity_model %>% 
+nhefs_complete_wts <- propensity_model %>% 
   _______(type.predict = _______, data = _______) %>% 
   _______(wts = 1 / _______(qsmk == 0, _______, _______))
 ```
@@ -76,7 +76,7 @@ nhefs_complete <- propensity_model %>%
 We're going to fit the marginal structural model using `geeglm()`. We need to use this because it gives us more accurate confidence intervals.
 
 1. Specify the formula: `wt82_71` on the left hand side and `qsmk` on the right hand side. We don't need any other variables in the formula!
-2. Set the data to `nhefs_complete`
+2. Set the data to `nhefs_complete_wts`
 3. Set the weights to `wts`
 4. Set the id to `id`. We need this to correct the confidence intervals.
 5. Take a look at the coefficients!
