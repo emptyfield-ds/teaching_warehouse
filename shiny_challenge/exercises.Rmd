@@ -15,6 +15,7 @@ Additionally, this app should:
 1. Have a default ggplot that:
  * shows life expectancy over time, colored and grouped by country
  * facets by continent
+ * whatever else you think you need to do to make the plot look nice
 2. Allow the user to filter by continent
 3. Allow the user to specify the year range using a slider
 4. Have a data table (either using DT or a static table) that shows the data you're using
