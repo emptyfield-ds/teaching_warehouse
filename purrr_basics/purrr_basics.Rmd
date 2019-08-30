@@ -831,7 +831,7 @@ ggsave_gapminder <- function(variable) {
     theme(legend.position = "none")
     
   ggsave(
-    filename = paste0("figures", variable, ".png"), 
+    filename = paste0("figures/", variable, ".png"), 
     plot = p, 
     dpi = 320
   )

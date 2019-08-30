@@ -3,7 +3,7 @@
   <head>
     <title>Functional programming and iteration with purrr</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2019-08-30" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -12,7 +12,7 @@
 class: center, middle, inverse, title-slide
 
 # Functional programming and iteration with purrr
-### 2019-08-29
+### 2019-08-30
 
 ---
 
@@ -69,7 +69,7 @@ list(a = "hello", b = 1, c = mean)
 ## $c
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7fdb056a29b0&gt;
+## &lt;bytecode: 0x7f835f93a920&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -1062,7 +1062,7 @@ ggsave_gapminder &lt;- function(variable) {
     theme(legend.position = "none")
     
   ggsave(
-    filename = paste0("figures", variable, ".png"), 
+    filename = paste0("figures/", variable, ".png"), 
     plot = p, 
     dpi = 320
   )
