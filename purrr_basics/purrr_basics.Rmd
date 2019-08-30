@@ -1,0 +1,979 @@
+---
+title: "Functional programming and iteration with purrr"
+subtitle: 
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+library(tidyverse)
+set.seed(1234)
+diabetes <- read_csv("diabetes.csv")
+```
+
+background-image: url(http://hexb.in/hexagons/purrr.png)
+background-position: 90% 26%
+
+# purrr: A functional programming toolkit for R 
+
+<br/><br/><br/>
+
+## Complete and consistent set of tools for working with functions and vectors
+
+---
+class: inverse, middle
+
+# Problems we want to solve:
+1. Making code clear
+2. Making code safe
+3. Working with lists and data frames
+
+---
+
+# Lists, vectors, and data.frames (or tibbles)
+
+```{r}
+c(a = "hello", b = 1)
+```
+
+---
+
+# lists can contain any object
+
+```{r}
+list(a = "hello", b = 1, c = mean)
+```
+
+---
+
+## Your Turn 1
+
+```{r}
+number_list <- list(
+  a = rnorm(10, mean = 2, sd = 1.4), 
+  b = rnorm(5, mean = 1, sd = 1), 
+  c = rnorm(20, mean = 10, sd = 3)
+)
+```
+
+### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["a"]]`?
+
+---
+
+## Your Turn 1
+
+.small[
+```{r}
+number_list["a"]
+```
+
+```{r}
+number_list$a
+```
+
+```{r}
+number_list[["a"]]
+```
+]
+---
+
+#  data frames are lists
+
+```{r}
+x <- list(a = "hello", b = 1)
+as.data.frame(x)
+```
+
+---
+
+#  data frames are lists
+
+```{r}
+library(gapminder)
+head(gapminder$pop)
+```
+
+---
+
+#  data frames are lists
+
+```{r, eval = FALSE}
+gapminder[1:6, "pop"]
+```
+
+---
+
+#  data frames are lists
+
+```{r}
+gapminder[1:6, "pop"]
+```
+
+---
+
+#  data frames are lists
+
+```{r}
+head(gapminder[["pop"]])
+```
+
+---
+
+#  vectorized functions don't work on lists
+
+```{r, include=FALSE}
+set.seed(1234)
+```
+
+```{r, error=TRUE, eval = FALSE}
+sum(rnorm(10))
+```
+
+---
+
+#  vectorized functions don't work on lists
+
+```{r, include=FALSE}
+set.seed(1234)
+```
+
+```{r, error=TRUE}
+sum(rnorm(10))
+```
+
+---
+
+#  vectorized functions don't work on lists
+
+```{r, include=FALSE}
+set.seed(1234)
+```
+
+```{r, error=TRUE}
+sum(rnorm(10))
+```
+
+```{r, error=TRUE, eval = FALSE}
+sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
+```
+
+---
+
+#  vectorized functions don't work on lists
+
+```{r, include=FALSE}
+set.seed(1234)
+```
+
+```{r, error=TRUE}
+sum(rnorm(10))
+```
+
+```{r, error=TRUE}
+sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
+```
+
+---
+
+background-image: url(http://hexb.in/hexagons/purrr.png)
+background-position: 95% 2%
+
+# map(.x, .f)
+
+--
+
+## .x: a vector, list, or data frame
+
+--
+
+## .f: a function
+
+--
+
+## Returns a list
+
+---
+
+# Using map()
+
+```{r, eval = FALSE}
+library(purrr)
+x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+
+map(x_list, mean)
+```
+
+---
+
+# Using map()
+
+```{r, eval = FALSE}
+library(purrr)
+x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10)) #<<
+
+map(x_list, mean)
+```
+
+
+---
+
+# Using map()
+
+```{r, eval = FALSE}
+library(purrr)
+x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+
+map(x_list, mean) #<<
+```
+
+
+---
+
+# Using map()
+
+```{r}
+library(purrr)
+x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+
+map(x_list, mean)
+```
+
+---
+
+```{r, echo=FALSE, out.width="50%", out.height="50%"}
+knitr::include_graphics("img/purrr_list.png")
+```
+
+---
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/purrr_f_list.png")
+```
+
+---
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/purr_x_input.png")
+```
+
+---
+
+## Your Turn 2
+
+### Read the code in the first chunk and predict what will happen.
+### Run the code in the first chunk. What does it return?
+
+```{r, eval=FALSE}
+list(
+  sum_a = sum(number_list$a),
+  sum_b = sum(number_list$b),
+  sum_c = sum(number_list$c)
+)
+```
+
+### Now, use `map()` to create the same output.
+
+---
+
+## Your Turn 2
+
+```{r}
+map(number_list, sum)
+```
+
+---
+
+## using `map()` with data frames
+
+--
+
+```{r, eval=FALSE}
+gapminder %>% 
+  dplyr::select_if(is.numeric) %>% 
+  map(sd)
+```
+
+---
+
+## using `map()` with data frames
+
+```{r, eval=FALSE}
+gapminder %>% #<<
+  dplyr::select_if(is.numeric) %>%  #<<
+  map(sd)
+```
+
+---
+
+## using `map()` with data frames
+
+```{r, eval=FALSE}
+gapminder %>% 
+  dplyr::select_if(is.numeric) %>% 
+  map(sd) #<<
+```
+
+---
+
+## using `map()` with data frames
+
+```{r}
+gapminder %>% 
+  dplyr::select_if(is.numeric) %>% 
+  map(sd)
+```
+
+---
+
+## Your Turn 3
+
+### Pass diabetes to `map()` and map using `class()`. What are these results telling you?
+
+---
+
+## Your Turn 3
+
+
+```{r}
+head(
+  map(diabetes, class), #<<
+  3
+)
+```
+
+---
+
+#  Review: writing functions
+
+```{r, eval = FALSE}
+x <- x^2
+x <- scale(x)
+x <- max(x)
+```
+
+---
+
+#  Review: writing functions
+
+```{r, eval = FALSE}
+x <- x^2
+x <- scale(x)
+x <- max(x)
+
+y <- x^2
+y <- scale(y)
+y <- max(y)
+
+z <- z^2
+z <- scale(x)
+z <- max(z)
+```
+
+---
+
+
+#  Review: writing functions
+
+```{r, eval = FALSE}
+x <- x^2
+x <- scale(x)
+x <- max(x)
+
+y <- x^2 #<<
+y <- scale(y)
+y <- max(y)
+
+z <- z^2
+z <- scale(x) #<<
+z <- max(z)
+```
+
+---
+
+#  Review: writing functions
+
+```{r, eval = FALSE}
+x <- x^3 #<<
+x <- scale(x)
+x <- max(x)
+
+y <- x^2 #<<
+y <- scale(y)
+y <- max(y)
+
+z <- z^2 #<<
+z <- scale(x)
+z <- max(z)
+```
+
+---
+
+#  Review: writing functions
+
+```{r, eval = FALSE}
+.f <- function(x) {
+  x <- x^3
+  x <- scale(x)
+  
+  max(x)
+}
+
+.f(x)
+.f(y)
+.f(z)
+```
+
+---
+
+class: inverse, center, middle, takeaway
+
+# **If you copy and paste your code three times, it's time to write a function**
+
+---
+
+## Your Turn 4
+
+### Write a function that returns the mean and standard deviation of a numeric vector.
+### Give the function a name
+### Find the mean and SD of `x`
+### Map your function to `number_list`
+
+---
+
+## Your Turn 4
+
+```{r, eval=FALSE}
+mean_sd <- function(x) {
+  x_mean <- mean(x)
+  x_sd <- sd(x)
+  tibble(mean = x_mean, sd = x_sd)
+}
+  
+map(number_list, mean_sd)
+```
+---
+
+## Your Turn 4
+
+```{r, echo=FALSE}
+mean_sd <- function(x) {
+  x_mean <- mean(x)
+  x_sd <- sd(x)
+  tibble(mean = x_mean, sd = x_sd)
+}
+  
+map(number_list, mean_sd)
+```
+
+---
+
+
+class: inverse
+# Three ways to pass functions to `map()`
+1. pass directly to `map()`
+2. use an anonymous function
+3. use ~
+
+---
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/purr_f_input1.png")
+```
+
+---
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/purr_f_input2.png")
+```
+
+---
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/purr_f_input3.png")
+```
+
+---
+
+```{r, eval = FALSE}
+map(gapminder, ~length(unique(.x)))
+```
+
+---
+
+```{r}
+map(gapminder, ~length(unique(.x)))
+```
+
+---
+
+# Returning types
+
+|  map |  returns |
+|:--|:--|
+|`map()` | list |
+|`map_chr()` | character vector |
+|`map_dbl()` | double vector (numeric) |
+|`map_int()` | integer vector |
+|`map_lgl()` | logical vector |
+|`map_dfc()` | data frame (by column) |
+|`map_dfr()` | data frame (by row) |
+
+---
+
+# Returning types
+
+```{r, eval = FALSE}
+map_int(gapminder, ~length(unique(.x)))
+```
+
+---
+
+# Returning types
+
+```{r}
+map_int(gapminder, ~length(unique(.x)))
+```
+
+---
+
+## Your Turn 5
+
+### Do the same as #3 above but return a vector instead of a list. 
+
+---
+
+## Your Turn 5
+.small[
+```{r}
+map_chr(diabetes, class)
+```
+]
+---
+
+## Your Turn 6
+
+### Check `diabetes` for any missing data. 
+
+### Using the ~.f(.x) shorthand, check each column for any missing values using `is.na()` and `any()`
+### Return a logical vector. Are any columns missing data? What happens if you don't include `any()`? Why?
+### Try counting the number of missing, returning an integer vector
+
+---
+
+## Your Turn 6
+
+.small[
+```{r}
+map_lgl(diabetes, ~any(is.na(.x)))
+```
+]
+---
+
+## Your Turn 6
+
+.small[
+```{r}
+map_int(diabetes, ~sum(is.na(.x)))
+```
+]
+---
+
+## Your Turn 7
+
+### Turn `diabetes` into a list split by `location` using the `split()` function. Check its length.
+### Fill in the `model_lm` function to model `chol` (the outcome) with `ratio` and pass the `.data` argument to `lm()`
+### map `model_lm` to `diabetes_list` so that it returns a data frame (by row).
+
+---
+
+## Your Turn 7
+
+```{r, eval=FALSE}
+diabetes_list <- split(diabetes, diabetes$location) #<<
+length(diabetes_list)
+model_lm <- function(.data) {
+  mdl <- lm(chol ~ ratio, data = .data) #<<
+  # get model statistics
+  broom::glance(mdl)
+}
+
+map(diabetes_list, model_lm) #<<
+```
+
+---
+
+## Your Turn 7
+.small[
+```{r, echo=FALSE}
+diabetes_list <- split(diabetes, diabetes$location)
+length(diabetes_list)
+model_lm <- function(.data) {
+  mdl <- lm(chol ~ ratio, data = .data)
+  # get model statistics
+  broom::glance(mdl)
+}
+
+map(diabetes_list, model_lm)
+```
+]
+
+---
+
+# map2(.x, .y, .f)
+
+--
+
+## .x, .y: a vector, list, or data frame
+
+--
+
+## .f: a function
+
+--
+
+## Returns a list
+
+
+---
+
+```{r, echo=FALSE, out.width="80%", out.height="80%"}
+knitr::include_graphics("img/purr_x2_input.png")
+```
+
+---
+
+```{r, echo=FALSE, out.width="80%", out.height="80%"}
+knitr::include_graphics("img/purr_x2_input_warn.png")
+```
+
+---
+
+```{r, echo=FALSE, out.width="80%", out.height="80%"}
+knitr::include_graphics("img/purr_f2_input.png")
+```
+
+---
+
+# map2()
+
+```{r, eval=FALSE}
+means <- c(-3, 4, 2, 2.3)
+sds <- c(.3, 4, 2, 1)
+  
+map2_dbl(means, sds, rnorm, n = 1)
+```
+
+---
+
+# map2()
+
+```{r, eval=FALSE}
+means <- c(-3, 4, 2, 2.3)
+sds <- c(.3, 4, 2, 1)
+  
+map2_dbl(means, sds, rnorm, n = 1) #<<
+```
+
+---
+
+# map2()
+
+```{r}
+means <- c(-3, 4, 2, 2.3)
+sds <- c(.3, 4, 2, 1)
+  
+map2_dbl(means, sds, rnorm, n = 1)
+```
+
+---
+
+## Your Turn 8
+
+### Split the gapminder dataset into a list by country
+### Create a list of models using `map()`. For the first argument, pass `gapminder_countries`. For the second, use the `~.f()` notation to write a model with `lm()`. Use `lifeExp` on the left hand side of the formula and `year` on the second. Pass `.x` to the `data` argument.
+### Use `map2()` to take the models list and the data set list and map them to `predict()`. Since we're not adding new arguments, you don't need to use `~.f()`.
+
+---
+
+## Your Turn 8
+
+```{r,eval=FALSE}
+gapminder_countries <- split(gapminder, gapminder$country) #<<
+models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x))
+preds <- map2(models, gapminder_countries, predict)
+head(preds, 3)
+```
+
+---
+
+## Your Turn 8
+
+```{r,eval=FALSE}
+gapminder_countries <- split(gapminder, gapminder$country)
+models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x)) #<<
+preds <- map2(models, gapminder_countries, predict)
+head(preds, 3)
+```
+
+---
+
+## Your Turn 8
+
+```{r, eval=FALSE}
+gapminder_countries <- split(gapminder, gapminder$country)
+models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x))
+preds <- map2(models, gapminder_countries, predict) #<<
+head(preds, 3)
+```
+
+---
+
+## Your Turn 8
+
+```{r, echo = FALSE}
+gapminder_countries <- split(gapminder, gapminder$country)
+models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x))
+preds <- map2(models, gapminder_countries, predict)
+map(head(preds, 3), head)
+```
+
+---
+
+class: middle, center
+
+| input 1 | input 2 | returns |
+|:--|:--|
+|`map()` | `map2()` | list |
+|`map_chr()` | `map2_chr()` |  character vector |
+|`map_dbl()` | `map2_dbl()` |  double vector (numeric) |
+|`map_int()` | `map2_int()` |  integer vector |
+|`map_lgl()` | `map2_lgl()` |  logical vector |
+|`map_dfc()` | `map2_dfc()` |  data frame (by column) |
+|`map_dfr()` | `map2_dfr()` |  data frame (by row) |
+
+---
+
+# Other mapping functions
+
+## **pmap()** and friends: take n lists or data frame with argument names
+---
+
+# Other mapping functions
+
+## ~~pmap() and friends: take n lists or data frame with argument names~~
+## **walk()** and friends: for side effects like plotting; returns input invisibly
+---
+
+# Other mapping functions
+
+## ~~pmap() and friends: take n lists or data frame with argument names~~
+## ~~walk() and friends: for side effects like plotting; returns input invisibly~~
+## **imap()** and friends: includes counter `i`
+---
+
+# Other mapping functions
+
+## ~~pmap() and friends: take n lists or data frame with argument names~~
+## ~~walk() and friends: for side effects like plotting; returns input invisibly~~
+## ~~imap() and friends: includes counter `i`~~
+## **map_if()**, **map_at()**: Apply only to certain elements
+
+---
+
+class: middle, center
+
+| input 1 | input 2 |  input n | returns |
+|:--|:--|
+|`map()` | `map2()` | `pmap()` | list |
+|`map_chr()` | `map2_chr()` | `pmap_chr()` | character vector |
+|`map_dbl()` | `map2_dbl()` | `pmap_dbl()` |   double vector (numeric) |
+|`map_int()` | `map2_int()` | `pmap_int()` |   integer vector |
+|`map_lgl()` | `map2_lgl()` | `pmap_lgl()` |   logical vector |
+|`map_dfc()` | `map2_dfc()` | `pmap_dfc()` |   data frame (by column) |
+|`map_dfr()` | `map2_dfr()` | `pmap_dfr()` |   data frame (by row) |
+|`walk()` | `walk2()` | `pwalk()` | input (side effects!) |
+
+---
+
+## Your turn 9
+
+#### Create a new directory using the fs package. Call it "figures".
+
+#### Write a function to plot a line plot of a given variable in gapminder over time, faceted by continent. Then, save the plot (how do you save a ggplot?). For the file name, paste together the folder, name of the variable, and extension so it follows the pattern `"folder/variable_name.png"`
+#### Create a character vector that has the three variables we'll plot: "lifeExp", "pop", and "gdpPercap".
+#### Use `walk()` to save a plot for each of the variables
+
+---
+
+## Your turn 9
+
+```{r, eval = FALSE}
+fs::dir_create("figures")
+
+ggsave_gapminder <- function(variable) {
+  #  we're using `aes_string()` so we don't need the curly-curly syntax
+  p <- ggplot(
+    gapminder, 
+    aes_string(x = "year", y = variable, color = "country")
+  ) + 
+    geom_line() + 
+    scale_color_manual(values = country_colors) + 
+    facet_wrap(vars(continent.)) + 
+    theme(legend.position = "none")
+    
+  ggsave(
+    filename = paste0("figures", variable, ".png"), 
+    plot = p, 
+    dpi = 320
+  )
+}
+```
+
+
+---
+
+## Your turn 9
+
+```{r, eval = FALSE}
+vars <- c("lifeExp", "pop", "gdpPercap")
+walk(vars, ggsave_gapminder)
+```
+
+
+---
+
+# Base R
+
+| base R | purrr |
+|:--|:--|
+|`lapply()` | `map()` |
+|`vapply()` | `map_*()` |
+|`sapply()` | ? |
+|`x[] <- lapply()` | `map_dfc()` |
+|`mapply()` | `map2()`, `pmap()` |
+
+---
+
+class: inverse
+
+# Benefits of purrr
+1. Consistent 
+2. Type-safe
+3. ~f(.x)
+
+---
+
+## Loops vs functional programming
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- map(x, mean)
+```
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- vector("list", length(x))
+for (i in seq_along(x)) {
+  y[[i]] <- mean(x[[i]])
+}
+```
+
+---
+
+## Loops vs functional programming
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- map(x, mean)
+```
+
+```{r, eval=FALSE}
+x <- rnorm(10) 
+y <- vector("list", length(x)) #<<
+for (i in seq_along(x)) {
+  y[[i]] <- mean(x[[i]]) 
+}
+```
+
+---
+
+## Loops vs functional programming
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- map(x, mean)
+```
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- vector("list", length(x)) 
+for (i in seq_along(x)) {#<<
+  y[[i]] <- mean(x[[i]]) 
+}
+```
+
+---
+
+## Loops vs functional programming
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- map(x, mean)
+```
+
+```{r, eval=FALSE}
+x <- rnorm(10)
+y <- vector("list", length(x)) 
+for (i in seq_along(x)) { 
+  y[[i]] <- mean(x[[i]]) #<<
+}
+```
+
+---
+
+class: center, middle, inverse
+
+# **Of course someone has to write loops. It doesn’t have to be you.**
+# **--Jenny Bryan**
+
+
+---
+
+# Working with lists and nested data
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/cheatsheet_lists.png")
+```
+
+---
+
+# Working with lists and nested data
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/cheatsheet_nested.png")
+```
+
+---
+
+# Adverbs: Modify function behavior
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/cheatsheet_adverbs.png")
+```
+
+---
+
+class: inverse, center
+
+# Learn more!
+## [Jenny Bryan's purrr tutorial](https://jennybc.github.io/purrr-tutorial/): A detailed introduction to purrr. Free online.
+## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.

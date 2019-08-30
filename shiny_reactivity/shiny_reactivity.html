@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Reactive apps with shiny</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-29" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reactive apps with shiny
+### 2019-08-29
+
+---
+
+
+
+
+.pull-left[
+## UI
+
+```r
+sliderInput(
+  inputId = "alpha",
+  label = "Alpha:",
+  min = 0,
+  max = 1,
+  value = 0.5
+)
+```
+]
+
+.pull_right[
+## Server
+
+```r
+ggplot(...) +
+  geom_point(alpha = input$alpha)
+```
+]
+---
+
+## Inputs are reactive
+
+
+```r
+# in server &lt;- function(input, output) {}
+output$scatterplot &lt;- renderPlot({
+  ggplot(
+    data = movies, 
+    aes_string(x = input$x, y = input$y, color = input$z)
+  ) +
+*   geom_point(alpha = input$alpha)
+})
+```
+
+---
+
+## Inputs are reactive
+
+
+```r
+# in server &lt;- function(input, output) {}
+output$scatterplot &lt;- renderPlot({
+  ggplot(
+    data = movies, 
+    aes_string(x = input$x, y = input$y, color = input$z)
+  ) +
+    geom_point(alpha = input$alpha) 
+})
+```
+
+## When the user changes the `alpha` slider, **`input$alpha`** changes. 
+
+---
+
+# Reactivity
+## Shiny **watches** reactive objects like `input$alpha`
+
+---
+
+# Reactivity
+## ~~Shiny watches reactive objects like `input$alpha`~~
+## Shiny **caches** and **updates** reactives
+
+---
+# Reactivity
+## ~~Shiny watches reactive objects like `input$alpha`~~
+## ~~Shiny caches and updates reactives~~
+## `render*()` functions are **reactive contexts**
+
+---
+
+# Render functions
+
+&lt;img src="outputs_full.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 1
+
+### Start with `movies_05.R`
+### Add a new slider to the UI to select `size` of the points from 0 to 5
+### Add the value to `geom_point()`
+### Run the app and update the points 
+
+---
+
+## Your Turn 1 (solutions in `movies_06.R`)
+
+
+```r
+sliderInput(
+  inputId = "size",
+  label = "Size:",
+  min = 0, 
+  max = 5,
+  value = 2
+)
+```
+
+
+```r
+ggplot(...) + 
+  geom_point(alpha = input$alpha, size = input$size)
+```
+
+---
+
+## Making data reactive
+
+
+```r
+*checkboxGroupInput(
+* inputId = "selected_type",
+  label = "Select movie type(s)",
+  choices = c("Documentary", "Feature Film", "TV Movie"),
+  selected = "Feature Film"
+)
+```
+
+---
+
+## Making data reactive
+
+
+
+```r
+*movies_subset &lt;- reactive({
+  req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+
+
+```r
+movies_subset &lt;- reactive({ 
+* req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+
+
+```r
+movies_subset &lt;- reactive({ 
+  req(input$selected_type) 
+* filter(
+*   movies, title_type %in% input$selected_type
+* )
+})
+```
+
+
+
+---
+
+## Making data reactive
+
+
+
+```r
+movies_subset &lt;- reactive({
+  req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+
+*movies_subset()
+```
+
+---
+
+## Making data reactive
+
+
+
+```r
+movies_subset &lt;- reactive({
+  req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+
+movies_subset()
+*movies_subset()$title_type
+```
+
+
+---
+
+## Making data reactive
+
+
+```r
+output$scatterplot &lt;- renderPlot({
+  ggplot(
+*   data = movies_subset(),
+    aes_string(...),
+  ) + 
+  ...
+})
+```
+
+
+---
+
+## Making data reactive
+
+
+```r
+# in mainPanel()
+uiOutput("n")
+```
+
+
+```r
+# in server
+output$n &lt;- renderUI({
+  types &lt;- movies_subset()$title_type %&gt;%
+    factor(levels = input$selected_type)
+  counts &lt;- table(types)
+
+  HTML(
+    paste(
+      "There are", 
+      counts, 
+      input$selected_type, 
+      "movies in this dataset. &lt;br&gt;"
+    )
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+
+```r
+# in mainPanel()
+*uiOutput("n")
+```
+
+
+```r
+# in server
+*output$n &lt;- renderUI({
+  types &lt;- movies_subset()$title_type %&gt;%
+    factor(levels = input$selected_type)
+  counts &lt;- table(types)
+
+* HTML(
+    paste(
+      "There are", 
+      counts, 
+      input$selected_type, 
+      "movies in this dataset. &lt;br&gt;"
+    )
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+
+```r
+# in mainPanel()
+uiOutput("n")
+```
+
+
+```r
+# in server
+output$n &lt;- renderUI({
+* types &lt;- movies_subset()$title_type %&gt;%
+    factor(levels = input$selected_type)
+  counts &lt;- table(types)
+
+  HTML(
+    paste(
+      "There are", 
+      counts, 
+      input$selected_type, 
+      "movies in this dataset. &lt;br&gt;"
+    )
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+## **Open `movies-07.R`**
+
+---
+
+## Your Turn 2
+
+## Update the data table to use the reactive version of the data
+## Run the app
+
+---
+
+## Your Turn 2 (solution: movies-08.R)
+
+
+```r
+# in server
+output$moviestable &lt;- DT::renderDataTable({
+  DT::datatable(
+*   data = movies_subset()[, 1:7],
+    options = list(pageLength = 10),
+    rownames = FALSE
+  )
+})
+```
+
+---
+
+## Your Turn 3
+
+### Create a new reactive data set called `movies_sample`. Require `input$n_samp`. Return a sample of `movies_subset()` with `sample_n()`
+### Use `movies_sample()` as the data for your plot, table, and UI outputs.
+### Create the corresponding UI input for `input$n_samp` with `numericInput()`: set `min` to 1 and `max` to `nrows(movies)`. Set the default value to 50.
+### Run the app
+
+---
+
+## Your Turn 3 (solution: movies-09.R)
+
+
+```r
+# in ui
+numericInput(
+  inputId = "n_samp",
+  label = "Sample size:",
+  min = 1, max = nrow(movies),
+  value = 50
+)
+```
+
+
+```r
+# in server
+movies_sample &lt;- reactive({
+  req(input$n_samp)
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+---
+
+
+## Your Turn 4
+
+## `movies-10.R` tries to add a dynamic plot title, but it doesn't work. Fix it using `reactive()`.
+
+---
+
+## Your Turn 4 (solution: movies-11.R)
+
+
+```r
+# in server
+*pretty_plot_title &lt;- reactive({
+  str_to_title(input$plot_title) 
+})
+```
+
+
+```r
+# in server
+output$scatterplot &lt;- renderPlot({
+  ggplot(...) + 
+    labs(
+      ...,
+*     title = pretty_plot_title()
+    )
+})
+```
+
+---
+
+# Show of hands
+
+## Does updating the title update the data sample?
+
+---
+
+## Reactivity is lazy
+
+
+```r
+# in server
+movies_subset &lt;- reactive({
+  req(input$selected_type) 
+  filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+
+```r
+# in server
+movies_sample &lt;- reactive({
+  req(input$n_samp) 
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+
+```r
+# in server
+pretty_plot_title &lt;- reactive({ 
+  str_to_title(input$plot_title) 
+})
+```
+
+---
+
+## Reactivity is lazy
+
+
+```r
+# in server
+movies_subset &lt;- reactive({
+* req(input$selected_type)
+* filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+
+```r
+# in server
+movies_sample &lt;- reactive({
+  req(input$n_samp) 
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+
+```r
+# in server
+pretty_plot_title &lt;- reactive({ 
+  str_to_title(input$plot_title) 
+})
+```
+
+---
+
+## Reactivity is lazy
+
+
+```r
+# in server
+movies_subset &lt;- reactive({
+  req(input$selected_type) 
+  filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+
+```r
+# in server
+movies_sample &lt;- reactive({
+* req(input$n_samp)
+* sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+
+```r
+# in server
+pretty_plot_title &lt;- reactive({ 
+  str_to_title(input$plot_title) 
+})
+```
+
+---
+
+## Reactivity is lazy
+
+
+```r
+# in server
+movies_subset &lt;- reactive({
+  req(input$selected_type) 
+  filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+
+```r
+# in server
+movies_sample &lt;- reactive({
+  req(input$n_samp) 
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+
+```r
+# in server
+pretty_plot_title &lt;- reactive({ 
+* str_to_title(input$plot_title)
+})
+```
+
+---
+
+class: inverse, center
+
+# Resources
+## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
+## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

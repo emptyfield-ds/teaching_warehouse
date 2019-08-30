@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Dashboards with shiny and R Markdown</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-29" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Dashboards with shiny and R Markdown
+### 2019-08-29
+
+---
+
+
+
+
+## Dashboards
+
+---
+
+## Dashboards
+## **At-a-glance views** of key information
+
+---
+
+
+## Dashboards
+## ~~At-a-glance views of key information~~
+## **Motivation**: Data that updates dynamically
+
+---
+
+## Dashboards
+## ~~At-a-glance views of key information~~
+## ~~Motivation: Data that updates dynamically~~
+## Often a good place for **alerts**
+
+---
+
+class: center, middle, inverse
+
+# **flexdashboards**
+
+---
+
+## Your Turn 1
+
+## Create a new flexdashboard (File &gt; New File &gt; R Markdown &gt; From Template &gt; Flex Dashboard)
+## Use the gapminder data to create three plots in the three panes
+
+---
+
+## Your Turn 2
+
+### Open `apps/dashboards/flexdashboard_01.Rmd`
+### Read through the code. How is it different from a normal Shiny app?
+
+### Make a change to the layout 
+#### http://rmarkdown.rstudio.com/flexdashboard/using.html#layout
+
+### Change the theme 
+#### http://rmarkdown.rstudio.com/flexdashboard/using.html#appearance
+
+---
+
+## Your Turn 3
+
+## Continue working on `apps/dashboards/flexdashboard_01.Rmd`
+
+## Add a `radioButton()` that allows the user to change the plot from a histogram to violin plot
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+
+```r
+radioButtons(
+  "plot_type", 
+  "Weight plot type", 
+  choices = c("Histogram", "Violin plot"), 
+  selected = c("Histogram")
+)
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+
+```r
+renderPlot({
+  if (input$plot_type == "Histogram") { 
+    geom &lt;- geom_histogram(aes(x = wt), binwidth = 0.25)
+  } else {
+    geom &lt;- geom_violin(aes(y = wt, x = 1))
+  }
+  
+  ggplot(mpg_subset()) + geom
+})
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+
+```r
+renderPlot({
+* if (input$plot_type == "Histogram") {
+    geom &lt;- geom_histogram(aes(x = wt), binwidth = 0.25)
+* } else {
+    geom &lt;- geom_violin(aes(y = wt, x = 1))
+  }
+  
+  ggplot(mpg_subset()) + geom
+})
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+
+```r
+renderPlot({
+  if (input$plot_type == "Histogram") { 
+*   geom &lt;- geom_histogram(aes(x = wt), binwidth = 0.25)
+  } else {
+*   geom &lt;- geom_violin(aes(y = wt, x = 1))
+  }
+  
+  ggplot(mpg_subset()) + geom 
+})
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+
+```r
+renderPlot({
+  if (input$plot_type == "Histogram") { 
+    geom &lt;- geom_histogram(aes(x = wt), binwidth = 0.25)
+  } else {
+    geom &lt;- geom_violin(aes(y = wt, x = 1)) 
+  }
+  
+* ggplot(mpg_subset()) + geom
+})
+```
+
+---
+class: center, middle, inverse
+
+# **shinydashboards**
+
+---
+
+# shinydashboards
+
+## Run this code:
+#### .large[`shiny::runGitHub("rstudio/shiny-examples/", subdir = "086-bus-dashboard")`]
+
+---
+
+class: center, middle 
+
+.large[
+|  *flexdashboard*|  **shinydashboard**|
+|:--|:--|
+|  R Markdown | Shiny UI code|
+| Super easy |  A little more work |
+| Static or dynamic | Dynamic |
+| CSS flexbox layout | Bootstrap grid layout |
+]
+
+---
+
+## Static or dynamic?
+
+---
+
+## Static or dynamic?
+## **Static**: Run it once, produce HTML to share
+
+---
+
+## Static or dynamic?
+## ~~Static: Run it once, produce HTML to share~~
+## **Dynamic**: Linked to R server, interactive
+
+---
+
+class: inverse, center
+
+# Resources
+## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
+## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

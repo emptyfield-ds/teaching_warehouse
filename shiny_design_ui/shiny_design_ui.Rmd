@@ -1,0 +1,376 @@
+---
+title: "User interfaces in shiny"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, eval = FALSE)
+library(tidyverse)
+library(shiny)
+```
+
+
+## What's going on under the hood?
+
+```{r}
+fluidPage(
+  headerPanel("Title"),
+  sidebarLayout(
+    sidebarPanel(
+      # Inputs
+    ),
+    mainPanel(
+      # Outputs
+    )
+  )
+)
+```
+
+---
+
+```{r}
+fluidPage(
+  headerPanel("Title"),
+  sidebarLayout(
+    sidebarPanel(
+      # Inputs
+    ),
+    mainPanel(
+      # Outputs
+    )
+  )
+)
+```
+
+```{r, echo=FALSE, eval = TRUE, as.is = TRUE}
+fluidPage(
+  headerPanel("Title"),
+  sidebarLayout(
+    sidebarPanel(
+      # Inputs
+    ),
+    mainPanel(
+      # Outputs
+    )
+  )
+) %>% as.character() %>% cat()
+```
+
+---
+
+class: inverse, center, middle
+
+# **Writing HTML in shiny**
+
+---
+
+class: medium
+
+```{r, eval=TRUE}
+names(tags)
+```
+
+---
+
+## Using HTML tags
+
+```{r}
+tags$b("This is my first app")
+```
+
+--
+
+```{r, eval=TRUE, echo=FALSE}
+tags$b("This is my first app") %>% 
+  as.character() %>% 
+  cat()
+```
+
+--
+
+```{r, eval=TRUE, echo=FALSE}
+tags$b("This is my first app")
+```
+
+
+---
+
+## Header tags
+
+```{r}
+tags$h1("First level heading")
+tags$h2("Second level heading")
+tags$h3("Third level heading")
+```
+
+--
+
+```{r, eval=TRUE, echo=FALSE}
+tagList(
+  tags$h1("First level heading"),
+  tags$h2("Second level heading"),
+  tags$h3("Third level heading")
+)
+```
+
+
+---
+
+## Header tags
+
+```{r}
+
+ui <- fluidPage(
+  tags$h1("First level heading"),
+  tags$h2("Second level heading"),
+  tags$h3("Third level heading")
+)
+
+server <- function(input, output) {}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+## Linked text
+
+```{r}
+tags$h1("Awesome title")
+tags$br() # line break
+tags$a(
+  "This app is built with Shiny.", 
+  href = "http::/shiny.rstudio.com"
+)
+```
+
+--
+
+```{r, eval=TRUE, echo=FALSE}
+tagList(
+  tags$h1("Awesome title"),
+  tags$br(), 
+  tags$a(
+    "This app is built with Shiny.", 
+    href = "http::/shiny.rstudio.com"
+  )
+)
+```
+
+---
+
+## Common tags are available without `tags`
+.pull-left[
+|With tags     |Without tags |
+|:-------------|:------------|
+|`tags$p`      |`p`          |
+|`tags$h1`     |`h1`         |
+|`tags$h2`     |`h2`         |
+|`tags$h3`     |`h3`         |
+|`tags$h4`     |`h4`         |
+|`tags$h5`     |`h5`         |
+|`tags$h6`     |`h6`         |
+|`tags$a`      |`a`          |
+]
+
+.pull-right[
+|With tags     |Without tags |
+|:-------------|:------------|
+|`tags$br`     |`br`         |
+|`tags$div`    |`div`        |
+|`tags$span`   |`span`       |
+|`tags$pre`    |`pre`        |
+|`tags$code`   |`code`       |
+|`tags$img`    |`img`        |
+|`tags$strong` |`strong`     |
+|`tags$em`     |`em`         |
+|`tags$hr`     |`hr`         |
+]
+
+---
+
+## Common tags are available without `tags`
+
+```{r}
+h1("First level header")
+br()
+code("Monospace text")
+```
+
+--
+
+```{r, eval=TRUE, echo=FALSE}
+tagList(
+  h1("First level header"),
+  br(),
+  code("Monospace text")
+)
+```
+
+---
+
+## Write HTML directly with `HTML()`
+
+```{r}
+HTML("<h2>Hello world, <br/> and then a line break.</h2>")
+```
+
+--
+
+```{r, eval=TRUE, echo=FALSE}
+HTML("<h2>Hello world, <br/> and then a line break.</h2>")
+```
+
+---
+
+## Put images, CSS, JS, etc in `www`
+
+```{r, eval=FALSE}
+|--name_of_app
+    |-- app.R 
+    |-- www
+        |-- image.png
+        |-- theme.css
+        |-- script.js
+```
+
+---
+
+## Your Turn 1
+## Start with `movies_11.R`
+## Add some helper text to the app using tags that let your users know how to navigate the app
+
+---
+
+class: inverse, center, middle
+
+# **organizing material with tabs**
+
+---
+
+## `tabsetPanel()` + `tabPanel()`
+
+```{r}
+mainPanel( #<<
+  tabsetPanel( #<<
+    tabPanel("Plot", plotOutput("plot")),
+    tabPanel("Data", DT::dataTableOutput("data"))
+  )
+)
+```
+
+---
+
+## `tabsetPanel()` + `tabPanel()`
+
+```{r}
+mainPanel(
+  tabsetPanel(
+    tabPanel("Plot", plotOutput("plot")), #<< 
+    tabPanel("Data", DT::dataTableOutput("data")) #<< 
+  )
+)
+```
+
+---
+
+## Your Turn 2
+
+### Continue working on `movies_11.R`.
+### Split the app into two tabs: one for plot and the other for data table. 
+### If you finish early: Add another tab that shows a table of summary statistics. Use `skimr::skim(movies) %>% skimr::kable()` in the server code
+
+---
+
+## Your Turn 2
+
+```{r}
+mainPanel(
+  tabsetPanel(
+    tabPanel("Plot", plotOutput("scatterplot")),
+    tabPanel("Data", DT::dataTableOutput("moviestable"))
+  )
+)
+```
+
+
+---
+class: inverse, middle, center
+
+# **setting a theme with shinythemes**
+
+---
+class: middle, center
+# shinythemes
+
+```{r, echo=FALSE, eval = TRUE, out.width="75%", out.height="75%"}
+knitr::include_graphics("shinythemes.png")
+```
+
+
+---
+
+# Selecting a shinytheme
+
+```{r}
+library(shinythemes)
+ui <- fluidPage(
+  themeSelector(), #<<
+  ...
+)
+```
+---
+
+# Selecting a shinytheme
+
+```{r}
+library(shinythemes)
+ui <- fluidPage(
+  theme = shinytheme("sandstone"), #<<
+  ...
+)
+```
+
+---
+
+## Your Turn 3
+
+### Continue working on `movies_11.R`
+### Add the theme selector, browse various themes, and pick a theme and apply it. Don’t forget to remove the selector once you’re done picking a theme
+
+---
+
+## Using your own CSS theme
+
+```{r}
+myapp
+ |-- app.R
+ |-- www/
+      |-- mytheme.css
+```
+
+```{r}
+fluidPage(
+  theme = "mytheme.css",
+  ...
+)
+```
+
+---
+
+class: inverse, center
+
+# Resources
+## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
+## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+
+

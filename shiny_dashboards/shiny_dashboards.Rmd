@@ -1,0 +1,201 @@
+---
+title: "Dashboards with shiny and R Markdown"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, eval = FALSE)
+library(tidyverse)
+library(shiny)
+```
+
+## Dashboards
+
+---
+
+## Dashboards
+## **At-a-glance views** of key information
+
+---
+
+
+## Dashboards
+## ~~At-a-glance views of key information~~
+## **Motivation**: Data that updates dynamically
+
+---
+
+## Dashboards
+## ~~At-a-glance views of key information~~
+## ~~Motivation: Data that updates dynamically~~
+## Often a good place for **alerts**
+
+---
+
+class: center, middle, inverse
+
+# **flexdashboards**
+
+---
+
+## Your Turn 1
+
+## Create a new flexdashboard (File > New File > R Markdown > From Template > Flex Dashboard)
+## Use the gapminder data to create three plots in the three panes
+
+---
+
+## Your Turn 2
+
+### Open `apps/dashboards/flexdashboard_01.Rmd`
+### Read through the code. How is it different from a normal Shiny app?
+
+### Make a change to the layout 
+#### http://rmarkdown.rstudio.com/flexdashboard/using.html#layout
+
+### Change the theme 
+#### http://rmarkdown.rstudio.com/flexdashboard/using.html#appearance
+
+---
+
+## Your Turn 3
+
+## Continue working on `apps/dashboards/flexdashboard_01.Rmd`
+
+## Add a `radioButton()` that allows the user to change the plot from a histogram to violin plot
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+```{r}
+radioButtons(
+  "plot_type", 
+  "Weight plot type", 
+  choices = c("Histogram", "Violin plot"), 
+  selected = c("Histogram")
+)
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+```{r}
+renderPlot({
+  if (input$plot_type == "Histogram") { 
+    geom <- geom_histogram(aes(x = wt), binwidth = 0.25)
+  } else {
+    geom <- geom_violin(aes(y = wt, x = 1))
+  }
+  
+  ggplot(mpg_subset()) + geom
+})
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+```{r}
+renderPlot({
+  if (input$plot_type == "Histogram") { #<<
+    geom <- geom_histogram(aes(x = wt), binwidth = 0.25)
+  } else { #<<
+    geom <- geom_violin(aes(y = wt, x = 1))
+  }
+  
+  ggplot(mpg_subset()) + geom
+})
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+```{r}
+renderPlot({
+  if (input$plot_type == "Histogram") { 
+    geom <- geom_histogram(aes(x = wt), binwidth = 0.25) #<<
+  } else {
+    geom <- geom_violin(aes(y = wt, x = 1)) #<<
+  }
+  
+  ggplot(mpg_subset()) + geom 
+})
+```
+
+---
+
+## Your Turn 3 (solution: `flexdashboard_02.Rmd`)
+
+```{r}
+renderPlot({
+  if (input$plot_type == "Histogram") { 
+    geom <- geom_histogram(aes(x = wt), binwidth = 0.25)
+  } else {
+    geom <- geom_violin(aes(y = wt, x = 1)) 
+  }
+  
+  ggplot(mpg_subset()) + geom #<<
+})
+```
+
+---
+class: center, middle, inverse
+
+# **shinydashboards**
+
+---
+
+# shinydashboards
+
+## Run this code:
+#### .large[`shiny::runGitHub("rstudio/shiny-examples/", subdir = "086-bus-dashboard")`]
+
+---
+
+class: center, middle 
+
+.large[
+|  *flexdashboard*|  **shinydashboard**|
+|:--|:--|
+|  R Markdown | Shiny UI code|
+| Super easy |  A little more work |
+| Static or dynamic | Dynamic |
+| CSS flexbox layout | Bootstrap grid layout |
+]
+
+---
+
+## Static or dynamic?
+
+---
+
+## Static or dynamic?
+## **Static**: Run it once, produce HTML to share
+
+---
+
+## Static or dynamic?
+## ~~Static: Run it once, produce HTML to share~~
+## **Dynamic**: Linked to R server, interactive
+
+---
+
+class: inverse, center
+
+# Resources
+## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
+## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+
+

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>User interfaces in shiny</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-08-29" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# User interfaces in shiny
+### 2019-08-29
+
+---
+
+
+
+
+
+## What's going on under the hood?
+
+
+```r
+fluidPage(
+  headerPanel("Title"),
+  sidebarLayout(
+    sidebarPanel(
+      # Inputs
+    ),
+    mainPanel(
+      # Outputs
+    )
+  )
+)
+```
+
+---
+
+
+```r
+fluidPage(
+  headerPanel("Title"),
+  sidebarLayout(
+    sidebarPanel(
+      # Inputs
+    ),
+    mainPanel(
+      # Outputs
+    )
+  )
+)
+```
+
+
+```
+## &lt;div class="container-fluid"&gt;
+##   &lt;div class="col-sm-12"&gt;
+##     &lt;h1&gt;Title&lt;/h1&gt;
+##   &lt;/div&gt;
+##   &lt;div class="row"&gt;
+##     &lt;div class="col-sm-4"&gt;
+##       &lt;form class="well"&gt;&lt;/form&gt;
+##     &lt;/div&gt;
+##     &lt;div class="col-sm-8"&gt;&lt;/div&gt;
+##   &lt;/div&gt;
+## &lt;/div&gt;
+```
+
+---
+
+class: inverse, center, middle
+
+# **Writing HTML in shiny**
+
+---
+
+class: medium
+
+
+```r
+names(tags)
+```
+
+```
+##   [1] "a"           "abbr"        "address"     "area"        "article"    
+##   [6] "aside"       "audio"       "b"           "base"        "bdi"        
+##  [11] "bdo"         "blockquote"  "body"        "br"          "button"     
+##  [16] "canvas"      "caption"     "cite"        "code"        "col"        
+##  [21] "colgroup"    "command"     "data"        "datalist"    "dd"         
+##  [26] "del"         "details"     "dfn"         "div"         "dl"         
+##  [31] "dt"          "em"          "embed"       "eventsource" "fieldset"   
+##  [36] "figcaption"  "figure"      "footer"      "form"        "h1"         
+##  [41] "h2"          "h3"          "h4"          "h5"          "h6"         
+##  [46] "head"        "header"      "hgroup"      "hr"          "html"       
+##  [51] "i"           "iframe"      "img"         "input"       "ins"        
+##  [56] "kbd"         "keygen"      "label"       "legend"      "li"         
+##  [61] "link"        "mark"        "map"         "menu"        "meta"       
+##  [66] "meter"       "nav"         "noscript"    "object"      "ol"         
+##  [71] "optgroup"    "option"      "output"      "p"           "param"      
+##  [76] "pre"         "progress"    "q"           "ruby"        "rp"         
+##  [81] "rt"          "s"           "samp"        "script"      "section"    
+##  [86] "select"      "small"       "source"      "span"        "strong"     
+##  [91] "style"       "sub"         "summary"     "sup"         "table"      
+##  [96] "tbody"       "td"          "textarea"    "tfoot"       "th"         
+## [101] "thead"       "time"        "title"       "tr"          "track"      
+## [106] "u"           "ul"          "var"         "video"       "wbr"
+```
+
+---
+
+## Using HTML tags
+
+
+```r
+tags$b("This is my first app")
+```
+
+--
+
+
+```
+## &lt;b&gt;This is my first app&lt;/b&gt;
+```
+
+--
+
+<b>This is my first app</b>
+
+
+---
+
+## Header tags
+
+
+```r
+tags$h1("First level heading")
+tags$h2("Second level heading")
+tags$h3("Third level heading")
+```
+
+--
+
+<h1>First level heading</h1>
+<h2>Second level heading</h2>
+<h3>Third level heading</h3>
+
+
+---
+
+## Header tags
+
+
+```r
+ui &lt;- fluidPage(
+  tags$h1("First level heading"),
+  tags$h2("Second level heading"),
+  tags$h3("Third level heading")
+)
+
+server &lt;- function(input, output) {}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+## Linked text
+
+
+```r
+tags$h1("Awesome title")
+tags$br() # line break
+tags$a(
+  "This app is built with Shiny.", 
+  href = "http::/shiny.rstudio.com"
+)
+```
+
+--
+
+<h1>Awesome title</h1>
+<br/>
+<a href="http::/shiny.rstudio.com">This app is built with Shiny.</a>
+
+---
+
+## Common tags are available without `tags`
+.pull-left[
+|With tags     |Without tags |
+|:-------------|:------------|
+|`tags$p`      |`p`          |
+|`tags$h1`     |`h1`         |
+|`tags$h2`     |`h2`         |
+|`tags$h3`     |`h3`         |
+|`tags$h4`     |`h4`         |
+|`tags$h5`     |`h5`         |
+|`tags$h6`     |`h6`         |
+|`tags$a`      |`a`          |
+]
+
+.pull-right[
+|With tags     |Without tags |
+|:-------------|:------------|
+|`tags$br`     |`br`         |
+|`tags$div`    |`div`        |
+|`tags$span`   |`span`       |
+|`tags$pre`    |`pre`        |
+|`tags$code`   |`code`       |
+|`tags$img`    |`img`        |
+|`tags$strong` |`strong`     |
+|`tags$em`     |`em`         |
+|`tags$hr`     |`hr`         |
+]
+
+---
+
+## Common tags are available without `tags`
+
+
+```r
+h1("First level header")
+br()
+code("Monospace text")
+```
+
+--
+
+<h1>First level header</h1>
+<br/>
+<code>Monospace text</code>
+
+---
+
+## Write HTML directly with `HTML()`
+
+
+```r
+HTML("&lt;h2&gt;Hello world, &lt;br/&gt; and then a line break.&lt;/h2&gt;")
+```
+
+--
+
+<h2>Hello world, <br/> and then a line break.</h2>
+
+---
+
+## Put images, CSS, JS, etc in `www`
+
+
+```r
+|--name_of_app
+    |-- app.R 
+    |-- www
+        |-- image.png
+        |-- theme.css
+        |-- script.js
+```
+
+---
+
+## Your Turn 1
+## Start with `movies_11.R`
+## Add some helper text to the app using tags that let your users know how to navigate the app
+
+---
+
+class: inverse, center, middle
+
+# **organizing material with tabs**
+
+---
+
+## `tabsetPanel()` + `tabPanel()`
+
+
+```r
+*mainPanel(
+* tabsetPanel(
+    tabPanel("Plot", plotOutput("plot")),
+    tabPanel("Data", DT::dataTableOutput("data"))
+  )
+)
+```
+
+---
+
+## `tabsetPanel()` + `tabPanel()`
+
+
+```r
+mainPanel(
+  tabsetPanel(
+*   tabPanel("Plot", plotOutput("plot")),
+*   tabPanel("Data", DT::dataTableOutput("data"))
+  )
+)
+```
+
+---
+
+## Your Turn 2
+
+### Continue working on `movies_11.R`.
+### Split the app into two tabs: one for plot and the other for data table. 
+### If you finish early: Add another tab that shows a table of summary statistics. Use `skimr::skim(movies) %&gt;% skimr::kable()` in the server code
+
+---
+
+## Your Turn 2
+
+
+```r
+mainPanel(
+  tabsetPanel(
+    tabPanel("Plot", plotOutput("scatterplot")),
+    tabPanel("Data", DT::dataTableOutput("moviestable"))
+  )
+)
+```
+
+
+---
+class: inverse, middle, center
+
+# **setting a theme with shinythemes**
+
+---
+class: middle, center
+# shinythemes
+
+&lt;img src="shinythemes.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Selecting a shinytheme
+
+
+```r
+library(shinythemes)
+ui &lt;- fluidPage(
+* themeSelector(),
+  ...
+)
+```
+---
+
+# Selecting a shinytheme
+
+
+```r
+library(shinythemes)
+ui &lt;- fluidPage(
+* theme = shinytheme("sandstone"),
+  ...
+)
+```
+
+---
+
+## Your Turn 3
+
+### Continue working on `movies_11.R`
+### Add the theme selector, browse various themes, and pick a theme and apply it. Don’t forget to remove the selector once you’re done picking a theme
+
+---
+
+## Using your own CSS theme
+
+
+```r
+myapp
+ |-- app.R
+ |-- www/
+      |-- mytheme.css
+```
+
+
+```r
+fluidPage(
+  theme = "mytheme.css",
+  ...
+)
+```
+
+---
+
+class: inverse, center
+
+# Resources
+## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
+## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+---
+title: "Shiny challenge!"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Exercise
+
+Create a new Shiny app to show a lineplot of the gapminder and a table of the data. Use the sidebar layout approach. 
+Put the plot and data table in separate tabs. Make sure your app has a title.
+
+Additionally, this app should:
+
+1. Have a default ggplot that:
+ * shows life expectancy over time, colored and grouped by country
+ * facets by continent
+2. Allow the user to filter by continent
+3. Allow the user to specify the year range using a slider
+4. Have a data table (either using DT or a static table) that shows the data you're using
+

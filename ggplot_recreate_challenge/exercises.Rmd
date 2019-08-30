@@ -1,0 +1,30 @@
+---
+title: "ggplot2: Plot replication challenge!"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+# Load your packages!
+
+```
+
+# Exercise
+
+The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open the journal article "Riddell_Annals_Hom-Sui-Disparities.pdf". Read the abstract and have a look at Figure 3. The data you need is "CDC_Males.csv". You'll have 1 hour to see what you can come up with in groups or individually!
+
+You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
+
+I'll leave these here:
+
+* https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+* http://colorbrewer2.org
+
+Hint: You may need to use some `dplyr` skills from the first session
+
+```{r}
+# Replicate Figure 3
+
+```
+
