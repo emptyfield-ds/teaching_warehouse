@@ -3,7 +3,7 @@
   <head>
     <title>Test R Code</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-20" />
+    <meta name="date" content="2020-01-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
   </head>
   <body>
@@ -13,7 +13,7 @@
 background-image: url(https://i.imgur.com/CVIZGyY.jpg)
 background-position: top
 background-size: 100%
-class: inverse
+class: inverse, shadow
 
 
 
@@ -35,7 +35,7 @@ strong {
 }
 
 em {
-  color: #56B4E9;  
+  color: #56B4E9;
   font-style: normal;
   font-weight: bold;
 }
@@ -65,6 +65,7 @@ del {
 .large { font-size: 130% }
 .medium { font-size: 115% }
 .small { font-size: 70% }
+
 
 .remark-slide-content {
   color: #474747;
@@ -141,6 +142,8 @@ h2 {
   font-weight: bold;
 }
 
+
+
 .takeaways {
   padding-top: 80px;
 }
@@ -153,6 +156,8 @@ h2 {
 .inverse del {
   color: #6C7B7F;
 }
+
+.shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
 
 img {
   display: block;
@@ -214,6 +219,12 @@ ol li::before {
 # My Organization's First R package
 ## Test R Code
 ## `rstudio::conf(2020L)`
+
+---
+
+class: middle, center
+
+&lt;img src="img/where_are_we_04.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -427,17 +438,63 @@ MANY more. See [https://r-pkgs.org/tests.html](https://r-pkgs.org/tests.html)
 
 ---
 
-##  Your Turn 1
+## Your Turn 1
 
-#### Use `use_test()` to create a new file. Call it ""
-#### Change the test description (the first argument of `test_that()`)  to ""
-#### Run `test_file("")` in the console or press the "Run tests" button in RStudio (above the script pane)
+#### Use `use_test()` to create a new file. Call it "resident_connection"
+#### Change the test description (the first argument of `test_that()`)  to "connection is returning valid data"
+#### In the `test_that()` function, remove the default expectations. Replace them with this code
+
+#### Re-load your package.
+
+#### Press the "Run tests" button in RStudio (above the script pane) or run `test_file("tests/testthat/test-resident_connection.R")` in the console.
+
+---
+
+## Your Turn 1
+
+
+```r
+use_test("resident_connection")
+```
+
+### In `test-resident_connection.R`
+
+
+```r
+test_that("connection is returning valid data", {
+  # `resident_data` is a tibble, isn't empty, and has the right columns
+  resident_data &lt;- get_resident_data()
+  expect_is(resident_data, c("tbl_df", "tbl", "data.frame"))
+  expect_gt(nrow(resident_data), 0)
+  expect_named(resident_data, c("sector", "residents"))
+
+  # `resident_data_dt` is a data.table
+  resident_data_dt &lt;- get_resident_data(data_table = TRUE)
+  expect_is(resident_data_dt, c("data.table", "data.frame"))
+})
+```
+
 
 ---
 
 ## Your Turn 2
 
-## Run all the tests in the package using `test()`. Fix the broken tests.
+### Run all the tests in the package using `test()`. Fix the broken tests.
+### Hint: The bug is in `R/summarize_data.R`
+### Re-run the tests until all of them pass
+
+---
+
+## Your Turn 2
+
+
+```r
+segment_reactor_output &lt;- function(reactor_num, data_table = FALSE) {
+  reactor_output &lt;- hack_shinra_data(data_table = data_table)
+
+* dplyr::filter(reactor_output, .data$reactor == reactor_num)
+}
+```
 
 ---
 
@@ -547,10 +604,41 @@ class: center, middle, inverse
 ---
 
 ## Your Turn 3
-## Run `check()` or `Cmd/Ctrl + Shift + E`
-## Fix the warnings
-## Hint: 
 
+### Run `check()` or `Cmd/Ctrl + Shift + E`
+### Fix the warnings. Re-run `check()` until you get a clean bill of health.
+### Hint: `segment_reactor_output()` is in `R/summarize_data.R`
+---
+
+## Your Turn 3
+
+
+```r
+use_package("dplyr")
+```
+
+.small[
+
+```r
+#' Segment Shinra reactor data
+#'
+#' @param reactor_num The reactor number to segment by.
+*#' @inheritParams hack_shinra_data
+#'
+#' @return a tibble or data.table filtered by `reactor_num`
+#' @export
+#'
+#' @examples
+#'
+#' segment_reactor_output(7)
+#'
+segment_reactor_output &lt;- function(reactor_num, data_table = FALSE) {
+  reactor_output &lt;- hack_shinra_data(data_table = data_table)
+
+  dplyr::filter(reactor_output, .data$reactor == reactor_num)
+}
+```
+]
 ---
 
 class: center, middle
@@ -600,12 +688,36 @@ class: center, middle
 
 ## Your Turn 4
 
-#### Both `test-____.R` and `test-____.R` use `residents_per_sector`. Let's move it to a helper file. First, create the file with `fs::file_create("test/testthat/helper-resident_data.R")`. Open it manually or use `edit_file()`.
+#### Both `test-count-donations.R` and `test-tables.R` use `donations_test_data`. Let's move it to a helper file. First, create the file with `fs::file_create("tests/testthat/helper-donations_data.R")`. Open it manually or use `edit_file()`.
 
-#### Move the code to create `residents_per_sector` into `helper-resident_data.R`. This should also be in `tests/testthat/`.
+#### Move the code to create `donations_test_data` into `helper-donations_data.R`.
 
-#### Remove the `residents_per_sector`code from the two test files.
+#### Remove the `donations_test_data` code from the two test files.
+
 #### Run the tests.
+
+---
+
+## Your Turn 4
+
+
+```r
+fs::file_create("tests/testthat/helper-donations_data.R")
+```
+
+### In `tests/testthat/helper-donations_data.R`
+
+
+```r
+donations_test_data &lt;- data.frame(
+  donor_id = 1:15,
+  sector = c(7L, 2L, 8L, 6L, 5L, 5L, 8L, 1L, 5L, 4L, 4L, 3L, 7L, 5L, 8L),
+  donation = c(
+    529.58, 16.64, 410.88, 448.73, 211.62, 642.53, 410.93,
+    707.38, 30.19, 573.02, 286.31, 734.73, 971.81, 30, 465.92
+  )
+)
+```
 
 ---
 
@@ -650,6 +762,14 @@ class: center, middle
 ## ~~All of the above and more!~~
 ## ~~Newer service~~
 ## `use_github_actions_*()`
+
+---
+
+class: inverse
+
+# Resources
+
+## Advanced R, ch. 22: ["Debugging"](https://adv-r.hadley.nz/debugging.html)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

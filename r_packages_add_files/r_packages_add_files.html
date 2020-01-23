@@ -3,7 +3,7 @@
   <head>
     <title>Add data and files to R packages</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-22" />
+    <meta name="date" content="2020-01-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
   </head>
   <body>
@@ -219,6 +219,13 @@ ol li::before {
 ## `rstudio::conf(2020L)`
 
 ---
+
+class: middle, center
+
+&lt;img src="img/where_are_we_06.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
 
 # What else can I do with an R package?
 
@@ -543,7 +550,10 @@ description: &gt;
 
 
 ```r
-use_rmarkdown_template("template_description", "A weekly report of AVALANCHE activities.")
+use_rmarkdown_template(
+  "template_description", 
+  "A weekly report of AVALANCHE activities."
+)
 ```
 
 ---
@@ -574,7 +584,7 @@ use_rmarkdown_template("template_description", "A weekly report of AVALANCHE act
 
 ```r
 system.file(
-* file.path("rmarkdown", "templates", "report"),
+* file.path("rmarkdown", "templates", "report.Rmd"),
   package = "shinRa", 
   mustWork = TRUE
 )
@@ -587,7 +597,7 @@ system.file(
 
 ```r
 system.file(
-  file.path("rmarkdown", "templates", "report"), 
+  file.path("rmarkdown", "templates", "report.Rmd"), 
   package = "shinRa", 
   mustWork = TRUE
 )
@@ -595,7 +605,7 @@ system.file(
 
 
 ```
-## [1] "path/to/shinRa/rmarkdown/templates/readme"
+## [1] "path/to/shinRa/rmarkdown/templates/report.Rmd"
 ```
 
 
@@ -840,9 +850,7 @@ description: A project to analyze reactor data
 
 ## Your Turn 3
 
-#### Let's create a usethis-style function to help set up analysis projects.
-
-#### In the folder `exercises/templates/`, there are three files: "packages.R", "analysis.R", and "report.Rmd". Open them up and take a look. Note that `report.Rmd` has some whisker variables in the YAML!
+#### Let's create a usethis-style function to help set up analysis projects. In the folder `exercises/templates/`, there are three files: "packages.R", "analysis.R", and "report.Rmd". Open them up and take a look. Note that `report.Rmd` has some whisker variables in the YAML!
 
 #### Copy the files to `inst/templates` by running this code in the console: `fs::dir_copy("exercises/templates/", "inst/templates")`
 

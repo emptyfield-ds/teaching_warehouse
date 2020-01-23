@@ -3,7 +3,7 @@
   <head>
     <title>Document R Code</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-21" />
+    <meta name="date" content="2020-01-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
   </head>
   <body>
@@ -220,6 +220,12 @@ ol li::before {
 
 ---
 
+class: middle, center
+
+&lt;img src="img/where_are_we_03.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
 # ?mean
 
 --
@@ -408,7 +414,7 @@ theme_mako &lt;- function(base_size = 14) {
 
 ## LaTeX like. See more at https://r-pkgs.org/man.html
 
-## `use_roxygen_rmd()` lets you write in Markdown. See more at https://roxygen2.r-lib.org/articles/rd-formatting.html 
+## `use_roxygen_md()` lets you write in Markdown. See more at https://roxygen2.r-lib.org/articles/rd-formatting.html 
 
 ---
 
@@ -862,6 +868,36 @@ filter_table &lt;- function(x) {
 
 #### In `R/themes.R`, join the documentation of `theme_avalanche_h()` and `theme_avalanche_v()` to `theme_avalanche()` by replacing the roxygen code for the first two functions with "#' @rdname theme_avalanche". 
 #### Make sure both functions still have an export tag, as well!
+#### Re-render the documentation and read the help page for `?theme_avalanche_h()`
+
+---
+
+
+## Your Turn 3
+
+
+```r
+*#' @rdname theme_avalanche
+*#' @export
+theme_avalanche_h &lt;- function(base_size = 14, ...) {
+  ggplot2::theme_minimal(base_size = base_size, ...) +
+    ggplot2::theme(
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_blank()
+    )
+}
+
+*#' @rdname theme_avalanche
+*#' @export
+theme_avalanche_v &lt;- function(base_size = 14, ...) {
+  ggplot2::theme_minimal(base_size = base_size, ...) +
+    ggplot2::theme(
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_blank()
+    )
+}
+```
+
 
 ---
 
@@ -873,7 +909,7 @@ filter_table &lt;- function(x) {
 
 
 ```
-## ✔ Setting active project to '/private/var/folders/ 03/9x7925g54mncswxx06wpkxl00000gn/T/Rtmp9F9...
+## ✔ Setting active project to '/private/var/folders/03/9x7925g54mncswxx06wpkxl00000gn/T/RtmpPcPj...
 ## ✔ Writing 'R/shinRa-package.R'```
 
 ---

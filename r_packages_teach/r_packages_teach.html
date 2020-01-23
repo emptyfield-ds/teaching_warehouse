@@ -3,7 +3,7 @@
   <head>
     <title>Teach your package</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-21" />
+    <meta name="date" content="2020-01-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
   </head>
   <body>
@@ -159,11 +159,6 @@ h2 {
 
 .shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
 
-.shadow-box {
-  display: inline;
-  background-color: rgba(51,51,51,0.35);
-}
-
 img {
   display: block;
   margin-left: auto;
@@ -223,6 +218,12 @@ ol li::before {
 # My Organization's First R package
 ## Teach your package
 ## `rstudio::conf(2020L)`
+
+---
+
+class: middle, center
+
+&lt;img src="img/where_are_we_05.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -321,7 +322,7 @@ create_package(path(dir, "temp.package"))
 
 ```
 ## ✔ Creating '/var/folders/03/9x7925g54mncswxx06wpkxl00000gn/...
-## ✔ Setting active project to '/private/var/ folders/03/9x792...
+## ✔ Setting active project to '/private/var/folders/03/9x7925...
 ## ✔ Creating 'R/'
 ## ✔ Writing 'DESCRIPTION'```
 
@@ -340,14 +341,11 @@ create_package(path(dir, "temp.package"))
 
 ```
 ## ✔ Writing 'NAMESPACE'
-## ✔ Setting active project to '&lt;no active project&gt;'```
-
----
-
-# Your Turn 2
-
-## Run R CMD Check
-## Fix the error using `dontrun{}`
+## ✔ Writing 'temp.package.Rproj'
+## ✔ Adding '.Rproj.user' to '.gitignore'
+## ✔ Adding '^temp\\.package\\.Rproj$', '^\\.Rproj\\.user$' to...
+## ✔ Opening '/var/folders/ 03/9x7925g54mncswxx06wpkxl00000gn/...
+## ✔ Setting active project to '/private/var/folders/03/9x7925...```
 
 ---
 
@@ -411,7 +409,7 @@ create_package(path(dir, "temp.package"))
 
 ---
 
-## Your Turn 1 
+## Your Turn 2
 
 #### Create a new vignette with `use_vignette()`. Set the `name` argument to "intro-to-avalanchr" and `title` to "An Introduction to avalanchr".
 #### Knit the vignette
@@ -495,7 +493,7 @@ class: inverse
 
 ---
 
-# Your Turn 2
+## Your Turn 3
 
 #### Run `use_readme_rmd()` to setup a 
 
