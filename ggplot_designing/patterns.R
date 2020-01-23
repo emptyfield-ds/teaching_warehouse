@@ -1,7 +1,7 @@
 # patterns:
 
 
-# facet with total background ---------------------------------------------
+# facet with data shadows -------------------------------------------------
 
 #  set up background geom
 drop_facet <- function(x) select(x, -facet_variable)
@@ -79,5 +79,27 @@ lightning_plot +
     curvature = -0.1,
     arrow = arrow(length = unit(0.01, "npc"), type = "closed"),
     inherit.aes = FALSE
+  )
+
+label <- str_wrap("Plot annotation", 50)
+text_df <- data.frame(x = 5.8, y = 5, label = label)
+arrow_df <- data.frame(
+  x = 5.6,
+  y = 5,
+  xend = 1.2,
+  yend = 5
+)
+
+plot +
+  geom_text(
+    data = text_df,
+    aes(x = x, y = y, label = label),
+    hjust = 0
+  ) +
+  geom_curve(
+    data = arrow_df,
+    mapping = aes(x = x, y = y, xend = xend, yend = yend),
+    curvature = -0.1,
+    arrow = arrow()
   )
 

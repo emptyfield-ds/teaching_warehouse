@@ -13,7 +13,7 @@ library(tidyverse)
 2. Sort the data using `arrange()` by the number of each type of killer
 3. Take a look at the data up until this point. Pick something you find interesting that you want to highlight. Then, in `mutate()`, create a new variable that is `TRUE` if `killer` matches the category you want to highlight and `FALSE` otherwise
 4. Use the variable you just created in the `fill` aesthetic of the ggplot call
-5. Finally, use `scale_fill_manual()` to add the fill colors. Set `values` to `c("#B0B0B0D0", "#BD3828D0")`.
+5. Finally, use `scale_fill_manual()` to add the fill colors. Set `values` to `c("#B0B0B0D0", "#D55E00D0")`.
 
 ```{r}
 emperors <- read_csv(file.path("data", "emperors.csv"))
@@ -34,7 +34,12 @@ emperor_killers %>%
   ) %>%
   ggplot(aes(x = n, y = killer, fill = ___________)) +
   geom_col() +
-  geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
+  geom_text(
+    aes(label = n, x = n - .25), 
+    color = "white", 
+    size = 5,
+    hjust = 1
+  ) +
   cowplot::theme_minimal_vgrid(16) +
   theme(
     axis.title.y = element_blank(), 
@@ -58,7 +63,7 @@ library(ggrepel)
 set.seed(42)
 
 ten_countries <- gapminder$country %>% 
-  unique() %>% 
+  levels() %>% 
   ______ 
 
 gapminder %>%
@@ -79,8 +84,7 @@ gapminder %>%
   theme_minimal(14) +
   theme(
     legend.position = "none",
-    panel.grid.minor.x = element_blank(),
-    panel.grid.minor.y = element_blank()
+    panel.grid.minor = element_blank()
   ) +
   labs(
     x = "log(GDP per capita)",
@@ -91,14 +95,14 @@ gapminder %>%
 
 ## Your Turn 
 
-1. Calculate the placement of the labels: in the `summarize()` call, create a variable called `y` that is the maximum `y` value for every continent For the labels, we'll use the continent names, which will be retained automatically. 
+1. Calculate the placement of the labels: in the `summarize()` call, create a variable called `y` that is the maximum `lifeExp` value for every continent For the labels, we'll use the continent names, which will be retained automatically. 
 
-2. Remove the legend from the line plot. There are [several ways to do so in ggplot2](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#removing-the-legend). I like setting `legend.position = "none"` in `theme()`.
+2. Remove the legend from the line plot. There are [several ways to do so in ggplot2](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29/#removing-the-legend). I like setting `legend.position = "none"` in `theme()`.
 
 3. `axis_canvas(line_plot, axis = "y")` creates a new ggplot2 canvas based on the y axis from `line_plot`. Add a text geom (using `+` as you normally would). In the text geom: 
   * set data to `direct_labels`
   * in `aes()`, set `y = y`, `label = continent`
-  * Outside of `aes()` set `x` to `0.05` (to add a little buffer)'
+  * Outside of `aes()` set `x` to `0.05` (to add a little buffer)
   * Make the size of the text `4.5`
   * Set the horizontal justification to `0`
   
@@ -139,6 +143,35 @@ _________(p_direct_labels)
 
 ## Your Turn
 
+1. Run the code below and take a look at the resulting plot.
+2. In the `ggplot()` function, add `y = ..count..` to `aes()`
+3. Add an additional `geom_density()` to the plot. This should go *before* the existing `geom_density()` so that it shows up in the background.
+4. In the new `geom_density()`, set the `data` argument to be a function. This function should take a data frame and remove gender (which we're about to facet on).
+5. Use `aes()` to set `color` and `fill`. Both should equal "all participants", *not* `gender`.
+6. Use `facet_wrap()` to facet the plot by `gender`.
+
+```{r}
+diabetes <- read_csv(file.path("data", "diabetes.csv"))
+
+density_colors <- c(
+  "male" = "#56B4E9",
+  "female" = "#009E73",
+  "all participants" = "grey85"
+)
+
+diabetes %>%
+  drop_na(glyhb, gender) %>% 
+  ggplot(aes(glyhb)) +
+  geom_density(aes(fill = gender, color = gender)) +
+  scale_x_log10(name = "glycosylated hemoglobin a1c") +
+  scale_color_manual(name = NULL, values = density_colors) +
+  scale_fill_manual(name = NULL, values = density_colors) +
+  theme_minimal_hgrid(16) +
+  theme(legend.position = "bottom", legend.justification = "center")
+```
+
+## Your Turn
+
 1. Take a look at the first few paragraphs of code. First, we're subsetting only African countries and sorting them by their life expectancy in 1952. Then, we're pivoting the data to be able to compare life expectancy in 1992 to 2007, creating a new variable, `le_dropped`, that is `TRUE` if life expectancy was higher in 1992. Then, we join `le_dropped` back to the data so we can use it in `gghighlight()`. Run the code at each step.
 
 2. Remove the legend from the plot using the `legend.position` argument in `theme()`. Take a look at the base plot.
@@ -172,8 +205,7 @@ le_line_plot <- africa %>%
   theme(
     ________________,
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.minor.y = element_blank()
+    panel.grid.minor = element_blank()
   ) +
   labs(y = "life expectancy", caption = "sorted by life expectancy in 1952") +
   xlim(1950, 2015)
@@ -182,53 +214,6 @@ le_line_plot
 
 le_line_plot + 
   _____________
-```
-
-
-## Your Turn
-
-1. Run the code below and take a look at the resulting plot.
-2. Add an additional `geom_density()` to the plot. This should go *before* the existing `geom_density()` so that it shows up in the background.
-3. In the new `geom_density()`, set the `data` argument to be a function. This function should take a data frame and remove gender (which we're about to facet on).
-4. Use `aes()` to set `color` and `fill`. Both should equal "all participants", *not* `gender`.
-5. Use `facet_wrap()` to facet the plot by `gender`.
-
-```{r}
-diabetes <- read_csv(file.path("data", "diabetes.csv"))
-
-density_colors <- c(
-  "male" = "#56B4E9",
-  "female" = "#009E73",
-  "all participants" = "grey85"
-)
-
-diabetes %>%
-  drop_na(glyhb, gender) %>% 
-  ggplot(aes(glyhb)) +
-  geom_density(aes(fill = gender, color = gender)) +
-  scale_x_log10(name = "glycosylated hemoglobin a1c") +
-  scale_color_manual(name = NULL, values = density_colors) +
-  scale_fill_manual(name = NULL, values = density_colors) +
-  theme_minimal_hgrid(16) +
-  theme(legend.position = "bottom", legend.justification = "center")
-```
-
-
-```{r}
-diabetes %>%
-  drop_na(glyhb, gender) %>% 
-  ggplot(aes(glyhb, y = ..count..)) +
-  geom_density(
-    data = function(x) select(x, -gender), 
-    aes(fill = "all participants", color = "all participants")
-  ) +
-  geom_density(aes(fill = gender, color = gender)) +
-  scale_x_log10(name = "glycosylated hemoglobin a1c") +
-  scale_color_manual(name = NULL, values = density_colors) +
-  scale_fill_manual(name = NULL, values = density_colors) +
-  facet_wrap(vars(gender)) +
-  theme_minimal_hgrid(16) +
-  theme(legend.position = "bottom", legend.justification = "center")
 ```
 
 
@@ -252,7 +237,7 @@ base_map
 ```
 
 2. In the second code chunk, we need to create two new data frames to draw the annotations and arrows. Pick a name for each.
-3. Add `geom_text()` and `geom_curve()` to `base_map. Give each geom the relevant data that you just named in (2).
+3. Add `geom_text()` and `geom_curve()` to `base_map`. Give each geom the relevant data that you just named in (2).
 4. Let's clean up the geoms a bit. Reduce the `lineheight` of the text geom to `0.8`. Then, add arrows to the curve geom usiing the `arrow()` function. Give it two arguments: `length = unit(0.01, "npc")` and `type = "closed"`. Run the plot. 
 5. One of the labels is being clipped because it runs off the main plotting panel. Add `coord_sf(clip = "off")` to prevent clipping the text.
 
@@ -319,8 +304,7 @@ theme_multiplot <- function(base_size = 14, ...) {
   theme_minimal(base_size = base_size, ...) %+replace%
     theme(
       panel.grid.major.x = element_blank(),
-      panel.grid.minor.x = element_blank(),
-      panel.grid.minor.y = element_blank(),
+      panel.grid.minor = element_blank(),
       legend.position = "none"
     )
 }
@@ -392,14 +376,13 @@ plot_c <- diabetes_complete %>%
       method = "lm", 
       formula = y ~ x,
       se = FALSE, 
-      size = 1.2
+      size = 1.1
     ) + 
     theme_minimal(base_size = 14) +
     theme(
       legend.justification = c(1, 0),
       legend.direction = "horizontal",
-      panel.grid.minor.x = element_blank(),
-      panel.grid.minor.y = element_blank()
+      panel.grid.minor = element_blank()
      ) + 
     facet_wrap(~fct_rev(frame), labeller = as_labeller(label_frames)) +
     scale_y_log10(breaks = c(3.5, 5.0, 7.0, 10.0, 14.0)) +
