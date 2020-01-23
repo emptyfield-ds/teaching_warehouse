@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Add data and files to R packages</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2020-01-22" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+background-image: url(https://i.imgur.com/CVIZGyY.jpg)
+background-position: top
+background-size: 100%
+class: inverse, shadow
+
+
+
+<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
+@import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
+
+body {
+  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+}
+
+a, a > code {
+  color: #EC99C6;
+  text-decoration: none;
+}
+
+strong {
+  color: #E69F00;
+}
+
+em {
+  color: #56B4E9;
+  font-style: normal;
+  font-weight: bold;
+}
+
+del {
+  color: #E5E5E5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.remark-code {
+  font-family: 'IBM Plex Mono', 'Lucida Console', Monaco, monospace;
+  font-size: 100%;
+}
+
+.remark-inline-code {
+  font-family: 'Fira Sans', 'Lucida Console', Monaco, monospace;
+  font-weight: 400;
+  font-size: 100%;
+}
+
+.remark-code-line-highlighted {
+  background-color: #CEE9FF;
+  font-weight: 500;
+}
+
+.large { font-size: 130% }
+.medium { font-size: 115% }
+.small { font-size: 70% }
+
+
+.remark-slide-content {
+  color: #474747;
+  font-weight: 300;
+  font-weight: 300;
+  padding: 1em 2em 1em 2em
+}
+
+h1 {
+  color: #56B4E9;
+  font-weight: 500;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+.remark-slide-number {
+  font-size: 20px;
+}
+
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.inverse.title-slide {
+  background-size: cover;
+  color: #EDEEEF;
+}
+
+.inverse.title-slide h1  {
+  color: #E69F00;
+  font-size: 72px;
+  text-shadow: none;
+  text-align: left;
+  vertical-align: bottom;
+}
+.inverse.title-slide h2  {
+  color: #56B4E9;
+  text-shadow: none;
+  font-size: 48px;
+  text-align: left;
+  font-weight: bold;
+}
+.inverse.title-slide h3  {
+  color: #EDEEEF;
+  text-shadow: none;
+  font-size: 36px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.inverse.title-slide h4  {
+  color: #EDEEEF;
+  text-shadow: none;
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.inverse {
+  background-size: cover;
+  background-color: #23373B;
+  color: #EDEEEF;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.inverse-ns {
+  background-size: cover;
+  background-color: #23373B;
+  color: #EDEEEF;
+  text-shadow: none;
+  font-weight: bold;
+}
+
+
+
+.takeaways {
+  padding-top: 80px;
+}
+
+.inverse h2, .inverse h3  {
+  color: #EDEEEF;
+  font-weight: 500;
+}
+
+.inverse del {
+  color: #6C7B7F;
+}
+
+.shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  font-size: 48px;
+  list-style-type: none;
+  text-align: left;
+  font-weight: 500;
+  padding-top: 40px;
+}
+
+ul li {
+  padding-bottom: 40px;
+}
+
+ol {
+  counter-reset: my-counter;
+  list-style: none;
+  padding-left: 40px;
+  font-size: 45px;
+  font-weight: bold;
+  text-align: left;
+}
+
+ol li {
+  counter-increment: my-counter;
+  padding-left: 40px;
+  position: relative;
+  font-size: 45px;
+  margin: 20px 0;
+  display: block;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+ol li::before {
+  content: counter(my-counter);
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: -25px;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  background: #56B4E9;
+  border-radius: 50%;
+  text-align: center;
+}</style>
+
+# My Organization's First R package
+## Add data and files to R packages
+## `rstudio::conf(2020L)`
+
+---
+
+# What else can I do with an R package?
+
+---
+
+# What else can I do with an R package?
+
+## **Store data and files**
+
+---
+
+# What else can I do with an R package?
+
+## ~~Store data and files~~
+## **Create R Markdown and other templates**
+
+---
+# What else can I do with an R package?
+
+## ~~Store data and files~~
+## ~~Create R Markdown and other templates~~
+## **Launch and store Shiny apps**
+
+---
+
+# Data in packages
+
+## data in ggplot2
+
+
+```
+## # A tibble: 11 x 2
+##    data         description                                 
+##    &lt;chr&gt;        &lt;chr&gt;                                       
+##  1 diamonds     Prices of over 50,000 round cut diamonds    
+##  2 economics    US economic time series                     
+##  3 economics_l… US economic time series                     
+##  4 faithfuld    2d density estimate of Old Faithful data    
+##  5 luv_colours  'colors()' in Luv space                     
+##  6 midwest      Midwest demographics                        
+##  7 mpg          Fuel economy data from 1999 to 2008 for 38 …
+##  8 msleep       An updated and expanded version of the mamm…
+##  9 presidential Terms of 11 presidents from Eisenhower to O…
+## 10 seals        Vector field of seal movements              
+## 11 txhousing    Housing sales in TX
+```
+
+---
+
+# Data packages
+
+--
+
+## data in [babynames](https://github.com/hadley/babynames)
+
+
+```
+## # A tibble: 4 x 2
+##   data       description
+##   &lt;chr&gt;      &lt;chr&gt;      
+## 1 applicants Applicants.
+## 2 babynames  Baby names.
+## 3 births     Births     
+## 4 lifetables Lifetables
+```
+
+---
+
+background-image: url(https://raw.githubusercontent.com/malcolmbarrett/claremontrun/master/man/figures/logo.png)
+background-position: 90% 10%
+background-size: 20%
+
+# Data packages
+
+## data in [claremontrun](https://github.com/malcolmbarrett/claremontrun)
+
+
+```
+## # A tibble: 7 x 2
+##   data              description                             
+##   &lt;chr&gt;             &lt;chr&gt;                                   
+## 1 character_visual… Counts of character speech, thought, na…
+## 2 characters        Descriptions of character actions in th…
+## 3 comic_bechdel     Whether or not an issue of another comi…
+## 4 covers            Data on covers of issues of Uncanny X-M…
+## 5 issue_collaborat… Data about other collaborators on each …
+## 6 locations         Locations of issues in the Claremont run
+## 7 xmen_bechdel      Whether or not an issue of Uncanny X-Me…
+```
+
+---
+
+class: inverse
+
+# Add data to your package 
+
+1. Include raw data and cleaning scripts using `use_data_raw()`
+2. Clean the data in the file created above, then use `use_data()`
+3. For non-exported data, `use_data(internal = TRUE)`
+4. [Document your data](https://r-pkgs.org/data.html#data-data)
+
+---
+
+# Data dictionary
+
+
+```r
+data_dictionary &lt;- 
+  tibble::tibble(
+    database = "daily_active_users",
+    variable = c("users", "sector"),
+    description = c(
+      "Active reactor-using households", 
+      "Midgar Sector #"
+    ),
+  )
+```
+
+---
+
+&lt;img src="img/checkpoint_data_raw.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `use_data_raw("data_dictionary")`: `data_dictionary.R`
+
+
+```r
+## code to prepare `data_dictionary` dataset goes here
+
+usethis::use_data(data_dictionary, overwrite = TRUE)
+```
+
+---
+
+## `use_data_raw("data_dictionary")`: `data_dictionary.R`
+
+
+```r
+## code to prepare `data_dictionary` dataset goes here
+
+*data_dictionary &lt;-
+* tibble::tibble(
+*   database = "daily_active_users",
+*   variable = c("users", "sector"),
+*   description = c(
+*     "Active reactor-using households",
+*     "Midgar Sector #"
+*   ),
+* )
+
+usethis::use_data(data_dictionary, overwrite = TRUE)
+```
+
+---
+
+
+## `use_data_raw("data_dictionary")`: `data_dictionary.R`
+
+
+```r
+## code to prepare `data_dictionary` dataset goes here
+
+data_dictionary &lt;- 
+  tibble::tibble(
+    database = "daily_active_users",
+    variable = c("users", "sector"),
+    description = c(
+      "Active reactor-using households", 
+      "Midgar Sector #"
+    ),
+  )
+
+*usethis::use_data(data_dictionary, overwrite = TRUE)
+```
+
+---
+
+&lt;img src="img/checkpoint_data.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+library(shinRa)
+data_dictionary
+```
+
+
+```
+## # A tibble: 2 x 3
+##   database           variable description                   
+##   &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;                         
+## 1 daily_active_users users    Active reactor-using househol…
+## 2 daily_active_users sector   Midgar Sector #
+```
+
+---
+## Your Turn 1
+
+#### Let's create a data dictionary for avalanche and add the results to a vignette. First, run `use_data_raw()`. Call the data "data_dictionary". In the data processing file, put this code before the `use_data()` line. Then, source the script. This will run `use_data()` for you.
+
+#### Open `R/tables.R`. Add a function called `gt_data_dictionary()` that wraps `data_dictionary` in `gt::gt()`. You can use `gt_donations()` as a starting point for the new function.
+
+#### Re-document and re-build the package.
+
+#### Open `vignettes/data-dictionary.Rmd`. On line 24, run `gt_data_dictionary()` and knit the vignette.
+
+---
+
+## Your Turn 1
+
+
+```r
+use_data_raw("data_dictionary")
+source("data-raw/data_dictionary.R")
+```
+
+
+```r
+#' Create gt table for the data dictionary
+#'
+#' @return a `gt` table
+#' @export
+gt_data_dictionary &lt;- function() {
+  gt::gt(data_dictionary)
+}
+```
+
+---
+
+class: inverse
+
+# Including data for tests
+
+1. Hard-code it in a `helper-` or `test-` file.
+2. Put a (small) file in `tests/testthat`
+3. Use internal data (`use_data(internal = TRUE)`) 
+4. Use exported data (`use_data()`) 
+
+---
+
+# R Markdown Templates
+
+--
+
+&lt;img src="img/rmardown_templates.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+&lt;img src="img/checkpoint_rmd_template.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+# xaringan template
+
+&lt;img src="img/xaringan_template.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# xaringan template: **`template.yaml`**
+
+```yaml
+name: Ninja Presentation
+description: &gt;
+  Create a presentation using the xaringan package based 
+  on remark.js.
+create_dir: false
+```
+
+---
+
+# xaringan template: **`skeleton.Rmd`**
+
+&lt;img src="img/skeleton_rmd.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+# xaringan Chinese template: **`template.yaml`**
+
+```yaml
+name: Ninja Presentation (Simplified Chinese)
+description: &gt;
+  Create a presentation using the xaringan package based 
+  on remark.js.
+* create_dir: true
+```
+
+---
+
+# xaringan Chinese template 
+
+
+```r
+## inst/rmarkdown/templates/xaringan_zh-CN/skeleton/
+## ├── skeleton.Rmd
+## └── zh-CN.css
+```
+
+---
+
+
+# xaringan Chinese template
+
+&lt;img src="img/xaringan_ch_template.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 2
+
+#### Create a new R Markdown template called "avalanche-report" using `use_rmarkdown_template()`. For the `template_description` argument, set it to: "A weekly report of AVALANCHE activities." 
+#### Inside the `exercises/` folder, there is a file called `report.Rmd`. Copy and paste its contents into `inst/rmarkdown/templates/avalanche-report/skeleton/skeleton.Rmd`, which you just created.
+#### Re-build the package (`build()` or `Cmd/Ctrl + Shift + B`).
+#### Create a new R Markdown document using `File &gt; New File &gt; R Markdown...`. Then, find your template under the "From Template" tab. Open it.
+
+---
+
+## Your Turn 2
+
+
+```r
+use_rmarkdown_template("template_description", "A weekly report of AVALANCHE activities.")
+```
+
+---
+
+# On `inst/`
+
+## We can put *any* arbitrary file in `inst/`.
+
+---
+
+# On `inst/`
+
+## ~~We can put any arbitrary file in `inst/`.~~
+## Be careful not to name the folders the same as any of the top-level package folders, e.g. `R/` or `data/`.
+
+---
+
+# On `inst/`
+
+## ~~We can put any arbitrary file in `inst/`.~~
+## ~~Be careful not to name the folders the same as any of the top-level package folders, e.g. `R/` or `data/`.~~
+## Access content with *`system.file()`* or *`fs::path_package()`*
+
+---
+
+## `system.file()`
+
+
+```r
+system.file(
+* file.path("rmarkdown", "templates", "report"),
+  package = "shinRa", 
+  mustWork = TRUE
+)
+```
+
+---
+
+## `system.file()`
+
+
+```r
+system.file(
+  file.path("rmarkdown", "templates", "report"), 
+  package = "shinRa", 
+  mustWork = TRUE
+)
+```
+
+
+```
+## [1] "path/to/shinRa/rmarkdown/templates/readme"
+```
+
+
+---
+
+# Other templates
+
+---
+
+
+# Other templates
+
+## **Analysis workflows or projects**
+
+---
+
+# Other templates
+
+## ~~Analysis workflows or projects~~
+## **More detailed R Markdown templates**
+
+---
+
+# Other templates
+
+## ~~Analysis workflows or projects~~
+## ~~More detailed R Markdown templates~~
+## **YAML and other configuration files**
+
+---
+
+# Templates with usethis
+
+## `use_cran_comments()`
+
+---
+
+# Templates with usethis
+
+## `use_cran_comments()`
+
+
+```r
+use_cran_comments &lt;- function(open = interactive()) {
+  check_is_package("use_cran_comments()")
+    use_template(
+      "cran-comments.md", 
+      data = list(rversion = glue("{version$major}.{version$minor}")), 
+      ignore = TRUE, 
+      open = open
+    )
+}
+```
+
+---
+
+# Templates with usethis
+
+## `use_cran_comments()`
+
+
+```r
+use_cran_comments &lt;- function(open = interactive()) {
+  check_is_package("use_cran_comments()")
+*   use_template(
+*     "cran-comments.md",
+      data = list(rversion = glue("{version$major}.{version$minor}")), 
+      ignore = TRUE, 
+      open = open
+    )
+}
+```
+
+---
+
+# `use_template()` and `inst/templates`
+
+--
+
+
+```
+## # A tibble: 56 x 2
+##    path                type 
+##    &lt;chr&gt;               &lt;fct&gt;
+##  1 CODE_OF_CONDUCT.md  file 
+##  2 Jenkinsfile         file 
+##  3 Makefile            file 
+##  4 NAMESPACE           file 
+##  5 NEWS.md             file 
+##  6 addins.dcf          file 
+##  7 appveyor.yml        file 
+##  8 article.Rmd         file 
+##  9 azure-pipelines.yml file 
+## 10 circleci-config.yml file 
+## # … with 46 more rows
+```
+
+---
+
+# `cran-comments.md`
+
+
+```r
+# ## Test environments
+*# * local R installation, R {{{ rversion }}}
+*# * ubuntu 16.04 (on travis-ci), R {{{ rversion }}}
+# * win-builder (devel)
+# 
+# ## R CMD check results
+# 
+# 0 errors | 0 warnings | 1 note
+# 
+# * This is a new release.
+```
+
+
+---
+
+## whisker
+
+--
+
+.small[
+
+```r
+whisker::whisker.render(
+"## Test environments
+* * local R installation, R {{{ rversion }}}
+* * ubuntu 16.04 (on travis-ci), R {{{ rversion }}}
+ * win-builder (devel)
+
+ ## R CMD check results
+
+ 0 errors | 0 warnings | 1 note
+
+ * This is a new release.",
+*data = list(rversion = glue::glue("{version$major}.{version$minor}"))
+)
+```
+]
+
+---
+
+
+## whisker
+
+.small[
+
+```
+## ## Test environments
+*##  * local R installation, R 3.6.1 
+*##  * ubuntu 16.04 (on travis-ci), R 3.6.1 
+##  * win-builder (devel)
+## 
+##  ## R CMD check results
+## 
+##  0 errors | 0 warnings | 1 note
+## 
+##  * This is a new release.
+```
+]
+
+---
+
+## Creating a template: `inst/templates/config.yml`
+
+--
+
+
+```r
+library(fs)
+dir_create(path("inst", "templates"))
+file_create(path("inst", "templates", "config.yml"))
+```
+
+--
+
+In `config.yml`:
+
+```yaml
+name: {{{name}}}
+  affiliation: Shinra, Inc.
+description: {{{description}}}
+```
+
+---
+
+&lt;img src="img/checkpoint_data_raw.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Wrapping `use_template()`
+
+
+```r
+use_yaml_template &lt;- function(path, name, description) {
+  usethis::use_template(
+    "config.yml",
+    save_as = file.path(path, "config.yml"),
+    package = "shinRa",
+    data = list(name = name, description = description)
+  )
+}
+```
+
+---
+
+&lt;img src="img/template_functions.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/template_functions_data.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+use_yaml_template(
+  ".", 
+  "Malcolm Barrett", 
+  "A project to analyze reactor data"
+)
+```
+
+--
+
+
+```
+## ✔ Writing '/var/folders/03/9x7925g54mncswxx06wpkxl0000...```
+
+
+--
+
+```yaml
+name: Malcolm Barrett
+  affiliation: Shinra, Inc.
+description: A project to analyze reactor data
+```
+
+---
+
+## Your Turn 3
+
+#### Let's create a usethis-style function to help set up analysis projects.
+
+#### In the folder `exercises/templates/`, there are three files: "packages.R", "analysis.R", and "report.Rmd". Open them up and take a look. Note that `report.Rmd` has some whisker variables in the YAML!
+
+#### Copy the files to `inst/templates` by running this code in the console: `fs::dir_copy("exercises/templates/", "inst/templates")`
+
+#### Open `R/create_analysis.R`. `create_analysis()` is going to help us set up the project directory, but we need to complete it. In lines 22, 23, and 25, add the template names: "packages.R", "analysis.R", and "report.Rmd".
+
+#### Remember that "report.Rmd" has data to whisk. We need to tell it what to pass to the final file. The `data` argument takes a named list`. For this argument, write: `list(author = author, title = title)`.
+
+#### Below `create_analysis()` is a helper function, `usethis::use_template()`, to create files from templates. Change the `package` argument to "avalanchr".
+
+#### Re-build your package and run `create_analysis()` in the console. If something went wrong, just delete the folder `avalanche_analysis` and try again.
+
+---
+
+## Your Turn 3
+
+
+```r
+create_analysis &lt;- function(path = ".", folder = "avalanche_analysis", author = "Author", title = "Untitled Analysis") {
+  analysis_path &lt;- fs::path(path, folder)
+  if (fs::dir_exists(analysis_path)) fs::dir_delete(analysis_path)
+
+  usethis::ui_done("Writing {usethis::ui_path(folder)}")
+  fs::dir_create(analysis_path)
+
+* use_avalanche_template("packages.R", folder = folder)
+* use_avalanche_template("analysis.R", folder = folder)
+  use_avalanche_template(
+*   "report.Rmd",
+    folder = folder,
+*   data = list(author = author, title = title)
+  )
+
+  invisible(analysis_path)
+}
+```
+
+---
+
+## Your Turn 3
+
+
+```r
+use_avalanche_template &lt;- function(template, folder, data = list()) {
+  usethis::use_template(
+    template = template,
+    save_as = fs::path(folder, template),
+    data = data,
+*   package = "avalanchr"
+  )
+}
+```
+
+
+```r
+create_analysis()
+```
+
+---
+
+# Shiny apps
+
+--
+
+## Add shiny app to `inst/shinyapps/` (or something similar)
+
+---
+
+# Shiny apps
+## ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
+## Then, use an R function like this to launch it:
+
+--
+
+
+```r
+launch_app &lt;- function(app) {
+  app_dir &lt;- system.file(
+    "shinyapps", 
+    app, 
+    package = "shinRa", 
+    mustWork = TRUE
+  )
+  shiny::runApp(app_dir)
+}
+```
+
+---
+
+# Shiny apps
+## ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
+## Then, use an R function like this to launch it:
+
+
+```r
+launch_app &lt;- function(app) {
+* app_dir &lt;- system.file(
+*   "shinyapps",
+*   app,
+    package = "shinRa", 
+    mustWork = TRUE
+  )
+  shiny::runApp(app_dir)
+}
+```
+
+---
+
+# Shiny apps
+## ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
+## Then, use an R function like this to launch it:
+
+
+```r
+launch_app &lt;- function(app) {
+  app_dir &lt;- system.file(
+    "shinyapps", 
+    app, 
+    package = "shinRa", 
+    mustWork = TRUE
+  )
+* shiny::runApp(app_dir)
+}
+```
+--
+
+See ["Supplementing your R package with a Shiny app"](https://deanattali.com/2015/04/21/r-package-shiny-app/) for more.
+
+---
+
+## Your Turn 4
+
+#### There is an app in the `examples/` folder called `plot_app/`. It has two Shiny files: `ui.R` and `server.R`.
+#### Run `use_package("shiny")`
+#### Create a folder in `inst/` called `shinyapps`
+#### Create an R file with `use_r()` called "launch_app".
+#### Write a function to launch the app
+#### Add a roxygen skeleton and add a title and describe any parameters you used (if you used any)
+#### Re-build your package and launch the app with your function
+
+---
+
+## Your Turn 4
+
+
+```r
+#' Launch Reactor Data Shiny App
+#'
+#' @return a shiny app
+#' @export
+launch_app &lt;- function() {
+  app_dir &lt;- system.file(
+    "shinyapps",
+    "shiny_reactor_report",
+    package = "avalanchr",
+    mustWork = TRUE
+  )
+
+  shiny::runApp(app_dir)
+}
+```
+
+
+```r
+launch_app()
+```
+
+---
+
+# With `inst/`, the world is yours
+
+---
+
+# With `inst/`, the world is yours
+
+## *Source files* with `inst/scripts` and `sys.source()`
+
+---
+
+# With `inst/`, the world is yours
+
+## ~~Source files with `inst/scripts` and `sys.source()`~~
+## *Add citations* to `inst/CITATION`
+
+---
+
+# With `inst/`, the world is yours
+
+## ~~Source files with `inst/scripts` and `sys.source()`~~
+## ~~Add citations to `inst/CITATION`~~
+## Much more. See [R Packages, ed 2](https://r-pkgs.org/inst.html)
+
+---
+
+# Ignoring files at the top-level
+
+--
+
+## *`use_build_ignore()`*: **don't include when building R package**
+
+---
+
+# Ignoring files at the top-level
+
+## ~~`use_build_ignore()`: don't include when building R package~~
+## *`use_git_ignore()`*: **don't commit (credentials, certain rendered files, etc)**
+---
+
+# Ignoring files at the top-level
+
+## ~~`use_build_ignore()`: don't include when building R package~~
+## ~~`use_git_ignore()`: don't commit (credentials, certain rendered files, etc)~~
+## Try *`git_vaccinate()`*
+
+---
+
+# RStudio Add-ins
+
+## Small shiny apps using `miniui` and RStudio. 
+## Create one with `use_addin()`
+
+--
+
+See ["Shiny Gadgets"](https://shiny.rstudio.com/articles/gadgets.html) and ["Designing Gadget UI"](https://shiny.rstudio.com/articles/gadget-ui.html)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

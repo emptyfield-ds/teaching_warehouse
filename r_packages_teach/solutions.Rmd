@@ -1,0 +1,18 @@
+---
+title: "Teach your package"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+library(tidyverse)
+```
+
+## Your Turn 1
+
+## Take-aways
+
+* 
+* 
+* 

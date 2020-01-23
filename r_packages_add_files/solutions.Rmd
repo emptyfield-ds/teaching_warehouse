@@ -1,0 +1,18 @@
+---
+title: "Add data and files to R packages"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+library(tidyverse)
+```
+
+## Your Turn 1
+
+## Take-aways
+
+* 
+* 
+* 

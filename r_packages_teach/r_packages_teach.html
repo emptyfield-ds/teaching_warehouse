@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Teach your package</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2020-01-21" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+background-image: url(https://i.imgur.com/CVIZGyY.jpg)
+background-position: top
+background-size: 100%
+class: inverse, shadow
+
+
+
+
+<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
+@import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
+
+body {
+  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+}
+
+a, a > code {
+  color: #EC99C6;
+  text-decoration: none;
+}
+
+strong {
+  color: #E69F00;
+}
+
+em {
+  color: #56B4E9;
+  font-style: normal;
+  font-weight: bold;
+}
+
+del {
+  color: #E5E5E5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.remark-code {
+  font-family: 'IBM Plex Mono', 'Lucida Console', Monaco, monospace;
+  font-size: 100%;
+}
+
+.remark-inline-code {
+  font-family: 'Fira Sans', 'Lucida Console', Monaco, monospace;
+  font-weight: 400;
+  font-size: 100%;
+}
+
+.remark-code-line-highlighted {
+  background-color: #CEE9FF;
+  font-weight: 500;
+}
+
+.large { font-size: 130% }
+.medium { font-size: 115% }
+.small { font-size: 70% }
+
+
+.remark-slide-content {
+  color: #474747;
+  font-weight: 300;
+  font-weight: 300;
+  padding: 1em 2em 1em 2em
+}
+
+h1 {
+  color: #56B4E9;
+  font-weight: 500;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+.remark-slide-number {
+  font-size: 20px;
+}
+
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.inverse.title-slide {
+  background-size: cover;
+  color: #EDEEEF;
+}
+
+.inverse.title-slide h1  {
+  color: #E69F00;
+  font-size: 72px;
+  text-shadow: none;
+  text-align: left;
+  vertical-align: bottom;
+}
+.inverse.title-slide h2  {
+  color: #56B4E9;
+  text-shadow: none;
+  font-size: 48px;
+  text-align: left;
+  font-weight: bold;
+}
+.inverse.title-slide h3  {
+  color: #EDEEEF;
+  text-shadow: none;
+  font-size: 36px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.inverse.title-slide h4  {
+  color: #EDEEEF;
+  text-shadow: none;
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.inverse {
+  background-size: cover;
+  background-color: #23373B;
+  color: #EDEEEF;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.inverse-ns {
+  background-size: cover;
+  background-color: #23373B;
+  color: #EDEEEF;
+  text-shadow: none;
+  font-weight: bold;
+}
+
+
+
+.takeaways {
+  padding-top: 80px;
+}
+
+.inverse h2, .inverse h3  {
+  color: #EDEEEF;
+  font-weight: 500;
+}
+
+.inverse del {
+  color: #6C7B7F;
+}
+
+.shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
+
+.shadow-box {
+  display: inline;
+  background-color: rgba(51,51,51,0.35);
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  font-size: 48px;
+  list-style-type: none;
+  text-align: left;
+  font-weight: 500;
+  padding-top: 40px;
+}
+
+ul li {
+  padding-bottom: 40px;
+}
+
+ol {
+  counter-reset: my-counter;
+  list-style: none;
+  padding-left: 40px;
+  font-size: 45px;
+  font-weight: bold;
+  text-align: left;
+}
+
+ol li {
+  counter-increment: my-counter;
+  padding-left: 40px;
+  position: relative;
+  font-size: 45px;
+  margin: 20px 0;
+  display: block;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+ol li::before {
+  content: counter(my-counter);
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: -25px;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  background: #56B4E9;
+  border-radius: 50%;
+  text-align: center;
+}</style>
+
+# My Organization's First R package
+## Teach your package
+## `rstudio::conf(2020L)`
+
+---
+
+## Your Turn 1: Discussion
+
+## What do you do when you want to learn a new package?
+
+---
+
+class: inverse
+
+# Learning new packages
+
+1. Examples
+1. Vignettes/pkgdown
+1. README
+1. Blog posts
+1. Books
+
+---
+
+class: inverse
+
+# Learning new packages
+ 
+1. **Examples**
+1. Vignettes/pkgdown
+1. README
+1. Blog posts
+1. Books
+
+---
+
+class: inverse
+
+# Learning new packages
+
+1. Examples
+1. **Vignettes/pkgdown**
+1. **README**
+1. Blog posts
+1. Books
+
+---
+
+class: center, middle
+
+# Guiding users
+
+|  document |  scope|
+|--:|--:|
+|  Vignettes | User-friendly, deeper introductions and complex topics |
+|  README | Simple introduction, installation. Get users going |
+|  Documentation &lt;br&gt;and examples | Granular, function-specific details and examples  |
+
+---
+
+# Examples revisted
+
+--
+
+## If you don't want to run examples, wrap them in `dontrun{}` or `donttest{}`
+
+
+```r
+#' [other roxygen code]
+#' @examples 
+#'
+*#' dontrun{
+*#'   get_data("daily_active_users")
+*#' }
+get_data &lt;- function(x) {
+  # code to get data
+}
+```
+
+---
+
+# Examples revisted
+
+## Don't mess around with the user's directory. Use `tempfile()` or fs if you need to.
+
+
+```r
+library(fs)
+dir &lt;- file_temp()
+dir_create(dir)
+```
+
+---
+
+
+```r
+create_package(path(dir, "temp.package"))
+```
+
+```
+## ✔ Creating '/var/folders/03/9x7925g54mncswxx06wpkxl00000gn/...
+## ✔ Setting active project to '/private/var/ folders/03/9x792...
+## ✔ Creating 'R/'
+## ✔ Writing 'DESCRIPTION'```
+
+```
+## Package: temp.package
+## Title: What the Package Does (One Line, Title Case)
+## Version: 0.0.0.9000
+## Authors@R (parsed):
+##     * Malcolm Barrett &lt;malcolmbarrett@gmail.com&gt; [aut, cre] (&lt;https://orcid.org/0000-0003-0299-5825&gt;)
+## Description: What the package does (one paragraph).
+## License: MIT + file LICENSE
+## Encoding: UTF-8
+## LazyData: true
+## Roxygen: list(markdown = TRUE)
+```
+
+```
+## ✔ Writing 'NAMESPACE'
+## ✔ Setting active project to '&lt;no active project&gt;'```
+
+---
+
+# Your Turn 2
+
+## Run R CMD Check
+## Fix the error using `dontrun{}`
+
+---
+
+# Vignettes
+
+--
+
+## Long-form documentation, written in [R Markdown](https://rmarkdown.rstudio.com/)
+
+---
+
+# Vignettes
+
+## ~~Long-form documentation, written in R Markdown~~
+## Great for general introductions and complex topics you don't want buried in the documentation
+
+---
+
+# Vignettes
+
+## ~~Long-form documentation, written in R Markdown~~
+## ~~Great for general introductions and complex topics you don't want buried in the documentation~~
+## Get rendered on pkgdown sites. See also `use_article()`
+
+---
+
+# Vignettes
+
+## ~~Long-form documentation, written in R Markdown~~
+## ~~Great for general introductions and complex topics you don't want buried in the documentation~~
+## ~~Get rendered on pkgdown sites. See also `use_article()`~~
+## `use_vignette()`
+
+---
+
+&lt;img src="img/checkpoint_vignette.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/use_vignette_yaml.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/use_vignette_yaml_title.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/use_vignette_yaml_output.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Need a Markdown refresher?
+
+--
+
+## Interactive, 10-20 min tutorial: https://commonmark.org/help/tutorial/
+
+--
+
+## The R Markdown [website](https://rmarkdown.rstudio.com/) or [book](https://bookdown.org/yihui/rmarkdown/)
+
+---
+
+## Your Turn 1 
+
+#### Create a new vignette with `use_vignette()`. Set the `name` argument to "intro-to-avalanchr" and `title` to "An Introduction to avalanchr".
+#### Knit the vignette
+#### Open the other vignette, `vignettes/system-setup.Rmd` and knit.
+
+#### Stretch goal: Use `install(build_vignettes = TRUE)` to build the vignettes and use `vignette()` to open them.
+
+---
+
+# README
+
+--
+
+## **A quick overview of your package**
+
+---
+
+# README
+
+## ~~A quick overview of your package~~
+## **A good place for installation instructions**
+
+---
+
+# README
+
+## ~~A quick overview of your package~~
+## ~~A good place for installation instructions~~
+## **Becomes the homepage for a pkgdown site**
+
+---
+
+# README
+
+## ~~A quick overview of your package~~
+## ~~A good place for installation instructions~~
+## ~~Becomes the homepage for a pkgdown site~~
+## *`use_readme_md()`* or *`use_readme_rmd()`*
+
+---
+
+class: inverse
+
+# What should I put in the README?
+
+1. Badges (`?use_badge()`), where applicable.
+2. Installation instructions
+3. A few examples
+4. Maybe: how to contribute (`use_tidy_contributing()`)
+
+
+---
+.pull-left[
+## R Packages: [ggplot2's README](https://github.com/tidyverse/ggplot2)
+]
+
+.pull-right[
+&lt;img src="img/readme_ggplot2.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.pull-left[
+## Other READMEs: [Zhi Yang's TidyTuesday repo](https://github.com/zhiiiyang/tidytuesday)
+]
+
+.pull-right[
+&lt;img src="img/readme_zhi.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.pull-left[
+## Other READMEs: [Zhi Yang's TidyTuesday repo](https://github.com/zhiiiyang/tidytuesday)
+## Check out ["Building a Better README"](https://blog.sourcerer.io/building-a-better-readme-d5053a7bc341)
+]
+
+.pull-right[
+&lt;img src="img/readme_zhi.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Your Turn 2
+
+#### Run `use_readme_rmd()` to setup a 
+
+---
+
+# Spell check with the [spelling](https://docs.ropensci.org/spelling/) package
+
+## `use_spell_check()`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

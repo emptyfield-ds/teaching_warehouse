@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Write R Code</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2020-01-21" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+background-image: url(https://i.imgur.com/CVIZGyY.jpg)
+background-position: top
+background-size: 100%
+class: inverse, shadow
+
+
+
+
+
+<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
+@import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
+
+body {
+  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+}
+
+a, a > code {
+  color: #EC99C6;
+  text-decoration: none;
+}
+
+strong {
+  color: #E69F00;
+}
+
+em {
+  color: #56B4E9;
+  font-style: normal;
+  font-weight: bold;
+}
+
+del {
+  color: #E5E5E5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.remark-code {
+  font-family: 'IBM Plex Mono', 'Lucida Console', Monaco, monospace;
+  font-size: 100%;
+}
+
+.remark-inline-code {
+  font-family: 'Fira Sans', 'Lucida Console', Monaco, monospace;
+  font-weight: 400;
+  font-size: 100%;
+}
+
+.remark-code-line-highlighted {
+  background-color: #CEE9FF;
+  font-weight: 500;
+}
+
+.large { font-size: 130% }
+.medium { font-size: 115% }
+.small { font-size: 70% }
+
+
+.remark-slide-content {
+  color: #474747;
+  font-weight: 300;
+  font-weight: 300;
+  padding: 1em 2em 1em 2em
+}
+
+h1 {
+  color: #56B4E9;
+  font-weight: 500;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+.remark-slide-number {
+  font-size: 20px;
+}
+
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.inverse.title-slide {
+  background-size: cover;
+  color: #EDEEEF;
+}
+
+.inverse.title-slide h1  {
+  color: #E69F00;
+  font-size: 72px;
+  text-shadow: none;
+  text-align: left;
+  vertical-align: bottom;
+}
+.inverse.title-slide h2  {
+  color: #56B4E9;
+  text-shadow: none;
+  font-size: 48px;
+  text-align: left;
+  font-weight: bold;
+}
+.inverse.title-slide h3  {
+  color: #EDEEEF;
+  text-shadow: none;
+  font-size: 36px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.inverse.title-slide h4  {
+  color: #EDEEEF;
+  text-shadow: none;
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.inverse {
+  background-size: cover;
+  background-color: #23373B;
+  color: #EDEEEF;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.inverse-ns {
+  background-size: cover;
+  background-color: #23373B;
+  color: #EDEEEF;
+  text-shadow: none;
+  font-weight: bold;
+}
+
+
+
+.takeaways {
+  padding-top: 80px;
+}
+
+.inverse h2, .inverse h3  {
+  color: #EDEEEF;
+  font-weight: 500;
+}
+
+.inverse del {
+  color: #6C7B7F;
+}
+
+.shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  font-size: 48px;
+  list-style-type: none;
+  text-align: left;
+  font-weight: 500;
+  padding-top: 40px;
+}
+
+ul li {
+  padding-bottom: 40px;
+}
+
+ol {
+  counter-reset: my-counter;
+  list-style: none;
+  padding-left: 40px;
+  font-size: 45px;
+  font-weight: bold;
+  text-align: left;
+}
+
+ol li {
+  counter-increment: my-counter;
+  padding-left: 40px;
+  position: relative;
+  font-size: 45px;
+  margin: 20px 0;
+  display: block;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+ol li::before {
+  content: counter(my-counter);
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: -25px;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  background: #56B4E9;
+  border-radius: 50%;
+  text-align: center;
+}</style>
+
+# My Organization's First R package
+## Write R Code
+## `rstudio::conf(2020L)`
+
+---
+
+class: middle, center, inverse
+
+# **Writing Functions: Review**
+
+---
+
+## Writing functions
+
+&lt;img src="img/writing_functions.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="img/writing_functions_args.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="img/writing_functions_body_name.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/writing_functions_inputs_output.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 1
+
+#### Re-write this ggplot2 theme as a function. Call it `theme_avalanche_h()`.
+
+#### Run this code to test that your function works
+
+---
+
+## Your Turn 1
+
+.small[
+
+```r
+*theme_avalanche_h &lt;- function() {
+* theme_minimal(base_size = 14) +
+*   theme(panel.grid.minor = element_blank(), panel.grid.major.y = element_blank())
+*} 
+
+residents_per_sector &lt;- 
+  data.frame(
+    sector = as.factor(1:8),
+    residents = c(1000, 2034, 4594, 2304, 8093, 1200, 300, 2398)
+  )
+
+ggplot(residents_per_sector, aes(forcats::fct_reorder(sector, residents), residents)) +
+  geom_col() + 
+  coord_flip() + 
+  xlab("sector") + 
+  theme_avalanche_h()
+```
+]
+---
+
+&lt;img src="r_packages_write_code_files/figure-html/yourturn1_sol-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center, middle, inverse
+
+# **We're going to start writing functions to our package, not the global environment. This will require a change in workflow!**
+
+---
+
+# `use_r("file_name")`
+
+--
+
+## Write a new file to `R/`
+
+---
+
+&lt;img src="img/use_r.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center, middle
+
+&lt;img src="img/workflow_alert.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# devtools: loading vs. building
+
+## **`load_all()`**: fast, all functions available
+## **`build()`**: builds and installs the package
+
+---
+
+# ~~devtools: loading vs. building~~
+
+## ~~`load_all()`: fast, all functions available~~
+## ~~`build()`: builds and installs the package~~
+
+&lt;br&gt;
+
+# *Keyboard shortcuts*
+## `load_all()`: **`CMD/CTRL + Shift + L`**
+## `build()`: **`CMD/CTRL + Shift + B`**
+
+---
+
+class: center, middle
+
+&lt;img src="img/build_tab.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center, middle
+
+## Our new workflow
+
+&lt;img src="img/flow_write_load.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 2
+
+#### Create a new file with `use_r()` called "db_con"
+#### Put this function in the file and save it
+#### Use `load_all()` to load the package function.
+#### Run this code to make sure it works:
+
+---
+
+## Your Turn 2
+
+
+```r
+use_r("db_con")
+```
+
+--
+
+### in `R/db_con.R`:
+
+
+```r
+db_con &lt;- function(dbname = "residents_per_sector") {
+  dbname &lt;- match.arg(dbname)
+  # We will set up real database connections later. For now, 
+  # we'll just return some hard-coded data instead.
+  data.frame(
+    sector = as.factor(1:8),
+    residents = c(1000, 2034, 4594, 2304, 8093, 1200, 300, 2398)
+  )
+}
+```
+
+---
+
+## Your Turn 2
+
+&lt;img src="r_packages_write_code_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse
+
+# Using other packages
+
+1. Import a package with `use_package()`
+2. Use the package with `pkg::fun()`
+3. **DO NOT** use `library()`. Avoid it completely while developing.
+
+---
+
+class: center
+
+&lt;img src="img/workflow_alert_pkgs.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/use_package.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/description_imports.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/description_minversion.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/description_dev_pkg.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/description_suggests.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Testing for suggested packages
+
+
+```r
+if (requireNamespace("shiny", quietly = TRUE)) {
+  # ... shiny code
+}
+```
+
+---
+
+&lt;img src="img/description_depends.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/description_tidy.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 3
+
+#### Fix the code in `R/themes.R` to use `ggplot2::` instead of `library(ggplot2)`
+#### Run `use_package("ggplot")` to add ggplot2 to `Imports`
+#### Re-load the package (`Cmd/Ctrl+Shift+L`) and run this code to make sure it works
+
+---
+
+## Your Turn 3
+
+
+```r
+use_package("ggplot2")
+```
+
+--
+
+### in `R/themes.R`:
+
+
+```r
+theme_avalanche &lt;- function() {
+* ggplot2::theme_minimal(base_size = 14) +
+*   ggplot2::theme(panel.grid.minor = ggplot2::element_blank())
+}
+```
+
+---
+
+## Your Turn 3
+
+&lt;img src="r_packages_write_code_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Packages so good they get their own functions 
+
+---
+
+# Packages so good they get their own functions 
+
+## `use_tibble()`
+## `use_data_table()`
+## `use_pipe()`
+## `use_rcpp*()`
+
+---
+
+## Your Turn 4
+
+#### We need roxygen2 for this exercise. We'll learn more about it in the next module. For now, just run `use_roxygen_md()`
+#### Run `use_tibble()` and `use_data_table()`
+#### In `R/get_data.R`, edit the function to be able to return a data table: Add the argument `data_table = FALSE`. If `data_table` is `TRUE`, convert the data frame with `data.table::as.data.table()`
+#### Run this code to make sure it works
+
+---
+
+## Your Turn 4
+
+
+```r
+use_roxygen_md()
+use_tibble() 
+use_data_table()
+```
+
+
+```r
+*get_resident_data &lt;- function(data_table = FALSE) {
+  residents_per_sector &lt;- db_con("residents_per_sector")
+
+* if (data_table)
+*   return(data.table::as.data.table(residents_per_sector))
+
+  tibble::as_tibble(residents_per_sector)
+}
+```
+
+---
+
+## Your Turn 4
+
+
+```
+##    sector residents
+## 1:      1      1000
+## 2:      2      2034
+## 3:      3      4594
+## 4:      4      2304
+## 5:      5      8093
+## 6:      6      1200
+## 7:      7       300
+## 8:      8      2398
+```
+
+
+```r
+data.table::is.data.table(res_data)
+```
+
+```
+## [1] TRUE
+```
+
+
+---
+
+## Your Turn 4: Stretch goal
+
+#### Run `use_pipe()` to add the magrittr pipe to your package. What changed?
+
+---
+
+## Organizing `.R` files
+
+---
+
+## Organizing `.R` files
+
+## *Less than 1:1, more than all:1*
+
+---
+
+## Organizing `.R` files
+
+## ~~Less than 1:1, more than all:1~~
+## *`utils.R`*
+
+---
+
+## Organizing `.R` files
+
+## ~~Less than 1:1, more than all:1~~
+## ~~`utils.R`~~
+## *`zzz.R`*, *`.onLoad`*
+
+See [R Packages, ed. 2](https://r-pkgs.org/r.html#when-you-do-need-side-effects) for more.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
