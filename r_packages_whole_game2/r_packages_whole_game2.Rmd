@@ -51,6 +51,9 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_package("ggplot2")`**
+# **`use_package("tibble")`**
+# **`use_package("dplyr")`**
+# **`use_package("stringr")`**
 
 ---
 
@@ -76,6 +79,7 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_roxygen_md()`**
+# **`document()`**
 
 ---
 
@@ -88,10 +92,8 @@ class: middle, center, inverse,
 
 class: middle, center, inverse, 
 
-# **`use_testthat()`**
 # **`use_test("labs_wrap")`**
-# **`use_package("stringr", "Suggests")`**
-
+# **`test()`**
 
 ---
 

@@ -230,11 +230,10 @@ knitr::include_graphics("img/use_vignette_yaml_output.png")
 
 ## Your Turn 2
 
-#### Create a new vignette with `use_vignette()`. Set the `name` argument to "intro-to-avalanchr" and `title` to "An Introduction to avalanchr".
-#### Knit the vignette
-#### Open the other vignette, `vignettes/system-setup.Rmd` and knit.
-
-#### Stretch goal: Use `install(build_vignettes = TRUE)` to build the vignettes and use `vignette()` to open them.
+#### Open `vignettes/intro-to-avalanchr.Rmd`.
+#### Let's add some more content before we knit this vignette. Lines 27-29 have an R Markdown code chunk. On line 28, fill in the blank with this code: `db_con("residents_per_sector")`
+#### Let's also add some examples of the summarizing and plotting functions. On line 57, fill in the blank with `count_donations()`. On line 62, use `plot_donations()`
+#### Knit the vignette. If you're having trouble finding some of your functions, try re-loading or documenting and re-building.
 
 ---
 
@@ -320,7 +319,8 @@ knitr::include_graphics("img/readme_zhi.png")
 
 ## Your Turn 3
 
-#### Run `use_readme_rmd()` to setup a 
+## Run `use_readme_rmd()` to setup a README. Knit the file and take a look.
+## Let's add some badges. Run `use_lifecycle_badge("experimental")` and `use_cran_badge()`. Then, re-knit.
 
 ---
 
