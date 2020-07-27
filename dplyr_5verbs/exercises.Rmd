@@ -176,6 +176,6 @@ gapminder %>%
 * Use `left_join()`, `right_join()`, `full_join()`, or `inner_join()` to join datasets
 * Use `semi_join()` or `anti_join()` to filter datasets against each other
 
-* dplyr works seamlessly with databases
+* `dplyr` works seamlessly with databases
 
 

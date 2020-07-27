@@ -13,13 +13,18 @@ output:
 class: middle, center
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+options(htmltools.dir.version = FALSE, 
+        tibble.max_extra_cols = 6, 
+        tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.align = "center", 
+                      dpi = 320)
 library(tidyverse)
 ```
 
 
-```{r, out.height="90%", out.width="90%", echo = FALSE}
+```{r dplyr_wrangling, out.height="90%", out.width="90%", echo = FALSE}
 knitr::include_graphics("dplyr_wrangling.png")
 ```
 .pull-right[Art by Allison Horst]
@@ -69,7 +74,7 @@ library(gapminder)
 
 ## `select()`
 
-```{r, eval=FALSE}
+```{r select-concept-map, eval=FALSE}
 select(<DATA>, <VARIABLES>)
 ```
 
@@ -77,18 +82,18 @@ select(<DATA>, <VARIABLES>)
 
 ## `select()`
 
-```{r, eval=FALSE}
+```{r select-concept-map-02, eval=FALSE}
 select(<DATA>, <VARIABLES>)
 ```
 
-```{r, highlight.output = c(2, 14)} 
+```{r select-concept-map-highlight-01, highlight.output = c(2, 14)} 
 diamonds
 ```
 
 ---
 class: middle
 
-```{r, out.height="100%", out.width="100%", echo = FALSE}
+```{r new_data_alert_diamonds, out.height="100%", out.width="100%", echo = FALSE}
 knitr::include_graphics("new_data_alert_diamonds.png")
 ```
 
@@ -96,7 +101,7 @@ knitr::include_graphics("new_data_alert_diamonds.png")
 
 ## `select()`
 
-```{r, eval = FALSE} 
+```{r select-example-01, eval = FALSE} 
 select(diamonds, carat, cut, color, clarity) #<<
 ```
 
@@ -104,7 +109,7 @@ select(diamonds, carat, cut, color, clarity) #<<
 
 ## `select()`
 
-```{r, highlight.output = 2} 
+```{r select-example-01-highlight, highlight.output = 2} 
 select(diamonds, carat, cut, color, clarity)
 ```
 
@@ -112,7 +117,7 @@ select(diamonds, carat, cut, color, clarity)
 
 ## `select()`
 
-```{r, eval=FALSE} 
+```{r select-helpers-example, eval=FALSE} 
 select(diamonds, carat, cut, color, clarity)
 
 select(diamonds, carat:clarity)
@@ -128,7 +133,7 @@ select(diamonds, starts_with("c"))
 
 ## gapminder
 
-```{r}
+```{r gapminder-package}
 library(gapminder)
 gapminder
 ```
@@ -136,7 +141,7 @@ gapminder
 ---
 class: middle
 
-```{r, out.height="100%", out.width="100%", echo = FALSE}
+```{r new_data_alert_gapminder, out.height="100%", out.width="100%", echo = FALSE}
 knitr::include_graphics("new_data_alert_gapminder.png")
 ```
 
@@ -146,7 +151,7 @@ knitr::include_graphics("new_data_alert_gapminder.png")
 
 ## Alter the code to select just the `pop` column:
 
-```{r, eval=FALSE}
+```{r select-your-turn-01, eval=FALSE}
 select(gapminder, year, lifeExp)
 ```
 
@@ -154,7 +159,7 @@ select(gapminder, year, lifeExp)
 
 ## Your Turn 1
 
-```{r}
+```{r select-your-turn-output}
 select(gapminder, pop)
 ```
 
@@ -164,7 +169,7 @@ select(gapminder, pop)
 
 #### Which of these is NOT a way to select the `country` and `continent` columns together?
 
-```{r, eval=FALSE}
+```{r select-show-of-hands-01, eval=FALSE}
 select(gapminder, -c(year, lifeExp, pop, gdpPercap))
 
 select(gapminder, country:continent)
@@ -180,7 +185,7 @@ select(gapminder, ends_with("t"))
 
 #### Which of these is NOT a way to select the `country` and `continent` columns together?
 
-```{r, highlight.output = 2}
+```{r select-show-of-hands-highlight, highlight.output = 2}
 select(gapminder, ends_with("t"))
 ```
 
@@ -204,7 +209,7 @@ select(gapminder, ends_with("t"))
 
 ## `filter()`
 
-```{r, eval=FALSE}
+```{r filter-concept-map, eval=FALSE}
 filter(<DATA>, <PREDICATES>)
 ```
 
@@ -216,7 +221,7 @@ filter(<DATA>, <PREDICATES>)
 
 ## `filter()`
 
-```{r, eval=FALSE}
+```{r filter-concept-map-example-comparisons, eval=FALSE}
 filter(<DATA>, <PREDICATES>)
 ```
 
@@ -228,7 +233,7 @@ filter(<DATA>, <PREDICATES>)
 
 ## `filter()`
 
-```{r, eval=FALSE}
+```{r filter-concept-map-example-operators, eval=FALSE}
 filter(<DATA>, <PREDICATES>)
 ```
 
@@ -242,7 +247,7 @@ filter(<DATA>, <PREDICATES>)
 
 ## `filter()`
 
-```{r, eval=FALSE}
+```{r filter-concept-map-example-in, eval=FALSE}
 filter(<DATA>, <PREDICATES>)
 ```
 
@@ -256,7 +261,7 @@ filter(<DATA>, <PREDICATES>)
 
 --
 
-```{r} 
+```{r filter-in-example} 
 "a" %in% c("a", "b", "c")
 ```
 
@@ -264,7 +269,7 @@ filter(<DATA>, <PREDICATES>)
 
 ## `filter()`
 
-```{r, eval = FALSE} 
+```{r filter-equal-example-01, eval = FALSE} 
 filter(diamonds, cut == "Ideal", carat > 3)
 ```
 
@@ -272,7 +277,7 @@ filter(diamonds, cut == "Ideal", carat > 3)
 
 ## `filter()`
 
-```{r, highlight.output = c(1, 4:7)} 
+```{r filter-equal-example-01-highlight, highlight.output = c(1, 4:7)} 
 filter(diamonds, cut == "Ideal", carat > 3)
 ```
 
@@ -296,7 +301,7 @@ filter(diamonds, cut == "Ideal", carat > 3)
 ### All of the rows for El Salvador  
 ### All of the rows that have a missing value for `year`  (no need to edit this code)
 
-```{r, eval=FALSE}
+```{r filter-your-turn-02-output, eval=FALSE}
 filter(gapminder, pop >= 100000)
 filter(gapminder, country == "El Salvador")
 filter(gapminder, is.na(year))
@@ -306,7 +311,7 @@ filter(gapminder, is.na(year))
 
 ## `filter()`
 
-```{r}
+```{r filter-or-example}
 filter(diamonds, cut == "Ideal" | cut == "Very Good", carat > 3)
 ```
 
@@ -319,7 +324,7 @@ filter(diamonds, cut == "Ideal" | cut == "Very Good", carat > 3)
 ### El Salvador  
 ### Countries that had populations over 100000 in 1960 or earlier
 
-```{r, eval=FALSE}
+```{r filter-your-turn-03, eval=FALSE}
 filter(gapminder, country == "El Salvador" | country == "Oman")
 filter(______, _______)
 ```
@@ -333,7 +338,7 @@ filter(______, _______)
 ### El Salvador  
 ### Countries that had populations over 100000 in 1960 or earlier
 
-```{r, eval=FALSE}
+```{r filter-your-turn-03-output, eval=FALSE}
 filter(gapminder, country == "El Salvador")
 filter(gapminder, pop > 100000, year <= 1960)
 ```
@@ -357,7 +362,7 @@ filter(gapminder, pop > 100000, year <= 1960)
 
 ## `mutate()`
 
-```{r, eval=FALSE}
+```{r mutate-concept-map, eval=FALSE}
 mutate(<DATA>, <NAME> = <FUNCTION>)
 ```
 
@@ -365,7 +370,7 @@ mutate(<DATA>, <NAME> = <FUNCTION>)
 
 ## `mutate()`
 
-```{r, eval = FALSE}
+```{r mutate-example, eval = FALSE}
 mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 ```
 
@@ -373,9 +378,73 @@ mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 
 ## `mutate()`
 
-```{r, highlight.output = 15}
+```{r mutate-example-highlight, highlight.output = 15}
 mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 ```
+
+
+---
+
+## `mutate(across())`
+
+
+```{r mutate-across-concept-map, eval=FALSE}
+mutate(<DATA>, 
+    across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>))) #<<
+```
+
+---
+
+## `mutate(across())`
+
+
+```{r mutate-across-example-01, eval=FALSE}
+mutate(diamonds, 
+   across(c("carat", "depth"), list(sd = sd, mean = mean))) #<<
+```
+
+---
+
+## `mutate(across())`
+
+```{r mutate-across-example-output, highlight.output = c(15,16)}
+mutate(diamonds, 
+   across(c("carat", "depth"), list(sd = sd, mean = mean)))
+```
+
+---
+
+
+## `mutate(across(where()))`
+
+```{r mutate-across-where-concept-map, eval=FALSE}
+mutate(<DATA>, 
+    across(where(<CONDITION>), list(<NAMES> = <FUNCTIONS>))) #<<
+```
+
+
+---
+
+## `mutate(across(where()))`
+
+
+```{r mutate-across-where-example-01, eval=FALSE}
+mutate(gapminder, 
+   across(where(is.numeric), list(mean = mean, median = median))) #<<
+```
+
+
+---
+
+
+## `mutate(across(where()))`
+
+```{r mutate-across-where-example-output, highlight.output = c(15, 16)}
+mutate(gapminder, 
+   across(where(is.numeric), list(mean = mean, median = median))) #<<
+```
+
+
 
 ---
 
@@ -396,7 +465,7 @@ mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 
 ## `arrange()`
 
-```{r, eval=FALSE}
+```{r arrange-concept-map, eval=FALSE}
 arrange(<DATA>, <SORTING VARIABLE>)
 ```
 
@@ -404,7 +473,7 @@ arrange(<DATA>, <SORTING VARIABLE>)
 
 ## `arrange()`
 
-```{r}
+```{r arrange-example-01}
 arrange(diamonds, price)
 ```
 
@@ -412,7 +481,7 @@ arrange(diamonds, price)
 
 ## `arrange()`
 
-```{r}
+```{r arrange-example-02}
 arrange(diamonds, cut, price)
 ```
 
@@ -420,7 +489,7 @@ arrange(diamonds, cut, price)
 
 ## `desc()`
 
-```{r}
+```{r arrange-desc-example-01}
 arrange(diamonds, cut, desc(price))
 ```
 
@@ -436,7 +505,7 @@ arrange(diamonds, cut, desc(price))
 
 ## Your turn 4
 
-```{r}
+```{r arrange-your-turn-04}
 arrange(gapminder, year, lifeExp)
 ```
 
@@ -450,7 +519,7 @@ arrange(gapminder, year, lifeExp)
 
 ## Your turn 5
 
-```{r}
+```{r arrange-your-turn-05}
 arrange(gapminder, desc(gdpPercap))
 ```
 
@@ -466,7 +535,7 @@ class: inverse, center
 
 ## Detour: The Pipe
 
-```{r, eval=FALSE}
+```{r withoout-pipes, eval=FALSE}
 diamonds <- arrange(diamonds, price)
 diamonds <- filter(diamonds, price > 300)
 diamonds <- mutate(diamonds, log_price = log(price))
@@ -478,7 +547,7 @@ diamonds
 
 ## Detour: The Pipe
 
-```{r, eval=FALSE}
+```{r with-pipes, eval=FALSE}
 diamonds <- diamonds %>% 
   arrange(price) %>% 
   filter(price > 300) %>% 
@@ -513,7 +582,7 @@ diamonds
 
 ## Your turn 6
 
-```{r}
+```{r filter-select-arrange-your-turn-06}
 gapminder %>% 
   filter(continent == "Oceania") %>% 
   select(country, year, lifeExp) %>% 
@@ -531,7 +600,7 @@ gapminder %>%
 
 ---
 
-```{r, eval=FALSE}
+```{r mutate-select-filter-challenge, eval=FALSE}
 diabetes <- read_csv("diabetes.csv")
 diabetes %>% 
   mutate(bmi = (weight / height^2) * 703) %>% 
@@ -540,7 +609,7 @@ diabetes %>%
 ```
 ---
 
-```{r, highlight.output=1}
+```{r mutate-select-filter-challenge-highlight, highlight.output=1}
 diabetes <- read_csv("diabetes.csv")
 diabetes %>% 
   mutate(bmi = (weight / height^2) * 703) %>% 
@@ -567,7 +636,7 @@ diabetes %>%
 
 ## `summarize()`
 
-```{r, eval=FALSE}
+```{r summarize-concept-map, eval=FALSE}
 summarize(<DATA>, <NAME> = <FUNCTION>)
 ```
 
@@ -575,7 +644,7 @@ summarize(<DATA>, <NAME> = <FUNCTION>)
 
 ## `summarize()`
 
-```{r}
+```{r summarize-example-01}
 summarize(diamonds, n = n(), mean_price = mean(price))
 ```
 
@@ -593,7 +662,7 @@ summarize(diamonds, n = n(), mean_price = mean(price))
 
 ## Your turn 7
 
-```{r}
+```{r summarize-your-turn-07}
 gapminder %>% 
   summarize(
     first = min(year), 
@@ -607,7 +676,7 @@ gapminder %>%
 
 ## `group_by()`
 
-```{r, eval=FALSE}
+```{r group-by-concept-map, eval=FALSE}
 group_by(<DATA>, <VARIABLE>)
 ```
 
@@ -615,7 +684,7 @@ group_by(<DATA>, <VARIABLE>)
 
 ## `group_by()`
 
-```{r, eval = FALSE}
+```{r group-by-example-01, eval = FALSE}
 diamonds %>% 
   group_by(cut)
 ```
@@ -624,7 +693,7 @@ diamonds %>%
 
 ## `group_by()`
 
-```{r, highlight.output = 2}
+```{r group-by-example-01-output-highlight, highlight.output = 2}
 diamonds %>% 
   group_by(cut)
 ```
@@ -633,7 +702,7 @@ diamonds %>%
 
 ## `group_by()`
 
-```{r, eval = FALSE}
+```{r group-by-summarize-example-01, eval = FALSE}
 diamonds %>% 
   group_by(cut) %>% #<<
   summarize(n = n(), mean_price = mean(price)) #<<
@@ -643,7 +712,7 @@ diamonds %>%
 
 ## `group_by()`
 
-```{r}
+```{r group-by-summarize-example-01-output}
 diamonds %>% 
   group_by(cut) %>% 
   summarize(n = n(), mean_price = mean(price))
@@ -653,7 +722,7 @@ diamonds %>%
 
 ## `group_by()`
 
-```{r, eval = FALSE}
+```{r group-by-mutate-example-01, eval = FALSE}
 diamonds %>% 
   group_by(cut) %>% 
   mutate(n = n(), mean_price = mean(price))
@@ -663,7 +732,7 @@ diamonds %>%
 
 ## `group_by()`
 
-```{r, highlight.output = 1:2}
+```{r group-by-mutate-example-01-output, highlight.output = 1:2}
 diamonds %>% 
   group_by(cut) %>% 
   mutate(n = n(), mean_price = mean(price))
@@ -682,7 +751,7 @@ diamonds %>%
 
 ## Your turn 8
 
-```{r}
+```{r filter-group-by-summarize-your-turn-08}
 gapminder %>% 
   filter(continent == "Europe") %>% 
   group_by(country) %>% 
@@ -695,7 +764,7 @@ gapminder %>%
 
 ### Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
-```{r, eval = FALSE}
+```{r filter-group-by-summarize-your-turn-09, eval = FALSE}
 gapminder %>% 
   __________ %>% 
   __________ %>% 
@@ -710,7 +779,7 @@ gapminder %>%
 
 ### Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
-```{r, eval = FALSE}
+```{r filter-group-by-summarize-your-turn-09-answer, eval = FALSE}
 gapminder %>% 
   group_by(continent, year) %>% 
   summarize(mean_le = mean(lifeExp)) %>% 
@@ -723,7 +792,7 @@ gapminder %>%
 
 class: center, middle
 
-```{r, echo = FALSE, fig.height=4.5}
+```{r filter-group-by-summarize-your-turn-09-output, echo = FALSE, fig.height=4.5}
 gapminder %>% 
   group_by(continent, year) %>% 
   summarize(mean_le = mean(lifeExp)) %>% 

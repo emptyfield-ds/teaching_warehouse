@@ -14,7 +14,11 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.align = "center", 
+                      dpi = 320, 
+                      fig.height = 4)
 library(tidyverse)
 set.seed(1234)
 diabetes <- read_csv("diabetes.csv")
@@ -41,55 +45,55 @@ class: inverse, middle
 
 # Lists, vectors, and data.frames (or tibbles)
 
-```{r}
-c(a = "hello", b = 1)
+```{r slide-04}
+c(char = "hello", num = 1)
 ```
 
 ---
 
 # lists can contain any object
 
-```{r}
-list(a = "hello", b = 1, c = mean)
+```{r slide-05}
+list(char = "hello", num = 1, fun = mean)
 ```
 
 ---
 
 ## Your Turn 1
 
-```{r}
+```{r slide-06}
 number_list <- list(
-  a = rnorm(10, mean = 2, sd = 1.4), 
-  b = rnorm(5, mean = 1, sd = 1), 
-  c = rnorm(20, mean = 10, sd = 3)
+  blood_glucose = rnorm(10, mean = 140, sd = 10), 
+  age = rnorm(5, mean = 40, sd = 5), 
+  heartrate = rnorm(20, mean = 60, sd = 30)
 )
 ```
 
-### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["a"]]`?
+### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["blood_glucose"]]`?
 
 ---
 
 ## Your Turn 1
 
 .small[
-```{r}
-number_list["a"]
+```{r slide-07-1}
+number_list["blood_glucose"]
 ```
 
-```{r}
-number_list$a
+```{r slide-07-2}
+number_list$blood_glucose
 ```
 
-```{r}
-number_list[["a"]]
+```{r slide-07-3}
+number_list[["blood_glucose"]]
 ```
 ]
 ---
 
 #  data frames are lists
 
-```{r}
-x <- list(a = "hello", b = 1)
+```{r slide-08}
+x <- list(char = "hello", num = 1)
 as.data.frame(x)
 ```
 
@@ -97,7 +101,7 @@ as.data.frame(x)
 
 #  data frames are lists
 
-```{r}
+```{r slide-09}
 library(gapminder)
 head(gapminder$pop)
 ```
@@ -106,7 +110,7 @@ head(gapminder$pop)
 
 #  data frames are lists
 
-```{r, eval = FALSE}
+```{r slide-10, eval = FALSE}
 gapminder[1:6, "pop"]
 ```
 
@@ -114,7 +118,7 @@ gapminder[1:6, "pop"]
 
 #  data frames are lists
 
-```{r}
+```{r slide-11}
 gapminder[1:6, "pop"]
 ```
 
@@ -122,7 +126,7 @@ gapminder[1:6, "pop"]
 
 #  data frames are lists
 
-```{r}
+```{r slide-12}
 head(gapminder[["pop"]])
 ```
 
@@ -130,11 +134,11 @@ head(gapminder[["pop"]])
 
 #  vectorized functions don't work on lists
 
-```{r, include=FALSE}
+```{r slide-13-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r, error=TRUE, eval = FALSE}
+```{r slide-13-2, error=TRUE, eval = FALSE}
 sum(rnorm(10))
 ```
 
@@ -142,11 +146,11 @@ sum(rnorm(10))
 
 #  vectorized functions don't work on lists
 
-```{r, include=FALSE}
+```{r slide-14-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r, error=TRUE}
+```{r slide-14-2, error=TRUE}
 sum(rnorm(10))
 ```
 
@@ -154,15 +158,15 @@ sum(rnorm(10))
 
 #  vectorized functions don't work on lists
 
-```{r, include=FALSE}
+```{r slide-15-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r, error=TRUE}
+```{r slide-15-2, error=TRUE}
 sum(rnorm(10))
 ```
 
-```{r, error=TRUE, eval = FALSE}
+```{r slide-15-3, error=TRUE, eval = FALSE}
 sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
 ```
 
@@ -170,15 +174,15 @@ sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
 
 #  vectorized functions don't work on lists
 
-```{r, include=FALSE}
+```{r slide-16-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r, error=TRUE}
+```{r slide-16-2, error=TRUE}
 sum(rnorm(10))
 ```
 
-```{r, error=TRUE}
+```{r slide-16-3, error=TRUE}
 sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
 ```
 
@@ -205,7 +209,7 @@ background-position: 95% 2%
 
 # Using map()
 
-```{r, eval = FALSE}
+```{r slide-18, eval = FALSE}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
@@ -216,7 +220,7 @@ map(x_list, mean)
 
 # Using map()
 
-```{r, eval = FALSE}
+```{r slide-19, eval = FALSE}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10)) #<<
 
@@ -228,7 +232,7 @@ map(x_list, mean)
 
 # Using map()
 
-```{r, eval = FALSE}
+```{r slide-20, eval = FALSE}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
@@ -240,7 +244,7 @@ map(x_list, mean) #<<
 
 # Using map()
 
-```{r}
+```{r slide-21}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
@@ -249,19 +253,19 @@ map(x_list, mean)
 
 ---
 
-```{r, echo=FALSE, out.width="50%", out.height="50%"}
+```{r slide-22, echo=FALSE, out.width="50%", out.height="50%"}
 knitr::include_graphics("img/purrr_list.png")
 ```
 
 ---
 
-```{r, echo=FALSE}
+```{r slide-23, echo=FALSE}
 knitr::include_graphics("img/purrr_f_list.png")
 ```
 
 ---
 
-```{r, echo=FALSE}
+```{r slide-24, echo=FALSE}
 knitr::include_graphics("img/purr_x_input.png")
 ```
 
@@ -269,14 +273,15 @@ knitr::include_graphics("img/purr_x_input.png")
 
 ## Your Turn 2
 
-### Read the code in the first chunk and predict what will happen.
+### Read the code in the first chunk and predict what will happen 
+
 ### Run the code in the first chunk. What does it return?
 
-```{r, eval=FALSE}
+```{r slide-25, eval=FALSE}
 list(
-  sum_a = sum(number_list$a),
-  sum_b = sum(number_list$b),
-  sum_c = sum(number_list$c)
+  sum_a = sum(number_list$blood_glucose),
+  sum_b = sum(number_list$age),
+  sum_c = sum(number_list$heartrate)
 )
 ```
 
@@ -286,7 +291,7 @@ list(
 
 ## Your Turn 2
 
-```{r}
+```{r slide-26}
 map(number_list, sum)
 ```
 
@@ -296,9 +301,10 @@ map(number_list, sum)
 
 --
 
-```{r, eval=FALSE}
+```{r slide-27, eval=FALSE}
+library(dplyr)
 gapminder %>% 
-  dplyr::select_if(is.numeric) %>% 
+  select(where(is.numeric)) %>%
   map(sd)
 ```
 
@@ -306,9 +312,10 @@ gapminder %>%
 
 ## using `map()` with data frames
 
-```{r, eval=FALSE}
+```{r slide-28, eval=FALSE}
+library(dplyr)
 gapminder %>% #<<
-  dplyr::select_if(is.numeric) %>%  #<<
+  select(where(is.numeric)) %>%  #<<
   map(sd)
 ```
 
@@ -317,8 +324,9 @@ gapminder %>% #<<
 ## using `map()` with data frames
 
 ```{r, eval=FALSE}
+library(dplyr)
 gapminder %>% 
-  dplyr::select_if(is.numeric) %>% 
+  select(where(is.numeric)) %>%
   map(sd) #<<
 ```
 
@@ -327,8 +335,9 @@ gapminder %>%
 ## using `map()` with data frames
 
 ```{r}
+library(dplyr)
 gapminder %>% 
-  dplyr::select_if(is.numeric) %>% 
+  select(where(is.numeric)) %>%
   map(sd)
 ```
 

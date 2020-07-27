@@ -13,11 +13,16 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+options(htmltools.dir.version = FALSE, 
+        tibble.max_extra_cols = 6, 
+        tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.align = "center", 
+                      dpi = 320, 
+                      fig.height = 4)
 library(tidyverse)
 library(datasauRus)
-
 diabetes <- read_csv("diabetes.csv")
 ```
 
@@ -88,7 +93,7 @@ background-position: 90% 10%
 
 ---
 
-```{r}
+```{r slide-10}
 # print prettily 
 as_tibble(mtcars)
 ```
@@ -97,31 +102,35 @@ as_tibble(mtcars)
 
 class: middle
 
-```{r, out.height="100%", out.width="100%", echo = FALSE}
+```{r slide-11, out.height="100%", out.width="100%", echo = FALSE}
 knitr::include_graphics("new_data_alert_mtcars.png")
 ```
 
 ---
 
-```{r, eval=FALSE}
+```{r slide-12, eval=FALSE}
 ggplot()
 ```
 
 ---
 
-```{r}
+```{r slide-13}
 ggplot()
 ```
 ---
 
-```{r}
-ggplot(mtcars, aes(x = mpg, y = hp))
+```{r slide-14}
+ggplot(mtcars, 
+       aes(x = mpg, 
+           y = hp))
 ```
 
 ---
 
-```{r}
-ggplot(mtcars, aes(x = mpg, y = hp)) +
+```{r slide-15}
+ggplot(mtcars, 
+       aes(x = mpg, 
+           y = hp)) +
   geom_point()
 ```
 
@@ -165,17 +174,21 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
 
 ## Write and run the code from this slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
-```{r, eval = FALSE}
-ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+```{r slide-20, eval = FALSE}
+ggplot(data = diabetes, 
+       mapping = aes(x = weight, 
+                     y = hip)) +
   geom_point()
 ```
 
 ---
 
-```{r}
+```{r slide-21}
 diabetes <- read_csv("diabetes.csv")
 
-ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+ggplot(data = diabetes, 
+       mapping = aes(x = weight, 
+                     y = hip)) +
   geom_point()
 ```
 
@@ -194,7 +207,7 @@ ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
 
 # Aesthetics: `aes()`
 
-```{r, eval = FALSE}
+```{r slide-23, eval = FALSE}
 ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + geom_point()
 
 ggplot(mtcars, aes(x = mpg, y = hp, size = cyl)) + geom_point()
@@ -210,9 +223,10 @@ ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
 
 ## Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph using the `gender` variable. Experiment.  
 
-```{r, eval=FALSE}
+```{r slide-24, eval=FALSE}
 ggplot(data = diabetes, 
-       mapping = aes(x = weight, y = hip)) +
+       mapping = aes(x = weight, 
+                     y = hip)) +
   geom_point()
 ```
 
@@ -220,56 +234,53 @@ ggplot(data = diabetes,
 
 ---
 
-```{r}
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, color = gender)
-) +
+```{r slide-25}
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                color = gender)) +
   geom_point()
 ```
 
 ---
 
-```{r}
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, size = gender)
-) +
+```{r slide-26}
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                size = gender)) +
   geom_point()
 ```
 
 ---
 
-```{r}
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, alpha = gender)
-) +
+```{r slide-27}
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                alpha = gender)) +
   geom_point()
 ```
 
 ---
 
-```{r}
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, shape = gender)
-) +
+```{r slide-28}
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                shape = gender)) +
   geom_point()
 ```
 
 ---
 
-```{r}
+```{r slide-29, out.height="90%", out.width="90%"}
 ggplot(data = diabetes) +
-  geom_point(
-    mapping = aes(
-      x = weight, 
-      y = hip, 
-      color = gender, 
-      shape = gender
-    )
-  )
+  geom_point(mapping = 
+               aes(x = weight, 
+                   y = hip, 
+                   color = gender, 
+                   shape = gender))
 ```
 
 ---
@@ -300,13 +311,13 @@ ggplot(data = diabetes) +
 
 ## Replace this scatterplot with one that draws boxplots. 
 
-```{r, eval = FALSE}
+```{r slide-31, eval = FALSE}
 ggplot(diabetes, aes(gender, chol)) + geom_point()
 ```
 
 ---
 
-```{r}
+```{r slide-32}
 ggplot(diabetes, aes(gender, chol)) + geom_boxplot()
 ```
 
@@ -316,26 +327,26 @@ ggplot(diabetes, aes(gender, chol)) + geom_boxplot()
 
 ## 1. Make a histogram of the `glyhb` variable in `diabetes`.
 
-```{r}
+```{r slide-33-1}
 
 ```
 
 ## 2. Redo the `glyhb` plot as a density plot.
 
-```{r}
+```{r slide-33-2}
 
 ```
 
 ---
 
-```{r}
+```{r slide-34}
 ggplot(diabetes, aes(x = glyhb)) + 
   geom_histogram()
 ```
 
 ---
 
-```{r}
+```{r slide-35}
 ggplot(diabetes, aes(x = glyhb)) + 
   geom_density()
 ```
@@ -343,7 +354,7 @@ ggplot(diabetes, aes(x = glyhb)) +
 ---
 
 
-```{r}
+```{r slide-36}
 diabetes %>% 
   ggplot(aes(x = frame)) + 
     geom_bar()
@@ -351,7 +362,7 @@ diabetes %>%
 
 ---
 
-```{r}
+```{r slide-37}
 diabetes %>% 
   drop_na() %>% #<<
   ggplot(aes(x = frame)) + 
@@ -364,7 +375,7 @@ diabetes %>%
 
 ## Make a bar chart of `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
 
-```{r, eval=FALSE}
+```{r slide-38, eval=FALSE}
 diabetes %>% 
   drop_na() %>% 
   ______() + 
@@ -373,7 +384,7 @@ diabetes %>%
 
 ---
 
-```{r}
+```{r slide-39}
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
@@ -400,21 +411,21 @@ diabetes %>%
 
 ---
 
-```{r}
+```{r slide-41}
 ggplot(mtcars, aes(x = factor(am), y = hp)) + 
   geom_point()
 ```
 
 ---
 
-```{r}
+```{r slide-42}
 ggplot(mtcars, aes(x = factor(am), y = hp)) + 
   geom_point(position = "jitter") #<<
 ```
 
 ---
 
-```{r}
+```{r slide-43}
 ggplot(mtcars, aes(x = factor(am), y = hp)) + 
   geom_jitter(width = .1, height = 0) #<<
 ```
@@ -427,7 +438,7 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 
 ---
 
-```{r}
+```{r slide-45}
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
@@ -436,7 +447,7 @@ diabetes %>%
 
 ---
 
-```{r}
+```{r slide-46}
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
@@ -445,7 +456,7 @@ diabetes %>%
 
 ---
 
-```{r}
+```{r slide-47}
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
@@ -469,34 +480,34 @@ diabetes %>%
 
 ---
 
-```{r}
+```{r slide-49}
 ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + 
   geom_point(color = "blue")
 ```
 
 ---
 
-```{r}
+```{r slide-50}
 ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + 
   geom_point(aes(color = "blue"))
 ```
 
 ---
 
-```{r}
+```{r slide-51}
 ggplot(mtcars, aes(x = cyl)) + 
   geom_bar(color = "blue")
 ```
 
 ---
 
-```{r}
+```{r slide-52}
 ggplot(mtcars, aes(x = cyl)) + 
   geom_bar(fill = "blue")
 ```
 ---
 
-```{r}
+```{r slide-53}
 ggplot(mtcars, aes(x = cyl)) + 
   geom_bar(color = "red", fill = "blue")
 ```
@@ -505,7 +516,7 @@ ggplot(mtcars, aes(x = cyl)) +
 
 ## Adding layers
 
-```{r eval = FALSE}
+```{r slide-54, eval = FALSE}
 ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
   <GEOM_FUNCTION>() +
   <GEOM_FUNCTION>() +
@@ -519,15 +530,15 @@ ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
 
 #### Run the code after every change you make.
 
-#### 1. Predict what this code will do. Then run it. 
-#### 2. Add a `linetype` aesthetic for `gender`. Run it again.
-#### 3. *Set* the color of `geom_smooth()` to "black"
-#### 4. Add `se = FALSE` to the `geom_smooth()`
-#### 5. It's hard to see the lines well now. How about setting `alpha = .2` in `geom_point()`?
-#### 6. Jitter the points. You can either change the geom or change the `position` argument.
-#### 7. Add another layer, `theme_bw()`. Remember to use `+`.
+#### 1. Predict what this code will do. Then run it.  
+#### 2. Add a `linetype` aesthetic for `gender`. Run it again.  
+#### 3. Set the color of `geom_smooth()` to "black"  
+#### 4. Add `se = FALSE` to the `geom_smooth()`  
+#### 5. It's hard to see the lines well now. How about setting `alpha = .2` in `geom_point()`?  
+#### 6. Jitter the points. You can either change the geom or change the `position` argument.  
+#### 7. Add another layer, `theme_bw()`. Remember to use `+`.  
 
-```{r, eval=FALSE}
+```{r slide-55, eval=FALSE}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth()
@@ -535,7 +546,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-56}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth()
@@ -543,7 +554,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-57}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth(aes(linetype = gender))
@@ -551,7 +562,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-58}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth(aes(linetype = gender), col = "black")
@@ -559,7 +570,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-59}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
@@ -567,7 +578,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-60}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point(alpha = .2) +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
@@ -575,7 +586,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-61}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_jitter(alpha = .2) +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
@@ -583,7 +594,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ---
 
-```{r}
+```{r slide-62}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_jitter(alpha = .2) +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE) +

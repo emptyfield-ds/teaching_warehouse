@@ -15,7 +15,7 @@ strong {
 }
 
 em {
-  color: #56B4E9;  
+  color: #56B4E9;
   font-style: normal;
   font-weight: bold;
 }
@@ -82,6 +82,7 @@ h2 {
   text-align: left;
   vertical-align: bottom;
 }
+
 .inverse.title-slide h2  {
   color: #56B4E9;
   text-shadow: none;
@@ -89,6 +90,7 @@ h2 {
   text-align: left;
   font-weight: bold;
 }
+
 .inverse.title-slide h3  {
   color: #EDEEEF;
   text-shadow: none;

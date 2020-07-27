@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Functional programming and iteration with purrr</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-30" />
+    <meta name="date" content="2020-07-27" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -12,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Functional programming and iteration with purrr
-### 2019-08-30
+### 2020-07-27
 
 ---
 
@@ -42,11 +43,11 @@ class: inverse, middle
 
 
 ```r
-c(a = "hello", b = 1)
+c(char = "hello", num = 1)
 ```
 
 ```
-##       a       b 
+##    char     num 
 ## "hello"     "1"
 ```
 
@@ -56,20 +57,20 @@ c(a = "hello", b = 1)
 
 
 ```r
-list(a = "hello", b = 1, c = mean)
+list(char = "hello", num = 1, fun = mean)
 ```
 
 ```
-## $a
+## $char
 ## [1] "hello"
 ## 
-## $b
+## $num
 ## [1] 1
 ## 
-## $c
+## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7f835f93a920&gt;
+## &lt;bytecode: 0x7fe354879a50&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -80,13 +81,13 @@ list(a = "hello", b = 1, c = mean)
 
 ```r
 number_list &lt;- list(
-  a = rnorm(10, mean = 2, sd = 1.4), 
-  b = rnorm(5, mean = 1, sd = 1), 
-  c = rnorm(20, mean = 10, sd = 3)
+  blood_glucose = rnorm(10, mean = 140, sd = 10), 
+  age = rnorm(5, mean = 40, sd = 5), 
+  heartrate = rnorm(20, mean = 60, sd = 30)
 )
 ```
 
-### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["a"]]`?
+### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["blood_glucose"]]`?
 
 ---
 
@@ -95,33 +96,33 @@ number_list &lt;- list(
 .small[
 
 ```r
-number_list["a"]
+number_list["blood_glucose"]
 ```
 
 ```
-## $a
-##  [1]  0.310108  2.388401  3.518218 -1.283977  2.600775  2.708478  1.195364
-##  [8]  1.234715  1.209767  0.753947
-```
-
-
-```r
-number_list$a
-```
-
-```
-##  [1]  0.310108  2.388401  3.518218 -1.283977  2.600775  2.708478  1.195364
-##  [8]  1.234715  1.209767  0.753947
+## $blood_glucose
+##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337
+##  [9] 134.3555 131.0996
 ```
 
 
 ```r
-number_list[["a"]]
+number_list$blood_glucose
 ```
 
 ```
-##  [1]  0.310108  2.388401  3.518218 -1.283977  2.600775  2.708478  1.195364
-##  [8]  1.234715  1.209767  0.753947
+##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337
+##  [9] 134.3555 131.0996
+```
+
+
+```r
+number_list[["blood_glucose"]]
+```
+
+```
+##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337
+##  [9] 134.3555 131.0996
 ```
 ]
 ---
@@ -130,13 +131,13 @@ number_list[["a"]]
 
 
 ```r
-x &lt;- list(a = "hello", b = 1)
+x &lt;- list(char = "hello", num = 1)
 as.data.frame(x)
 ```
 
 ```
-##       a b
-## 1 hello 1
+##    char num
+## 1 hello   1
 ```
 
 ---
@@ -362,15 +363,16 @@ map(x_list, mean)
 
 ## Your Turn 2
 
-### Read the code in the first chunk and predict what will happen.
+### Read the code in the first chunk and predict what will happen 
+
 ### Run the code in the first chunk. What does it return?
 
 
 ```r
 list(
-  sum_a = sum(number_list$a),
-  sum_b = sum(number_list$b),
-  sum_c = sum(number_list$c)
+  sum_a = sum(number_list$blood_glucose),
+  sum_b = sum(number_list$age),
+  sum_c = sum(number_list$heartrate)
 )
 ```
 
@@ -386,14 +388,14 @@ map(number_list, sum)
 ```
 
 ```
-## $a
-## [1] 14.6358
+## $blood_glucose
+## [1] 1361.684
 ## 
-## $b
-## [1] 3.77212
+## $age
+## [1] 193.8606
 ## 
-## $c
-## [1] 181.8609
+## $heartrate
+## [1] 1018.609
 ```
 
 ---
@@ -404,8 +406,9 @@ map(number_list, sum)
 
 
 ```r
+library(dplyr)
 gapminder %&gt;% 
-  dplyr::select_if(is.numeric) %&gt;% 
+  select(where(is.numeric)) %&gt;%
   map(sd)
 ```
 
@@ -415,8 +418,9 @@ gapminder %&gt;%
 
 
 ```r
+library(dplyr)
 *gapminder %&gt;%
-* dplyr::select_if(is.numeric) %&gt;%
+* select(where(is.numeric)) %&gt;%
   map(sd)
 ```
 
@@ -426,8 +430,9 @@ gapminder %&gt;%
 
 
 ```r
+library(dplyr)
 gapminder %&gt;% 
-  dplyr::select_if(is.numeric) %&gt;% 
+  select(where(is.numeric)) %&gt;%
 * map(sd)
 ```
 
@@ -437,8 +442,9 @@ gapminder %&gt;%
 
 
 ```r
+library(dplyr)
 gapminder %&gt;% 
-  dplyr::select_if(is.numeric) %&gt;% 
+  select(where(is.numeric)) %&gt;%
   map(sd)
 ```
 
@@ -608,23 +614,23 @@ map(number_list, mean_sd)
 
 
 ```
-## $a
+## $blood_glucose
 ## # A tibble: 1 x 2
 ##    mean    sd
 ##   &lt;dbl&gt; &lt;dbl&gt;
-## 1  1.46  1.39
+## 1  136.  9.96
 ## 
-## $b
+## $age
 ## # A tibble: 1 x 2
 ##    mean    sd
 ##   &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.754 0.783
+## 1  38.8  3.91
 ## 
-## $c
+## $heartrate
 ## # A tibble: 1 x 2
 ##    mean    sd
 ##   &lt;dbl&gt; &lt;dbl&gt;
-## 1  9.09  2.77
+## 1  50.9  27.7
 ```
 
 ---
@@ -829,18 +835,18 @@ model_lm &lt;- function(.data) {
 
 ```
 ## $Buckingham
-## # A tibble: 1 x 11
+## # A tibble: 1 x 12
 ##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.252         0.248  38.8      66.4 4.11e-14     2 -1009. 2025. 2034.
-## # … with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.252         0.248  38.8      66.4 4.11e-14     1 -1009. 2025. 2034.
+## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
 ## 
 ## $Louisa
-## # A tibble: 1 x 11
+## # A tibble: 1 x 12
 ##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.204         0.201  39.4      51.7 1.26e-11     2 -1033. 2072. 2082.
-## # … with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.204         0.201  39.4      51.7 1.26e-11     1 -1033. 2072. 2082.
+## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
 ```
 ]
 
@@ -1257,9 +1263,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1268,7 +1290,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

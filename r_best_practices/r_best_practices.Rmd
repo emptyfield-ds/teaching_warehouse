@@ -18,6 +18,14 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dp
 library(tidyverse)
 ```
 
+## Welcome! 
+
+```{r r_first_then, echo=FALSE, out.width="58%", out.height="58%"}
+knitr::include_graphics("images/r_first_then.png")
+```
+
+---
+
 ## Change Settings
 
 .pull-left[
@@ -579,4 +587,93 @@ factor_to_text <- function(data, names) {
   data
 }
 ```
+
+---
+
+## Updating R and RStudio
+
+### The most recent version of R can be downloaded from [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+
+
+```{r Rlogo, out.width="50%", out.height="50%", echo=FALSE}
+knitr::include_graphics(path = "https://cran.r-project.org/Rlogo.svg")
+```
+
+---
+
+## Updating R and RStudio
+
+### Download the most recent version of RStudio at their [downloads page](https://rstudio.com/products/rstudio/download/)
+
+```{r rstudio-downloads, out.width="80%", out.height="80%", echo=FALSE}
+knitr::include_graphics(path =
+"images/rstudio-downloads.png")
+```
+
+---
+
+## How to ask for help (`datapasta` and `reprex`)
+
+#### The `reprex` package helps you create a reproducible example  
+
+#### `datapasta` lets you easy copy + paste small samples of data into RStudio
+
+```{r datapasta-reprex-spreadsheet, out.width="65%", out.height="65%", echo=FALSE}
+knitr::include_graphics(path = "images/datapasta-reprex-spreadsheet.gif")
+```
+
+
+---
+
+## How to ask for help (`reprex`)
+
+### Check out the [package website](https://reprex.tidyverse.org/) and [RStudio webinar](https://rstudio.com/resources/webinars/help-me-help-you-creating-reproducible-examples/) on creating reproducible examples
+
+```{r reprex, out.height="50%", out.width="50%", echo=FALSE}
+knitr::include_graphics(path = "images/reprex.png")
+```
+
+---
+
+## Where to get help
+
+### RStudio has a helpful community if you have questions (everyone does!)
+
+#### RStudio Community:
+
+RStudio has a dedicated forum for questions related to R and RStudio: https://community.rstudio.com/
+
+```{r rstudio-community, echo=FALSE, out.width="70%", out.height="70%"}
+knitr::include_graphics("images/rstudio-community.png")
+```
+
+
+---
+
+## Where else to get help
+
+### Stack Overflow
+
+Check out the questions tagged `r` on Stack Overflow: https://stackoverflow.com/questions/tagged/r
+
+```{r r-tag-stackoverflow, echo=FALSE, out.width="90%", out.height="90%"}
+knitr::include_graphics("images/r-tag-stackoverflow.png")
+```
+
+
+---
+
+## Where else to get help 
+
+### `#rstats` on Twitter
+
+If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/rstats
+
+```{r welcome_to_rstats_twitter, echo=FALSE, out.width="50%", out.height="50%"}
+knitr::include_graphics("images/welcome_to_rstats_twitter.png")
+```
+
+.pull-right[![#rstats on twitter](images/welcome_to_rstats_twitter.png)]
+
+
 

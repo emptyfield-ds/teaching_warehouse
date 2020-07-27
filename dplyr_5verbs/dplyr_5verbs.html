@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Wrangling data with dplyr</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2020-07-13" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -12,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Wrangling data with dplyr
-### 2019-08-29
+### 2020-07-13
 
 ---
 
@@ -526,6 +527,115 @@ mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 *## #   log_price &lt;dbl&gt;, log_pricesq &lt;dbl&gt;
 ```
 
+
+---
+
+## `mutate(across())`
+
+
+
+```r
+mutate(&lt;DATA&gt;, 
+*   across(c(&lt;VARIABLES&gt;), list(&lt;NAMES&gt; = &lt;FUNCTIONS&gt;)))
+```
+
+---
+
+## `mutate(across())`
+
+
+
+```r
+mutate(diamonds, 
+*  across(c("carat", "depth"), list(sd = sd, mean = mean)))
+```
+
+---
+
+## `mutate(across())`
+
+
+```r
+mutate(diamonds, 
+   across(c("carat", "depth"), list(sd = sd, mean = mean)))
+```
+
+```
+## # A tibble: 53,940 x 14
+##    carat cut     color clarity depth table price     x     y
+##    &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 0.23  Ideal   E     SI2      61.5    55   326  3.95  3.98
+##  2 0.21  Premium E     SI1      59.8    61   326  3.89  3.84
+##  3 0.23  Good    E     VS1      56.9    65   327  4.05  4.07
+##  4 0.290 Premium I     VS2      62.4    58   334  4.2   4.23
+##  5 0.31  Good    J     SI2      63.3    58   335  4.34  4.35
+##  6 0.24  Very G… J     VVS2     62.8    57   336  3.94  3.96
+##  7 0.24  Very G… I     VVS1     62.3    57   336  3.95  3.98
+##  8 0.26  Very G… H     SI1      61.9    55   337  4.07  4.11
+##  9 0.22  Fair    E     VS2      65.1    61   337  3.87  3.78
+## 10 0.23  Very G… H     VS1      59.4    61   338  4     4.05
+## # … with 53,930 more rows, and 5 more variables: z &lt;dbl&gt;,
+*## #   carat_sd &lt;dbl&gt;, carat_mean &lt;dbl&gt;, depth_sd &lt;dbl&gt;,
+*## #   depth_mean &lt;dbl&gt;
+```
+
+---
+
+
+## `mutate(across(where()))`
+
+
+```r
+mutate(&lt;DATA&gt;, 
+*   across(where(&lt;CONDITION&gt;), list(&lt;NAMES&gt; = &lt;FUNCTIONS&gt;)))
+```
+
+
+---
+
+## `mutate(across(where()))`
+
+
+
+```r
+mutate(gapminder, 
+*  across(where(is.numeric), list(mean = mean, median = median)))
+```
+
+
+---
+
+
+## `mutate(across(where()))`
+
+
+```r
+mutate(gapminder, 
+*  across(where(is.numeric), list(mean = mean, median = median)))
+```
+
+```
+## # A tibble: 1,704 x 14
+##    country continent  year lifeExp    pop gdpPercap
+##    &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghan… Asia       1952    28.8 8.43e6      779.
+##  2 Afghan… Asia       1957    30.3 9.24e6      821.
+##  3 Afghan… Asia       1962    32.0 1.03e7      853.
+##  4 Afghan… Asia       1967    34.0 1.15e7      836.
+##  5 Afghan… Asia       1972    36.1 1.31e7      740.
+##  6 Afghan… Asia       1977    38.4 1.49e7      786.
+##  7 Afghan… Asia       1982    39.9 1.29e7      978.
+##  8 Afghan… Asia       1987    40.8 1.39e7      852.
+##  9 Afghan… Asia       1992    41.7 1.63e7      649.
+## 10 Afghan… Asia       1997    41.8 2.22e7      635.
+## # … with 1,694 more rows, and 8 more variables:
+*## #   year_mean &lt;dbl&gt;, year_median &lt;dbl&gt;, lifeExp_mean &lt;dbl&gt;,
+*## #   lifeExp_median &lt;dbl&gt;, pop_mean &lt;dbl&gt;, pop_median &lt;dbl&gt;,
+## #   …
+```
+
+
+
 ---
 
 ## The main verbs of `dplyr`
@@ -895,7 +1005,7 @@ gapminder %&gt;%
 ```
 ## # A tibble: 1 x 4
 ##   first  last     n n_countries
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;       &lt;int&gt;
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;int&gt;
 ## 1  1952  2007  1704         142
 ```
 
@@ -1094,7 +1204,7 @@ gapminder %&gt;%
 
 class: center, middle
 
-&lt;img src="dplyr_5verbs_files/figure-html/unnamed-chunk-53-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="dplyr_5verbs_files/figure-html/filter-group-by-summarize-your-turn-09-output-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1166,9 +1276,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1177,7 +1303,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

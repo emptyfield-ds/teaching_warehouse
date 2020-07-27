@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Data Visualization in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2020-07-23" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -13,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # <span style="color:#E69F00">Data Visualization in R</span>
 ## <span style="color:#56B4E9">ggplot2 and the grammar of graphics</span> <br>
-### 2019-08-29
+### 2020-07-23
 
 ---
 
@@ -129,25 +130,29 @@ ggplot()
 ggplot()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-13-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 
 ```r
-ggplot(mtcars, aes(x = mpg, y = hp))
+ggplot(mtcars, 
+       aes(x = mpg, 
+           y = hp))
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-14-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 
 ```r
-ggplot(mtcars, aes(x = mpg, y = hp)) +
+ggplot(mtcars, 
+       aes(x = mpg, 
+           y = hp)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-15-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -191,7 +196,9 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
 
 
 ```r
-ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+ggplot(data = diabetes, 
+       mapping = aes(x = weight, 
+                     y = hip)) +
   geom_point()
 ```
 
@@ -201,11 +208,13 @@ ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
 ```r
 diabetes &lt;- read_csv("diabetes.csv")
 
-ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
+ggplot(data = diabetes, 
+       mapping = aes(x = weight, 
+                     y = hip)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-21-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -242,7 +251,8 @@ ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
 
 ```r
 ggplot(data = diabetes, 
-       mapping = aes(x = weight, y = hip)) +
+       mapping = aes(x = weight, 
+                     y = hip)) +
   geom_point()
 ```
 
@@ -252,70 +262,67 @@ ggplot(data = diabetes,
 
 
 ```r
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, color = gender)
-) +
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                color = gender)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-25-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 
 ```r
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, size = gender)
-) +
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                size = gender)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-26-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 
 ```r
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, alpha = gender)
-) +
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                alpha = gender)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-27-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 
 ```r
-ggplot(
-  data = diabetes, 
-  mapping = aes(x = weight, y = hip, shape = gender)
-) +
+ggplot(data = diabetes, 
+  mapping = aes(x = weight, 
+                y = hip, 
+                shape = gender)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-28-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 
 ```r
 ggplot(data = diabetes) +
-  geom_point(
-    mapping = aes(
-      x = weight, 
-      y = hip, 
-      color = gender, 
-      shape = gender
-    )
-  )
+  geom_point(mapping = 
+               aes(x = weight, 
+                   y = hip, 
+                   color = gender, 
+                   shape = gender))
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-29-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -357,7 +364,7 @@ ggplot(diabetes, aes(gender, chol)) + geom_point()
 ggplot(diabetes, aes(gender, chol)) + geom_boxplot()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-32-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -379,7 +386,7 @@ ggplot(diabetes, aes(x = glyhb)) +
   geom_histogram()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-34-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -389,7 +396,7 @@ ggplot(diabetes, aes(x = glyhb)) +
   geom_density()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-35-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -401,7 +408,7 @@ diabetes %&gt;%
     geom_bar()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-36-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -413,7 +420,7 @@ diabetes %&gt;%
     geom_bar()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-37-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -439,7 +446,7 @@ diabetes %&gt;%
     geom_bar()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-39-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -467,7 +474,7 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
   geom_point()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-41-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -477,7 +484,7 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 * geom_point(position = "jitter")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-42-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -487,7 +494,7 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 * geom_jitter(width = .1, height = 0)
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-43-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -505,7 +512,7 @@ diabetes %&gt;%
     geom_bar(position = "stack")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-45-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -517,7 +524,7 @@ diabetes %&gt;%
     geom_bar(position = "dodge")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-46-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -529,7 +536,7 @@ diabetes %&gt;%
     geom_bar(position = "fill")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-47-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -554,7 +561,7 @@ ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) +
   geom_point(color = "blue")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-49-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -564,7 +571,7 @@ ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) +
   geom_point(aes(color = "blue"))
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-50-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -574,7 +581,7 @@ ggplot(mtcars, aes(x = cyl)) +
   geom_bar(color = "blue")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-51-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -584,7 +591,7 @@ ggplot(mtcars, aes(x = cyl)) +
   geom_bar(fill = "blue")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-52-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 
@@ -593,7 +600,7 @@ ggplot(mtcars, aes(x = cyl)) +
   geom_bar(color = "red", fill = "blue")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-53-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -614,13 +621,13 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 
 #### Run the code after every change you make.
 
-#### 1. Predict what this code will do. Then run it. 
-#### 2. Add a `linetype` aesthetic for `gender`. Run it again.
-#### 3. *Set* the color of `geom_smooth()` to "black"
-#### 4. Add `se = FALSE` to the `geom_smooth()`
-#### 5. It's hard to see the lines well now. How about setting `alpha = .2` in `geom_point()`?
-#### 6. Jitter the points. You can either change the geom or change the `position` argument.
-#### 7. Add another layer, `theme_bw()`. Remember to use `+`.
+#### 1. Predict what this code will do. Then run it.  
+#### 2. Add a `linetype` aesthetic for `gender`. Run it again.  
+#### 3. Set the color of `geom_smooth()` to "black"  
+#### 4. Add `se = FALSE` to the `geom_smooth()`  
+#### 5. It's hard to see the lines well now. How about setting `alpha = .2` in `geom_point()`?  
+#### 6. Jitter the points. You can either change the geom or change the `position` argument.  
+#### 7. Add another layer, `theme_bw()`. Remember to use `+`.  
 
 
 ```r
@@ -638,7 +645,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-56-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -649,7 +656,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender))
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-57-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -660,7 +667,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), col = "black")
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-58-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -671,7 +678,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-59-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -682,7 +689,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-44-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-60-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -693,7 +700,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-45-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-61-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -705,7 +712,7 @@ ggplot(diabetes, aes(weight, hip)) +
   theme_bw()
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-46-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/slide-62-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -754,7 +761,7 @@ diamonds %&gt;%
   facet_grid(rows = vars(cut), cols = vars(clarity))
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Your Turn 8
@@ -778,7 +785,7 @@ ggplot(diabetes, aes(weight, hip)) +
 * facet_grid(rows = vars(gender), cols = vars(location))
 ```
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -796,7 +803,7 @@ diamonds %&gt;%
 
 # `facet_wrap()`
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-52-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -956,7 +963,7 @@ datasaurus_dozen %&gt;%
 
 ---
 
-&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ggplot_basics_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -1003,9 +1010,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1014,7 +1037,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
