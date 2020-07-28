@@ -5,8 +5,9 @@ output: html_document
 
 ```{r setup}
 library(tidyverse)
-library(haven)
 library(broom)
+library(rsample)
+library(haven)
 library(cidata)
 ```
 
