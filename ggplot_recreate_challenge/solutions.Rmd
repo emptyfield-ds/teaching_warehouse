@@ -41,7 +41,7 @@ FtExcessDeaths <- read_csv("FtExcessDeaths.csv")
 
 ### View the data
 
-Use `dplyr::glimpse()` and `skimr::skim()` to view the `FtExcessDeaths` data.
+Use `glimpse()` and `skim()` to view the `FtExcessDeaths` data.
 
 ```{r glimpse}
 # get a glimpse of the data
@@ -49,8 +49,9 @@ FtExcessDeaths %>% glimpse(78)
 ```
 
 ```{r skim}
+library(skimr)
 # get a skim of the data
-FtExcessDeaths %>% skimr::skim()
+FtExcessDeaths %>% skim()
 ```
 
 
@@ -141,7 +142,7 @@ We will store the result in `UKExcessDeathsPriorWk`.
 ```{r create-UKExcessDeathsPriorWk}
 UKExcessDeathsPriorWk <- UKExcessDeathsPrior %>%
   dplyr::group_by(week, year) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE))
+  dplyr::summarize(deaths = mean(deaths, na.rm = TRUE))
 # view data
 head(UKExcessDeathsPriorWk)
 ```
@@ -154,8 +155,10 @@ We'll also need to format the `week` and `year` variables so they're easier to p
 
 ```{r UKExcessDeathsPriorWk-week-year}
 UKExcessDeathsPriorWk <- UKExcessDeathsPriorWk %>%
-  dplyr::mutate(week = as.numeric(week), 
-                year = factor(year))
+  dplyr::mutate(
+    week = as.numeric(week),
+    year = factor(year)
+  )
 ```
 
 ### Define labels 
@@ -163,23 +166,21 @@ UKExcessDeathsPriorWk <- UKExcessDeathsPriorWk %>%
 Start by defining the labels (so we know what we're expecting to see).
 
 ```{r uk_labs}
-uk_labs <- ggplot2::labs(x = "Date", y = "Deaths",
-                title = "Death rates in UK compared to historical averages",
-       subtitle = "Number of deaths per week from all causes  vs. recent years")
+uk_labs <- ggplot2::labs(
+  x = "Date", y = "Deaths",
+  title = "Death rates in UK compared to historical averages",
+  subtitle = "Number of deaths per week from all causes  vs. recent years"
+)
 ```
 
 We need to make sure the lines in the graph will represent different years, and we can check this by mapping `x` to `week`, `y` to `deaths`, and `color` to `year` and adding a `geom_line()`
 
 ```{r check-years}
-ggplot(data = UKExcessDeathsPriorWk,
-
-                aes(
-                      x = week,
-                      y = deaths,
-                  color = year
-                )) +
-  
-            geom_line() + 
+ggplot(
+  data = UKExcessDeathsPriorWk,
+  aes(x = week, y = deaths, color = year)
+) +
+  geom_line() +
   # add labels
   uk_labs
 ```
@@ -190,12 +191,8 @@ We'll move the `color` aesthetic to the `geom_line()` function (use `color = "gr
 
 ```{r gg_uk_recent_years}
 gg_uk_recent_years <- UKExcessDeathsPriorWk %>%
-  ggplot(aes(x = week,
-             y = deaths,
-             group = year)) +
-
-  geom_line(color = "grey75",
-            alpha = 3/5)
+  ggplot(aes(x = week, y = deaths, group = year)) +
+  geom_line(color = "grey75", alpha = 3 / 5)
 
 gg_uk_recent_years + uk_labs
 ```
@@ -208,18 +205,17 @@ The second layer will be mean deaths per week and year in 2020 (since the corona
 UKExcessDeaths2020 <- UKExcessDeaths %>%
   dplyr::filter(
     year == 2020
-    )
+  )
 # grouped data
 UKExcessDeaths2020Wk <- UKExcessDeaths2020 %>%
-  
   dplyr::group_by(week, year) %>%
-  
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE),
-                     expected_deaths = mean(expected_deaths, na.rm = TRUE)) %>% 
-                    # numeric week
-      dplyr::mutate(week = as.numeric(week),
-                    # factor year
-                    year = factor(year))
+  dplyr::summarize(
+    deaths = mean(deaths, na.rm = TRUE),
+    expected_deaths = mean(expected_deaths, na.rm = TRUE)
+  ) %>%
+  # numeric week and factor year
+  dplyr::mutate(
+    week = as.numeric(week), year = factor(year))
 ```
 
 Now we add another layer to the existing graph object (`gg_uk_recent_years`), but we'll change the aesthetics for this layer (inside the `geom_line()`) to `x = week`, `y = deaths`, `group = year`.
@@ -229,15 +225,9 @@ Outside the `aes*()`, set the `color` as `"firebrick"`. Save this as `gg_uk_exce
 ```{r gg_uk_excess_deaths-uk_labs}
 gg_uk_excess_deaths <- gg_uk_recent_years +
 
-    geom_line(data = UKExcessDeaths2020Wk,
-
-              aes(
-                x = week,
-                y = deaths,
-                group = year
-                 ),
-
-              color = "firebrick")
+  geom_line(data = UKExcessDeaths2020Wk,
+    
+    aes(x = week, y = deaths, group = year), color = "firebrick")
 
 gg_uk_excess_deaths
 ```
@@ -255,16 +245,9 @@ Outside the `aes()`, we will also set the `fill` to `"tomato"` and the `alpha` t
 ```{r gg_uk_total_excess_deaths}
 gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
 
-    geom_ribbon(data = UKExcessDeaths2020Wk,
+  geom_ribbon(data = UKExcessDeaths2020Wk,
 
-                aes(
-                  ymin = expected_deaths,
-                  ymax = deaths
-                  ),
-
-                fill = "tomato",
-
-                alpha = 1/2)
+    aes(ymin = expected_deaths, ymax = deaths), fill = "tomato", alpha = 1 / 2)
 
 gg_uk_total_excess_deaths
 ```
@@ -278,13 +261,9 @@ The grouped data `UKExcessDeathsWk` is created in the code chunk below (be sure 
 ```{r create-UKExcessDeathsWk}
 UKExcessDeathsWk <- UKExcessDeaths %>%
   # these are historical, so we will remove the 2020 data
-  dplyr::filter(
-    year != 2020
-    ) %>%
-  dplyr::group_by(
-    week
-    ) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
+  dplyr::filter(year != 2020) %>%
+  dplyr::group_by(week) %>%
+  dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
   # we'll pipe this right over to the mutate function
   dplyr::mutate(week = as.numeric(week))
 ```
@@ -296,16 +275,9 @@ This line will have `week` on the `x`, and `deaths` on the `y`. The `color` aest
 ```{r gg_uk_historical_average}
 gg_uk_historical_average <- gg_uk_total_excess_deaths +
 
-    geom_line(data = UKExcessDeathsWk,
+  geom_line(data = UKExcessDeathsWk, inherit.aes = FALSE,
 
-              inherit.aes = FALSE,
-
-            aes(
-                x = week,
-                y = deaths
-                ),
-
-             color = "black")
+    aes(x = week, y = deaths), color = "black")
 
 gg_uk_historical_average +
 
@@ -328,13 +300,11 @@ Inside the `aes()` of `geom_text()`:
 
 ```{r gg_text_annotations}
 gg_text_annotations <- gg_uk_historical_average +
-  geom_text(x = 25, 
-            y = 4000, 
-            label = "65,700\nexcess\ndeaths\n(+45%)", 
+  geom_text(x = 25, y = 4000, label = "65,700\nexcess\ndeaths\n(+45%)", 
             color = "darkred")
-# add labels 
-gg_text_annotations + 
-  
+# add labels
+gg_text_annotations +
+
   uk_labs
 ```
 
@@ -354,16 +324,12 @@ Inside the `aes()` of `geom_segment()`:
 
 
 ```{r gg_arrow_segment}
-# add the arrows 
-gg_arrow_segment <- gg_text_annotations + 
-  geom_segment(aes(x = 22, 
-                   xend = 17, 
-                   y = 4000, 
-                   yend = 4001),
-                   arrow = arrow(length = unit(0.3, "cm")),
-                   color = "black") 
-# add labels 
-gg_arrow_segment + 
+# add the arrows
+gg_arrow_segment <- gg_text_annotations +
+  geom_segment(aes(x = 22, xend = 17, y = 4000, yend = 4001),
+  arrow = arrow(length = unit(0.3, "cm")), color = "black")
+# add labels
+gg_arrow_segment +
   uk_labs
 ```
 
@@ -387,9 +353,11 @@ Now that we've successfully created a graph for a single country, we can apply t
 Start by defining the title and labels (so we know what we're expecting to see)
 
 ```{r create-labs}
-labs <- ggplot2::labs(x = "Date", y = "Deaths",
-                title = "Death rates compared to historical averages",
-       subtitle = "Number of deaths per week from all causes vs. recent years")
+labs <- ggplot2::labs(
+  x = "Date", y = "Deaths",
+  title = "Death rates compared to historical averages",
+  subtitle = "Number of deaths per week from all causes vs. recent years"
+)
 ```
 
 ### Create the data layers
@@ -400,49 +368,48 @@ Below is the code for reproducing the steps and creating the three data layers w
 # create ExcessDeathsPriorWk ----
 ExcessDeathsPriorWk <- FtExcessDeaths %>%
   dplyr::filter(year != 2020) %>%
-# ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# Our plot will have deaths on the y axis, and weeks across the x for each 
-# country in the dataset. We'll calculate the mean number of deaths per week 
-# and year by grouping the dataset by country, week, and year and summarizing
-# the mean deaths
+  # ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
+  # Our plot will have deaths on the y axis, and weeks across the x for each
+  # country in the dataset. We'll calculate the mean number of deaths per week
+  # and year by grouping the dataset by country, week, and year and summarizing
+  # the mean deaths
   dplyr::group_by(country, week, year) %>%
   # use na.rm to remove missing values
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
-  # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week),
-                 # ~~ factor years ------
-                year = factor(year))
+  dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
+  # ~~ numeric week and factor years ------
+  dplyr::mutate(week = as.numeric(week), year = factor(year))
 
 # create ExcessDeaths2020Wk ----
 ExcessDeaths2020Wk <- FtExcessDeaths %>%
   dplyr::filter(year == 2020) %>%
-# ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# Our plot will also have 2020 deaths on the y axis, and weeks across the x, 
-# grouped by country. We'll calculate the mean number of deaths per country, 
-# week, and year by grouping the dataset by country, week, and year and 
-# summarizing the mean deaths and expected_deaths
+  # ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
+  # Our plot will also have 2020 deaths on the y axis, and weeks across the x,
+  # grouped by country. We'll calculate the mean number of deaths per country,
+  # week, and year by grouping the dataset by country, week, and year and
+  # summarizing the mean deaths and expected_deaths
   dplyr::group_by(country, week, year) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE),
-                     # also include the average expected_deaths
-                     expected_deaths = mean(expected_deaths, na.rm = TRUE)) %>% 
-    # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week),
-                # ~~ factor years ------
-                year = factor(year))
+  dplyr::summarize(
+    deaths = mean(deaths, na.rm = TRUE),
+    # also include the average expected_deaths
+    expected_deaths = mean(expected_deaths, na.rm = TRUE)
+  ) %>%
+  # ~~ numeric week and factor years ------
+  dplyr::mutate(
+    week = as.numeric(week), year = factor(year))
 
 # create FtExcessDeathsWk ----------------------------------------------------
 FtExcessDeathsWk <- FtExcessDeaths %>%
-#  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# The last data layer for our plot all us to put deaths on the y axis, and 
-# weeks across the x. We will calculate the mean number of deaths per country 
-# and week by grouping the dataset by country and week and summarizing the mean
-# deaths 
-# these are historical, so we will remove the 2020 data
+  #  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
+  # The last data layer for our plot all us to put deaths on the y axis, and
+  # weeks across the x. We will calculate the mean number of deaths per country
+  # and week by grouping the dataset by country and week and summarizing the mean
+  # deaths
+  # these are historical, so we will remove the 2020 data
   dplyr::filter(year != 2020) %>%
   # only grouped by country and week
   dplyr::group_by(country, week) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
-    # ~~ numeric week -----
+  dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
+  # ~~ numeric week -----
   dplyr::mutate(week = as.numeric(week))
 ```
 
@@ -460,63 +427,45 @@ Each layer in this plot is built below, but without any intermediate objects (it
 
 ```{r create-gg_facet_by_country}
 # previous years (gray lines) ----------------------------------------------
-# this is the first layer of multiple gray lines. we'll be mapping the deaths 
-# per week from all previous years, so remember which variable will be the 
+# this is the first layer of multiple gray lines. we'll be mapping the deaths
+# per week from all previous years, so remember which variable will be the
 # grouping variable
-gg_facet_by_country <- ggplot(data = ExcessDeathsPriorWk,
-               aes(
-                   x = week,
-                   y = deaths,
-                   group = year
-                   )) +
-  # add the "grey75" to the and alpha level for transparency 
-  geom_line(color = "grey75",
-            alpha = 3/5) +
+gg_facet_by_country <- ggplot(
+  data = ExcessDeathsPriorWk,
+  aes(x = week, y = deaths, group = year)) +
+  # add the "grey75" to the and alpha level for transparency
+  geom_line(color = "grey75", alpha = 3 / 5) +
 
-# 2020 excess deaths ------------------------------------------------------
-# these are the deaths from 2020 (the coronavirus data) stored in 
-# ExcessDeaths2020Wk
-    geom_line(data = ExcessDeaths2020Wk,
-                aes(
-                    x = week,
-                    y = deaths,
-                group = year
-                    ),
-  # the color here is the "firebrick"
-              color = "firebrick") +
+  # 2020 excess deaths ------------------------------------------------------
+  # these are the deaths from 2020 (the coronavirus data) stored in
+  # ExcessDeaths2020Wk
+  geom_line(
+    data = ExcessDeaths2020Wk,
+    # the color here is the "firebrick"
+    aes(x = week, y = deaths, group = year), color = "firebrick") +
 
-# total excess deaths -----------------------------------------------------
-# here we have the area (ribbon) with the same ExcessDeaths2020Wk
+  # total excess deaths -----------------------------------------------------
+  # here we have the area (ribbon) with the same ExcessDeaths2020Wk
 
-    geom_ribbon(data = ExcessDeaths2020Wk,
-# the ymin and ymax variables are expected_deaths and deaths, respectively.
-                aes(
-                    ymin = expected_deaths,
-                    ymax = deaths
-                    ),
-# the color here is "tomato"
-                    fill = "tomato",
-# the alpha setting here is 1/2
-                    alpha = 1/2) +
+  geom_ribbon(
+    data = ExcessDeaths2020Wk,
+    # the ymin and ymax variables are expected_deaths and deaths, respectively.
+    # the fill here is "tomato" and the alpha setting here is 1/2
+    aes(ymin = expected_deaths, ymax = deaths), fill = "tomato", alpha = 1 / 2) +
 
 
-# historical averages -----------------------------------------------------
-# these is the data from FtExcessDeathsWk (grouped only on country and week)
-    geom_line(data = FtExcessDeathsWk,
-# remove the inherited aesthetics from the previous layers
-              inherit.aes = FALSE,
-# here we're only mapping an x and y variable
-            aes(
-                x = week,
-                y = deaths
-                ),
-# set the color to "black"
-             color = "black") +
-  
-# facet by country --------------------------------------------------------
-# use facet_wrap to facet this by country, and set the scales to "free"
-    facet_wrap(. ~ country,
-               scales = "free") 
+  # historical averages -----------------------------------------------------
+  # these is the data from FtExcessDeathsWk (grouped only on country and week)
+  geom_line(data = FtExcessDeathsWk,
+    # remove the inherited aesthetics from the previous layers
+    inherit.aes = FALSE,
+    # here we're only mapping an x and y variable
+    # set the color to "black"
+    aes(x = week, y = deaths), color = "black") +
+
+  # facet by country --------------------------------------------------------
+  # use facet_wrap to facet this by country, and set the scales to "free"
+  facet_wrap(. ~ country, scales = "free")
 ```
 
 ```{r gg_facet_by_country-labs, fig.height=5, fig.width=7}
@@ -524,7 +473,7 @@ gg_facet_by_country <- ggplot(data = ExcessDeathsPriorWk,
 
 gg_facet_by_country +
 
-    labs
+  labs
 ```
 
 ### Add custom themes
@@ -543,42 +492,46 @@ Use the `ggplot2::theme()` to make the following changes to the graph:
 
 
 ```{r my_theme}
-my_theme <- theme(plot.background =
-             element_rect(fill = "#FFF1E5"),
+my_theme <- theme(
+  plot.background =
+    element_rect(fill = "#FFF1E5"),
 
-          panel.background =
-              element_rect(fill = "#FFF1E5"),
-          
-          panel.grid = element_line(color = "grey90"),
+  panel.background =
+    element_rect(fill = "#FFF1E5"),
 
-          axis.text =
-            element_text(family = "Ubuntu",
-                                   size = 7),
+  panel.grid = element_line(color = "grey90"),
 
-          axis.title =
-            element_text(family = "Ubuntu",
-                                    size = 11),
+  axis.text =
+    element_text(
+      family = "Ubuntu",
+      size = 7),
 
-          panel.border =
-            element_blank(),
+  axis.title =
+    element_text(
+      family = "Ubuntu",
+      size = 11),
 
-          strip.background = 
-            element_blank(),
+  panel.border =
+    element_blank(),
 
-          plot.title = 
-            element_text(family = "Verdana",
-                                    size = 15)
+  strip.background =
+    element_blank(),
 
-          ) 
+  plot.title =
+    element_text(
+      family = "Verdana",
+      size = 15
+    )
+)
 ```
 
 Add `my_theme` and `labs` to `gg_facet_by_country` 
 
 ```{r gg_facet_by_country-my_theme, fig.height=5, fig.width=7}
-gg_facet_by_country + 
-  
-  my_theme + 
-  
+gg_facet_by_country +
+
+  my_theme +
+
   labs
 ```
 

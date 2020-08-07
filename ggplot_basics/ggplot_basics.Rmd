@@ -13,14 +13,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE, 
-        tibble.max_extra_cols = 6, 
-        tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, 
-                      message = FALSE, 
-                      fig.align = "center", 
-                      dpi = 320, 
-                      fig.height = 4)
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", 
+                      dpi = 320, fig.height = 4)
 library(tidyverse)
 library(datasauRus)
 diabetes <- read_csv("diabetes.csv")
@@ -121,16 +116,14 @@ ggplot()
 
 ```{r slide-14}
 ggplot(mtcars, 
-       aes(x = mpg, 
-           y = hp))
+       aes(x = mpg, y = hp))
 ```
 
 ---
 
 ```{r slide-15}
 ggplot(mtcars, 
-       aes(x = mpg, 
-           y = hp)) +
+       aes(x = mpg, y = hp)) +
   geom_point()
 ```
 
@@ -176,20 +169,15 @@ ggplot(mtcars,
 
 ```{r slide-20, eval = FALSE}
 ggplot(data = diabetes, 
-       mapping = aes(x = weight, 
-                     y = hip)) +
-  geom_point()
+       mapping = aes(x = weight, y = hip)) + geom_point()
 ```
 
 ---
 
 ```{r slide-21}
 diabetes <- read_csv("diabetes.csv")
-
 ggplot(data = diabetes, 
-       mapping = aes(x = weight, 
-                     y = hip)) +
-  geom_point()
+       mapping = aes(x = weight, y = hip)) + geom_point()
 ```
 
 ---
@@ -224,9 +212,10 @@ ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
 ## Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph using the `gender` variable. Experiment.  
 
 ```{r slide-24, eval=FALSE}
-ggplot(data = diabetes, 
-       mapping = aes(x = weight, 
-                     y = hip)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip)
+) +
   geom_point()
 ```
 
@@ -235,52 +224,51 @@ ggplot(data = diabetes,
 ---
 
 ```{r slide-25}
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                color = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, color = gender)
+) +
   geom_point()
 ```
 
 ---
 
 ```{r slide-26}
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                size = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, size = gender)
+) +
   geom_point()
 ```
 
 ---
 
 ```{r slide-27}
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                alpha = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, alpha = gender)
+) +
   geom_point()
 ```
 
 ---
 
 ```{r slide-28}
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                shape = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, shape = gender)
+) +
   geom_point()
 ```
 
 ---
 
 ```{r slide-29, out.height="90%", out.width="90%"}
-ggplot(data = diabetes) +
-  geom_point(mapping = 
-               aes(x = weight, 
-                   y = hip, 
-                   color = gender, 
-                   shape = gender))
+ggplot(
+  data = diabetes) +
+  geom_point(
+  mapping = aes(x = weight, y = hip, color = gender, shape = gender)
+)
 ```
 
 ---
@@ -695,7 +683,6 @@ diamonds %>%
 ```{r}
 library(datasauRus)
 datasaurus_dozen 
-
 ```
 
 ---

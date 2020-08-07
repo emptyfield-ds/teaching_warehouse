@@ -3,7 +3,7 @@
   <head>
     <title>Data Visualization in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-07-23" />
+    <meta name="date" content="2020-08-06" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # <span style="color:#E69F00">Data Visualization in R</span>
 ## <span style="color:#56B4E9">ggplot2 and the grammar of graphics</span> <br>
-### 2020-07-23
+### 2020-08-06
 
 ---
 
@@ -136,8 +136,7 @@ ggplot()
 
 ```r
 ggplot(mtcars, 
-       aes(x = mpg, 
-           y = hp))
+       aes(x = mpg, y = hp))
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-14-1.png" style="display: block; margin: auto;" /&gt;
@@ -147,8 +146,7 @@ ggplot(mtcars,
 
 ```r
 ggplot(mtcars, 
-       aes(x = mpg, 
-           y = hp)) +
+       aes(x = mpg, y = hp)) +
   geom_point()
 ```
 
@@ -197,9 +195,7 @@ ggplot(mtcars,
 
 ```r
 ggplot(data = diabetes, 
-       mapping = aes(x = weight, 
-                     y = hip)) +
-  geom_point()
+       mapping = aes(x = weight, y = hip)) + geom_point()
 ```
 
 ---
@@ -207,11 +203,8 @@ ggplot(data = diabetes,
 
 ```r
 diabetes &lt;- read_csv("diabetes.csv")
-
 ggplot(data = diabetes, 
-       mapping = aes(x = weight, 
-                     y = hip)) +
-  geom_point()
+       mapping = aes(x = weight, y = hip)) + geom_point()
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-21-1.png" style="display: block; margin: auto;" /&gt;
@@ -250,9 +243,10 @@ ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
 
 
 ```r
-ggplot(data = diabetes, 
-       mapping = aes(x = weight, 
-                     y = hip)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip)
+) +
   geom_point()
 ```
 
@@ -262,10 +256,10 @@ ggplot(data = diabetes,
 
 
 ```r
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                color = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, color = gender)
+) +
   geom_point()
 ```
 
@@ -275,10 +269,10 @@ ggplot(data = diabetes,
 
 
 ```r
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                size = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, size = gender)
+) +
   geom_point()
 ```
 
@@ -288,10 +282,10 @@ ggplot(data = diabetes,
 
 
 ```r
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                alpha = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, alpha = gender)
+) +
   geom_point()
 ```
 
@@ -301,10 +295,10 @@ ggplot(data = diabetes,
 
 
 ```r
-ggplot(data = diabetes, 
-  mapping = aes(x = weight, 
-                y = hip, 
-                shape = gender)) +
+ggplot(
+  data = diabetes, 
+  mapping = aes(x = weight, y = hip, shape = gender)
+) +
   geom_point()
 ```
 
@@ -314,12 +308,11 @@ ggplot(data = diabetes,
 
 
 ```r
-ggplot(data = diabetes) +
-  geom_point(mapping = 
-               aes(x = weight, 
-                   y = hip, 
-                   color = gender, 
-                   shape = gender))
+ggplot(
+  data = diabetes) +
+  geom_point(
+  mapping = aes(x = weight, y = hip, color = gender, shape = gender)
+)
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-29-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;

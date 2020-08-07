@@ -13,12 +13,9 @@ output:
 class: middle, center
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE, 
-        tibble.max_extra_cols = 6, 
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, 
         tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, 
-                      message = FALSE, 
-                      fig.align = "center", 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", 
                       dpi = 320)
 library(tidyverse)
 ```
