@@ -19,10 +19,10 @@ library(tidyverse)
 ```
 
 
-```{r, out.height="70%", out.width="70%", echo = FALSE}
-knitr::include_graphics("tidyr_spread_gather.png")
+```{r original-dfs-tidy, out.height="70%", out.width="70%", echo = FALSE}
+knitr::include_graphics("original-dfs-tidy.png")
 ```
-.pull-right[Art by Allison Horst]
+.pull-right[Art by Garrick Aden‑Buie]
 
 ---
 background-image: url(http://hexb.in/hexagons/tidyr.png)
@@ -64,10 +64,10 @@ background-position: 90% 10%
 ---
 
 
-## `gather()`
+## `pivot_longer()`
 
 ```{r, eval=FALSE}
-gather(<DATA>, "<KEY>", "<VALUE>", <VARIABLES>)
+pivot_longer(<DATA>, <NAMES TO>, <VALUES TO>, <VARIABLES>)
 ```
 
 ---
@@ -105,20 +105,24 @@ knitr::include_graphics("new_data_alert_lotr.png")
 
 ---
 
-## `gather()`
+## `pivot_longer()`
 
 ```{r, eval=FALSE}
 lotr %>% 
-  gather("sex", "words", female:male) #<<
+  pivot_longer(names_to = "sex", #<<
+               values_to = "words", #<<
+               cols = female:male) #<<
 ```
 
 ---
 
-## `gather()`
+## `pivot_longer()`
 
 ```{r, highlight.output = 2}
 lotr %>% 
-  gather("sex", "words", female:male)
+  pivot_longer(names_to = "sex", 
+               values_to = "words", 
+               cols = female:male)
 ```
 
 ---
@@ -132,63 +136,74 @@ knitr::include_graphics("new_data_alert_tidyr.png")
 ## Your Turn 1
 
 
-### Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+### Use `pivot_longer()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
 
 ---
 
 ## Your Turn 1
 
 
-### Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+### Use `pivot_longer()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
 
 ```{r}
 table4a %>% 
-  gather("year", "cases", -country)
+  pivot_longer(names_to = "year", 
+               values_to = "cases", 
+               cols = -country)
 ```
 
 ---
 
-## `spread()`
+## `pivot_wider()`
 
 ```{r, eval=FALSE}
-spread(<DATA>, <KEY>, <VALUE>)
+pivot_wider(<DATA>, <NAMES FROM>, <VALUES FROM>)
 ```
 
 ---
 
-## `spread()`
-
-```{r, eval=FALSE}
-lotr %>% 
-  gather("sex", "words", female:male) %>% #<<
-  spread(race, words)
-```
-
----
-
-## `spread()`
+## `pivot_wider()`
 
 ```{r, eval=FALSE}
 lotr %>% 
-  gather("sex", "words", female:male) %>% 
-  spread(race, words) #<<
+  pivot_longer(names_to = "sex", #<<
+               values_to = "words", #<<
+               cols = female:male) %>% #<<
+  pivot_wider(names_from = race, 
+              values_from = words)
 ```
 
 ---
 
-## `spread()`
+## `pivot_wider()`
+
+```{r, eval=FALSE}
+lotr %>% 
+  pivot_longer(names_to = "sex", 
+               values_to = "words", 
+               cols = female:male) %>% 
+  pivot_wider(names_from = race, #<<
+              values_from = words) #<<
+```
+
+---
+
+## `pivot_wider()`
 
 ```{r, highlight.output=2}
 lotr %>% 
-  gather("sex", "words", female:male) %>% 
-  spread(race, words)
+  pivot_longer(names_to = "sex", 
+               values_to = "words", 
+               cols = female:male) %>% 
+  pivot_wider(names_from = race, 
+              values_from = words)
 ```
 
 ---
 
 ## Your Turn 2
 
-### Use `spread()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
+### Use `pivot_wider()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
 ### Create a new variable called `prevalence` that divides `cases` by `population` multiplied by 100000.
 ###  Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom. 
 
@@ -202,7 +217,8 @@ table2
 
 ```{r}
 table2 %>% 
-  spread(type, count) %>% #<<
+  pivot_wider(names_from = type, #<<
+              values_from = count) %>% #<<
   mutate(prevalence = (cases/population) * 100000) #<<
 ```
 
@@ -212,7 +228,8 @@ table2 %>%
 
 ```{r,eval=FALSE}
 table2 %>% 
-  spread(type, count) %>% 
+  pivot_wider(names_from = type, 
+              values_from = count) %>% 
   mutate(prevalence = (cases/population) * 100000) %>% 
   ggplot(aes(x = year, y = prevalence, color = country)) +  #<<
     geom_point(size = 2) +  #<<
@@ -226,7 +243,8 @@ table2 %>%
 
 ```{r echo=FALSE, fig.width=5.5, out.height="50%", out.width="50%"}
 table2 %>% 
-  spread(type, count) %>% 
+  pivot_wider(names_from = type, 
+              values_from = count) %>% 
   mutate(prevalence = (cases/population) * 100000) %>% 
   ggplot(aes(x = year, y = prevalence, color = country)) + 
     geom_point(size = 2) + 
@@ -238,16 +256,18 @@ table2 %>%
 
 class: center, middle
 
-## `gather()` and `spread()`
+## `pivot_longer()` and `pivot_wider()`
 
-![](https://github.com/gadenbuie/tidyexplain/raw/master/images/tidyr-spread-gather.gif)
+```{r tidyr-longer-wider, out.height="65%", out.width="65%", echo = FALSE}
+knitr::include_graphics("tidyr-longer-wider.gif")
+```
 .pull-right[Animation: Garrick Aden-Buie]
 
 ---
 
 ## Your Turn 3
 
-### Gather the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
+### Pivot the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
 
 ```{r, eval = FALSE}
 who
@@ -259,7 +279,9 @@ who
 
 ```{r, eval=FALSE}
 who %>% 
-  gather("codes", "n", 5:60) %>% #<<
+  pivot_longer(names_to = "codes", #<<
+               values_to = "n", #<<
+               cols = 5:60) %>% #<<
   select(country, year, codes, n)
 ```
 
@@ -269,7 +291,9 @@ who %>%
 
 ```{r}
 who %>%
-  gather("codes", "n", 5:60) %>% 
+  pivot_longer(names_to = "codes", 
+               values_to = "n", 
+               cols = 5:60) %>% 
   select(country, year, codes, n)
 ```
 
@@ -362,7 +386,7 @@ separate(cases, sex_age, into = c("sex", "age"), convert = TRUE) #<<
 #### There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
 
 #### Import the data
-#### Gather the columns into 2 new columns called `year` and `incidence`
+#### Pivot the columns into 2 new columns called `year` and `incidence`
 #### Add a new variable called `race`. Remember that each data set corresponds to a single race.
 #### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
 #### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
@@ -374,7 +398,9 @@ separate(cases, sex_age, into = c("sex", "age"), convert = TRUE) #<<
 
 ```{r, eval=FALSE}
 lotr %>% 
-  gather("sex", "count", female, male) %>% #<<
+  pivot_longer(names_to = "sex", #<<
+               values_to = "count", #<<
+               cols = c(female, male)) %>% #<<
   uncount(count) #<<
 ```
 
@@ -385,7 +411,10 @@ lotr %>%
 
 ```{r, echo=FALSE, highlight.output = 1:2}
 lotr %>% 
-  gather("sex", "count", female, male) %>% 
+  pivot_longer(
+    names_to = "sex", 
+    values_to = "count", 
+    cols = c(female, male)) %>% 
   uncount(count)
 ```
 
@@ -403,16 +432,6 @@ lotr %>%
 ## Work with missing data
 ## **`complete()`**
 ## **`drop_na()`** and **`replace_na()`**
-
----
- 
-# In development: `pivot_longer()`, `pivot_wider()`
-
-```{r, out.height="60%", out.width="60%", echo = FALSE}
-knitr::include_graphics("pivot.png")
-```
-
-## https://tidyr.tidyverse.org/dev/
 
 ---
 

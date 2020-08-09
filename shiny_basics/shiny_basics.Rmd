@@ -473,14 +473,38 @@ output$moviestable <- DT::renderDataTable({
 
 ## Your Turn 6
 
-### Add a title to your app with `headerPanel()`
-### Make the input choices nicer by making the vector named, e.g. `choices = c("IMDB rating" = "imdb_rating", ...)`
-### Clean up your axes titles with: 
-### `str_to_title()` to change to title case 
-### `str_replace_all()` to replace `_` with `" "`
+### Add a title to your app with `headerPanel()`  
+
+### Make the input choices nicer by making the vector named, e.g. `choices = c("IMDB rating" = "imdb_rating", ...)`  
+
+### Clean up your axes titles with:  
+
+#### `str_replace_all()` to replace `_` with `" "`  
+
+#### `str_to_title()` to change to title case 
 
 ---
 
+## Your Turn 6 
+
+`str_replace_all()` takes three arguments, 
+
+```{r , eval=FALSE}
+str_replace_all(string = , # input variable
+                pattern = , # pattern to look for
+                replacement = # character vector of replacements
+                )
+```
+
+`str_to_title()` converts the case of a string to title case.
+
+```{r , eval=FALSE}
+str_to_title(string = # string to modify
+               )
+```
+
+
+---
 
 ## Your Turn 6 (solution: `movies_05.R`)
 
@@ -515,9 +539,15 @@ output$scatterplot <- renderPlot({
     aes_string(x = input$x, y = input$y, color = input$z)) +
     geom_point(alpha = input$alpha) +
     labs(
-      x = str_to_title(str_replace_all(input$x, "_", " ")),
-      y = str_to_title(str_replace_all(input$y, "_", " ")),
-      color = str_to_title(str_replace_all(input$z, "_", " "))
+      x = str_to_title(string = str_replace_all(string = input$x, 
+                                       pattern = "_", 
+                                       replacement = " ")),
+      y = str_to_title(string = str_replace_all(string = input$y, 
+                                       pattern = "_", 
+                                       replacement = " ")),
+      color = str_to_title(string = str_replace_all(string = input$z, 
+                                           pattern = "_", 
+                                           replacement = " "))
     )
 })
 ```
@@ -568,9 +598,35 @@ output$scatterplot <- renderPlot({
 
 ## Your Turn 7
 
-## Create folder called movies_app
+## Create folder called `movies_app`
+
 ## Move any of the (working) app files into this folder, along with `movies.Rdata`
-## Go to http://shinyapps.io. Sign up for an account. Follow the instructions to deply your app.
+
+## Go to http://shinyapps.io. Sign up for an account ([instructions](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)). 
+
+---
+
+## Your turn 7
+
+### Click on the 'Tokens' option under your username (upper right corner)
+
+```{r tokens.png, out.width="50%", out.height="50%", echo=FALSE}
+knitr::include_graphics(path = "tokens.png")
+```
+
+
+---
+
+## Your Turn 7
+
+### Click 'Show' button on the 'Token' page
+### Copy this to the clipboard, paste it into the console in the RStudio IDE, hit Enter
+
+```{r tokens2.png, out.width="50%", out.height="50%", echo=FALSE}
+knitr::include_graphics(path = "tokens2.png")
+```
+
+
 
 ---
 

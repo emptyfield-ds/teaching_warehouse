@@ -320,7 +320,7 @@ gapminder %>%
 ### Create a numeric vector that has the following values: 3, 5, NA, 2, and NA. 
 ### Try using `sum()`. Then add `na.rm = TRUE`.
 ### Check which values are missing with `is.na()`; save the results to a new object and take a look
-### Chance all missing values of `x` to 0
+### Change all missing values of `x` to 0
 ### Try `sum()` again without `na.rm = TRUE`.
 
 ---

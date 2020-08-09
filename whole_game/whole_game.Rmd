@@ -127,8 +127,10 @@ This chunk can take a while to run. Set the code chunk option `cache = TRUE` for
 ```{r}
 _______ <- titanic %>% 
   ______ ___
-  mice(method = "norm") %>% 
-  complete() 
+  # added the haven::zap_labels because of error
+  purrr::map_df(haven::zap_labels) %>% 
+  mice(method = "norm") %>%
+  complete()
 
 titanic$mice_age <- imputed_titanic$age
 titanic$mice_embarked <- imputed_titanic$embarked
@@ -154,8 +156,9 @@ ______(survived ~ age, data = titanic, family = binomial()) %>%
 It might also be useful to visualize their distributions. 
 
 1. Subset the two age columns
-2. Use tidyr to gather the variable names into one column and the values into another. Since you're only passing two columns, you don't need to change any function arguments. Remember the new columns are called "key" and "value" by default.
-3. Color and fill the density plots by `key`.
+2. Use tidyr to `pivot_longer()` the variable names into one column and the values into another. Since you're passing two columns, you need to specify the `cols =` argument. Name the new columns `"key"` and `"value"` using `names_to` and `values_to`.
+
+3. Color and fill the density plots by the new `key`.
 
 ```{r}
 # 
@@ -198,8 +201,10 @@ Paired plots contain a lot of information, which is a pro and a con. What do you
 We'll use a a logistic regression to predict survival. Remember that `survival=1` means survival, so a higher odds ratio means greater odds of survival.
 
 1. Fit a model with survived as the outcome and mice_age, sex, pclass, sibsp, parch, mice_embarked, and title as predictors. Save the model as `survived_model`
+
 2. Tidy the results.
-3. Pass the results to `mutate_if()`. This function takes a predicate function (one that produces a `TRUE`/`FALSE` answer) and applies a function to any variables that result in `TRUE`. Here, we're going to round all variables that are numeric to 2 digits. 
+
+3. Pass the results to `mutate(across(where(is.numeric), round, digits = 2))`. These functions take a predicate function (one that produces a `TRUE`/`FALSE` answer). In this case, that's `is.numeric`. Then it applies a function to any variables that result in `TRUE`. Here, we're going to `round` all variables that are numeric to `2` digits.
 
 ```{r}
 _______ ___ glm(_______, data = titanic, family = binomial)
@@ -207,7 +212,7 @@ _______ ___ glm(_______, data = titanic, family = binomial)
 survived_model %>% 
   _______() %>% 
   #  round all numeric variables to 2 digits
-  _______(is.numeric, round, digits = 2)
+  mutate(across(where(_______), round, digits = 2))
 ```
 
 What's going on with this model? Something looks wrong. Try to fix it. Hint: when variables on the right hand side of the formula are highly correlated with each other (collinear), it can sometimes mess up the model fit. This often shows itself through extremely high standard errors. 
@@ -231,8 +236,11 @@ Did your changes work?
 Let's save a cleaned up table of the model results. We'll get the estimates and confidence intervals, exponentiation them, and round them. 
 
 1. Tidy the results. Get the confidence intervals using the argument `conf.int = TRUE`.
+
 2. Select only the term, estimate, and the upper and lower CIs. To get the confidence intervals, you can enter in the names directly or use dplyr helpers like `starts_with()`.
+
 3. Exponentiate any variable that's numeric. The function for exponentiating is `exp()`.
+
 4. Round any variable that's numeric.
 
 ```{r}
@@ -241,8 +249,8 @@ model_table <- survived_model2 %>%
   #  filter out the intercept. no need to change this line.
   filter(term != "(Intercept)") %>% 
   ______(term, estimate, _______) %>% 
-  ______(______, exp) %>%
-  mutate_if(is.numeric, ______, digits = ___)
+  mutate(______(where(is.numeric), ___)) %>%
+  mutate(across(_______(is.numeric), round, digits = 2))
 
 model_table
 ```

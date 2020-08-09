@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Web apps in R with Shiny</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2020-07-27" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -12,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Web apps in R with Shiny
-### 2019-08-29
+### 2020-07-27
 
 ---
 
@@ -474,14 +475,40 @@ output$moviestable &lt;- DT::renderDataTable({
 
 ## Your Turn 6
 
-### Add a title to your app with `headerPanel()`
-### Make the input choices nicer by making the vector named, e.g. `choices = c("IMDB rating" = "imdb_rating", ...)`
-### Clean up your axes titles with: 
-### `str_to_title()` to change to title case 
-### `str_replace_all()` to replace `_` with `" "`
+### Add a title to your app with `headerPanel()`  
+
+### Make the input choices nicer by making the vector named, e.g. `choices = c("IMDB rating" = "imdb_rating", ...)`  
+
+### Clean up your axes titles with:  
+
+#### `str_replace_all()` to replace `_` with `" "`  
+
+#### `str_to_title()` to change to title case 
 
 ---
 
+## Your Turn 6 
+
+`str_replace_all()` takes three arguments, 
+
+
+```r
+str_replace_all(string = , # input variable
+                pattern = , # pattern to look for
+                replacement = # character vector of replacements
+                )
+```
+
+`str_to_title()` converts the case of a string to title case.
+
+
+```r
+str_to_title(string = # string to modify
+               )
+```
+
+
+---
 
 ## Your Turn 6 (solution: `movies_05.R`)
 
@@ -519,9 +546,15 @@ output$scatterplot &lt;- renderPlot({
     aes_string(x = input$x, y = input$y, color = input$z)) +
     geom_point(alpha = input$alpha) +
     labs(
-      x = str_to_title(str_replace_all(input$x, "_", " ")),
-      y = str_to_title(str_replace_all(input$y, "_", " ")),
-      color = str_to_title(str_replace_all(input$z, "_", " "))
+      x = str_to_title(string = str_replace_all(string = input$x, 
+                                       pattern = "_", 
+                                       replacement = " ")),
+      y = str_to_title(string = str_replace_all(string = input$y, 
+                                       pattern = "_", 
+                                       replacement = " ")),
+      color = str_to_title(string = str_replace_all(string = input$z, 
+                                           pattern = "_", 
+                                           replacement = " "))
     )
 })
 ```
@@ -574,9 +607,31 @@ output$scatterplot &lt;- renderPlot({
 
 ## Your Turn 7
 
-## Create folder called movies_app
+## Create folder called `movies_app`
+
 ## Move any of the (working) app files into this folder, along with `movies.Rdata`
-## Go to http://shinyapps.io. Sign up for an account. Follow the instructions to deply your app.
+
+## Go to http://shinyapps.io. Sign up for an account ([instructions](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)). 
+
+---
+
+## Your turn 7
+
+### Click on the 'Tokens' option under your username (upper right corner)
+
+&lt;img src="tokens.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Your Turn 7
+
+### Click 'Show' button on the 'Token' page
+### Copy this to the clipboard, paste it into the console in the RStudio IDE, hit Enter
+
+&lt;img src="tokens2.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+
 
 ---
 
@@ -585,6 +640,7 @@ class: inverse, center
 # Resources
 ## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
 ## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -631,9 +687,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -642,7 +714,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

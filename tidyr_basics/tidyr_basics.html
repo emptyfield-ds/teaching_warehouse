@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Tidying Data</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2020-07-27" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -13,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Tidying Data
 ## <span style="color:#56B4E9">tidyr</span> <br>
-### 2019-08-29
+### 2020-07-27
 
 ---
 
@@ -21,8 +22,8 @@ class: center, middle, inverse, title-slide
 
 
 
-&lt;img src="tidyr_spread_gather.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
-.pull-right[Art by Allison Horst]
+&lt;img src="original-dfs-tidy.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+.pull-right[Art by Garrick Aden‑Buie]
 
 ---
 background-image: url(http://hexb.in/hexagons/tidyr.png)
@@ -64,11 +65,11 @@ background-position: 90% 10%
 ---
 
 
-## `gather()`
+## `pivot_longer()`
 
 
 ```r
-gather(&lt;DATA&gt;, "&lt;KEY&gt;", "&lt;VALUE&gt;", &lt;VARIABLES&gt;)
+pivot_longer(&lt;DATA&gt;, &lt;NAMES TO&gt;, &lt;VALUES TO&gt;, &lt;VARIABLES&gt;)
 ```
 
 ---
@@ -121,22 +122,26 @@ lotr
 
 ---
 
-## `gather()`
+## `pivot_longer()`
 
 
 ```r
 lotr %&gt;% 
-* gather("sex", "words", female:male)
+* pivot_longer(names_to = "sex",
+*              values_to = "words",
+*              cols = female:male)
 ```
 
 ---
 
-## `gather()`
+## `pivot_longer()`
 
 
 ```r
 lotr %&gt;% 
-  gather("sex", "words", female:male)
+  pivot_longer(names_to = "sex", 
+               values_to = "words", 
+               cols = female:male)
 ```
 
 ```
@@ -144,15 +149,15 @@ lotr %&gt;%
 *##    film                       race   sex    words
 ##    &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;
 ##  1 The Fellowship Of The Ring Elf    female  1229
-##  2 The Fellowship Of The Ring Hobbit female    14
-##  3 The Fellowship Of The Ring Man    female     0
-##  4 The Two Towers             Elf    female   331
-##  5 The Two Towers             Hobbit female     0
-##  6 The Two Towers             Man    female   401
-##  7 The Return Of The King     Elf    female   183
-##  8 The Return Of The King     Hobbit female     2
-##  9 The Return Of The King     Man    female   268
-## 10 The Fellowship Of The Ring Elf    male     971
+##  2 The Fellowship Of The Ring Elf    male     971
+##  3 The Fellowship Of The Ring Hobbit female    14
+##  4 The Fellowship Of The Ring Hobbit male    3644
+##  5 The Fellowship Of The Ring Man    female     0
+##  6 The Fellowship Of The Ring Man    male    1995
+##  7 The Two Towers             Elf    female   331
+##  8 The Two Towers             Elf    male     513
+##  9 The Two Towers             Hobbit female     0
+## 10 The Two Towers             Hobbit male    2463
 ## # … with 8 more rows
 ```
 
@@ -165,19 +170,21 @@ lotr %&gt;%
 ## Your Turn 1
 
 
-### Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+### Use `pivot_longer()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
 
 ---
 
 ## Your Turn 1
 
 
-### Use `gather()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+### Use `pivot_longer()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
 
 
 ```r
 table4a %&gt;% 
-  gather("year", "cases", -country)
+  pivot_longer(names_to = "year", 
+               values_to = "cases", 
+               cols = -country)
 ```
 
 ```
@@ -185,53 +192,62 @@ table4a %&gt;%
 ##   country     year   cases
 ##   &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
 ## 1 Afghanistan 1999     745
-## 2 Brazil      1999   37737
-## 3 China       1999  212258
-## 4 Afghanistan 2000    2666
-## 5 Brazil      2000   80488
+## 2 Afghanistan 2000    2666
+## 3 Brazil      1999   37737
+## 4 Brazil      2000   80488
+## 5 China       1999  212258
 ## 6 China       2000  213766
 ```
 
 ---
 
-## `spread()`
+## `pivot_wider()`
 
 
 ```r
-spread(&lt;DATA&gt;, &lt;KEY&gt;, &lt;VALUE&gt;)
+pivot_wider(&lt;DATA&gt;, &lt;NAMES FROM&gt;, &lt;VALUES FROM&gt;)
 ```
 
 ---
 
-## `spread()`
+## `pivot_wider()`
 
 
 ```r
 lotr %&gt;% 
-* gather("sex", "words", female:male) %&gt;%
-  spread(race, words)
+* pivot_longer(names_to = "sex",
+*              values_to = "words",
+*              cols = female:male) %&gt;%
+  pivot_wider(names_from = race, 
+              values_from = words)
 ```
 
 ---
 
-## `spread()`
+## `pivot_wider()`
 
 
 ```r
 lotr %&gt;% 
-  gather("sex", "words", female:male) %&gt;% 
-* spread(race, words)
+  pivot_longer(names_to = "sex", 
+               values_to = "words", 
+               cols = female:male) %&gt;% 
+* pivot_wider(names_from = race,
+*             values_from = words)
 ```
 
 ---
 
-## `spread()`
+## `pivot_wider()`
 
 
 ```r
 lotr %&gt;% 
-  gather("sex", "words", female:male) %&gt;% 
-  spread(race, words)
+  pivot_longer(names_to = "sex", 
+               values_to = "words", 
+               cols = female:male) %&gt;% 
+  pivot_wider(names_from = race, 
+              values_from = words)
 ```
 
 ```
@@ -240,17 +256,17 @@ lotr %&gt;%
 ##   &lt;chr&gt;                      &lt;chr&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt;
 ## 1 The Fellowship Of The Ring female  1229     14     0
 ## 2 The Fellowship Of The Ring male     971   3644  1995
-## 3 The Return Of The King     female   183      2   268
-## 4 The Return Of The King     male     510   2673  2459
-## 5 The Two Towers             female   331      0   401
-## 6 The Two Towers             male     513   2463  3589
+## 3 The Two Towers             female   331      0   401
+## 4 The Two Towers             male     513   2463  3589
+## 5 The Return Of The King     female   183      2   268
+## 6 The Return Of The King     male     510   2673  2459
 ```
 
 ---
 
 ## Your Turn 2
 
-### Use `spread()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
+### Use `pivot_wider()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
 ### Create a new variable called `prevalence` that divides `cases` by `population` multiplied by 100000.
 ###  Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom. 
 
@@ -266,7 +282,8 @@ table2
 
 ```r
 table2 %&gt;% 
-* spread(type, count) %&gt;%
+* pivot_wider(names_from = type,
+*             values_from = count) %&gt;%
 * mutate(prevalence = (cases/population) * 100000)
 ```
 
@@ -289,7 +306,8 @@ table2 %&gt;%
 
 ```r
 table2 %&gt;% 
-  spread(type, count) %&gt;% 
+  pivot_wider(names_from = type, 
+              values_from = count) %&gt;% 
   mutate(prevalence = (cases/population) * 100000) %&gt;% 
 * ggplot(aes(x = year, y = prevalence, color = country)) +
 *   geom_point(size = 2) +
@@ -301,22 +319,22 @@ table2 %&gt;%
 
 ## Your Turn 2
 
-&lt;img src="tidyr_basics_files/figure-html/unnamed-chunk-16-1.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="tidyr_basics_files/figure-html/unnamed-chunk-15-1.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 class: center, middle
 
-## `gather()` and `spread()`
+## `pivot_longer()` and `pivot_wider()`
 
-![](https://github.com/gadenbuie/tidyexplain/raw/master/images/tidyr-spread-gather.gif)
+&lt;img src="tidyr-longer-wider.gif" width="65%" height="65%" style="display: block; margin: auto;" /&gt;
 .pull-right[Animation: Garrick Aden-Buie]
 
 ---
 
 ## Your Turn 3
 
-### Gather the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
+### Pivot the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
 
 
 ```r
@@ -330,7 +348,9 @@ who
 
 ```r
 who %&gt;% 
-* gather("codes", "n", 5:60) %&gt;%
+* pivot_longer(names_to = "codes",
+*              values_to = "n",
+*              cols = 5:60) %&gt;%
   select(country, year, codes, n)
 ```
 
@@ -341,24 +361,26 @@ who %&gt;%
 
 ```r
 who %&gt;%
-  gather("codes", "n", 5:60) %&gt;% 
+  pivot_longer(names_to = "codes", 
+               values_to = "n", 
+               cols = 5:60) %&gt;% 
   select(country, year, codes, n)
 ```
 
 ```
 ## # A tibble: 405,440 x 4
-##    country      year codes           n
-##    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;
-##  1 Afghanistan  1980 new_sp_m014    NA
-##  2 Afghanistan  1981 new_sp_m014    NA
-##  3 Afghanistan  1982 new_sp_m014    NA
-##  4 Afghanistan  1983 new_sp_m014    NA
-##  5 Afghanistan  1984 new_sp_m014    NA
-##  6 Afghanistan  1985 new_sp_m014    NA
-##  7 Afghanistan  1986 new_sp_m014    NA
-##  8 Afghanistan  1987 new_sp_m014    NA
-##  9 Afghanistan  1988 new_sp_m014    NA
-## 10 Afghanistan  1989 new_sp_m014    NA
+##    country      year codes            n
+##    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 Afghanistan  1980 new_sp_m014     NA
+##  2 Afghanistan  1980 new_sp_m1524    NA
+##  3 Afghanistan  1980 new_sp_m2534    NA
+##  4 Afghanistan  1980 new_sp_m3544    NA
+##  5 Afghanistan  1980 new_sp_m4554    NA
+##  6 Afghanistan  1980 new_sp_m5564    NA
+##  7 Afghanistan  1980 new_sp_m65      NA
+##  8 Afghanistan  1980 new_sp_f014     NA
+##  9 Afghanistan  1980 new_sp_f1524    NA
+## 10 Afghanistan  1980 new_sp_f2534    NA
 ## # … with 405,430 more rows
 ```
 
@@ -484,7 +506,7 @@ cases &lt;- tribble(
 #### There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
 
 #### Import the data
-#### Gather the columns into 2 new columns called `year` and `incidence`
+#### Pivot the columns into 2 new columns called `year` and `incidence`
 #### Add a new variable called `race`. Remember that each data set corresponds to a single race.
 #### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
 #### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
@@ -497,7 +519,9 @@ cases &lt;- tribble(
 
 ```r
 lotr %&gt;% 
-* gather("sex", "count", female, male) %&gt;%
+* pivot_longer(names_to = "sex",
+*              values_to = "count",
+*              cols = c(female, male)) %&gt;%
 * uncount(count)
 ```
 
@@ -600,9 +624,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -611,7 +651,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

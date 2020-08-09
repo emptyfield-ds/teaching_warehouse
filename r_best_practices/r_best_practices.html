@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Best Practices in R</title>
     <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -11,13 +12,19 @@
 class: center, middle, inverse, title-slide
 
 # Best Practices in R
-### 2019-08-29 <br><br>developed by Emil Hvitfeldt
+### 2020-07-27 <br><br>developed by Emil Hvitfeldt
 
 ---
 
 
 
 
+
+## Welcome! 
+
+&lt;img src="images/r_first_then.png" width="58%" height="58%" style="display: block; margin: auto;" /&gt;
+
+---
 
 ## Change Settings
 
@@ -620,6 +627,81 @@ factor_to_text &lt;- function(data, names) {
   data
 }
 ```
+
+---
+
+## Updating R and RStudio
+
+### The most recent version of R can be downloaded from [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+
+
+&lt;img src="https://cran.r-project.org/Rlogo.svg" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Updating R and RStudio
+
+### Download the most recent version of RStudio at their [downloads page](https://rstudio.com/products/rstudio/download/)
+
+&lt;img src="images/rstudio-downloads.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## How to ask for help (`datapasta` and `reprex`)
+
+#### The `reprex` package helps you create a reproducible example  
+
+#### `datapasta` lets you easy copy + paste small samples of data into RStudio
+
+&lt;img src="images/datapasta-reprex-spreadsheet.gif" width="65%" height="65%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## How to ask for help (`reprex`)
+
+### Check out the [package website](https://reprex.tidyverse.org/) and [RStudio webinar](https://rstudio.com/resources/webinars/help-me-help-you-creating-reproducible-examples/) on creating reproducible examples
+
+&lt;img src="images/reprex.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Where to get help
+
+### RStudio has a helpful community if you have questions (everyone does!)
+
+#### RStudio Community:
+
+RStudio has a dedicated forum for questions related to R and RStudio: https://community.rstudio.com/
+
+&lt;img src="images/rstudio-community.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Where else to get help
+
+### Stack Overflow
+
+Check out the questions tagged `r` on Stack Overflow: https://stackoverflow.com/questions/tagged/r
+
+&lt;img src="images/r-tag-stackoverflow.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Where else to get help 
+
+### `#rstats` on Twitter
+
+If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/rstats
+
+&lt;img src="images/welcome_to_rstats_twitter.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+.pull-right[![#rstats on twitter](images/welcome_to_rstats_twitter.png)]
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -666,9 +748,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -677,7 +775,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
