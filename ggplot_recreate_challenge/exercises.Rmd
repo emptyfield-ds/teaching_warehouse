@@ -23,7 +23,7 @@ The purpose of this exercise is to make a publication-ready plot using your `dpl
 
 Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks*. 
 
-The data you need is "`FtExcessDeaths.csv`" in the `data` folder. You'll have 1 hour to see what you can come up with in groups or individually!
+The data you need is "`ft_excess_deaths.csv`" in the `data` folder. You'll have 1 hour to see what you can come up with in groups or individually!
 
 You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
 
@@ -35,29 +35,29 @@ library(tidyverse)
 
 ## Import the data
 
-Import the .csv file below into `FtExcessDeaths`.
+Import the .csv file below into `excess_deaths` using `read_csv()`
 
-```{r import-FtExcessDeaths}
-FtExcessDeaths <- read_csv("data/FtExcessDeaths.csv")
+```{r import-ft_excess_deaths}
+ft_excess_deaths <- ________("data/ft_excess_deaths.csv")
 ```
 
 ### View the data 
 
-Use `glimpse()` and `skim()` to view the `FtExcessDeaths` data. 
+Use `glimpse()` to view the `excess_deaths` data. 
 
 ```{r glimpse}
 glimpse(______)
 ```
 
+The skimr package has a function called `skim()`, which is a useful way to take a quick look at your data. Load the skimr package, then call `skim()` on `ft_excess_deaths.`
+
 ```{r skimr}
-library(skimr)
-skim(______)
+library(______)
+_________
 ```
 
 
-### What are the variables measuring?
-
-Below is a portion of the [README.md file](https://github.com/Financial-Times/coronavirus-excess-mortality-data/blob/master/README.md) from the FT Github repo: 
+What are the variables measuring? The authors included a data dictionary in the [README file](https://github.com/Financial-Times/coronavirus-excess-mortality-data/blob/master/README.md) associated with these data: 
 
 ```
 ## Data definitions
@@ -91,10 +91,10 @@ following fields:
 
 ### How many countries are in this dataset?
 
-Use `dplyr::count()` to determine how many countries are in the `FtExcessDeaths` data.
+Use `dplyr::count()` to determine how many countries are in the `ft_excess_deaths` data.
 
 ```{r count-countries}
-dplyr::count(x = FtExcessDeaths, # _______)
+dplyr::count(x = ft_excess_deaths, # _______)
 ```
 
 
@@ -106,17 +106,17 @@ Let's start by building a single plot like the ones in the FT graphic. Below is 
 knitr::include_graphics("latest-data.png")
 ```
 
-In order to build this graph, we will need to filter `FtExcessDeaths` to only the data for `"UK"` and store it in `UKExcessDeaths`. 
+In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `UKExcessDeaths`. 
 
 ```{r create-UKExcessDeaths}
-UKExcessDeaths <- FtExcessDeaths %>% dplyr::filter(# country == _____)
+UKExcessDeaths <- ft_excess_deaths %>% dplyr::filter(# country == _____)
 ```
 
 ### What can we learn from the labels? 
 
 The labels and subtitles tells us that we're looking at three metrics: 1) the number of deaths from all causes in 2020, and the number of deaths from previous years (lines in gray), and the historical average (black line).
 
-We're going to build this graph from the `UKExcessDeaths`, and then apply what we've learned to the entire `FtExcessDeaths` dataset. 
+We're going to build this graph from the `UKExcessDeaths`, and then apply what we've learned to the entire `ft_excess_deaths` dataset. 
 
 ## Building the plot layer-by-layer
 
@@ -355,12 +355,12 @@ labs <- ggplot2::labs(x = # "", y = # "", title = # "", subtitle = # "")
 
 ### Create the data layers 
 
-Below is the code for reproducing the steps and creating the three data layers we built above. We end up with `ExcessDeathsPriorWk`, `ExcessDeaths2020Wk`, and `FtExcessDeathsWk`. Read through the comments for more information.
+Below is the code for reproducing the steps and creating the three data layers we built above. We end up with `ExcessDeathsPriorWk`, `ExcessDeaths2020Wk`, and `ft_excess_deathsWk`. Read through the comments for more information.
 
 ```{r facet-data}
 # create ExcessDeathsPriorWk ----
 # filter to correct date range
-ExcessDeathsPriorWk <- FtExcessDeaths %>%
+ExcessDeathsPriorWk <- ft_excess_deaths %>%
   dplyr::filter(year != # ) %>%
 # ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our plot will have deaths on the y axis, and weeks across the x for each 
@@ -375,7 +375,7 @@ ExcessDeathsPriorWk <- FtExcessDeaths %>%
                 year = factor(year))
 
 # create ExcessDeaths2020Wk ----
-ExcessDeaths2020Wk <- FtExcessDeaths %>%
+ExcessDeaths2020Wk <- ft_excess_deaths %>%
   dplyr::filter(year == 2020) %>%
 # ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our plot will also have 2020 deaths on the y axis, and weeks across the x, 
@@ -390,8 +390,8 @@ ExcessDeaths2020Wk <- FtExcessDeaths %>%
                 # ~~ factor years ------
                 year = factor(year))
 
-# create FtExcessDeathsWk ----------------------------------------------------
-FtExcessDeathsWk <- FtExcessDeaths %>%
+# create ft_excess_deathsWk ----------------------------------------------------
+ft_excess_deathsWk <- ft_excess_deaths %>%
 #  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # The last data layer for our plot all us to put deaths on the y axis, and 
 # weeks across the x. We will calculate the mean number of deaths per country 
@@ -447,9 +447,9 @@ gg_facet_by_country <- ggplot(data = ExcessDeathsPriorWk,
 
 
 # historical averages -----------------------------------------------------
-# these is the data from FtExcessDeathsWk (grouped only on country and week)
+# these is the data from ft_excess_deathsWk (grouped only on country and week)
 # remove the inherited aesthetics from the previous layers
-    geom_line(data = FtExcessDeathsWk,
+    geom_line(data = ft_excess_deathsWk,
               # _____ = FALSE,
 # here we're only mapping an x and y variable
 # set the color to "black"
