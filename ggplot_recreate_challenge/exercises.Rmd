@@ -201,23 +201,25 @@ gg_uk_recent_years
 
 The second layer will be mean deaths per week and year in 2020 (since the coronavirus pandemic). 
 
-We'll build this data layer similar to the one above, but filtered to only the `year` 2020, but this time we will also get the mean `deaths` and the mean `expected_deaths`. 
+We'll build this data layer similar to the one above but for 2020. This time we will also get the mean `deaths` and the mean `expected_deaths`. 
 
-```{r create-uk_excess_deaths2020Wk}
-# filter to the year 2020
-uk_excess_deaths2020 <- uk_excess_deaths %>%
-  filter(# year == )
-# create uk_excess_deaths2020Wk
-uk_excess_deaths2020Wk <- uk_excess_deaths2020 %>%
-  # group by the week and year
-  group_by(# week, # year) %>%
-    # calculate mean deaths and mean expected_deaths
-    summarize(deaths = # mean(, na.rm = TRUE),
-                     expected_deaths = # mean(, na.rm = TRUE)) %>%
-    mutate(week = as.numeric(# week),
-    # to plot the weeks along the x axis in order, we will
-    # want this to be a factor
-                  year = factor(# year))
+Filter the data to only include 2020. Then, group by week and year. Finally, summarize the data using `mean()`. Make sure to add the "na.rm = TRUE" argument to `mean()`, as above.
+
+# TODO: CHECK THESE FACTORS
+
+```{r create-uk_excess_deaths2020_wk}
+# create uk_excess_deaths2020_wk
+uk_excess_deaths2020_wk <- uk_excess_deaths %>%
+  ________ %>% 
+  ________ %>%
+  ________(
+    deaths = ________,
+    expected_deaths = ________
+  ) %>%
+  mutate(
+    week = as.numeric(week),
+    year = factor(year)
+  )
 ```
 
 Now we add another layer to the existing graph object (`gg_uk_recent_years`), but we'll change the aesthetics for this layer (inside the `geom_line()`) to `x = week`, `y = deaths`, `group = year`. 
@@ -227,7 +229,7 @@ Outside the `aes*()`, set the `color` as `"firebrick"`. Save this as `gg_uk_exce
 ```{r gg_uk_excess_deaths-uk_labs}
 gg_uk_excess_deaths <- gg_uk_recent_years +
 
-    geom_line(data = uk_excess_deaths2020Wk,
+    geom_line(data = uk_excess_deaths2020_wk,
               
               aes(# x = , # y = , # group = ), # color = ,)
 
@@ -248,7 +250,7 @@ Outside the `aes()`, we will also set the `fill` to `"tomato"` and the `alpha` t
 
 ```{r gg_uk_total_excess_deaths}
 gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
-    geom_ribbon(data = uk_excess_deaths2020Wk, aes(# ymin = , # ymax = ), 
+    geom_ribbon(data = uk_excess_deaths2020_wk, aes(# ymin = , # ymax = ), 
                                                   fill = "tomato", alpha = 1/2)
 gg_uk_total_excess_deaths + 
   # add labs
