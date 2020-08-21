@@ -19,7 +19,7 @@ knitr::opts_knit$set(
 
 # Exercise
 
-The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open the journal article "2020-07-24-excess_mortaility.pdf". 
+The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open article from the Financial Times, called "2020-07-24-excess_mortaility.pdf". 
 
 Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks*. 
 
@@ -109,12 +109,12 @@ knitr::include_graphics("img/latest-data.png")
 In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `uk_excess_deaths`. 
 
 ```{r create-uk_excess_deaths}
-uk_excess_deaths <- ft_excess_deaths %>% filter(# country == _____)
+uk_excess_deaths <- ft_excess_deaths %>% ____________
 ```
 
 ### What can we learn from the labels? 
 
-The labels and subtitles tells us that we're looking at three metrics: 1) the number of deaths from all causes in 2020, and the number of deaths from previous years (lines in gray), and the historical average (black line).
+Take another look at the image of the UK plot. The labels and subtitles tells us that we're looking at three metrics: 1) the number of deaths from all causes in 2020, and the number of deaths from previous years (lines in gray), and the historical average (black line).
 
 We're going to build this graph from the `uk_excess_deaths`, and then apply what we've learned to the entire `ft_excess_deaths` dataset. 
 
@@ -124,25 +124,29 @@ Each section below covers how to build the FT plot, one layer at a time.
 
 ### Layer 1: Deaths from recent years
 
-The first layer we will build is the lines for 'recent years', which we will call `uk_excess_deaths_prior` and it includes all years prior to 2020.
+The first layer we will build is the lines for 'recent years', which we will call `uk_excess_deaths_prior` and it includes all years prior to 2020. These show up in the original plot as light grey lines in the background of the excess mortaility geom.
 
 ```{r create-uk_excess_deaths_prior}
 uk_excess_deaths_prior <- uk_excess_deaths %>%
-  filter(# year != )
+  filter(__________)
+
 # how many years do we have data for?
 # (what do we expect to see?)
 distinct(uk_excess_deaths_prior, year)
 ```
 
-Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`, so we'll calculate the average number of `deaths` per week and year by grouping the dataset by `week` and `year` and summarizing mean `deaths`. We will store the result in `uk_excess_deaths_priorWk`.
+Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`. Let's calculate the average number of `deaths` per week and year by grouping the dataset by `week` and `year`, then summarizing mean `deaths`. We will store the result in `uk_excess_deaths_prior_wk`.
 
-```{r create-uk_excess_deaths_priorWk}
-uk_excess_deaths_priorWk <- uk_excess_deaths_prior %>%
-  group_by(week, year) %>%
-    summarize(deaths = # mean(______, na.rm = TRUE))
+```{r create-uk_excess_deaths_prior_wk}
+uk_excess_deaths_prior_wk <- uk_excess_deaths_prior %>%
+  group_by(_____, ______) %>%
+  summarize(deaths = mean(______, na.rm = TRUE))
+
 # view data 
-head(uk_excess_deaths_priorWk)
+head(uk_excess_deaths_prior_wk)
 ```
+
+#TODO: NOT SURE ABOUT THIS
 
 We need to format the variables so they're easier to plot. 
 
@@ -151,43 +155,46 @@ We need to format the variables so they're easier to plot.
 - `year` should be a separate gray line for each prior `year`, so we need this to be a factor
 
 ```{r uk_excess_deaths_prior-week-year}
-uk_excess_deaths_priorWk <- uk_excess_deaths_priorWk %>%
-  mutate(week = #  as.numeric(_____), year = # factor(______))
+uk_excess_deaths_prior_wk <- uk_excess_deaths_prior_wk %>%
+  mutate(week = as.numeric(_____), year = factor(______))
 ```
 
-Start by defining your labels (so you know what you're expecting to see).
+We need to make sure the lines in the graph will represent different years. 
 
-```{r uk_labs}
-uk_labs <- ggplot2::labs(x = "Date", y = "Deaths",
-                title = "Death rates in UK compared to historical averages",
-       subtitle = "Number of deaths per week from all causes  vs. recent years")
-```
-
-We need to make sure the lines in the graph will represent different years, and we can check this by mapping `x` to `week`, `y` to `deaths`, and `color` to `year` and adding a `geom_line()`
+Map `x` to `week`, `y` to `deaths`, and `group` to `year`, then add `geom_line()`. Make sure to connect your geom with the labels using `+`
 
 ```{r check-years}
-ggplot(data = uk_excess_deaths_priorWk, 
-       
-       aes(x = week, y = deaths, color = year)) +
-  
-          # add a geom_line()
-          
-          # add the labs
-   
+ggplot(
+  uk_excess_deaths_prior_wk, 
+  aes(_______, _______, _______)
+) +
+  _______ 
+  labs(
+    x = "Date", 
+    y = "Deaths",
+    title = "Death rates in UK compared to historical averages",
+    subtitle = "Number of deaths per week from all causes  vs. recent years"
+  )
 ```
 
-These will be our gray lines. And, now we can plot the mean `deaths` per `week` grouped by `year` for the `"UK"` and store it in `gg_uk_recent_years`.
+These will be our previous year lines. Now we can plot the mean `deaths` per `week` grouped by `year` for the `"UK"` and store it in `gg_uk_recent_years`.
 
-We'll move the `color` aesthetic to the `geom_line()` function (use `color = "grey75"`), and make them slightly transparent with `alpha = 3/5`.
+In `geom_line()`, add `color = "grey75"` and make the lines slightly transparent with `alpha = 0.6`.
 
 ```{r gg_uk_recent_years}
-gg_uk_recent_years <-  ggplot(data = uk_excess_deaths_priorWk, 
-                              aes(x = week, y = deaths, group = year)) +
+gg_uk_recent_years <- ggplot(
+  uk_excess_deaths_prior_wk, 
+  aes(x = week, y = deaths, group = year)
+) +
+  geom_line(______, _______) +
+  labs(
+    x = "Date", 
+    y = "Deaths",
+    title = "Death rates in UK compared to historical averages",
+    subtitle = "Number of deaths per week from all causes  vs. recent years"
+  )
 
-                        geom_line(# add color, # add alpha)
-
-# add labs
-gg_uk_recent_years + uk_labs
+gg_uk_recent_years
 ```
 
 ### Layer 2: Excess deaths (2020)
