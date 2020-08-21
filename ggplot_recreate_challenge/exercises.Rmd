@@ -312,13 +312,13 @@ gg_text_annotations <- ____________
 gg_text_annotations
 ```
 
-For the arrow, we'll add a second annotation with `annotate()` with the segment geom.
+For the arrow, we'll add a second annotation with `annotate()` with the segment geom. Again, we won't use `aes()`; we'll just give the arguments directly to `annotate()`
 
 1. Add `annotate()` to `gg_text_annotations`. Don't forget to connect them with `+`!
 2. Set `geom` to "segment". Like the text annotation, this links the annotation to the underlying function `geom_segment()`
 3. Set `x` to `22` and `xend` to `17`, 
 4. Set `y` to `4000` and `yend` to `4001`
-5. Set the `arrow` argument to `arrow(length( = unit(0.3, "cm")))`. This is a function that creates an arrowhead shape.
+5. Set the `arrow` argument to `arrow(length = unit(0.3, "cm"))`. This is a function that creates an arrowhead shape.
 6. Set `color` to `"black"`
 
 ```{r gg_arrow_segment}
@@ -331,14 +331,13 @@ gg_arrow_segment
 
 ### Add theme
 
-This looks very close to the original graphic above, but we will add the `ft_theme()` theme from [`ftplottools`](https://github.com/Financial-Times/ftplottools) package.
+We're pretty close! Interestingly, the Financial Times team has its own R package, [`ftplottools`](https://github.com/Financial-Times/ftplottools), for use in their articles. ftplottools includes a ggplot2 theme function, `ft_theme()`, similar to the original plot's theme.
+
+Load ftplottools with `library(), then add `ft_theme()` to `gg_arrow_segment`.
 
 ```{r ft_theme}
-gg_uk_historical_average +
+# Finish your plot with a theme!
 
-  uk_labs + 
-  # add theme
-  # ftplottools::
 ```
 
 ## Rinse, repeat
