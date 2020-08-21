@@ -17,7 +17,7 @@ output:
 
 #### Open the Financial Times article, [Coronavirus tracked: the latest figures as countries start to reopen](https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441)
 
-#### There is also a PDF of the article titled, "*2020-07-24-coronavirus-tracked-the-latest-figures-as-countries-start-to-reopen.pdf*"
+#### There is also a PDF of the article titled, "*2020-07-24-excess_mortaility.pdf*"
 
 ####  The data you need is "FtExcessDeaths.csv"
 

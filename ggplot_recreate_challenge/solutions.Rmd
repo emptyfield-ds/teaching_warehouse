@@ -23,7 +23,7 @@ library(ftplottools)
 
 # Exercise
 
-The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open the journal article "2020-07-24-coronavirus-tracked-the-latest-figures-as-countries-start-to-reopen.pdf".
+The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open the journal article "2020-07-24-excess_mortaility.pdf".
 
 Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks*.
 
