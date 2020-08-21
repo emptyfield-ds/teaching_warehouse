@@ -17,7 +17,7 @@ options(tibble.print_max = 50)
 # ‹(•_•)› IMPORT ––•––•––√\/––√\/––•––•––√\/––√\/––•––•––√\/––√\/  ----
 # see 01-import.R for more details.
 # import this from local
-FtExcessDeaths <- readr::read_csv("2020-07-updates/ggplot_recreate_challenge/FtExcessDeaths.csv")
+FtExcessDeaths <- readr::read_csv("ggplot_recreate_challenge/data/FtExcessDeaths.csv")
 
 
 # VIEW DATA ----

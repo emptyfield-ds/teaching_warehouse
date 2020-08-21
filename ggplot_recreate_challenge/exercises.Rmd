@@ -26,7 +26,7 @@ The purpose of this exercise is to make a publication-ready plot using your `dpl
 
 Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks*. 
 
-The data you need is "`FtExcessDeaths.csv`". You'll have 1 hour to see what you can come up with in groups or individually!
+The data you need is "`FtExcessDeaths.csv`" in the `data` folder. You'll have 1 hour to see what you can come up with in groups or individually!
 
 You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
 
@@ -35,7 +35,7 @@ You got this. Don't worry about making it exactly, try and see how far you can g
 Import the .csv file below into `FtExcessDeaths`.
 
 ```{r import-FtExcessDeaths}
-FtExcessDeaths <- read_csv("FtExcessDeaths.csv")
+FtExcessDeaths <- read_csv("data/FtExcessDeaths.csv")
 ```
 
 ### View the data 
