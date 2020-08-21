@@ -354,14 +354,14 @@ labs <- ggplot2::labs(x = # "", y = # "", title = # "", subtitle = # "")
 
 ### Create the data layers 
 
-Below is the code for reproducing the steps and creating the three data layers we built above. We end up with `ExcessDeathsPriorWk`, `ExcessDeaths2020Wk`, and `ft_excess_deathsWk`. Read through the comments for more information.
+Below is the code for reproducing the steps and creating the three data layers we built above. We end up with `excess_deaths_prior_wk`, `excess_deaths2020_wk`, and `ft_excess_deaths_wk`. Read through the comments for more information.
 
 ```{r facet-data}
-# create ExcessDeathsPriorWk ----
+# create excess_deaths_prior_wk ----
 # filter to correct date range
-ExcessDeathsPriorWk <- ft_excess_deaths %>%
+excess_deaths_prior_wk <- ft_excess_deaths %>%
   filter(year != # ) %>%
-# ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
+# excess_deaths_prior_wk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our plot will have deaths on the y axis, and weeks across the x for each 
 # country in the dataset. We'll calculate the mean number of deaths per week 
 # and year by grouping the dataset by country, week, and year and summarizing
@@ -373,8 +373,8 @@ ExcessDeathsPriorWk <- ft_excess_deaths %>%
                  # ~~ factor years ------
                 year = factor(year))
 
-# create ExcessDeaths2020Wk ----
-ExcessDeaths2020Wk <- ft_excess_deaths %>%
+# create excess_deaths2020_wk ----
+excess_deaths2020_wk <- ft_excess_deaths %>%
   filter(year == 2020) %>%
 # ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our plot will also have 2020 deaths on the y axis, and weeks across the x, 
@@ -389,8 +389,8 @@ ExcessDeaths2020Wk <- ft_excess_deaths %>%
                 # ~~ factor years ------
                 year = factor(year))
 
-# create ft_excess_deathsWk ----------------------------------------------------
-ft_excess_deathsWk <- ft_excess_deaths %>%
+# create ft_excess_deaths_wk ----------------------------------------------------
+ft_excess_deaths_wk <- ft_excess_deaths %>%
 #  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # The last data layer for our plot all us to put deaths on the y axis, and 
 # weeks across the x. We will calculate the mean number of deaths per country 
@@ -407,7 +407,7 @@ ft_excess_deathsWk <- ft_excess_deaths %>%
 
 ### Adding facets
 
-To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the `ExcessDeathsPriorWk` data. We can do this by adding the `ggplot2::facet_wrap()` function
+To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the `excess_deaths_prior_wk` data. We can do this by adding the `ggplot2::facet_wrap()` function
 
 When we facet our data by `country`, we will want to allow the `x` and `y` axes to have differing scales, so we'll add the `scales = "free"` argument. 
 
@@ -422,21 +422,21 @@ Each layer in this plot is built below, but without any intermediate objects (it
 # this is the first layer of multiple gray lines. we'll be mapping the deaths 
 # per week from all previous years, so remember which variable will be the 
 # grouping variable
-gg_facet_by_country <- ggplot(data = ExcessDeathsPriorWk,
+gg_facet_by_country <- ggplot(data = excess_deaths_prior_wk,
                aes(x = # _____, y = # _____, group = # _____)) +
   # add the "grey75" to the and alpha level for transparency 
   geom_line(color = # _____, alpha = # _____) +
 
 # 2020 excess deaths ------------------------------------------------------
 # these are the deaths from 2020 (the coronavirus data) stored in 
-# ExcessDeaths2020Wk
+# excess_deaths2020_wk
     geom_line(data = # _____, 
                 aes(x = # _____, y = # _____, group = # _____),
   # the color here is the "firebrick"
               color = # _____) +
 
 # total excess deaths -----------------------------------------------------
-# here we have the area (ribbon) with the same ExcessDeaths2020Wk
+# here we have the area (ribbon) with the same excess_deaths2020_wk
 
     geom_ribbon(data = # _____,
 # the ymin and ymax variables are expected_deaths and deaths, respectively.
@@ -446,9 +446,9 @@ gg_facet_by_country <- ggplot(data = ExcessDeathsPriorWk,
 
 
 # historical averages -----------------------------------------------------
-# these is the data from ft_excess_deathsWk (grouped only on country and week)
+# these is the data from ft_excess_deaths_wk (grouped only on country and week)
 # remove the inherited aesthetics from the previous layers
-    geom_line(data = ft_excess_deathsWk,
+    geom_line(data = ft_excess_deaths_wk,
               # _____ = FALSE,
 # here we're only mapping an x and y variable
 # set the color to "black"
