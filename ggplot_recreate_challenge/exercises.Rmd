@@ -103,7 +103,7 @@ count(ft_excess_deaths, _______)
 Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only:
 
 ```{r latest-data, out.height="70%", out.width="70%", fig.align='center', echo=FALSE, eval=TRUE}
-knitr::include_graphics("latest-data.png")
+knitr::include_graphics("img/latest-data.png")
 ```
 
 In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `UKExcessDeaths`. 

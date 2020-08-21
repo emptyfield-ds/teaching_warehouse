@@ -28,7 +28,7 @@ output:
 ### Financial Times Figure
 
 ```{r ft-covid-19-jul-recreate, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jul-recreate.png")
+knitr::include_graphics("img/ft-covid-19-jul-recreate.png")
 ```
 
 
@@ -59,13 +59,13 @@ knitr::include_graphics("ft-covid-19-jul-recreate.png")
 --
 
 ```{r ft-covid-19-jul-recreate-alt-text-01, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jul-recreate-alt-text-01.png")
+knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-01.png")
 ```
 
 --
 
 ```{r ft-covid-19-jul-recreate-alt-text-02, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jul-recreate-alt-text-02.png")
+knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-02.png")
 ```
 
 ---
@@ -75,7 +75,7 @@ knitr::include_graphics("ft-covid-19-jul-recreate-alt-text-02.png")
 ### What can we learn from the labels?
 
 ```{r latest-data, out.height="50%", out.width="50%", fig.align='center', echo=F}
-knitr::include_graphics("latest-data.png")
+knitr::include_graphics("img/latest-data.png")
 ```
 
 ---
@@ -85,7 +85,7 @@ knitr::include_graphics("latest-data.png")
 ### What can we learn from the labels?
 
 ```{r historical-average, out.height="50%", out.width="50%", fig.align='center', echo=F}
-knitr::include_graphics("historical-average.png")
+knitr::include_graphics("img/historical-average.png")
 ```
 
 
@@ -98,7 +98,7 @@ knitr::include_graphics("historical-average.png")
 
 
 ```{r no-excess-deaths, out.height="50%", out.width="50%", fig.align='center', echo=F}
-knitr::include_graphics("no-excess-deaths.png")
+knitr::include_graphics("img/no-excess-deaths.png")
 ```
 
 
@@ -117,5 +117,5 @@ knitr::include_graphics("no-excess-deaths.png")
 ## Here is a figure with data from the previous month
 
 ```{r ft-covid-19-jun-recreate, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jun-recreate.jpeg")
+knitr::include_graphics("img/ft-covid-19-jun-recreate.jpeg")
 ```
