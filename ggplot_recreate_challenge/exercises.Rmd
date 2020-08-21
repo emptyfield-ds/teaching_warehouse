@@ -15,9 +15,6 @@ knitr::opts_knit$set(
   width = 78,
   progress = FALSE
 )
-# Load your packages!
-library(tidyverse)
-library(ftplottools)
 ```
 
 # Exercise
@@ -29,6 +26,12 @@ Read the article and have a look at the figure titled, *Death rates have climbed
 The data you need is "`FtExcessDeaths.csv`" in the `data` folder. You'll have 1 hour to see what you can come up with in groups or individually!
 
 You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
+
+First, load the packages you need
+
+```{r}
+library(tidyverse)
+```
 
 ## Import the data
 
@@ -43,12 +46,12 @@ FtExcessDeaths <- read_csv("data/FtExcessDeaths.csv")
 Use `glimpse()` and `skim()` to view the `FtExcessDeaths` data. 
 
 ```{r glimpse}
-glimpse(x = #______)
+glimpse(______)
 ```
 
 ```{r skimr}
 library(skimr)
-skim(data = # ______)
+skim(______)
 ```
 
 
