@@ -1,6 +1,6 @@
 ---
 title: "ggplot2: Plot replication challenge!"
-date: "`r paste(Sys.Date(), '<br><br>developed with Corinne Riddell')`"
+date: "`r paste(Sys.Date(), '<br><br>developed with Martin Frigaard')`"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
