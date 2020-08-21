@@ -91,10 +91,10 @@ following fields:
 
 ### How many countries are in this dataset?
 
-Use `count()` to determine how many countries are in the `ft_excess_deaths` data.
+Use `count()` to determine how many countries are in the `country`.
 
 ```{r count-countries}
-count(x = ft_excess_deaths, # _______)
+count(ft_excess_deaths, _______)
 ```
 
 
@@ -102,7 +102,7 @@ count(x = ft_excess_deaths, # _______)
 
 Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only:
 
-```{r latest-data, out.height="50%", out.width="50%", fig.align='center', echo=FALSE, eval=TRUE}
+```{r latest-data, out.height="70%", out.width="70%", fig.align='center', echo=FALSE, eval=TRUE}
 knitr::include_graphics("latest-data.png")
 ```
 
