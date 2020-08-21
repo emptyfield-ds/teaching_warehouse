@@ -91,10 +91,10 @@ following fields:
 
 ### How many countries are in this dataset?
 
-Use `dplyr::count()` to determine how many countries are in the `ft_excess_deaths` data.
+Use `count()` to determine how many countries are in the `ft_excess_deaths` data.
 
 ```{r count-countries}
-dplyr::count(x = ft_excess_deaths, # _______)
+count(x = ft_excess_deaths, # _______)
 ```
 
 
@@ -102,14 +102,14 @@ dplyr::count(x = ft_excess_deaths, # _______)
 
 Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only:
 
-```{r latest-data, out.height="70%", out.width="70%", fig.align='center', echo=FALSE, eval=TRUE}
+```{r latest-data, out.height="50%", out.width="50%", fig.align='center', echo=FALSE, eval=TRUE}
 knitr::include_graphics("latest-data.png")
 ```
 
 In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `UKExcessDeaths`. 
 
 ```{r create-UKExcessDeaths}
-UKExcessDeaths <- ft_excess_deaths %>% dplyr::filter(# country == _____)
+UKExcessDeaths <- ft_excess_deaths %>% filter(# country == _____)
 ```
 
 ### What can we learn from the labels? 
@@ -128,7 +128,7 @@ The first layer we will build is the lines for 'recent years', which we will cal
 
 ```{r create-UKExcessDeathsPrior}
 UKExcessDeathsPrior <- UKExcessDeaths %>%
-  dplyr::filter(# year != )
+  filter(# year != )
 # how many years do we have data for?
 # (what do we expect to see?)
 distinct(UKExcessDeathsPrior, year)
@@ -138,8 +138,8 @@ Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`, s
 
 ```{r create-UKExcessDeathsPriorWk}
 UKExcessDeathsPriorWk <- UKExcessDeathsPrior %>%
-  dplyr::group_by(week, year) %>%
-    dplyr::summarize(deaths = # mean(______, na.rm = TRUE))
+  group_by(week, year) %>%
+    summarize(deaths = # mean(______, na.rm = TRUE))
 # view data 
 head(UKExcessDeathsPriorWk)
 ```
@@ -152,7 +152,7 @@ We need to format the variables so they're easier to plot.
 
 ```{r UKExcessDeathsPrior-week-year}
 UKExcessDeathsPriorWk <- UKExcessDeathsPriorWk %>%
-  dplyr::mutate(week = #  as.numeric(_____), year = # factor(______))
+  mutate(week = #  as.numeric(_____), year = # factor(______))
 ```
 
 Start by defining your labels (so you know what you're expecting to see).
@@ -199,15 +199,15 @@ We'll build this data layer similar to the one above, but filtered to only the `
 ```{r create-UKExcessDeaths2020Wk}
 # filter to the year 2020
 UKExcessDeaths2020 <- UKExcessDeaths %>%
-  dplyr::filter(# year == )
+  filter(# year == )
 # create UKExcessDeaths2020Wk
 UKExcessDeaths2020Wk <- UKExcessDeaths2020 %>%
   # group by the week and year
-  dplyr::group_by(# week, # year) %>%
+  group_by(# week, # year) %>%
     # calculate mean deaths and mean expected_deaths
-    dplyr::summarize(deaths = # mean(, na.rm = TRUE),
+    summarize(deaths = # mean(, na.rm = TRUE),
                      expected_deaths = # mean(, na.rm = TRUE)) %>%
-    dplyr::mutate(week = as.numeric(# week),
+    mutate(week = as.numeric(# week),
     # to plot the weeks along the x axis in order, we will
     # want this to be a factor
                   year = factor(# year))
@@ -256,13 +256,13 @@ The grouped data `UKExcessDeathsWk` is created in the code chunk below (be sure 
 ```{r create-UKExcessDeathsWk}
 UKExcessDeathsWk <- UKExcessDeaths %>%
   # these are historical, so we will remove the 2020 data
-  dplyr::filter(# year != ) %>%
+  filter(# year != ) %>%
     # note this is not by week and year, just week!
-  dplyr::group_by( ) %>%
+  group_by( ) %>%
   # historical average = mean
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
+    summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
   # we'll pipe this right over to the mutate function
-  dplyr::mutate(week = as.numeric(week))
+  mutate(week = as.numeric(week))
 ```
 
 Now we can plot the historical average, but we need to make sure we aren't inheriting any aesthetics from the previous layers (they are expecting a year variable we don't have in the `UKExcessDeathsWk` data), so we add `inherit.aes = FALSE` to the `geom_line()` function.
@@ -361,32 +361,32 @@ Below is the code for reproducing the steps and creating the three data layers w
 # create ExcessDeathsPriorWk ----
 # filter to correct date range
 ExcessDeathsPriorWk <- ft_excess_deaths %>%
-  dplyr::filter(year != # ) %>%
+  filter(year != # ) %>%
 # ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our plot will have deaths on the y axis, and weeks across the x for each 
 # country in the dataset. We'll calculate the mean number of deaths per week 
 # and year by grouping the dataset by country, week, and year and summarizing
 # the mean deaths
-  dplyr::group_by(# , # , # ) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
+  group_by(# , # , # ) %>%
+    summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
   # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week),
+  mutate(week = as.numeric(week),
                  # ~~ factor years ------
                 year = factor(year))
 
 # create ExcessDeaths2020Wk ----
 ExcessDeaths2020Wk <- ft_excess_deaths %>%
-  dplyr::filter(year == 2020) %>%
+  filter(year == 2020) %>%
 # ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our plot will also have 2020 deaths on the y axis, and weeks across the x, 
 # grouped by country. We'll calculate the mean number of deaths per country, 
 # week, and year by grouping the dataset by country, week, and year and 
 # summarizing the mean deaths and expected_deaths
-  dplyr::group_by(# , # , # ) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE),
+  group_by(# , # , # ) %>%
+    summarize(deaths = mean(deaths, na.rm = TRUE),
                      expected_deaths = mean(expected_deaths, na.rm = TRUE)) %>% 
     # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week),
+  mutate(week = as.numeric(week),
                 # ~~ factor years ------
                 year = factor(year))
 
@@ -398,12 +398,12 @@ ft_excess_deathsWk <- ft_excess_deaths %>%
 # and week by grouping the dataset by country and week and summarizing the mean
 # deaths 
 # these are historical, so we will remove the 2020 data
-  dplyr::filter(year != 2020) %>%
+  filter(year != 2020) %>%
   # group these data by the correct categories
-  dplyr::group_by(# , #) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
+  group_by(# , #) %>%
+    summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
     # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week))
+  mutate(week = as.numeric(week))
 ```
 
 ### Adding facets
