@@ -17,19 +17,19 @@ options(tibble.print_max = 50)
 # ‹(•_•)› IMPORT ––•––•––√\/––√\/––•––•––√\/––√\/––•––•––√\/––√\/  ----
 # see 01-import.R for more details.
 # import this from local
-FtExcessDeaths <- readr::read_csv("ggplot_recreate_challenge/data/FtExcessDeaths.csv")
+ft_excess_deaths <- readr::read_csv("ggplot_recreate_challenge/data/ft_excess_deaths.csv")
 
 
 # VIEW DATA ----
-# View(FtExcessDeaths)
+# View(ft_excess_deaths)
 
 # View the data -----------------------------------------------------------
 
 # get a glimpse of the data
-FtExcessDeaths %>% glimpse(78)
+ft_excess_deaths %>% glimpse(78)
 
 # get a skim of the data
-FtExcessDeaths %>% skimr::skim()
+ft_excess_deaths %>% skimr::skim()
 
 
 # >>>>> CREATE LINE PLOT FOR A SINGLE COUNTRY <<<<< --------------------------
@@ -38,7 +38,7 @@ FtExcessDeaths %>% skimr::skim()
 # country (UK) and recreate the line graph
 
 # create UKExcessDeaths ----
-UKExcessDeaths <- FtExcessDeaths %>%
+UKExcessDeaths <- ft_excess_deaths %>%
   dplyr::filter(country == "UK")
 
 # create UKExcessDeathsPrior ----
@@ -101,7 +101,7 @@ UKExcessDeathsWk <- UKExcessDeaths %>%
 
 # >>>>> REPEAT THIS PROCESS FOR ENTIRE DATASET <<<<< --------------------------
 # create ExcessDeaths2020Wk ----
-ExcessDeaths2020Wk <- FtExcessDeaths %>%
+ExcessDeaths2020Wk <- ft_excess_deaths %>%
   dplyr::filter(year == 2020) %>%
 # ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our final plot will have deaths on the y axis, and weeks across the x, so
@@ -117,7 +117,7 @@ ExcessDeaths2020Wk <- FtExcessDeaths %>%
 
 
 # create ExcessDeathsPriorWk ----
-ExcessDeathsPriorWk <- FtExcessDeaths %>%
+ExcessDeathsPriorWk <- ft_excess_deaths %>%
   dplyr::filter(year != 2020) %>%
 # ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our final plot will have deaths on the y axis, and weeks across the x, so
@@ -130,9 +130,9 @@ ExcessDeathsPriorWk <- FtExcessDeaths %>%
                 year = factor(year))
 
 
-# create FtExcessDeathsWk ----------------------------------------------------
+# create ft_excess_deathsWk ----------------------------------------------------
 # first create numeric/factor variables
-FtExcessDeathsWk <- FtExcessDeaths %>%
+ft_excess_deathsWk <- ft_excess_deaths %>%
 #  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
 # Our final plot will have deaths on the y axis, and weeks across the x, so
 # we'll calculate the mean number of deaths per country and week by grouping
