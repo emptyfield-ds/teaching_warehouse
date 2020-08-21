@@ -25,9 +25,10 @@ Read the article and have a look at the figure titled, *Death rates have climbed
 
 The data you need is "`ft_excess_deaths.csv`" in the `data` folder. You'll have 1 hour to see what you can come up with in groups or individually!
 
-You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
+You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. At the bottom of this document, the "Resources" section may have a few helpful things to check out.
 
-First, load the packages you need
+
+First, load the packages you need.
 
 ```{r}
 library(tidyverse)
@@ -39,6 +40,7 @@ Import the .csv file below into `excess_deaths` using `read_csv()`
 
 ```{r import-ft_excess_deaths}
 ft_excess_deaths <- ________("data/ft_excess_deaths.csv")
+# TODO: maybe move as.numeric and factor code here?
 ```
 
 ### View the data 
@@ -130,8 +132,7 @@ The first layer we will build is the lines for 'recent years', which we will cal
 uk_excess_deaths_prior <- uk_excess_deaths %>%
   filter(__________)
 
-# how many years do we have data for?
-# (what do we expect to see?)
+# how many years do we have data for? What do we expect to see?
 distinct(uk_excess_deaths_prior, year)
 ```
 
@@ -342,218 +343,111 @@ Load ftplottools with `library(), then add `ft_theme()` to `gg_arrow_segment`.
 
 ## Rinse, repeat
 
-Now that we've created a graph for a single country that looks similar to the FT graph, we can apply the same process to all the countries in the data.
-
-### Define the title and labels 
-
-Start by defining the title and labels (so we know what we're expecting to see)
-
-```{r labs}
-labs <- ggplot2::labs(x = # "", y = # "", title = # "", subtitle = # "")
-```
+Now that we've created a graph for a single country that looks similar to the FT graph, we can apply the same process to all the countries in the data. From this point on, you'll use what you've learned so far in the course and in this assignment to make a plot similar to what we saw in the article. Change the skeleton code in the next two sections to make the plot yourself!
 
 ### Create the data layers 
 
-Below is the code for reproducing the steps and creating the three data layers we built above. We end up with `excess_deaths_prior_wk`, `excess_deaths2020_wk`, and `ft_excess_deaths_wk`. Read through the comments for more information.
+For the UK data, we made three data sets that we used in the plot. We'll need to make them for the entire dataset now. We'll end up with three datasets: `excess_deaths_prior_wk`, `excess_deaths2020_wk`, and `ft_excess_deaths_wk`. Use the code you wrote for the UK data above as a basis for making these datasets using the skeleton code below.
 
 ```{r facet-data}
-# create excess_deaths_prior_wk ----
-# filter to correct date range
 excess_deaths_prior_wk <- ft_excess_deaths %>%
-  filter(year != # ) %>%
-# excess_deaths_prior_wk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# Our plot will have deaths on the y axis, and weeks across the x for each 
-# country in the dataset. We'll calculate the mean number of deaths per week 
-# and year by grouping the dataset by country, week, and year and summarizing
-# the mean deaths
-  group_by(# , # , # ) %>%
-    summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
-  # ~~ numeric week -----
-  mutate(week = as.numeric(week),
-                 # ~~ factor years ------
-                year = factor(year))
+  filter() %>% 
+  group_by() %>%
+  summarize() %>%
+  # TODO: check this 
+  mutate(
+    week = as.numeric(week),
+    year = factor(year)
+  )
 
-# create excess_deaths2020_wk ----
 excess_deaths2020_wk <- ft_excess_deaths %>%
-  filter(year == 2020) %>%
-# ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# Our plot will also have 2020 deaths on the y axis, and weeks across the x, 
-# grouped by country. We'll calculate the mean number of deaths per country, 
-# week, and year by grouping the dataset by country, week, and year and 
-# summarizing the mean deaths and expected_deaths
-  group_by(# , # , # ) %>%
-    summarize(deaths = mean(deaths, na.rm = TRUE),
-                     expected_deaths = mean(expected_deaths, na.rm = TRUE)) %>% 
-    # ~~ numeric week -----
-  mutate(week = as.numeric(week),
-                # ~~ factor years ------
-                year = factor(year))
+  filter() %>%
+  group_by() %>%
+  summarize() %>% 
+  # TODO: check this
+  mutate(
+    week = as.numeric(week),
+    year = factor(year)
+  )
 
-# create ft_excess_deaths_wk ----------------------------------------------------
 ft_excess_deaths_wk <- ft_excess_deaths %>%
-#  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# The last data layer for our plot all us to put deaths on the y axis, and 
-# weeks across the x. We will calculate the mean number of deaths per country 
-# and week by grouping the dataset by country and week and summarizing the mean
-# deaths 
-# these are historical, so we will remove the 2020 data
-  filter(year != 2020) %>%
-  # group these data by the correct categories
-  group_by(# , #) %>%
-    summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
-    # ~~ numeric week -----
+  filter() %>%
+  group_by() %>%
+  summarize() %>% 
+  #TODO: Check this
   mutate(week = as.numeric(week))
 ```
 
-### Adding facets
+### Creating the plot and adding facets
 
-To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the `excess_deaths_prior_wk` data. We can do this by adding the `ggplot2::facet_wrap()` function
+To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the `excess_deaths_prior_wk` data. We can do this easily by adding `facet_wrap()`!
 
-When we facet our data by `country`, we will want to allow the `x` and `y` axes to have differing scales, so we'll add the `scales = "free"` argument. 
+When we facet our data by `country`, we will want to allow each facet have differing x and y axes (since each country has different baseline mortality), so we'll add the `scales = "free"` argument.
 
-The full syntax is below:
+As a reminder, `facet_wrap()` usually looks something like this: `facet_wrap(vars(variable_name), scales = "free")`
 
-`facet_wrap( ~ 'variable', scales = "free")`
+For ease, we won't add the text annotations to this plot, although ggplot2 can certainly handle it. 
 
-Each layer in this plot is built below, but without any intermediate objects (it's all one continuous pipe!). Fill in each portion by looking at what you did for each layer about (and check the comments).
+Fill in the skeleton code to create a facetted plot.
 
-```{r gg_facet_by_country}
-# previous years (gray lines) ----------------------------------------------
-# this is the first layer of multiple gray lines. we'll be mapping the deaths 
-# per week from all previous years, so remember which variable will be the 
-# grouping variable
-gg_facet_by_country <- ggplot(data = excess_deaths_prior_wk,
-               aes(x = # _____, y = # _____, group = # _____)) +
-  # add the "grey75" to the and alpha level for transparency 
-  geom_line(color = # _____, alpha = # _____) +
-
-# 2020 excess deaths ------------------------------------------------------
-# these are the deaths from 2020 (the coronavirus data) stored in 
-# excess_deaths2020_wk
-    geom_line(data = # _____, 
-                aes(x = # _____, y = # _____, group = # _____),
-  # the color here is the "firebrick"
-              color = # _____) +
-
-# total excess deaths -----------------------------------------------------
-# here we have the area (ribbon) with the same excess_deaths2020_wk
-
-    geom_ribbon(data = # _____,
-# the ymin and ymax variables are expected_deaths and deaths, respectively.
-# the fill here is "tomato", and the alpha setting here is 1/2
-                aes(ymin = # _____, ymax = # _____), fill = # _____,
-                    alpha = # _____) +
-
-
-# historical averages -----------------------------------------------------
-# these is the data from ft_excess_deaths_wk (grouped only on country and week)
-# remove the inherited aesthetics from the previous layers
-    geom_line(data = ft_excess_deaths_wk,
-              # _____ = FALSE,
-# here we're only mapping an x and y variable
-# set the color to "black"
-            aes(x = # _____, y = # _____), # _____ = "black") +
-# facet by country --------------------------------------------------------
-# use facet_wrap to facet this by country, and set the scales to "free"
-    facet_wrap(. ~ # _____, scales = # _____) 
+```{r gg_by_country}
+gg_by_country <- ggplot(
+  data = excess_deaths_prior_wk,
+  aes() 
+) +
+  # Add the grey historical lines (layer 1)
+  geom_line() +
+  # Add the 2020 mortality line (layer 2)
+  geom_line() +
+  # Add the excess mortality shading (layer 3)
+  geom_ribbon() +
+  # Add the historical mean mortality line (layer 4)
+  geom_line() +
+  # Use facet_wrap() to facet this plot by country. Set the scales to "free"
+  facet_wrap() +
+  # Add appropriate labels to the plot
+  labs()
 ```
 
-Combine the new plot object with the `labs`
+Alright, let's take a look!
 
-```{r gg_facet_by_country-labs, fig.height=5, fig.width=7}
-gg_facet_by_country + 
-  # add labels --------------------------------------------------------------
-    
+```{r gg_by_country-final, fig.height=5, fig.width=7}
+gg_by_country + 
+  ft_theme()
 ```
 
-### Add custom themes 
+You did it! You can stop here, and only up to this point will be graded. Below this point, you'll have the opportunity to try out themes a bit more, if you like. At the bottom of the document, you'll find several resources related to this exercise.
 
-Use the `ggplot2::theme()` to make the following changes to the graph:
+### Bonus: Add a custom theme
 
-- Change the color of the `plot.background` and `panel.background` by setting `fill` to `"#FFF1E5"` inside `element_rect()`, 
+Want a little more challenge? Try making your own theme to add to your plot. 
 
-- Change the color of the `panel.grid` to `"grey90"` inside `element_line()`
+Instead of `ft_theme(), use `theme()` to make the following changes to the graph. As a reminder, many of the `theme()` arguments take `element_()` functions. For help, check out the [themes chapter](https://ggplot2-book.org/polishing.html) of the ggplot2 book.
 
-- Change the `axis.text` and `axis.title` font size to `7` and `11`, and the family to `"Courier"` inside `element_text()`
-
-- Change the font size to fifteen and family to `"Verdana"` for the `plot.title`  inside `element_text()`, 
-
-- Remove the `panel.border` and `strip.background` with `element_blank()`
+1. Change the color of the `plot.background` and `panel.background` by setting `fill` to `"#FFF1E5"` inside `element_rect()`, 
+2. Change the color of the `panel.grid` to `"grey90"` inside `element_line()`
+3. Change the `axis.text` and `axis.title` font size to `7` and `11`, and the family to `"Courier"` inside `element_text()`
+4. Change the font size to fifteen and family to `"Verdana"` for the `plot.title`  inside `element_text()`, 
+5. Remove the `panel.border` and `strip.background` with `element_blank()`
 
 ```{r my_theme}
-my_theme <- theme(plot.background =
-                    element_rect(fill = 
-                                   
-                                 ),
-                  
-                  panel.background =
-                    element_rect(fill = 
-                                   
-                                   ),
-                  
-                  panel.grid = 
-                    element_line(color = 
-                                   
-                                 ),
-                  
-                  axis.text =
-                    element_text(# change this to seven
-                                size = ,
-                                # change this to family
-                                family = 
-                                  
-                                 ),
-                  
-                  axis.title =
-                    element_text(# change this to seven
-                                size = ,
-                                # change this to family
-                                family =
-                                 ),
-                  
-                  plot.title = 
-                    element_text(size = 
-                                   # change this to fifteen
-                                 family = ,
-                                   # change to "Verdana"
-                                 ),
-                  
-                  panel.border =
-                    # add the element_blank() to remove the panel.boarder
-                    ,
-                  
-                  strip.background = 
-                    # add the element_blank() to remove the panel.boarder
-                    ) 
+my_theme <- theme(
+  
+) 
 ```
 
-Add `my_theme` and `labs` to `gg_facet_by_country` 
+Let's take a look!
 
-```{r gg_facet_by_country-my_theme-labs,  fig.height=5, fig.width=7}
-gg_facet_by_country + 
-  
-  my_theme + 
-  
-  labs
+```{r gg_by_country-my_theme-labs,  fig.height=5, fig.width=7}
+gg_by_country + 
+  my_theme
 ```
 
+Custom theming is a rich area in ggplot2. Many community members have created their own extensions with beautiful themes, as well. One great set of themes for scientific publications is in the [cowplot package](https://wilkelab.org/cowplot/articles/themes.html). [ggthemes](https://github.com/jrnold/ggthemes) and [hrbrthemes](https://github.com/hrbrmstr/hrbrthemes) also have many interesting and pretty themes. 
 
 ## More resources 
 
-Hint: You may need to use some `dplyr` skills from the first session
-
-I'll leave these here:
-
-* Manually label axes: 
-
-  * Read more about manually changing the axes in the [themes](https://ggplot2-book.org/polishing.html) chapter in the [`ggplot2` book](https://ggplot2-book.org/).
-
+* Read more about manually changing the axes in the [themes](https://ggplot2-book.org/polishing.html) chapter in the [`ggplot2` book](https://ggplot2-book.org/).
 * Learn more about facets: https://ggplot2.tidyverse.org/reference/facet_wrap.html
-
 * The FT package: https://github.com/Financial-Times/ftplottools 
-
-* The line geoms: https://ggplot2.tidyverse.org/reference/geom_path.html
-
-* Building small multiples: https://kieranhealy.org/blog/archives/2020/03/27/a-covid-small-multiple/
-
-
+* Building "small multiples", plots with many facets: https://kieranhealy.org/blog/archives/2020/03/27/a-covid-small-multiple/
