@@ -100,23 +100,23 @@ count(ft_excess_deaths, _______)
 
 ## Start small 
 
-Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only:
+Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only (press green play button to see the image):
 
 ```{r latest-data, out.height="70%", out.width="70%", fig.align='center', echo=FALSE, eval=TRUE}
 knitr::include_graphics("img/latest-data.png")
 ```
 
-In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `UKExcessDeaths`. 
+In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `uk_excess_deaths`. 
 
-```{r create-UKExcessDeaths}
-UKExcessDeaths <- ft_excess_deaths %>% filter(# country == _____)
+```{r create-uk_excess_deaths}
+uk_excess_deaths <- ft_excess_deaths %>% filter(# country == _____)
 ```
 
 ### What can we learn from the labels? 
 
 The labels and subtitles tells us that we're looking at three metrics: 1) the number of deaths from all causes in 2020, and the number of deaths from previous years (lines in gray), and the historical average (black line).
 
-We're going to build this graph from the `UKExcessDeaths`, and then apply what we've learned to the entire `ft_excess_deaths` dataset. 
+We're going to build this graph from the `uk_excess_deaths`, and then apply what we've learned to the entire `ft_excess_deaths` dataset. 
 
 ## Building the plot layer-by-layer
 
@@ -124,24 +124,24 @@ Each section below covers how to build the FT plot, one layer at a time.
 
 ### Layer 1: Deaths from recent years
 
-The first layer we will build is the lines for 'recent years', which we will call `UKExcessDeathsPrior` and it includes all years prior to 2020.
+The first layer we will build is the lines for 'recent years', which we will call `uk_excess_deaths_prior` and it includes all years prior to 2020.
 
-```{r create-UKExcessDeathsPrior}
-UKExcessDeathsPrior <- UKExcessDeaths %>%
+```{r create-uk_excess_deaths_prior}
+uk_excess_deaths_prior <- uk_excess_deaths %>%
   filter(# year != )
 # how many years do we have data for?
 # (what do we expect to see?)
-distinct(UKExcessDeathsPrior, year)
+distinct(uk_excess_deaths_prior, year)
 ```
 
-Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`, so we'll calculate the average number of `deaths` per week and year by grouping the dataset by `week` and `year` and summarizing mean `deaths`. We will store the result in `UKExcessDeathsPriorWk`.
+Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`, so we'll calculate the average number of `deaths` per week and year by grouping the dataset by `week` and `year` and summarizing mean `deaths`. We will store the result in `uk_excess_deaths_priorWk`.
 
-```{r create-UKExcessDeathsPriorWk}
-UKExcessDeathsPriorWk <- UKExcessDeathsPrior %>%
+```{r create-uk_excess_deaths_priorWk}
+uk_excess_deaths_priorWk <- uk_excess_deaths_prior %>%
   group_by(week, year) %>%
     summarize(deaths = # mean(______, na.rm = TRUE))
 # view data 
-head(UKExcessDeathsPriorWk)
+head(uk_excess_deaths_priorWk)
 ```
 
 We need to format the variables so they're easier to plot. 
@@ -150,8 +150,8 @@ We need to format the variables so they're easier to plot.
 
 - `year` should be a separate gray line for each prior `year`, so we need this to be a factor
 
-```{r UKExcessDeathsPrior-week-year}
-UKExcessDeathsPriorWk <- UKExcessDeathsPriorWk %>%
+```{r uk_excess_deaths_prior-week-year}
+uk_excess_deaths_priorWk <- uk_excess_deaths_priorWk %>%
   mutate(week = #  as.numeric(_____), year = # factor(______))
 ```
 
@@ -166,7 +166,7 @@ uk_labs <- ggplot2::labs(x = "Date", y = "Deaths",
 We need to make sure the lines in the graph will represent different years, and we can check this by mapping `x` to `week`, `y` to `deaths`, and `color` to `year` and adding a `geom_line()`
 
 ```{r check-years}
-ggplot(data = UKExcessDeathsPriorWk, 
+ggplot(data = uk_excess_deaths_priorWk, 
        
        aes(x = week, y = deaths, color = year)) +
   
@@ -181,7 +181,7 @@ These will be our gray lines. And, now we can plot the mean `deaths` per `week` 
 We'll move the `color` aesthetic to the `geom_line()` function (use `color = "grey75"`), and make them slightly transparent with `alpha = 3/5`.
 
 ```{r gg_uk_recent_years}
-gg_uk_recent_years <-  ggplot(data = UKExcessDeathsPriorWk, 
+gg_uk_recent_years <-  ggplot(data = uk_excess_deaths_priorWk, 
                               aes(x = week, y = deaths, group = year)) +
 
                         geom_line(# add color, # add alpha)
@@ -196,12 +196,12 @@ The second layer will be mean deaths per week and year in 2020 (since the corona
 
 We'll build this data layer similar to the one above, but filtered to only the `year` 2020, but this time we will also get the mean `deaths` and the mean `expected_deaths`. 
 
-```{r create-UKExcessDeaths2020Wk}
+```{r create-uk_excess_deaths2020Wk}
 # filter to the year 2020
-UKExcessDeaths2020 <- UKExcessDeaths %>%
+uk_excess_deaths2020 <- uk_excess_deaths %>%
   filter(# year == )
-# create UKExcessDeaths2020Wk
-UKExcessDeaths2020Wk <- UKExcessDeaths2020 %>%
+# create uk_excess_deaths2020Wk
+uk_excess_deaths2020Wk <- uk_excess_deaths2020 %>%
   # group by the week and year
   group_by(# week, # year) %>%
     # calculate mean deaths and mean expected_deaths
@@ -220,7 +220,7 @@ Outside the `aes*()`, set the `color` as `"firebrick"`. Save this as `gg_uk_exce
 ```{r gg_uk_excess_deaths-uk_labs}
 gg_uk_excess_deaths <- gg_uk_recent_years +
 
-    geom_line(data = UKExcessDeaths2020Wk,
+    geom_line(data = uk_excess_deaths2020Wk,
               
               aes(# x = , # y = , # group = ), # color = ,)
 
@@ -241,7 +241,7 @@ Outside the `aes()`, we will also set the `fill` to `"tomato"` and the `alpha` t
 
 ```{r gg_uk_total_excess_deaths}
 gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
-    geom_ribbon(data = UKExcessDeaths2020Wk, aes(# ymin = , # ymax = ), 
+    geom_ribbon(data = uk_excess_deaths2020Wk, aes(# ymin = , # ymax = ), 
                                                   fill = "tomato", alpha = 1/2)
 gg_uk_total_excess_deaths + 
   # add labs
@@ -251,10 +251,10 @@ gg_uk_total_excess_deaths +
 
 The final layer will be the historical average (the `median` for **all** `year`s in the `"UK"` before `2020`).
 
-The grouped data `UKExcessDeathsWk` is created in the code chunk below (be sure to note the `filter()` function before grouping and summarizing!)
+The grouped data `uk_excess_deathsWk` is created in the code chunk below (be sure to note the `filter()` function before grouping and summarizing!)
 
-```{r create-UKExcessDeathsWk}
-UKExcessDeathsWk <- UKExcessDeaths %>%
+```{r create-uk_excess_deathsWk}
+uk_excess_deathsWk <- uk_excess_deaths %>%
   # these are historical, so we will remove the 2020 data
   filter(# year != ) %>%
     # note this is not by week and year, just week!
@@ -265,13 +265,13 @@ UKExcessDeathsWk <- UKExcessDeaths %>%
   mutate(week = as.numeric(week))
 ```
 
-Now we can plot the historical average, but we need to make sure we aren't inheriting any aesthetics from the previous layers (they are expecting a year variable we don't have in the `UKExcessDeathsWk` data), so we add `inherit.aes = FALSE` to the `geom_line()` function.
+Now we can plot the historical average, but we need to make sure we aren't inheriting any aesthetics from the previous layers (they are expecting a year variable we don't have in the `uk_excess_deathsWk` data), so we add `inherit.aes = FALSE` to the `geom_line()` function.
 
 This line will have `week` on the `x`, and `deaths` on the `y`. The `color` aesthetic will be placed outside `aes()`, and it should be set to `"black"`.
 
 ```{r gg_uk_historical_average}
 gg_uk_historical_average <- gg_uk_total_excess_deaths +
-    geom_line(data = UKExcessDeathsWk, inherit.aes = FALSE, aes(# x = , # y = ),
+    geom_line(data = uk_excess_deathsWk, inherit.aes = FALSE, aes(# x = , # y = ),
              color = # set color)
 
 gg_uk_historical_average +
