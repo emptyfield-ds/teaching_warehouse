@@ -347,7 +347,7 @@ Now that we've created a graph for a single country that looks similar to the FT
 
 ### Create the data layers 
 
-For the UK data, we made three data sets that we used in the plot. We'll need to make them for the entire dataset now. We'll end up with three datasets: `excess_deaths_prior_wk`, `excess_deaths2020_wk`, and `ft_excess_deaths_wk`. Use the code you wrote for the UK data above as a basis for making these datasets using the skeleton code below.
+For the UK data, we made three data sets that we used in the plot. We'll need to make them for the entire dataset now. We'll end up with three datasets: `excess_deaths_prior_wk`, `excess_deaths2020_wk`, and `excess_deaths_wk`. Use the code you wrote for the UK data above as a basis for making these datasets using the skeleton code below.
 
 **Hint**: for this data set, you also need to group by country. Put that variable first whenever you use groupings.
 
@@ -365,7 +365,7 @@ excess_deaths2020_wk <- ft_excess_deaths %>%
     expected_deaths = mean(expected_deaths, na.rm = TRUE)
   )
 
-ft_excess_deaths_wk <- ft_excess_deaths %>%
+excess_deaths_wk <- ft_excess_deaths %>%
   filter(year == 2020) %>%
   group_by(country, week) %>%
   summarize(expected_deaths = mean(expected_deaths, na.rm = TRUE))
@@ -404,7 +404,7 @@ gg_by_country <- ggplot(
   ) +
   # Add the historical mean mortality line (layer 4)
   geom_line(
-    data = ft_excess_deaths_wk,
+    data = excess_deaths_wk,
     aes(x = week, y = expected_deaths),
     color = "black",
     inherit.aes = FALSE
