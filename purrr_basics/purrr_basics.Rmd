@@ -57,15 +57,15 @@ list(char = "hello", num = 1, fun = mean)
 
 ## Your Turn 1
 
-```{r slide-06}
-number_list <- list(
+```{r}
+measurements <- list(
   blood_glucose = rnorm(10, mean = 140, sd = 10), 
   age = rnorm(5, mean = 40, sd = 5), 
-  heartrate = rnorm(20, mean = 60, sd = 30)
+  heartrate = rnorm(20, mean = 80, sd = 15)
 )
 ```
 
-### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["blood_glucose"]]`?
+### There are two ways to subset lists: dollar signs and brackets. Try to subset `blood_glucose` from `measurements` using these approaches. Are they different? What about `measurements[["blood_glucose"]]`?
 
 ---
 
@@ -73,15 +73,15 @@ number_list <- list(
 
 .small[
 ```{r slide-07-1}
-number_list["blood_glucose"]
+measurements["blood_glucose"]
 ```
 
 ```{r slide-07-2}
-number_list$blood_glucose
+measurements$blood_glucose
 ```
 
 ```{r slide-07-3}
-number_list[["blood_glucose"]]
+measurements[["blood_glucose"]]
 ```
 ]
 ---
@@ -275,9 +275,9 @@ knitr::include_graphics("img/purr_x_input.png")
 
 ```{r slide-25, eval=FALSE}
 list(
-  sum_a = sum(number_list$blood_glucose),
-  sum_b = sum(number_list$age),
-  sum_c = sum(number_list$heartrate)
+  sum_blood_glucose = sum(measurements$blood_glucose),
+  sum_age = sum(measurements$age),
+  sum_heartrate = sum(measurements$heartrate)
 )
 ```
 
@@ -288,7 +288,7 @@ list(
 ## Your Turn 2
 
 ```{r slide-26}
-map(number_list, sum)
+map(measurements, sum)
 ```
 
 ---
@@ -450,7 +450,7 @@ class: inverse, center, middle, takeaway
 ### Write a function that returns the mean and standard deviation of a numeric vector.
 ### Give the function a name
 ### Find the mean and SD of `x`
-### Map your function to `number_list`
+### Map your function to `measurements`
 
 ---
 
@@ -463,7 +463,7 @@ mean_sd <- function(x) {
   tibble(mean = x_mean, sd = x_sd)
 }
   
-map(number_list, mean_sd)
+map(measurements, mean_sd)
 ```
 ---
 
@@ -476,7 +476,7 @@ mean_sd <- function(x) {
   tibble(mean = x_mean, sd = x_sd)
 }
   
-map(number_list, mean_sd)
+map(measurements, mean_sd)
 ```
 
 ---
@@ -948,7 +948,7 @@ for (i in seq_along(x)) {
 class: center, middle, inverse
 
 # **Of course someone has to write loops. It doesn’t have to be you.**
-# **--Jenny Bryan**
+# **—Jenny Bryan**
 
 
 ---
@@ -982,3 +982,4 @@ class: inverse, center
 # Learn more!
 ## [Jenny Bryan's purrr tutorial](https://jennybc.github.io/purrr-tutorial/): A detailed introduction to purrr. Free online.
 ## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
