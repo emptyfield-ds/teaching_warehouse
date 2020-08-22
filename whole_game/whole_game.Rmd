@@ -127,7 +127,7 @@ This chunk can take a while to run. Set the code chunk option `cache = TRUE` for
 ```{r}
 _______ <- titanic %>% 
   ______ ___
-  # added the haven::zap_labels because of error
+  # remove labels because mice doesn't like them
   purrr::map_df(haven::zap_labels) %>% 
   mice(method = "norm") %>%
   complete()
@@ -156,7 +156,7 @@ ______(survived ~ age, data = titanic, family = binomial()) %>%
 It might also be useful to visualize their distributions. 
 
 1. Subset the two age columns
-2. Use tidyr to `pivot_longer()` the variable names into one column and the values into another. Since you're passing two columns, you need to specify the `cols =` argument. Name the new columns `"key"` and `"value"` using `names_to` and `values_to`.
+2. Use tidyr to `pivot_longer()` the variable names into one column and the values into another. Since you're only passing two columns, you can tell tidyr to just use everything in the dataset with `cols = everything()`. Name the new columns `"key"` and `"value"` using `names_to` and `values_to`.
 
 3. Color and fill the density plots by the new `key`.
 
