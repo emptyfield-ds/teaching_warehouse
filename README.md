@@ -17,8 +17,8 @@ Tidyverse](https://github.com/rstudio/master-the-tidyverse) workshop
 offered by RStudio but generally focus more on the needs of health
 researchers. The Shiny materials here were heavily influenced by the
 [full day Shiny workshop](https://github.com/dtkaplan/shinymark) offered
-by RStudio. Additionally, the following collaborators have influenced or
-contributed to this work:
+by RStudio. Additionally, many of my amazing collaborators have
+influenced or contributed to this work:
 
   - [Corinne Riddell](https://corinne-riddell.github.io/)
   - [Martin Frigaard](https://www.martinfrigaard.io/)
@@ -26,7 +26,8 @@ contributed to this work:
   - [Lucy D’Agostino McGowan](https://www.lucymcgowan.com/)
   - [Richard Iannone](https://randr.rocks/)
 
-My thanks to all of them, as well as RStudio,
+My thanks to all of them, as well as RStudio, for their contributions to
+these materials and generally to the R community\!
 
 These materials are open source and free to use with attribution under
 the following license:
