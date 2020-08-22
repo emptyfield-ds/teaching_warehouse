@@ -28,15 +28,16 @@ ft_countries <- c(
 )
 
 ft_excess_deaths <- raw_ft_excess_deaths %>%
-  filter(country %in% ft_countries)
+  filter(country %in% ft_countries) %>%
+  filter(region == country)
 
 # remove last week of 2020
-
 ft_excess_deaths <-
   bind_rows(
     filter(ft_excess_deaths, year != 2020),
     filter(ft_excess_deaths, year == 2020, week < 25)
   )
+
 
 # ‹(•_•)› EXPORT ––•––•––√\/––√\/––•––•––√\/––√\/––•––•––√\/––√\/  ----
 write_csv(

@@ -226,11 +226,11 @@ gg_uk_excess_deaths
 
 The third layer uses the same data we've created above, but with a `geom_ribbon()`. 
 
-This time, we'll set some new aesthetics inside the new geom (`geom_ribbon(aes())`). `geom_ribbon()` takes two additional aesthetics: `ymin` and `ymax`.
+This time, we'll set some new aesthetics inside the new geom (`geom_ribbon(aes())`). `geom_ribbon()` takes two additional aesthetics: `ymin` and `ymax`, referring to the bottom and top of the shading. 
 
-We want the the bottom of the ribbon area (`ymin`) to be the mean `expected_deaths`, and the top of the ribbon area (`ymax`) to extend to the top of the mean `deaths` variable.
+We want the the bottom of the ribbon area (`ymin`) to be the mean `expected_deaths`, but we don't want it to draw the shading if `expected_deaths` is less than the observed `deaths`. In other words, we want `ymin` to be whichever is lower: `expected_deaths` or `deaths`. For that we can use `pmin()`. We want the top of the ribbon area (`ymax`) to extend to the top of the mean `deaths` variable.
 
-Outside the `aes()`, we will also set the `fill` to `"tomato"` and the `alpha` to `0.5`.
+Set `ymin` to `pmin(expected_deaths, deaths)` and `ymax` to `deaths`. Outside the `aes()`, also set `fill` to `"tomato"` and the `alpha` to `0.5`.
 
 ```{r gg_uk_total_excess_deaths}
 gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
@@ -282,12 +282,11 @@ We're going to use `annotate()` to add the annotations on the graph (for ease, w
 
 `annotate()` is a way of using geoms to draw anywhere on your plot. We won't use `aes()` for this function! If you get lost here, read the help page for `annotate()` by running ?annotate in the console.
 
-1. Add `annotate()` to `gg_text_annotations`. Don't forget to connect them with `+`!
-2. Set `geom` to "segment". Like the text annotation, this links the annotation to the underlying function `geom_segment()`
-3. Set `x` to 22 and `xend` to 17, 
-4. Set `y` to 4000 and `yend` to 4001
-5. Set the `arrow` argument to `arrow(length = unit(0.3, "cm"))`. This is a function that creates an arrowhead shape.
-6. Set `color` to "black"
+1. Add `annotate()` to `gg_uk_historical_average`. Don't forget to connect them with `+`!
+2. Set the `geom` argument to "text" (under the hood, this is calling the very useful `geom_text()` function)
+3. Set `x` to 25 and `y` to 20000 (these are where the annotation will show up, so you can play with them as you wish) 
+4. Set the `label` argument to "65,700\nexcess\ndeaths\n(+45%)". (PS: wondering what's up with the "\n" thing? The labels require a little formatting for new lines; ggplot2 (and many other tools) will insert a new line anywhere you write "\n")
+5. Use the same `color`, "firebrick", as the 2020 line
 
 ```{r gg_text_annotations}
 gg_text_annotations <- ____________
@@ -301,7 +300,7 @@ For the arrow, we'll add a second annotation with `annotate()` with the segment 
 1. Add `annotate()` to `gg_text_annotations`. Don't forget to connect them with `+`!
 2. Set `geom` to "segment". Like the text annotation, this links the annotation to the underlying function `geom_segment()`
 3. Set `x` to 22 and `xend` to 17, 
-4. Set `y` to 4000 and `yend` to 4001
+4. Set `y` to 20000 and `yend` to 20001
 5. Set the `arrow` argument to `arrow(length = unit(0.3, "cm"))`. This is a function that creates an arrowhead shape.
 6. Set `color` to "black"
 
@@ -355,9 +354,9 @@ excess_deaths_wk <- ft_excess_deaths %>%
 
 To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the datasets we just made. We can do this easily by adding `facet_wrap()`!
 
-When we facet our data by `country`, we will want to allow each facet have differing x and y axes (since each country has different baseline mortality), so we'll add the `scales = "free"` argument.
+When we facet our data by `country`, we will want to allow each facet have differing y axes (since each country has different baseline mortality), so we'll add the `scales = "free_y"` argument. 
 
-As a reminder, `facet_wrap()` usually looks something like this: `facet_wrap(vars(variable_name), scales = "free")`
+As a reminder, `facet_wrap()` usually looks something like this: `facet_wrap(vars(variable_name), scales = "free_y")`
 
 For ease, we won't add the text annotations to this plot, although ggplot2 can certainly handle it. 
 
@@ -376,7 +375,7 @@ gg_by_country <- ggplot(
   geom_ribbon() +
   # Add the historical mean mortality line (layer 4)
   geom_line() +
-  # Use facet_wrap() to facet this plot by country. Set the scales to "free"
+  # Use facet_wrap() to facet this plot by country. Set the scales to "free_y"
   facet_wrap() +
   # Add appropriate labels to the plot
   labs()
