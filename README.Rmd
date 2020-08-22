@@ -27,7 +27,9 @@ Many elements of these materials were inspired by the [Master the Tidyverse](htt
 
 My thanks to all of them, as well as RStudio, for their contributions to these materials and generally to the R community!
 
-These materials are open source and free to use with attribution under the following license:
+## Using these materials in your own courses
+
+The materials in these repository are open source and free to use with attribution (see license below). Please do let me know if you use them in any way!
 
 [![forthebadge](https://forthebadge.com/images/badges/cc-by.svg)](https://creativecommons.org/licenses/by/4.0/)  
 This work is licensed under a [Creative Commons Attribution 4.0
