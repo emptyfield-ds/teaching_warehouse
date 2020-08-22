@@ -10,9 +10,7 @@ library(tidyverse)
 
 # ‹(•_•)› IMPORT ––•––•––√\/––√\/––•––•––√\/––√\/––•––•––√\/––√\/  ----
 # https://github.com/Financial-Times/coronavirus-excess-mortality-data
-raw_ft_excess_deaths <- read_csv(
-  "https://raw.githubusercontent.com/Financial-Times/coronavirus-excess-mortality-data/master/data/ft_excess_deaths.csv"
-)
+raw_ft_excess_deaths <- read_csv("ggplot_recreate_challenge/data-raw/raw_ft_excess_deaths.csv")
 
 # ‹(•_•)› WRANGLE ––•––•––√\/––√\/––•––•––√\/––√\/––•––•––√\/––√\/  ----
 # FILTER the countries ----------------------------------------
@@ -31,6 +29,14 @@ ft_countries <- c(
 
 ft_excess_deaths <- raw_ft_excess_deaths %>%
   filter(country %in% ft_countries)
+
+# remove last week of 2020
+
+ft_excess_deaths <-
+  bind_rows(
+    filter(ft_excess_deaths, year != 2020),
+    filter(ft_excess_deaths, year == 2020, week < 25)
+  )
 
 # ‹(•_•)› EXPORT ––•––•––√\/––√\/––•––•––√\/––√\/––•––•––√\/––√\/  ----
 write_csv(
