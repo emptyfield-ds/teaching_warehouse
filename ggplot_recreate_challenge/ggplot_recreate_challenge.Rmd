@@ -21,8 +21,6 @@ output:
 
 ####  The data you need is "data/ft_excess_deaths.csv"
 
-####  You'll have 1 hour to see what you can come up with in groups or individually!
-
 ---
 
 ### Financial Times Figure
@@ -88,8 +86,6 @@ knitr::include_graphics("img/latest-data.png")
 knitr::include_graphics("img/historical-average.png")
 ```
 
-
-
 ---
 
 ## Questions to guide you:
@@ -101,21 +97,3 @@ knitr::include_graphics("img/historical-average.png")
 knitr::include_graphics("img/no-excess-deaths.png")
 ```
 
-
----
-
-## I'll leave these here
-
-#### https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
-
-#### http://colorbrewer2.org
-
-### You may need to use some `dplyr` skills from the first session
-
----
-
-## Here is a figure with data from the previous month
-
-```{r ft-covid-19-jun-recreate, out.width="80%", fig.align='center', echo=FALSE}
-knitr::include_graphics("img/ft-covid-19-jun-recreate.jpeg")
-```
