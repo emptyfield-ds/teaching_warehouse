@@ -19,7 +19,7 @@ knitr::opts_knit$set(
 
 # Exercise
 
-The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open article from the Financial Times, called "2020-07-24-excess_mortaility.pdf". 
+The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open article from the Financial Times, called "2020-07-24-excess_mortality.pdf". 
 
 Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks*. 
 
