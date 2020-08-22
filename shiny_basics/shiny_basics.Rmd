@@ -490,17 +490,17 @@ output$moviestable <- DT::renderDataTable({
 `str_replace_all()` takes three arguments, 
 
 ```{r , eval=FALSE}
-str_replace_all(string = , # input variable
-                pattern = , # pattern to look for
-                replacement = # character vector of replacements
-                )
+str_replace_all(
+  string = "lord_of_the_rings",
+  pattern = "_",
+  replacement = " " 
+)
 ```
 
 `str_to_title()` converts the case of a string to title case.
 
 ```{r , eval=FALSE}
-str_to_title(string = # string to modify
-               )
+str_to_title("lord of the rings")
 ```
 
 
@@ -536,18 +536,13 @@ selectInput(
 output$scatterplot <- renderPlot({
   ggplot(
     data = movies,
-    aes_string(x = input$x, y = input$y, color = input$z)) +
+    aes_string(x = input$x, y = input$y, color = input$z)
+  ) +
     geom_point(alpha = input$alpha) +
     labs(
-      x = str_to_title(string = str_replace_all(string = input$x, 
-                                       pattern = "_", 
-                                       replacement = " ")),
-      y = str_to_title(string = str_replace_all(string = input$y, 
-                                       pattern = "_", 
-                                       replacement = " ")),
-      color = str_to_title(string = str_replace_all(string = input$z, 
-                                           pattern = "_", 
-                                           replacement = " "))
+      x = str_to_title(str_replace_all(input$x, "_", " ")),
+      y = str_to_title(str_replace_all(input$y, "_", " ")),
+      color = str_to_title(str_replace_all(input$z, "_", " "))
     )
 })
 ```

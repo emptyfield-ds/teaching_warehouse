@@ -14,8 +14,7 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", 
-                      dpi = 320, fig.height = 4)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
 library(tidyverse)
 library(datasauRus)
 diabetes <- read_csv("diabetes.csv")
@@ -168,16 +167,16 @@ ggplot(mtcars,
 ## Write and run the code from this slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
 ```{r slide-20, eval = FALSE}
-ggplot(data = diabetes, 
-       mapping = aes(x = weight, y = hip)) + geom_point()
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) + 
+  geom_point()
 ```
 
 ---
 
 ```{r slide-21}
 diabetes <- read_csv("diabetes.csv")
-ggplot(data = diabetes, 
-       mapping = aes(x = weight, y = hip)) + geom_point()
+ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) + 
+  geom_point()
 ```
 
 ---
@@ -209,7 +208,7 @@ ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
 
 ## Your Turn 2
 
-## Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph using the `gender` variable. Experiment.  
+### Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph using the `gender` variable. Experiment.  
 
 ```{r slide-24, eval=FALSE}
 ggplot(
@@ -219,7 +218,7 @@ ggplot(
   geom_point()
 ```
 
-## Try moving the mapping argument to `geom_point()`. Add in any aesthetics you found helpful.
+### Try moving the mapping argument to `geom_point()`. Add in any aesthetics you found helpful.
 
 ---
 
@@ -263,14 +262,33 @@ ggplot(
 
 ---
 
-```{r slide-29, out.height="90%", out.width="90%"}
-ggplot(
-  data = diabetes) +
+```{r slide-29-a, out.height="90%", out.width="90%", eval = FALSE}
+ggplot(data = diabetes) +
   geom_point(
-  mapping = aes(x = weight, y = hip, color = gender, shape = gender)
-)
+    mapping = aes(
+      x = weight, 
+      y = hip, 
+      color = gender, 
+      shape = gender
+    )
+  )
 ```
 
+---
+
+class: middle
+
+```{r slide-29-b, out.height="90%", out.width="90%", echo = FALSE}
+ggplot(data = diabetes) +
+  geom_point(
+    mapping = aes(
+      x = weight, 
+      y = hip, 
+      color = gender, 
+      shape = gender
+    )
+  )
+```
 ---
 
 # geoms

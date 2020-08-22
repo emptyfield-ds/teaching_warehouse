@@ -175,7 +175,7 @@ superscript^2^
 
 ## Your turn 2
 
-## Do the ten minute tutorial on markdown at https://commonmark.org/help/tutorial. Let us know if you need help!
+## Do the ten-twenty minute tutorial on markdown at https://commonmark.org/help/tutorial. Let us know if you need help!
 
 ---
 

@@ -12,12 +12,12 @@ library(tidyverse)
 library(haven)
 library(mice)
 titanic <- read_dta("titanic3.dta")
-titanic <- titanic %>% 
+titanic <- titanic %>%
   mutate(
     survived = factor(survived, labels = c("Died", "Survived")),
     pclass = factor(pclass)
   )
-titanic <- titanic %>% 
+titanic <- titanic %>%
   mutate(
     title = str_replace_all(name, "(.*, )|(\\..*)", ""),
     title = case_when(
@@ -27,7 +27,7 @@ titanic <- titanic %>%
     ),
     title = factor(title)
   )
-titanic <- titanic %>% 
+titanic <- titanic %>%
   mutate(title = fct_lump(title, 4))
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -50,10 +50,10 @@ fmla_spline <- survived ~ rcs(mice_age) + pclass + sibsp + I(sibsp^2) + parch + 
 We need to re-impute age first.
 
 ```{r}
-imputed_titanic <- titanic %>% 
-  select(age, pclass, sex, sibsp, parch, embarked, title) %>% 
-  mice(method = "norm") %>% 
-  complete() 
+imputed_titanic <- titanic %>%
+  select(age, pclass, sex, sibsp, parch, embarked, title) %>%
+  mice(method = "norm") %>%
+  complete()
 
 titanic$mice_age <- imputed_titanic$age
 titanic$mice_embarked <- imputed_titanic$embarked
@@ -68,15 +68,21 @@ We'll also create a function so we don't have to keep entering arguments. We'll 
 ml <- function(.fmla = fmla, method, ...) {
   train(
     .fmla,
-    data = titanic, # set data to titanic
-    method = method, # the method we'll use
-    ..., # any extra arguments we need
-    na.action = na.omit, # remove missing values
-    metric = "ROC", # use the area under the curve to measure model performance
-    trControl = trainControl( # use repeated cross-validation
+    # set data to titanic
+    data = titanic,
+    # the method we'll use
+    method = method,
+    # any extra arguments we need
+    ...,
+    # remove missing values
+    na.action = na.omit,
+    # use the area under the curve to measure model performance
+    metric = "ROC",
+    # use repeated cross-validation
+    trControl = trainControl(
       method = "repeatedcv",
-      repeats = 5,	
-      summaryFunction = twoClassSummary,	
+      repeats = 5,
+      summaryFunction = twoClassSummary,
       classProbs = TRUE
     )
   )
@@ -111,9 +117,9 @@ The caret package also has a built-in function for variable importance, `varImp(
 
 ```{r}
 library(gbm)
-boosted$finalModel %>% 
-  varImp() %>% 
-  rownames_to_column("variable") %>% 
+boosted$finalModel %>%
+  varImp() %>%
+  rownames_to_column("variable") %>%
   arrange(desc(Overall))
 ```
 ng the `cache` code chunk option to save the results from knit to knit.

@@ -16,23 +16,23 @@ diabetes <- read_csv("diabetes.csv")
 Here is a list:
 
 ```{r}
-number_list <- list(
-  a = rnorm(10, mean = 2, sd = 1.4), 
-  b = rnorm(5, mean = 1, sd = 1), 
-  c = rnorm(20, mean = 10, sd = 3)
+measurements <- list(
+  blood_glucose = rnorm(10, mean = 140, sd = 10), 
+  age = rnorm(5, mean = 40, sd = 5), 
+  heartrate = rnorm(20, mean = 80, sd = 15)
 )
 
-number_list
+measurements
 ```
 
-There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["a"]]`?
+There are two ways to subset lists: dollar signs and brackets. Try to subset `blood_glucose` from `measurements` using these approaches. Are they different? What about `measurements[["blood_glucose"]]`?
 
 ```{r}
-number_list["a"]
+measurements["blood_glucose"]
 ```
 
 ```{r}
-number_list$a
+measurements$blood_glucose
 ```
 
 
@@ -43,16 +43,16 @@ number_list$a
 
 ```{r}
 list(
-  sum_a = sum(number_list$a),
-  sum_b = sum(number_list$b),
-  sum_c = sum(number_list$c)
+  sum_blood_glucose = sum(measurements$blood_glucose),
+  sum_age = sum(measurements$age),
+  sum_heartrate = sum(measurements$heartrate)
 )
 ```
 
 3. Now, use `map()` to create the same output.
 
 ```{r}
-map(number_list, ___)
+map(measurements, ___)
 ```
 
 ## Your Turn 3
@@ -69,7 +69,7 @@ Pass diabetes to `map()` and map using `class()`. What are these results telling
 Write a function that returns the mean and standard deviation of a numeric vector.
 1. Give the function a name
 2. Find the mean and SD of `x`
-3. Map your function to `number_list`
+3. Map your function to `measurements`
 
 ```{r}
 _______ <- function(x) {

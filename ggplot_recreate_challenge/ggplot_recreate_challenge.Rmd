@@ -1,6 +1,6 @@
 ---
 title: "ggplot2: Plot replication challenge!"
-date: "`r paste(Sys.Date(), '<br><br>developed with Corinne Riddell')`"
+date: "`r paste(Sys.Date(), '<br><br>developed with Martin Frigaard')`"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
@@ -17,18 +17,16 @@ output:
 
 #### Open the Financial Times article, [Coronavirus tracked: the latest figures as countries start to reopen](https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441)
 
-#### There is also a PDF of the article titled, "*2020-07-24-coronavirus-tracked-the-latest-figures-as-countries-start-to-reopen.pdf*"
+#### There is also a PDF of the article titled, "*2020-07-24-excess_mortality.pdf*"
 
-####  The data you need is "FtExcessDeaths.csv"
-
-####  You'll have 1 hour to see what you can come up with in groups or individually!
+####  The data you need is "data/ft_excess_deaths.csv"
 
 ---
 
 ### Financial Times Figure
 
-```{r ft-covid-19-jul-recreate, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jul-recreate.png")
+```{r ft-covid-19-jul-recreate, out.width="80%", fig.align='center', echo=FALSE}
+knitr::include_graphics("img/ft-covid-19-jul-recreate.png")
 ```
 
 
@@ -58,14 +56,14 @@ knitr::include_graphics("ft-covid-19-jul-recreate.png")
 
 --
 
-```{r ft-covid-19-jul-recreate-alt-text-01, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jul-recreate-alt-text-01.png")
+```{r ft-covid-19-jul-recreate-alt-text-01, out.width="80%", fig.align='center', echo=FALSE}
+knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-01.png")
 ```
 
 --
 
-```{r ft-covid-19-jul-recreate-alt-text-02, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jul-recreate-alt-text-02.png")
+```{r ft-covid-19-jul-recreate-alt-text-02, out.width="80%", fig.align='center', echo=FALSE}
+knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-02.png")
 ```
 
 ---
@@ -74,8 +72,8 @@ knitr::include_graphics("ft-covid-19-jul-recreate-alt-text-02.png")
 
 ### What can we learn from the labels?
 
-```{r latest-data, out.height="50%", out.width="50%", fig.align='center', echo=F}
-knitr::include_graphics("latest-data.png")
+```{r latest-data, out.height="50%", out.width="50%", fig.align='center', echo=FALSE}
+knitr::include_graphics("img/latest-data.png")
 ```
 
 ---
@@ -84,11 +82,9 @@ knitr::include_graphics("latest-data.png")
 
 ### What can we learn from the labels?
 
-```{r historical-average, out.height="50%", out.width="50%", fig.align='center', echo=F}
-knitr::include_graphics("historical-average.png")
+```{r historical-average, out.height="50%", out.width="50%", fig.align='center', echo=FALSE}
+knitr::include_graphics("img/historical-average.png")
 ```
-
-
 
 ---
 
@@ -97,25 +93,7 @@ knitr::include_graphics("historical-average.png")
 ### What can we learn from the labels?
 
 
-```{r no-excess-deaths, out.height="50%", out.width="50%", fig.align='center', echo=F}
-knitr::include_graphics("no-excess-deaths.png")
+```{r no-excess-deaths, out.height="50%", out.width="50%", fig.align='center', echo=FALSE}
+knitr::include_graphics("img/no-excess-deaths.png")
 ```
 
-
----
-
-## I'll leave these here
-
-#### https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
-
-#### http://colorbrewer2.org
-
-### You may need to use some `dplyr` skills from the first session
-
----
-
-## Here is a figure with data from the previous month
-
-```{r ft-covid-19-jun-recreate, out.width="80%", fig.align='center', echo=F}
-knitr::include_graphics("ft-covid-19-jun-recreate.jpeg")
-```

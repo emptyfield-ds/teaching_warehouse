@@ -100,8 +100,7 @@ titanic <- titanic %>%
   mutate(title = fct_lump(title, 4))
 
 # look at the counts for title again
- table(titanic$title)
-
+table(titanic$title)
 ```
 
 ## Missing data
@@ -130,10 +129,9 @@ This chunk can take a while to run. Set the code chunk option `cache = TRUE` for
 
 ```{r mice, cache = TRUE}
 imputed_titanic <- titanic %>%
-  select(age, pclass, sex, sibsp, 
-         parch, embarked, title) %>%
+  select(age, pclass, sex, sibsp, parch, embarked, title) %>%
   # added the haven::zap_labels because of error
-  purrr::map_df(haven::zap_labels) %>% 
+  purrr::map_df(haven::zap_labels) %>%
   mice(method = "norm") %>%
   complete()
 
@@ -155,24 +153,25 @@ glm(survived ~ age, data = titanic, family = binomial()) %>%
 # Do the same for `mice_age`
 glm(survived ~ mice_age, data = titanic, family = binomial()) %>%
   tidy()
-
 ```
 
 It might also be useful to visualize their distributions.
 
 1. Subset the two age columns
-2. Use tidyr to `pivot_longer()` the variable names into one column and the values into another. Since you're passing two columns, you need to specify the `cols =` argument. Name the new columns `"key"` and `"value"` using `names_to` and `values_to`.
+2. Use tidyr to `pivot_longer()` the variable names into one column and the values into another. Since you're only passing two columns, you can tell tidyr to just use everything in the dataset with `cols = everything()`. Name the new columns `"key"` and `"value"` using `names_to` and `values_to`.
 
 3. Color and fill the density plots by the new `key`.
 
 ```{r}
 titanic %>%
   select(mice_age, age) %>%
-  pivot_longer(names_to = "key", 
-               values_to = "value", 
-               cols = c(mice_age, age)) %>%
+  pivot_longer(
+    names_to = "key",
+    values_to = "value",
+    cols = c(mice_age, age)
+  ) %>%
   ggplot(aes(x = value, color = key, fill = key)) +
-    geom_density(alpha = .7)
+  geom_density(alpha = .7)
 ```
 
 ## Exploratory analysis
@@ -185,7 +184,7 @@ There are many ways to go about exploring your data, but let's use a simple one:
 It may take a little bit of time for `ggpairs()` to plot everything.
 
 ```{r}
-titanic  %>%
+titanic %>%
   select(survived, mice_age, pclass, sex, title) %>%
   # ggpairs doesn't like that the variables are labelled.
   # remove them with haven::zap_labels()
@@ -193,11 +192,13 @@ titanic  %>%
   #  color by survival status.
   #  only show age, class, sex, and title.
   ggpairs(mapping = aes(color = survived), columns = 2:5, legend = 1) +
-    theme_minimal() +
-    #  put the legend at the bottom
-    #  make the column/row text bold
-    theme(legend.position = "bottom",
-          strip.text = element_text(face = "bold"))
+  theme_minimal() +
+  #  put the legend at the bottom
+  #  make the column/row text bold
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold")
+  )
 ```
 
 Paired plots contain a lot of information, which is a pro and a con. What do you see?
@@ -212,7 +213,7 @@ We'll use a a logistic regression to predict survival. Remember that `survival=1
 
 
 ```{r}
-survived_model <-  glm(survived ~ mice_age + sex + pclass + sibsp + parch + mice_embarked + title, data = titanic, family = binomial)
+survived_model <- glm(survived ~ mice_age + sex + pclass + sibsp + parch + mice_embarked + title, data = titanic, family = binomial)
 
 survived_model %>%
   tidy() %>%
@@ -227,14 +228,13 @@ What's going on with this model? Something looks wrong. Try to fix it. Hint: whe
 
 ```{r}
 #  fit a new model
-survived_model2 <-  glm(survived ~ mice_age + pclass + sibsp + parch + mice_embarked + title, data = titanic, family = binomial)
+survived_model2 <- glm(survived ~ mice_age + pclass + sibsp + parch + mice_embarked + title, data = titanic, family = binomial)
 
 #  tidy the results
 survived_model2 %>%
   tidy() %>%
   #  round all numeric variables to 2 digits
-  mutate_if(is.numeric, round, digits = 2)
-
+  mutate(across(where(is.numeric), round, digits = 2))
 ```
 
 Did your changes work?
@@ -248,6 +248,7 @@ Let's save a cleaned up table of the model results. We'll get the estimates and 
 2. Select only the term, estimate, and the upper and lower CIs. To get the confidence intervals, you can enter in the names directly or use dplyr helpers like `starts_with()`.
 
 3. Exponentiate any variable that's numeric. The function for exponentiating is `exp()`.
+
 4. Round any variable that's numeric.
 
 ```{r}
@@ -275,9 +276,9 @@ model_table %>%
   arrange(estimate) %>%
   mutate(term = fct_inorder(term)) %>%
   ggplot(aes(x = estimate, y = term)) +
-    geom_point(size = 2) +
-    geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0) +
-    geom_vline(xintercept = 1)
+  geom_point(size = 2) +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0) +
+  geom_vline(xintercept = 1)
 ```
 
 To know the real impact of a single variable on survival, we would need to thoughtfully create a model focused on getting an unbiased effect estimate. Since this is a prediction model, the individual odds ratios may or may not have a have a meaningful interpretation.
@@ -303,6 +304,6 @@ survived_model2 %>%
     term = fct_inorder(term)
   ) %>%
   ggplot(aes(x = term, y = importance)) +
-    geom_col() +
-    coord_flip()
+  geom_col() +
+  coord_flip()
 ```

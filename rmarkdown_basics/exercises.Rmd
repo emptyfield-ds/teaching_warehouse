@@ -21,7 +21,7 @@ Create a new R Markdown file. Go to File > New File > R Markdown. Press OK. Save
 
 ## Your turn 2
 
-Do the ten minute tutorial on markdown at https://commonmark.org/help/tutorial. Let us know if you need help!
+Do the ten-twenty minute tutorial on markdown at https://commonmark.org/help/tutorial. Let us know if you need help!
 
 ## Your turn 3
 

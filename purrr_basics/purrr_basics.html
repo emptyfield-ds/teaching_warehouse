@@ -3,7 +3,7 @@
   <head>
     <title>Functional programming and iteration with purrr</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-07-27" />
+    <meta name="date" content="2020-08-22" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -13,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Functional programming and iteration with purrr
-### 2020-07-27
+### 2020-08-22
 
 ---
 
@@ -70,7 +70,7 @@ list(char = "hello", num = 1, fun = mean)
 ## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7fe354879a50&gt;
+## &lt;bytecode: 0x7f91726a51d0&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -80,14 +80,14 @@ list(char = "hello", num = 1, fun = mean)
 
 
 ```r
-number_list &lt;- list(
+measurements &lt;- list(
   blood_glucose = rnorm(10, mean = 140, sd = 10), 
   age = rnorm(5, mean = 40, sd = 5), 
-  heartrate = rnorm(20, mean = 60, sd = 30)
+  heartrate = rnorm(20, mean = 80, sd = 15)
 )
 ```
 
-### There are two ways to subset lists: dollar signs and brackets. Try to subset `a` from `number_list` using these approaches. Are they different? What about `number_list[["blood_glucose"]]`?
+### There are two ways to subset lists: dollar signs and brackets. Try to subset `blood_glucose` from `measurements` using these approaches. Are they different? What about `measurements[["blood_glucose"]]`?
 
 ---
 
@@ -96,7 +96,7 @@ number_list &lt;- list(
 .small[
 
 ```r
-number_list["blood_glucose"]
+measurements["blood_glucose"]
 ```
 
 ```
@@ -107,7 +107,7 @@ number_list["blood_glucose"]
 
 
 ```r
-number_list$blood_glucose
+measurements$blood_glucose
 ```
 
 ```
@@ -117,7 +117,7 @@ number_list$blood_glucose
 
 
 ```r
-number_list[["blood_glucose"]]
+measurements[["blood_glucose"]]
 ```
 
 ```
@@ -370,9 +370,9 @@ map(x_list, mean)
 
 ```r
 list(
-  sum_a = sum(number_list$blood_glucose),
-  sum_b = sum(number_list$age),
-  sum_c = sum(number_list$heartrate)
+  sum_blood_glucose = sum(measurements$blood_glucose),
+  sum_age = sum(measurements$age),
+  sum_heartrate = sum(measurements$heartrate)
 )
 ```
 
@@ -384,7 +384,7 @@ list(
 
 
 ```r
-map(number_list, sum)
+map(measurements, sum)
 ```
 
 ```
@@ -395,7 +395,7 @@ map(number_list, sum)
 ## [1] 193.8606
 ## 
 ## $heartrate
-## [1] 1018.609
+## [1] 1509.304
 ```
 
 ---
@@ -592,7 +592,7 @@ class: inverse, center, middle, takeaway
 ### Write a function that returns the mean and standard deviation of a numeric vector.
 ### Give the function a name
 ### Find the mean and SD of `x`
-### Map your function to `number_list`
+### Map your function to `measurements`
 
 ---
 
@@ -606,7 +606,7 @@ mean_sd &lt;- function(x) {
   tibble(mean = x_mean, sd = x_sd)
 }
   
-map(number_list, mean_sd)
+map(measurements, mean_sd)
 ```
 ---
 
@@ -630,7 +630,7 @@ map(number_list, mean_sd)
 ## # A tibble: 1 x 2
 ##    mean    sd
 ##   &lt;dbl&gt; &lt;dbl&gt;
-## 1  50.9  27.7
+## 1  75.5  13.8
 ```
 
 ---
@@ -1189,7 +1189,7 @@ for (i in seq_along(x)) {
 class: center, middle, inverse
 
 # **Of course someone has to write loops. It doesn’t have to be you.**
-# **--Jenny Bryan**
+# **—Jenny Bryan**
 
 
 ---
@@ -1217,6 +1217,7 @@ class: inverse, center
 # Learn more!
 ## [Jenny Bryan's purrr tutorial](https://jennybc.github.io/purrr-tutorial/): A detailed introduction to purrr. Free online.
 ## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

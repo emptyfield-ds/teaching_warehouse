@@ -3,7 +3,7 @@
   <head>
     <title>Tidying Data</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-07-27" />
+    <meta name="date" content="2020-08-22" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,20 +14,22 @@ class: center, middle, inverse, title-slide
 
 # Tidying Data
 ## <span style="color:#56B4E9">tidyr</span> <br>
-### 2020-07-27
+### 2020-08-22
 
 ---
 
 
-
-
-
-&lt;img src="original-dfs-tidy.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
-.pull-right[Art by Garrick Aden‑Buie]
-
----
 background-image: url(http://hexb.in/hexagons/tidyr.png)
 background-position: 90% 10%
+
+
+
+&lt;!-- 
+TODO: Update the art slide when Allison makes a pivot version
+&lt;img src="tidyr_spread_gather.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+.pull-right[Art by Allison Horst]
+--&gt;
+
 
 ## **tidyr**
 
@@ -126,22 +128,24 @@ lotr
 
 
 ```r
-lotr %&gt;% 
-* pivot_longer(names_to = "sex",
-*              values_to = "words",
-*              cols = female:male)
+lotr %&gt;%
+* pivot_longer(
+*   names_to = "sex",
+*   values_to = "words",
+*   cols = female:male
+* )
 ```
 
 ---
 
-## `pivot_longer()`
-
 
 ```r
-lotr %&gt;% 
-  pivot_longer(names_to = "sex", 
-               values_to = "words", 
-               cols = female:male)
+lotr %&gt;%
+  pivot_longer(
+    names_to = "sex",
+    values_to = "words",
+    cols = female:male
+  )
 ```
 
 ```
@@ -177,14 +181,13 @@ lotr %&gt;%
 ## Your Turn 1
 
 
-### Use `pivot_longer()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
-
-
 ```r
-table4a %&gt;% 
-  pivot_longer(names_to = "year", 
-               values_to = "cases", 
-               cols = -country)
+table4a %&gt;%
+  pivot_longer(
+    names_to = "year",
+    values_to = "cases",
+    cols = -country
+  )
 ```
 
 ```
@@ -214,12 +217,16 @@ pivot_wider(&lt;DATA&gt;, &lt;NAMES FROM&gt;, &lt;VALUES FROM&gt;)
 
 
 ```r
-lotr %&gt;% 
-* pivot_longer(names_to = "sex",
-*              values_to = "words",
-*              cols = female:male) %&gt;%
-  pivot_wider(names_from = race, 
-              values_from = words)
+lotr %&gt;%
+* pivot_longer(
+*   names_to = "sex",
+*   values_to = "words",
+*   cols = female:male
+* ) %&gt;%
+  pivot_wider(
+    names_from = race,
+    values_from = words
+  )
 ```
 
 ---
@@ -228,12 +235,16 @@ lotr %&gt;%
 
 
 ```r
-lotr %&gt;% 
-  pivot_longer(names_to = "sex", 
-               values_to = "words", 
-               cols = female:male) %&gt;% 
-* pivot_wider(names_from = race,
-*             values_from = words)
+lotr %&gt;%
+  pivot_longer(
+    names_to = "sex",
+    values_to = "words",
+    cols = female:male
+  ) %&gt;%
+* pivot_wider(
+*   names_from = race,
+*   values_from = words
+* )
 ```
 
 ---
@@ -242,12 +253,16 @@ lotr %&gt;%
 
 
 ```r
-lotr %&gt;% 
-  pivot_longer(names_to = "sex", 
-               values_to = "words", 
-               cols = female:male) %&gt;% 
-  pivot_wider(names_from = race, 
-              values_from = words)
+lotr %&gt;%
+  pivot_longer(
+    names_to = "sex",
+    values_to = "words",
+    cols = female:male
+  ) %&gt;%
+  pivot_wider(
+    names_from = race,
+    values_from = words
+  )
 ```
 
 ```
@@ -281,10 +296,12 @@ table2
 
 
 ```r
-table2 %&gt;% 
-* pivot_wider(names_from = type,
-*             values_from = count) %&gt;%
-* mutate(prevalence = (cases/population) * 100000)
+table2 %&gt;%
+  pivot_wider(
+*   names_from = type,
+*   values_from = count
+  ) %&gt;% 
+* mutate(prevalence = (cases / population) * 100000)
 ```
 
 ```
@@ -305,21 +322,23 @@ table2 %&gt;%
 
 
 ```r
-table2 %&gt;% 
-  pivot_wider(names_from = type, 
-              values_from = count) %&gt;% 
-  mutate(prevalence = (cases/population) * 100000) %&gt;% 
+table2 %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) %&gt;%
+  mutate(prevalence = (cases / population) * 100000) %&gt;%
 * ggplot(aes(x = year, y = prevalence, color = country)) +
-*   geom_point(size = 2) +
-*   geom_line() +
-*   scale_x_continuous(breaks = c(1999L, 2000L))
+* geom_point(size = 2) +
+* geom_line() +
+* scale_x_continuous(breaks = c(1999L, 2000L))
 ```
 
 ---
 
 ## Your Turn 2
 
-&lt;img src="tidyr_basics_files/figure-html/unnamed-chunk-15-1.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="tidyr_basics_files/figure-html/unnamed-chunk-16-1.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -347,10 +366,12 @@ who
 
 
 ```r
-who %&gt;% 
-* pivot_longer(names_to = "codes",
-*              values_to = "n",
-*              cols = 5:60) %&gt;%
+who %&gt;%
+  pivot_longer(
+*   names_to = "codes",
+*   values_to = "n",
+*   cols = 5:60
+  ) %&gt;% 
   select(country, year, codes, n)
 ```
 
@@ -358,14 +379,6 @@ who %&gt;%
 
 ## Your Turn 3
 
-
-```r
-who %&gt;%
-  pivot_longer(names_to = "codes", 
-               values_to = "n", 
-               cols = 5:60) %&gt;% 
-  select(country, year, codes, n)
-```
 
 ```
 ## # A tibble: 405,440 x 4
@@ -518,10 +531,12 @@ cases &lt;- tribble(
 
 
 ```r
-lotr %&gt;% 
-* pivot_longer(names_to = "sex",
-*              values_to = "count",
-*              cols = c(female, male)) %&gt;%
+lotr %&gt;%
+  pivot_longer(
+    names_to = "sex",
+    values_to = "count",
+    cols = c(female, male)
+  ) %&gt;% 
 * uncount(count)
 ```
 
@@ -562,14 +577,6 @@ lotr %&gt;%
 ## Work with missing data
 ## **`complete()`**
 ## **`drop_na()`** and **`replace_na()`**
-
----
- 
-# In development: `pivot_longer()`, `pivot_wider()`
-
-&lt;img src="pivot.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
-
-## https://tidyr.tidyverse.org/dev/
 
 ---
 

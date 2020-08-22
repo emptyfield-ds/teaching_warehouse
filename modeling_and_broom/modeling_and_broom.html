@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Modeling in R and Tidying Results</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2020-08-22" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -13,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Modeling in R and Tidying Results
 ## <span style="color:#56B4E9">linear models and broom</span> <br>
-### 2019-08-29
+### 2020-08-22
 
 ---
 
@@ -271,12 +272,13 @@ lm(price ~ carat, data = diamonds) %&gt;%
 ```
 
 ```
-*## # A tibble: 1 x 11
+*## # A tibble: 1 x 12
 *##   r.squared adj.r.squared sigma statistic p.value    df
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
-## 1     0.849         0.849 1549.   304051.       0     2
-## # … with 5 more variables: logLik &lt;dbl&gt;, AIC &lt;dbl&gt;,
-## #   BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.849         0.849 1549.   304051.       0     1
+## # … with 6 more variables: logLik &lt;dbl&gt;, AIC &lt;dbl&gt;,
+## #   BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;,
+## #   nobs &lt;int&gt;
 ```
 
 ---
@@ -300,21 +302,21 @@ lm(price ~ carat, data = diamonds) %&gt;%
 ```
 
 ```
-*## # A tibble: 53,940 x 9
-*##    price carat .fitted .se.fit .resid    .hat .sigma .cooksd
-##    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1   326 0.23  -472.     10.4    798. 4.52e-5  1549. 6.00e-6
-##  2   326 0.21  -628.     10.6    954. 4.71e-5  1549. 8.92e-6
-##  3   327 0.23  -472.     10.4    799. 4.52e-5  1549. 6.02e-6
-##  4   334 0.290   -7.00    9.77   341. 3.98e-5  1549. 9.66e-7
-##  5   335 0.31   148.      9.57   187. 3.82e-5  1549. 2.78e-7
-##  6   336 0.24  -395.     10.3    731. 4.42e-5  1549. 4.93e-6
-##  7   336 0.24  -395.     10.3    731. 4.42e-5  1549. 4.93e-6
-##  8   337 0.26  -240.     10.1    577. 4.24e-5  1549. 2.94e-6
-##  9   337 0.22  -550.     10.5    887. 4.61e-5  1549. 7.56e-6
-## 10   338 0.23  -472.     10.4    810. 4.52e-5  1549. 6.18e-6
+*## # A tibble: 53,940 x 8
+*##    price carat .fitted .resid .std.resid    .hat .sigma
+##    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1   326 0.23  -472.     798.      0.516 4.52e-5  1549.
+##  2   326 0.21  -628.     954.      0.616 4.71e-5  1549.
+##  3   327 0.23  -472.     799.      0.516 4.52e-5  1549.
+##  4   334 0.290   -7.00   341.      0.220 3.98e-5  1549.
+##  5   335 0.31   148.     187.      0.121 3.82e-5  1549.
+##  6   336 0.24  -395.     731.      0.472 4.42e-5  1549.
+##  7   336 0.24  -395.     731.      0.472 4.42e-5  1549.
+##  8   337 0.26  -240.     577.      0.372 4.24e-5  1549.
+##  9   337 0.22  -550.     887.      0.573 4.61e-5  1549.
+## 10   338 0.23  -472.     810.      0.523 4.52e-5  1549.
 ## # … with 53,930 more rows, and 1 more variable:
-## #   .std.resid &lt;dbl&gt;
+## #   .cooksd &lt;dbl&gt;
 ```
 
 ---
@@ -376,9 +378,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -387,7 +405,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

@@ -15,46 +15,55 @@ knitr::opts_knit$set(
   width = 78,
   progress = FALSE
 )
-# Load your packages!
-library(tidyverse)
-library(ftplottools)
 ```
 
 # Exercise
 
-The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open the journal article "2020-07-24-coronavirus-tracked-the-latest-figures-as-countries-start-to-reopen.pdf". 
+The purpose of this exercise is to make a publication-ready plot using your `dplyr` and `ggplot2` skills. Open article from the Financial Times (FT), called "2020-07-24-excess_mortality.pdf". 
 
-Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks*. 
+Read the article and have a look at the figure titled, *Death rates have climbed far above historical averages in many countries that have faced Covid-19 outbreaks* (on the third page). 
 
-The data you need is "`FtExcessDeaths.csv.csv`". You'll have 1 hour to see what you can come up with in groups or individually!
+The data you need is "`ft_excess_deaths.csv`" in the `data` folder. 
 
-You got this. Don't worry about making it exactly, try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
+You got this. Don't worry about making it exactly; try and see how far you can get. You're encouraged to work together if you want to and exchange tips/tricks you figured out. At the bottom of this document, the "Resources" section may have a few helpful things to check out.
+
+First, load the packages you need.
+
+```{r}
+library(tidyverse)
+```
 
 ## Import the data
 
-Import the .csv file below into `FtExcessDeaths`.
+Import the .csv file below into `ft_excess_deaths` using `read_csv()`
 
-```{r import-FtExcessDeaths}
-FtExcessDeaths <- read_csv("FtExcessDeaths.csv")
+```{r import-ft_excess_deaths}
+ft_excess_deaths <- ________("data/ft_excess_deaths.csv")
+```
+
+To make our lives easier when we get to plotting, we'll also change "year" to a factor. We'll cover factors, and why they're useful when you're plotting, later in the course. 
+
+```{r year-factor}
+ft_excess_deaths <- mutate(ft_excess_deaths, year = factor(year))
 ```
 
 ### View the data 
 
-Use `glimpse()` and `skim()` to view the `FtExcessDeaths` data. 
+Use `glimpse()` to view the `ft_excess_deaths` data. 
 
 ```{r glimpse}
-glimpse(x = #______)
+glimpse(______)
 ```
+
+The skimr package has a function called `skim()`, which is a useful way to take a quick look at your data. Load the skimr package, then call `skim()` on `ft_excess_deaths.`
 
 ```{r skimr}
-library(skimr)
-skim(data = # ______)
+library(______)
+_________
 ```
 
 
-### What are the variables measuring?
-
-Below is a portion of the [README.md file](https://github.com/Financial-Times/coronavirus-excess-mortality-data/blob/master/README.md) from the FT Github repo: 
+What are the variables measuring? The authors included a data dictionary in the [README file](https://github.com/Financial-Times/coronavirus-excess-mortality-data/blob/master/README.md) associated with these data: 
 
 ```
 ## Data definitions
@@ -88,32 +97,33 @@ following fields:
 
 ### How many countries are in this dataset?
 
-Use `dplyr::count()` to determine how many countries are in the `FtExcessDeaths` data.
+Use `distinct()` to determine which countries are in the `country`.
 
-```{r count-countries}
-dplyr::count(x = FtExcessDeaths, # _______)
+```{r distinct-countries}
+distinct(ft_excess_deaths, _______)
 ```
 
 
 ## Start small 
 
-Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only:
+Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only (press green play button to see the image):
 
-```{r latest-data, out.height="70%", out.width="70%", fig.align='center', echo=FALSE, eval=TRUE}
-knitr::include_graphics("latest-data.png")
+```{r latest-data}
+knitr::include_graphics("img/latest-data.png")
 ```
 
-In order to build this graph, we will need to filter `FtExcessDeaths` to only the data for `"UK"` and store it in `UKExcessDeaths`. 
+In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `uk_excess_deaths`. 
 
-```{r create-UKExcessDeaths}
-UKExcessDeaths <- FtExcessDeaths %>% dplyr::filter(# country == _____)
+```{r create-uk_excess_deaths}
+uk_excess_deaths <- ft_excess_deaths %>%
+  ____________
 ```
 
 ### What can we learn from the labels? 
 
-The labels and subtitles tells us that we're looking at three metrics: 1) the number of deaths from all causes in 2020, and the number of deaths from previous years (lines in gray), and the historical average (black line).
+Take another look at the image of the UK plot. The labels and subtitles tells us that we're looking at three metrics: 1) the number of deaths from all causes in 2020, and the number of deaths from previous years (lines in gray), and the historical average (black line).
 
-We're going to build this graph from the `UKExcessDeaths`, and then apply what we've learned to the entire `FtExcessDeaths` dataset. 
+We're going to build this graph from `uk_excess_deaths`, and then apply what we've learned to the entire `ft_excess_deaths` dataset. 
 
 ## Building the plot layer-by-layer
 
@@ -121,437 +131,296 @@ Each section below covers how to build the FT plot, one layer at a time.
 
 ### Layer 1: Deaths from recent years
 
-The first layer we will build is the lines for 'recent years', which we will call `UKExcessDeathsPrior` and it includes all years prior to 2020.
+The first layer we will build is the lines for recent years, which we will call `uk_excess_deaths_prior` and it includes all years prior to 2020. These show up in the original plot as light grey lines in the background of the excess mortality geom.
 
-```{r create-UKExcessDeathsPrior}
-UKExcessDeathsPrior <- UKExcessDeaths %>%
-  dplyr::filter(# year != )
-# how many years do we have data for?
-# (what do we expect to see?)
-distinct(UKExcessDeathsPrior, year)
+```{r create-uk_excess_deaths_prior}
+uk_excess_deaths_prior <- uk_excess_deaths %>%
+  filter(_____ != 2020)
+
+# how many years do we have data for? What do we expect to see?
+distinct(uk_excess_deaths_prior, year)
 ```
 
-Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`, so we'll calculate the average number of `deaths` per week and year by grouping the dataset by `week` and `year` and summarizing mean `deaths`. We will store the result in `UKExcessDeathsPriorWk`.
+Our final plot will have `deaths` on the `y` axis, and `week`s across the `x`. Let's calculate the average number of `deaths` per week and year by grouping the dataset by `week` and `year`, then summarizing mean `deaths`. We will store the result in `uk_excess_deaths_prior_wk`.
 
-```{r create-UKExcessDeathsPriorWk}
-UKExcessDeathsPriorWk <- UKExcessDeathsPrior %>%
-  dplyr::group_by(week, year) %>%
-    dplyr::summarize(deaths = # mean(______, na.rm = TRUE))
-# view data 
-head(UKExcessDeathsPriorWk)
+```{r create-uk_excess_deaths_prior_wk}
+uk_excess_deaths_prior_wk <- uk_excess_deaths_prior %>%
+  group_by(_____, ______) %>%
+  summarize(deaths = mean(______, na.rm = TRUE))
+
+# view the first six rows of the data 
+head(uk_excess_deaths_prior_wk)
 ```
 
-We need to format the variables so they're easier to plot. 
-
-- `week` should be numeric on the `x` 
-
-- `year` should be a separate gray line for each prior `year`, so we need this to be a factor
-
-```{r UKExcessDeathsPrior-week-year}
-UKExcessDeathsPriorWk <- UKExcessDeathsPriorWk %>%
-  dplyr::mutate(week = #  as.numeric(_____), year = # factor(______))
-```
-
-Start by defining your labels (so you know what you're expecting to see).
-
-```{r uk_labs}
-uk_labs <- ggplot2::labs(x = "Date", y = "Deaths",
-                title = "Death rates in UK compared to historical averages",
-       subtitle = "Number of deaths per week from all causes  vs. recent years")
-```
-
-We need to make sure the lines in the graph will represent different years, and we can check this by mapping `x` to `week`, `y` to `deaths`, and `color` to `year` and adding a `geom_line()`
+Let's make a first attemp at the plot! Map `x` to `week`, `y` to `deaths`, and `group` to `year`, then add `geom_line()`. Make sure to connect your geom with the labels using `+`
 
 ```{r check-years}
-ggplot(data = UKExcessDeathsPriorWk, 
-       
-       aes(x = week, y = deaths, color = year)) +
-  
-          # add a geom_line()
-          
-          # add the labs
-   
+ggplot(
+  uk_excess_deaths_prior_wk, 
+  aes(_______, _______, _______)
+) +
+  _______ 
+  labs(
+    x = "Date", 
+    y = "Deaths",
+    title = "Death rates in UK compared to historical averages",
+    subtitle = "Number of deaths per week from all causes  vs. recent years"
+  )
 ```
 
-These will be our gray lines. And, now we can plot the mean `deaths` per `week` grouped by `year` for the `"UK"` and store it in `gg_uk_recent_years`.
+These will be our previous year lines. Now we can plot the mean `deaths` per `week` grouped by `year` for the `"UK"` and store it in `gg_uk_recent_years`.
 
-We'll move the `color` aesthetic to the `geom_line()` function (use `color = "grey75"`), and make them slightly transparent with `alpha = 3/5`.
+In `geom_line()`, add `color = "grey75"` and make the lines slightly transparent with `alpha = 0.6`.
 
 ```{r gg_uk_recent_years}
-gg_uk_recent_years <-  ggplot(data = UKExcessDeathsPriorWk, 
-                              aes(x = week, y = deaths, group = year)) +
+gg_uk_recent_years <- ggplot(
+  uk_excess_deaths_prior_wk, 
+  aes(x = week, y = deaths, group = year)
+) +
+  geom_line(______, _______) +
+  labs(
+    x = "Date", 
+    y = "Deaths",
+    title = "Death rates in UK compared to historical averages",
+    subtitle = "Number of deaths per week from all causes  vs. recent years"
+  )
 
-                        geom_line(# add color, # add alpha)
-
-# add labs
-gg_uk_recent_years + uk_labs
+gg_uk_recent_years
 ```
 
 ### Layer 2: Excess deaths (2020)
 
-The second layer will be mean deaths per week and year in 2020 (since the coronavirus pandemic). 
+The second layer will be mean deaths per week in 2020 (in otherwords, during the coronavirus pandemic). 
 
-We'll build this data layer similar to the one above, but filtered to only the `year` 2020, but this time we will also get the mean `deaths` and the mean `expected_deaths`. 
+We'll build this data layer similar to the one above but for 2020. This time we will also get the mean `deaths` and the mean `expected_deaths`. 
 
-```{r create-UKExcessDeaths2020Wk}
-# filter to the year 2020
-UKExcessDeaths2020 <- UKExcessDeaths %>%
-  dplyr::filter(# year == )
-# create UKExcessDeaths2020Wk
-UKExcessDeaths2020Wk <- UKExcessDeaths2020 %>%
-  # group by the week and year
-  dplyr::group_by(# week, # year) %>%
-    # calculate mean deaths and mean expected_deaths
-    dplyr::summarize(deaths = # mean(, na.rm = TRUE),
-                     expected_deaths = # mean(, na.rm = TRUE)) %>%
-    dplyr::mutate(week = as.numeric(# week),
-    # to plot the weeks along the x axis in order, we will
-    # want this to be a factor
-                  year = factor(# year))
+Filter the data to only include 2020. Then, group by week and year. Finally, summarize the data using `mean()`. Make sure to add the "na.rm = TRUE" argument to `mean()`, as above.
+
+```{r create-uk_excess_deaths2020_wk}
+# create uk_excess_deaths2020_wk
+uk_excess_deaths2020_wk <- uk_excess_deaths %>%
+  ________ %>% 
+  ________ %>%
+  ________(
+    deaths = ________,
+    expected_deaths = ________
+  )
+
+uk_excess_deaths2020_wk
 ```
 
-Now we add another layer to the existing graph object (`gg_uk_recent_years`), but we'll change the aesthetics for this layer (inside the `geom_line()`) to `x = week`, `y = deaths`, `group = year`. 
+Now, we'll add another layer to the existing ggplot2 object (`gg_uk_recent_years`), but we'll change the aesthetics for this layer to `x = week`, `y = deaths`, `group = year` (inside the `geom_line()`) . 
+ 
+For this layer, we'll use the same aesthetics but with this new data. Each geom inherits data from `ggplot()`, but you can use a different dataset using the `data` argument directly, in the geom.
 
-Outside the `aes*()`, set the `color` as `"firebrick"`. Save this as `gg_uk_excess_deaths` and add the labs `uk_labs`
+Add an additional `geom_line(). Set the `data` argument to `uk_excess_deaths2020_wk`. Additionally, Set the `color` argument to "firebrick". Then, take a look at the plot. 
 
 ```{r gg_uk_excess_deaths-uk_labs}
 gg_uk_excess_deaths <- gg_uk_recent_years +
+  ____________
 
-    geom_line(data = UKExcessDeaths2020Wk,
-              
-              aes(# x = , # y = , # group = ), # color = ,)
-
-
-gg_uk_excess_deaths + 
-  # add labs
+gg_uk_excess_deaths
 ```
 
 ### Layer 3: Total excess deaths (shading)
 
 The third layer uses the same data we've created above, but with a `geom_ribbon()`. 
 
-Once again, we'll set the aesthetics inside the geom (`geom_ribbon(data = (aes())`). 
+This time, we'll set some new aesthetics inside the new geom (`geom_ribbon(aes())`). `geom_ribbon()` takes two additional aesthetics: `ymin` and `ymax`, referring to the bottom and top of the shading. 
 
-We want the the bottom of the ribbon area (`ymin`) to be the mean `expected_deaths`, and the top of the ribbon area (`ymax`) to extend to the top of the mean `deaths` variable.
+We want the the bottom of the ribbon area (`ymin`) to be the mean `expected_deaths`, but we don't want it to draw the shading if `expected_deaths` is less than the observed `deaths`. In other words, we want `ymin` to be whichever is lower: `expected_deaths` or `deaths`. For that we can use `pmin()`. We want the top of the ribbon area (`ymax`) to extend to the top of the mean `deaths` variable.
 
-Outside the `aes()`, we will also set the `fill` to `"tomato"` and the `alpha` to `1/2`.
+Set `ymin` to `pmin(expected_deaths, deaths)` and `ymax` to `deaths`. Outside the `aes()`, also set `fill` to `"tomato"` and the `alpha` to `0.5`.
 
 ```{r gg_uk_total_excess_deaths}
 gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
-    geom_ribbon(data = UKExcessDeaths2020Wk, aes(# ymin = , # ymax = ), 
-                                                  fill = "tomato", alpha = 1/2)
-gg_uk_total_excess_deaths + 
-  # add labs
+  _______(
+    data = uk_excess_deaths2020_wk,
+    aes(ymin = _______, ymax = _______), 
+    fill = "tomato", 
+    alpha = 0.5
+  )
+  
+gg_uk_total_excess_deaths
 ```
 
 ### Layer 4: Historical averages 
 
-The final layer will be the historical average (the `median` for **all** `year`s in the `"UK"` before `2020`).
+The final layer will be the historical average (the `mean` for **all** `year`s in the `"UK"` before `2020`). Instead of using the average of the years in the dataset, we'll used the `excess_deaths` variable that the authors calculated. That means we need to get the `expected_deaths` for 2020, then get their weekly average.
 
-The grouped data `UKExcessDeathsWk` is created in the code chunk below (be sure to note the `filter()` function before grouping and summarizing!)
+Let's create the grouped data `uk_excess_deaths_wk`. First, filter to only the 2020 data. Then group the data by week (not year!).
 
-```{r create-UKExcessDeathsWk}
-UKExcessDeathsWk <- UKExcessDeaths %>%
-  # these are historical, so we will remove the 2020 data
-  dplyr::filter(# year != ) %>%
-    # note this is not by week and year, just week!
-  dplyr::group_by( ) %>%
-  # historical average = mean
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
-  # we'll pipe this right over to the mutate function
-  dplyr::mutate(week = as.numeric(week))
+```{r create-uk_excess_deaths_wk}
+uk_excess_deaths_wk <- uk_excess_deaths %>%
+  _______(_______ == _______) %>%
+  _______(_______) %>%
+  summarize(expected_deaths = mean(expected_deaths, na.rm = TRUE))
+
+uk_excess_deaths_wk
 ```
 
-Now we can plot the historical average, but we need to make sure we aren't inheriting any aesthetics from the previous layers (they are expecting a year variable we don't have in the `UKExcessDeathsWk` data), so we add `inherit.aes = FALSE` to the `geom_line()` function.
-
-This line will have `week` on the `x`, and `deaths` on the `y`. The `color` aesthetic will be placed outside `aes()`, and it should be set to `"black"`.
+Now we can plot the historical average line, but we need to make sure we aren't inheriting any aesthetics from the previous layers (we're using `expected_deaths` instead of `deaths`, and ggplot is expecting a year variable that we don't have in the `uk_excess_deaths_wk` data), so we'll add `inherit.aes = FALSE` to the `geom_line()` function. This line will have `week` on the `x` axis, and `expected_deaths` on the `y` axis. The `color` argument will be placed outside `aes()`, and it should be set to "black".
 
 ```{r gg_uk_historical_average}
 gg_uk_historical_average <- gg_uk_total_excess_deaths +
-    geom_line(data = UKExcessDeathsWk, inherit.aes = FALSE, aes(# x = , # y = ),
-             color = # set color)
+  # what kind of geom should this be?
+  _______(
+    data = uk_excess_deaths_wk,
+    aes(_______, _______),
+    color = _______,
+    inherit.aes = FALSE 
+  ) 
 
-gg_uk_historical_average +
-
-  uk_labs
+gg_uk_historical_average 
 ```
 
 ### Layer 5: Add text annotations
 
 The FT graph has a text annotation on the `"UK"` plot, which displays the excess deaths and percent. Our data looks slightly different than the data in the FT graph, but the trends is nearly identical. 
 
-We're going to use `ggplot2::geom_text()` and `ggplot2::geom_segment()` to add the annotations on the graph (we'll assume the FT graph is correct).
+We're going to use `annotate()` to add the annotations on the graph (for ease, we'll assume the numbers in FT graph is correct rather than calculating them ourselves).
 
-Inside the `aes()` of `geom_text()`:
+`annotate()` is a way of using geoms to draw anywhere on your plot. We won't use `aes()` for this function! If you get lost here, read the help page for `annotate()` by running ?annotate in the console.
 
-- set x to `25` and `y` to `4000` (these are just numbers on the Cartesian coordinate plane, so you can play with them as you wish) 
-
-- the labels require a little formatting for new lines, so `\n` is added after each word: `"65,700\nexcess\ndeaths\n(+45%)"`  
-
-- And we will use the same `color` as the 2020 line (`"firebrick"`)
+1. Add `annotate()` to `gg_uk_historical_average`. Don't forget to connect them with `+`!
+2. Set the `geom` argument to "text" (under the hood, this is calling the very useful `geom_text()` function)
+3. Set `x` to 25 and `y` to 20000 (these are where the annotation will show up, so you can play with them as you wish) 
+4. Set the `label` argument to "65,700\nexcess\ndeaths\n(+45%)". (PS: wondering what's up with the "\n" thing? The labels require a little formatting for new lines; ggplot2 (and many other tools) will insert a new line anywhere you write "\n")
+5. Use the same `color`, "firebrick", as the 2020 line
 
 ```{r gg_text_annotations}
-gg_text_annotations <- gg_uk_historical_average +
-  geom_text(x = # , y = # , label = # , color = # )
-# add labels 
-gg_text_annotations + 
+gg_text_annotations <- ____________
+  ____________
   
-  uk_labs
+gg_text_annotations
 ```
 
-For the arrow, 
+For the arrow, we'll add a second annotation with `annotate()` with the segment geom. Again, we won't use `aes()`; we'll just give the arguments directly to `annotate()`
 
-Inside the `aes()` of `geom_segment()`:
-
-- set `x` to `22` and `xend` to `17`, 
-
-- set `y` to `4000` and `yend` to `4001`
-
-- the `arrow =` takes an `arrow()` function with the following arguments: 
-
-  - `length( = unit(0.3, "cm"))`
-
-- `color` needs to be set to `"black"`
+1. Add `annotate()` to `gg_text_annotations`. Don't forget to connect them with `+`!
+2. Set `geom` to "segment". Like the text annotation, this links the annotation to the underlying function `geom_segment()`
+3. Set `x` to 22 and `xend` to 17, 
+4. Set `y` to 20000 and `yend` to 20001
+5. Set the `arrow` argument to `arrow(length = unit(0.3, "cm"))`. This is a function that creates an arrowhead shape.
+6. Set `color` to "black"
 
 ```{r gg_arrow_segment}
 # add the arrows 
-gg_arrow_segment <- gg_text_annotations + 
-  geom_segment(aes(x = # , xend = # , y = # , yend = # ), 
-                     arrow = # arrow( = unit(, " ")), color = #) 
-# add labels 
-gg_arrow_segment + 
-  uk_labs
+gg_arrow_segment <- ____________
+  ____________
+
+gg_arrow_segment 
 ``` 
-
-
-
 
 ### Add theme
 
-This looks very close to the original graphic above, but we will add the `ft_theme()` theme from [`ftplottools`](https://github.com/Financial-Times/ftplottools) package.
+We're pretty close! Interestingly, the Financial Times team has its own R package, [`ftplottools`](https://github.com/Financial-Times/ftplottools), for use in their articles. ftplottools includes a ggplot2 theme function, `ft_theme()`, similar to the original plot's theme (although there are some differences, including the default background color).
+
+Load ftplottools with `library()`, then add `ft_theme()` to `gg_arrow_segment`.
 
 ```{r ft_theme}
-gg_uk_historical_average +
+# Finish your plot with a theme!
 
-  uk_labs + 
-  # add theme
-  # ftplottools::
 ```
 
 ## Rinse, repeat
 
-Now that we've created a graph for a single country that looks similar to the FT graph, we can apply the same process to all the countries in the data.
-
-### Define the title and labels 
-
-Start by defining the title and labels (so we know what we're expecting to see)
-
-```{r labs}
-labs <- ggplot2::labs(x = # "", y = # "", title = # "", subtitle = # "")
-```
+Now that we've created a graph for a single country that looks similar to the FT graph, we can apply the same process to all the countries in the data. From this point on, you'll use what you've learned so far in the course and in this assignment to make a plot similar to what we saw in the article. Change the skeleton code in the next two sections to make the plot yourself!
 
 ### Create the data layers 
 
-Below is the code for reproducing the steps and creating the three data layers we built above. We end up with `ExcessDeathsPriorWk`, `ExcessDeaths2020Wk`, and `FtExcessDeathsWk`. Read through the comments for more information.
+For the UK data, we made three data sets that we used in the plot. We'll need to make them for the entire dataset now. We'll end up with three datasets: `excess_deaths_prior_wk`, `excess_deaths2020_wk`, and `excess_deaths_wk`. Use the code you wrote for the UK data above as a basis for making these datasets using the skeleton code below.
+
+**Hint**: for this data set, you also need to group by country. Put that variable first whenever you use groupings.
 
 ```{r facet-data}
-# create ExcessDeathsPriorWk ----
-# filter to correct date range
-ExcessDeathsPriorWk <- FtExcessDeaths %>%
-  dplyr::filter(year != # ) %>%
-# ExcessDeathsPriorWk ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# Our plot will have deaths on the y axis, and weeks across the x for each 
-# country in the dataset. We'll calculate the mean number of deaths per week 
-# and year by grouping the dataset by country, week, and year and summarizing
-# the mean deaths
-  dplyr::group_by(# , # , # ) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>%
-  # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week),
-                 # ~~ factor years ------
-                year = factor(year))
+excess_deaths_prior_wk <- ft_excess_deaths %>%
+  filter() %>% 
+  group_by() %>%
+  summarize()
 
-# create ExcessDeaths2020Wk ----
-ExcessDeaths2020Wk <- FtExcessDeaths %>%
-  dplyr::filter(year == 2020) %>%
-# ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# Our plot will also have 2020 deaths on the y axis, and weeks across the x, 
-# grouped by country. We'll calculate the mean number of deaths per country, 
-# week, and year by grouping the dataset by country, week, and year and 
-# summarizing the mean deaths and expected_deaths
-  dplyr::group_by(# , # , # ) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE),
-                     expected_deaths = mean(expected_deaths, na.rm = TRUE)) %>% 
-    # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week),
-                # ~~ factor years ------
-                year = factor(year))
+excess_deaths2020_wk <- ft_excess_deaths %>%
+  filter() %>%
+  group_by() %>%
+  summarize()
 
-# create FtExcessDeathsWk ----------------------------------------------------
-FtExcessDeathsWk <- FtExcessDeaths %>%
-#  ~~~ GROUP BY & SUMMARIZE deaths by week/year -------------
-# The last data layer for our plot all us to put deaths on the y axis, and 
-# weeks across the x. We will calculate the mean number of deaths per country 
-# and week by grouping the dataset by country and week and summarizing the mean
-# deaths 
-# these are historical, so we will remove the 2020 data
-  dplyr::filter(year != 2020) %>%
-  # group these data by the correct categories
-  dplyr::group_by(# , #) %>%
-    dplyr::summarize(deaths = mean(deaths, na.rm = TRUE)) %>% 
-    # ~~ numeric week -----
-  dplyr::mutate(week = as.numeric(week))
+excess_deaths_wk <- ft_excess_deaths %>%
+  filter() %>%
+  group_by() %>%
+  summarize()
 ```
 
-### Adding facets
+### Creating the plot and adding facets
 
-To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the `ExcessDeathsPriorWk` data. We can do this by adding the `ggplot2::facet_wrap()` function
+To create a plot similar to the one in the FT times, we'll need to duplicate each layer in the line graph for all 21 countries in the datasets we just made. We can do this easily by adding `facet_wrap()`!
 
-When we facet our data by `country`, we will want to allow the `x` and `y` axes to have differing scales, so we'll add the `scales = "free"` argument. 
+When we facet our data by `country`, we will want to allow each facet have differing y axes (since each country has different baseline mortality), so we'll add the `scales = "free_y"` argument. 
 
-The full syntax is below:
+As a reminder, `facet_wrap()` usually looks something like this: `facet_wrap(vars(variable_name), scales = "free_y")`
 
-`facet_wrap( ~ 'variable', scales = "free")`
+For ease, we won't add the text annotations to this plot, although ggplot2 can certainly handle it. 
 
-Each layer in this plot is built below, but without any intermediate objects (it's all one continuous pipe!). Fill in each portion by looking at what you did for each layer about (and check the comments).
+Fill in the skeleton code to create a facetted plot.
 
-```{r gg_facet_by_country}
-# previous years (gray lines) ----------------------------------------------
-# this is the first layer of multiple gray lines. we'll be mapping the deaths 
-# per week from all previous years, so remember which variable will be the 
-# grouping variable
-gg_facet_by_country <- ggplot(data = ExcessDeathsPriorWk,
-               aes(x = # _____, y = # _____, group = # _____)) +
-  # add the "grey75" to the and alpha level for transparency 
-  geom_line(color = # _____, alpha = # _____) +
-
-# 2020 excess deaths ------------------------------------------------------
-# these are the deaths from 2020 (the coronavirus data) stored in 
-# ExcessDeaths2020Wk
-    geom_line(data = # _____, 
-                aes(x = # _____, y = # _____, group = # _____),
-  # the color here is the "firebrick"
-              color = # _____) +
-
-# total excess deaths -----------------------------------------------------
-# here we have the area (ribbon) with the same ExcessDeaths2020Wk
-
-    geom_ribbon(data = # _____,
-# the ymin and ymax variables are expected_deaths and deaths, respectively.
-# the fill here is "tomato", and the alpha setting here is 1/2
-                aes(ymin = # _____, ymax = # _____), fill = # _____,
-                    alpha = # _____) +
-
-
-# historical averages -----------------------------------------------------
-# these is the data from FtExcessDeathsWk (grouped only on country and week)
-# remove the inherited aesthetics from the previous layers
-    geom_line(data = FtExcessDeathsWk,
-              # _____ = FALSE,
-# here we're only mapping an x and y variable
-# set the color to "black"
-            aes(x = # _____, y = # _____), # _____ = "black") +
-# facet by country --------------------------------------------------------
-# use facet_wrap to facet this by country, and set the scales to "free"
-    facet_wrap(. ~ # _____, scales = # _____) 
+```{r gg_by_country}
+gg_by_country <- ggplot(
+  data = excess_deaths_prior_wk,
+  aes() 
+) +
+  # Add the grey historical lines (layer 1)
+  geom_line() +
+  # Add the 2020 mortality line (layer 2)
+  geom_line() +
+  # Add the excess mortality shading (layer 3)
+  geom_ribbon() +
+  # Add the historical mean mortality line (layer 4)
+  geom_line() +
+  # Use facet_wrap() to facet this plot by country. Set the scales to "free_y"
+  facet_wrap() +
+  # Add appropriate labels to the plot
+  labs()
 ```
 
-Combine the new plot object with the `labs`
+Alright, let's take a look!
 
-```{r gg_facet_by_country-labs, fig.height=5, fig.width=7}
-gg_facet_by_country + 
-  # add labels --------------------------------------------------------------
-    
+```{r gg_by_country-final, fig.height=5, fig.width=7}
+gg_by_country + 
+  ft_theme()
 ```
 
-### Add custom themes 
+You did it! You can stop here, and only up to this point will be graded. Below this point, you'll have the opportunity to try out themes a bit more, if you like. At the bottom of the document, you'll find several resources related to this exercise.
 
-Use the `ggplot2::theme()` to make the following changes to the graph:
+### Bonus: Add a custom theme
 
-- Change the color of the `plot.background` and `panel.background` by setting `fill` to `"#FFF1E5"` inside `element_rect()`, 
+Want a little more challenge? Try making your own theme to add to your plot. 
 
-- Change the color of the `panel.grid` to `"grey90"` inside `element_line()`
+Instead of `ft_theme(), use `theme()` to make the following changes to the graph. As a reminder, many of the `theme()` arguments take `element_()` functions. For help, check out the [themes chapter](https://ggplot2-book.org/polishing.html) of the ggplot2 book.
 
-- Change the `axis.text` and `axis.title` font size to `7` and `11`, and the family to `"Courier"` inside `element_text()`
+1. Change the color of the `plot.background` and `panel.background` by setting `fill` to `"#FFF1E5"` inside `element_rect()`, 
+2. Change the color of the `panel.grid` to `"grey90"` inside `element_line()`
+3. Change the `axis.text` and `axis.title` font size to `7` and `11`, respectively, and the family to `"Courier"` inside `element_text()`
+4. Change the font size to 15 and family to `"Verdana"` for the `plot.title`  inside `element_text()`, 
+5. Remove the `panel.border` and `strip.background` with `element_blank()`
 
-- Change the font size to fifteen and family to `"Verdana"` for the `plot.title`  inside `element_text()`, 
-
-- Remove the `panel.border` and `strip.background` with `element_blank()`
 
 ```{r my_theme}
-my_theme <- theme(plot.background =
-                    element_rect(fill = 
-                                   
-                                 ),
-                  
-                  panel.background =
-                    element_rect(fill = 
-                                   
-                                   ),
-                  
-                  panel.grid = 
-                    element_line(color = 
-                                   
-                                 ),
-                  
-                  axis.text =
-                    element_text(# change this to seven
-                                size = ,
-                                # change this to family
-                                family = 
-                                  
-                                 ),
-                  
-                  axis.title =
-                    element_text(# change this to seven
-                                size = ,
-                                # change this to family
-                                family =
-                                 ),
-                  
-                  plot.title = 
-                    element_text(size = 
-                                   # change this to fifteen
-                                 family = ,
-                                   # change to "Verdana"
-                                 ),
-                  
-                  panel.border =
-                    # add the element_blank() to remove the panel.boarder
-                    ,
-                  
-                  strip.background = 
-                    # add the element_blank() to remove the panel.boarder
-                    ) 
+my_theme <- theme(
+  
+) 
 ```
 
-Add `my_theme` and `labs` to `gg_facet_by_country` 
+Let's take a look!
 
-```{r gg_facet_by_country-my_theme-labs,  fig.height=5, fig.width=7}
-gg_facet_by_country + 
-  
-  my_theme + 
-  
-  labs
+```{r gg_by_country-my_theme-labs,  fig.height=5, fig.width=7}
+gg_by_country + 
+  my_theme
 ```
 
+Custom theming is a rich area in ggplot2. Many community members have created their own extensions with beautiful themes, as well. One great set of themes for scientific publications is in the [cowplot package](https://wilkelab.org/cowplot/articles/themes.html). [ggthemes](https://github.com/jrnold/ggthemes) and [hrbrthemes](https://github.com/hrbrmstr/hrbrthemes) also have many interesting and pretty themes. 
 
 ## More resources 
 
-Hint: You may need to use some `dplyr` skills from the first session
-
-I'll leave these here:
-
-* Manually label axes: 
-
-  * Read more about manually changing the axes in the [themes](https://ggplot2-book.org/polishing.html) chapter in the [`ggplot2` book](https://ggplot2-book.org/).
-
+* Read more about manually changing the axes in the [themes](https://ggplot2-book.org/polishing.html) chapter in the [`ggplot2` book](https://ggplot2-book.org/).
 * Learn more about facets: https://ggplot2.tidyverse.org/reference/facet_wrap.html
-
 * The FT package: https://github.com/Financial-Times/ftplottools 
-
-* The line geoms: https://ggplot2.tidyverse.org/reference/geom_path.html
-
-* Building small multiples: https://kieranhealy.org/blog/archives/2020/03/27/a-covid-small-multiple/
-
-
+* Building "small multiples", plots with many facets: https://kieranhealy.org/blog/archives/2020/03/27/a-covid-small-multiple/
