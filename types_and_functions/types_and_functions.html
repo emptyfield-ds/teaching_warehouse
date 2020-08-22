@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Types, vectors, and functions in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2020-08-22" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -12,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Types, vectors, and functions in R
-### 2019-08-29
+### 2020-08-22
 
 ---
 
@@ -350,7 +351,7 @@ gapminder %&gt;%
 ### Create a numeric vector that has the following values: 3, 5, NA, 2, and NA. 
 ### Try using `sum()`. Then add `na.rm = TRUE`.
 ### Check which values are missing with `is.na()`; save the results to a new object and take a look
-### Chance all missing values of `x` to 0
+### Change all missing values of `x` to 0
 ### Try `sum()` again without `na.rm = TRUE`.
 
 ---
@@ -531,16 +532,16 @@ sim_data()
 ## # A tibble: 50 x 3
 ##          x sex      age
 ##      &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;
-##  1  0.0202 male      34
-##  2 -1.10   female    42
-##  3  0.200  male      40
-##  4  0.357  female    40
-##  5 -0.0356 male      27
-##  6 -0.248  female    44
-##  7  0.233  male      29
-##  8 -0.760  female    34
-##  9 -0.0736 male      50
-## 10  1.06   female    46
+##  1  1.22   male      26
+##  2 -0.233  female    47
+##  3  0.556  male      29
+##  4  0.764  female    41
+##  5 -1.73   male      41
+##  6  0.584  female    25
+##  7  0.0391 male      43
+##  8 -1.86   female    43
+##  9 -0.346  male      34
+## 10  1.03   female    33
 ## # … with 40 more rows
 ```
 
@@ -1038,7 +1039,7 @@ plot_hist("lifeExp")
 ```
 
 ```
-## Error: StatBin requires a continuous x variable: the x variable is discrete. Perhaps you want stat="count"?
+## Error: StatBin requires a continuous x variable: the x variable is discrete.Perhaps you want stat="count"?
 ```
 
 &lt;img src="types_and_functions_files/figure-html/unnamed-chunk-58-1.png" style="display: block; margin: auto;" /&gt;
@@ -1193,9 +1194,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1204,7 +1221,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
