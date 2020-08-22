@@ -632,7 +632,7 @@ knitr::include_graphics(path = "images/datapasta-reprex-spreadsheet.gif")
 ```{r reprex, out.height="50%", out.width="50%", echo=FALSE}
 knitr::include_graphics(path = "images/reprex.png")
 ```
-
+.pull-right[Art by Allison Horst]
 ---
 
 ## Where to get help
@@ -663,8 +663,6 @@ knitr::include_graphics("images/r-tag-stackoverflow.png")
 
 ---
 
-## Where else to get help 
-
 ### `#rstats` on Twitter
 
 If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/rstats
@@ -673,7 +671,6 @@ If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/
 knitr::include_graphics("images/welcome_to_rstats_twitter.png")
 ```
 
-.pull-right[![#rstats on twitter](images/welcome_to_rstats_twitter.png)]
-
+.pull-right[Art by Allison Horst]
 
 
