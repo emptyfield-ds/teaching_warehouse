@@ -386,27 +386,30 @@ mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 
 
 ```{r mutate-across-concept-map, eval=FALSE}
-mutate(<DATA>, 
-    across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>))) #<<
+mutate(
+  <DATA>, 
+  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) #<<
+)
 ```
 
 ---
-
-## `mutate(across())`
 
 
 ```{r mutate-across-example-01, eval=FALSE}
-mutate(diamonds, 
-   across(c("carat", "depth"), list(sd = sd, mean = mean))) #<<
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean)) #<<
+)
 ```
 
 ---
 
-## `mutate(across())`
 
 ```{r mutate-across-example-output, highlight.output = c(15,16)}
-mutate(diamonds, 
-   across(c("carat", "depth"), list(sd = sd, mean = mean)))
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean))
+)
 ```
 
 ---
@@ -415,33 +418,32 @@ mutate(diamonds,
 ## `mutate(across(where()))`
 
 ```{r mutate-across-where-concept-map, eval=FALSE}
-mutate(<DATA>, 
-    across(where(<CONDITION>), list(<NAMES> = <FUNCTIONS>))) #<<
+mutate(
+  <DATA>, 
+  across(where(<CONDITION>), list(<NAMES> = <FUNCTIONS>)) #<<
+)
 ```
 
 
 ---
-
-## `mutate(across(where()))`
-
 
 ```{r mutate-across-where-example-01, eval=FALSE}
-mutate(gapminder, 
-   across(where(is.numeric), list(mean = mean, median = median))) #<<
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
 ```
 
 
 ---
 
 
-## `mutate(across(where()))`
-
 ```{r mutate-across-where-example-output, highlight.output = c(15, 16)}
-mutate(gapminder, 
-   across(where(is.numeric), list(mean = mean, median = median))) #<<
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
 ```
-
-
 
 ---
 
@@ -797,15 +799,6 @@ gapminder %>%
     geom_line() + 
     scale_color_manual(values = continent_colors)
 ```
-
----
-
-## `mutate_if/all/at()`
-## `summarize_if/all/at()`
-
---
-
-### ... etc!
 
 ---
 
