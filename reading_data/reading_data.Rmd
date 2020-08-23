@@ -46,7 +46,7 @@ dataset
 ## R functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("function_call.png")
+knitr::include_graphics("img/function_call.png")
 ```
 
 ---
@@ -54,7 +54,7 @@ knitr::include_graphics("function_call.png")
 ## R functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("function_call_fname.png")
+knitr::include_graphics("img/function_call_fname.png")
 ```
 
 ---
@@ -62,7 +62,7 @@ knitr::include_graphics("function_call_fname.png")
 ## R functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("function_call_assignment.png")
+knitr::include_graphics("img/function_call_assignment.png")
 ```
 
 ---
@@ -85,7 +85,7 @@ diabetes <- read_csv("diabetes.csv")
 class: middle
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_diabetes.png")
+knitr::include_graphics("img/new_data_alert_diabetes.png")
 ```
 
 ---

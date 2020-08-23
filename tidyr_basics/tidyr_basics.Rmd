@@ -24,7 +24,7 @@ library(tidyverse)
 <!-- 
 TODO: Update the art slide when Allison makes a pivot version
 ```{r, out.height="70%", out.width="70%", echo = FALSE}
-knitr::include_graphics("tidyr_spread_gather.png")
+knitr::include_graphics("img/tidyr_spread_gather.png")
 ```
 .pull-right[Art by Allison Horst]
 -->
@@ -102,7 +102,7 @@ lotr
 ---
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_lotr.png")
+knitr::include_graphics("img/new_data_alert_lotr.png")
 ```
 
 ---
@@ -132,7 +132,7 @@ lotr %>%
 ---
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_tidyr.png")
+knitr::include_graphics("img/new_data_alert_tidyr.png")
 ```
 
 ---
@@ -280,7 +280,7 @@ class: center, middle
 ## `pivot_longer()` and `pivot_wider()`
 
 ```{r tidyr-longer-wider, out.height="65%", out.width="65%", echo = FALSE}
-knitr::include_graphics("tidyr-longer-wider.gif")
+knitr::include_graphics("img/tidyr-longer-wider.gif")
 ```
 .pull-right[Animation: Garrick Aden-Buie]
 

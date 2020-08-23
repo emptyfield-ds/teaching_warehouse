@@ -22,7 +22,7 @@ library(here)
 
 
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("rmarkdown_wizards.png")
+knitr::include_graphics("img/rmarkdown_wizards.png")
 ```
 
 .pull-right[Artwork by @allison_horst]
@@ -68,7 +68,7 @@ class: middle, center
 class: middle
 
 ```{r, echo = FALSE, out.height="130%", out.width="130%"}
-knitr::include_graphics("rmarkdown_components.png")
+knitr::include_graphics("img/rmarkdown_components.png")
 ```
 
 ---
@@ -199,7 +199,7 @@ background-position: 93% 10%
 ### Code chunks
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-  knitr::include_graphics("code_chunk.png")
+  knitr::include_graphics("img/code_chunk.png")
 ```
 
 ---
@@ -207,7 +207,7 @@ background-position: 93% 10%
 ### Code chunks
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-  knitr::include_graphics("code_chunk_fences.png")
+  knitr::include_graphics("img/code_chunk_fences.png")
 ```
 
 ---
@@ -215,7 +215,7 @@ background-position: 93% 10%
 ### Code chunks
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-  knitr::include_graphics("code_chunk_opts.png")
+  knitr::include_graphics("img/code_chunk_opts.png")
 ```
 
 ---
@@ -247,7 +247,7 @@ Option       | Effect
 
 
 ```{r, echo = FALSE, out.height="30%", out.width="30%"}
-knitr::include_graphics("rmarkdown_knit.png")
+knitr::include_graphics("img/rmarkdown_knit.png")
 ```
 
 ---
@@ -255,7 +255,7 @@ knitr::include_graphics("rmarkdown_knit.png")
 ## Edit code chunk options
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-knitr::include_graphics("chunk_setup_gui.png")
+knitr::include_graphics("img/chunk_setup_gui.png")
 ```
 
 ---
@@ -289,7 +289,7 @@ gapminder %>%
 ### Inline Code
 
 ```{r, echo = FALSE, out.height="75%", out.width="75%"}
-knitr::include_graphics("inline_code.png")
+knitr::include_graphics("img/inline_code.png")
 ```
 
 ---
@@ -297,7 +297,7 @@ knitr::include_graphics("inline_code.png")
 ### Inline Code
 
 ```{r, echo = FALSE, out.height="75%", out.width="75%"}
-knitr::include_graphics("inline_code_highlight.png")
+knitr::include_graphics("img/inline_code_highlight.png")
 ```
 
 ---
@@ -338,31 +338,31 @@ output:
 
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-knitr::include_graphics("yaml_example.png")
+knitr::include_graphics("img/yaml_example.png")
 ```
 
 ---
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-knitr::include_graphics("yaml_example_noted.png")
+knitr::include_graphics("img/yaml_example_noted.png")
 ```
 
 ---
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-knitr::include_graphics("yaml_example_noted2.png")
+knitr::include_graphics("img/yaml_example_noted2.png")
 ```
 
 ---
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-knitr::include_graphics("yaml_example_noted3.png")
+knitr::include_graphics("img/yaml_example_noted3.png")
 ```
 
 ---
 
 ```{r, echo = FALSE, out.height="100%", out.width="100%"}
-knitr::include_graphics("yaml_example_noted4.png")
+knitr::include_graphics("img/yaml_example_noted4.png")
 ```
 
 ---

@@ -22,7 +22,7 @@ diabetes <- read_csv("diabetes.csv")
 
 
 ```{r, out.height="90%", out.width="90%", echo = FALSE}
-knitr::include_graphics("ggplot2_masterpiece.png")
+knitr::include_graphics("img/ggplot2_masterpiece.png")
 ```
 .pull-right[Art by Allison Horst]
 
@@ -45,7 +45,7 @@ class: inverse, center
 
 class: inverse, center
 
-background-image: url(tidyhex.png)
+background-image: url(img/tidyhex.png)
 
 ---
 background-image: url(http://hexb.in/hexagons/ggplot2.png)
@@ -97,7 +97,7 @@ as_tibble(mtcars)
 class: middle
 
 ```{r slide-11, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_mtcars.png")
+knitr::include_graphics("img/new_data_alert_mtcars.png")
 ```
 
 ---
@@ -708,7 +708,7 @@ datasaurus_dozen
 class: middle
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_datasaurus.png")
+knitr::include_graphics("img/new_data_alert_datasaurus.png")
 ```
 
 ---

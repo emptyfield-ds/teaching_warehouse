@@ -27,7 +27,7 @@ library(tidyverse)
 ## Modeling in R
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("r_models.png")
+knitr::include_graphics("img/r_models.png")
 ```
 
 ---
@@ -35,7 +35,7 @@ knitr::include_graphics("r_models.png")
 ## Modeling in R
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("r_models_fnname.png")
+knitr::include_graphics("img/r_models_fnname.png")
 ```
 
 ---
@@ -43,7 +43,7 @@ knitr::include_graphics("r_models_fnname.png")
 ## Modeling in R
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("r_models_data.png")
+knitr::include_graphics("img/r_models_data.png")
 ```
 
 ---
@@ -51,7 +51,7 @@ knitr::include_graphics("r_models_data.png")
 ## Modeling in R
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("r_models_formula.png")
+knitr::include_graphics("img/r_models_formula.png")
 ```
 
 ---

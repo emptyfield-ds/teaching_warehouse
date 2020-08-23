@@ -313,7 +313,7 @@ class: middle, center
 # shinythemes
 
 ```{r, echo=FALSE, eval = TRUE, out.width="75%", out.height="75%"}
-knitr::include_graphics("shinythemes.png")
+knitr::include_graphics("img/shinythemes.png")
 ```
 
 

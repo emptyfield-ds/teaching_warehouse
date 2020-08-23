@@ -22,7 +22,7 @@ library(tidyverse)
 
 
 ```{r dplyr_wrangling, out.height="90%", out.width="90%", echo = FALSE}
-knitr::include_graphics("dplyr_wrangling.png")
+knitr::include_graphics("img/dplyr_wrangling.png")
 ```
 .pull-right[Art by Allison Horst]
 
@@ -91,7 +91,7 @@ diamonds
 class: middle
 
 ```{r new_data_alert_diamonds, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_diamonds.png")
+knitr::include_graphics("img/new_data_alert_diamonds.png")
 ```
 
 ---
@@ -139,7 +139,7 @@ gapminder
 class: middle
 
 ```{r new_data_alert_gapminder, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("new_data_alert_gapminder.png")
+knitr::include_graphics("img/new_data_alert_gapminder.png")
 ```
 
 ---

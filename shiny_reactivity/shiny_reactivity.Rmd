@@ -92,7 +92,7 @@ output$scatterplot <- renderPlot({
 # Render functions
 
 ```{r, echo=FALSE, eval = TRUE, out.width="100%", out.height="100%"}
-knitr::include_graphics("outputs_full.png")
+knitr::include_graphics("img/outputs_full.png")
 ```
 
 ---
