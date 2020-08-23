@@ -64,7 +64,7 @@ background-position: 90% 10%
 ## Anatomy of a shiny app
 
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("shiny_skeleton.png")
+knitr::include_graphics("img/shiny_skeleton.png")
 ```
 
 ---
@@ -72,7 +72,7 @@ knitr::include_graphics("shiny_skeleton.png")
 ## Anatomy of a shiny app
 
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("shiny_skeleton_ui.png")
+knitr::include_graphics("img/shiny_skeleton_ui.png")
 ```
 
 ---
@@ -80,7 +80,7 @@ knitr::include_graphics("shiny_skeleton_ui.png")
 ## Anatomy of a shiny app
 
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("shiny_skeleton_server.png")
+knitr::include_graphics("img/shiny_skeleton_server.png")
 ```
 
 ---
@@ -88,13 +88,13 @@ knitr::include_graphics("shiny_skeleton_server.png")
 ## Anatomy of a shiny app
 
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("shiny_skeleton_runapp.png")
+knitr::include_graphics("img/shiny_skeleton_runapp.png")
 ```
 
 ---
 
 ```{r, echo=FALSE}
-knitr::include_graphics("new_data_alert_movies.png")
+knitr::include_graphics("img/new_data_alert_movies.png")
 ```
 
 ---
@@ -111,7 +111,7 @@ knitr::include_graphics("new_data_alert_movies.png")
 # `movies_01.R`
 
 ```{r, echo=FALSE, out.width="60%", out.height="60%"}
-knitr::include_graphics("sidebar.png")
+knitr::include_graphics("img/sidebar.png")
 ```
 .pull-right[Image by Hadley Wickham]
 
@@ -374,14 +374,14 @@ class: center, middle
 
 .pull-left[
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("cheatsheet.png")
+knitr::include_graphics("img/cheatsheet.png")
 ```
 ]
 
 
 .pull-right[
 ```{r, echo=FALSE, out.width="70%", out.height="70%"}
-knitr::include_graphics("cheatsheet_inputs.png")
+knitr::include_graphics("img/cheatsheet_inputs.png")
 ```
 ]
 
@@ -429,14 +429,14 @@ class: center, middle
 
 .pull-left[
 ```{r, echo=FALSE, out.width="100%", out.height="100%"}
-knitr::include_graphics("cheatsheet.png")
+knitr::include_graphics("img/cheatsheet.png")
 ```
 ]
 
 
 .pull-right[
 ```{r, echo=FALSE, out.width="70%", out.height="70%"}
-knitr::include_graphics("cheatsheet_outputs.png")
+knitr::include_graphics("img/cheatsheet_outputs.png")
 ```
 ]
 
@@ -606,7 +606,7 @@ output$scatterplot <- renderPlot({
 ### Click on the 'Tokens' option under your username (upper right corner)
 
 ```{r tokens.png, out.width="50%", out.height="50%", echo=FALSE}
-knitr::include_graphics(path = "tokens.png")
+knitr::include_graphics("img/tokens.png")
 ```
 
 
@@ -618,7 +618,7 @@ knitr::include_graphics(path = "tokens.png")
 ### Copy this to the clipboard, paste it into the console in the RStudio IDE, hit Enter
 
 ```{r tokens2.png, out.width="50%", out.height="50%", echo=FALSE}
-knitr::include_graphics(path = "tokens2.png")
+knitr::include_graphics("img/tokens2.png")
 ```
 
 

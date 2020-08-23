@@ -21,7 +21,7 @@ library(tidyverse)
 ## Welcome! 
 
 ```{r r_first_then, echo=FALSE, out.width="58%", out.height="58%"}
-knitr::include_graphics("images/r_first_then.png")
+knitr::include_graphics("img/r_first_then.png")
 ```
 
 ---
@@ -38,7 +38,7 @@ knitr::include_graphics("images/r_first_then.png")
 ### ✓ - Set "Save work space to .Rdata on exit" to "Never"
 ]
 
-.pull-right[![Settings window](images/settings-general.png)]
+.pull-right[![Settings window](img/settings-general.png)]
 
 ---
 
@@ -51,7 +51,7 @@ knitr::include_graphics("images/r_first_then.png")
 ## Editor Themes
 ]
 
-.pull-right[![Settings window](images/settings-appearance.png)]
+.pull-right[![Settings window](img/settings-appearance.png)]
 
 ---
 
@@ -65,7 +65,7 @@ knitr::include_graphics("images/r_first_then.png")
 ## It's all up to you!
 ]
 
-.pull-right[![Settings window](images/settings-pane-layout.png)]
+.pull-right[![Settings window](img/settings-pane-layout.png)]
 
 ---
 
@@ -74,7 +74,7 @@ knitr::include_graphics("images/r_first_then.png")
 ### Some like having both source and console open
 
 ```{r, echo=FALSE, out.width="80%", out.height="80%"}
-knitr::include_graphics("images/my-pane-layout.png")
+knitr::include_graphics("img/my-pane-layout.png")
 ```
 
 
@@ -85,7 +85,7 @@ knitr::include_graphics("images/my-pane-layout.png")
 ### ...while still allowing to have viewer open
 
 ```{r, echo=FALSE, out.width="80%", out.height="80%"}
-knitr::include_graphics("images/my-pane-layout-recursive.png")
+knitr::include_graphics("img/my-pane-layout-recursive.png")
 ```
 
 
@@ -117,31 +117,31 @@ keep all the files associated with a project together — input data, R scripts,
 
 .pull-left[
 Click File > New Project  
-![Up right tick](images/rstudio-project-1.png)
+![Up right tick](img/rstudio-project-1.png)
 ]
 
 .pull-right[
 Or click on the upper right
-![Up right tick](images/rstudio-project-2.png)
+![Up right tick](img/rstudio-project-2.png)
 ]
 
 ---
 
 ## RStudio Projects - Creation 2 / 4
 
-.center[![1](images/project-creation-1.png)]
+.center[![1](img/project-creation-1.png)]
 
 ---
 
 ## RStudio Projects - Creation 3 / 4
 
-.center[![1](images/project-creation-2.png)]
+.center[![1](img/project-creation-2.png)]
 
 ---
 
 ## RStudio Projects - Creation 4 / 4
 
-.center[![1](images/project-creation-3.png)]
+.center[![1](img/project-creation-3.png)]
 
 ---
 
@@ -245,7 +245,7 @@ data <- read_csv(here("raw_data", "amazing_data.csv"))
 
 --
 
-.center[![tweet about naming](images/naming-tweet.png)]
+.center[![tweet about naming](img/naming-tweet.png)]
 
 ???
 
@@ -607,7 +607,7 @@ knitr::include_graphics(path = "https://cran.r-project.org/Rlogo.svg")
 
 ```{r rstudio-downloads, out.width="80%", out.height="80%", echo=FALSE}
 knitr::include_graphics(path =
-"images/rstudio-downloads.png")
+"img/rstudio-downloads.png")
 ```
 
 ---
@@ -619,7 +619,7 @@ knitr::include_graphics(path =
 #### `datapasta` lets you easy copy + paste small samples of data into RStudio
 
 ```{r datapasta-reprex-spreadsheet, out.width="65%", out.height="65%", echo=FALSE}
-knitr::include_graphics(path = "images/datapasta-reprex-spreadsheet.gif")
+knitr::include_graphics(path = "img/datapasta-reprex-spreadsheet.gif")
 ```
 
 
@@ -630,7 +630,7 @@ knitr::include_graphics(path = "images/datapasta-reprex-spreadsheet.gif")
 ### Check out the [package website](https://reprex.tidyverse.org/) and [RStudio webinar](https://rstudio.com/resources/webinars/help-me-help-you-creating-reproducible-examples/) on creating reproducible examples
 
 ```{r reprex, out.height="50%", out.width="50%", echo=FALSE}
-knitr::include_graphics(path = "images/reprex.png")
+knitr::include_graphics(path = "img/reprex.png")
 ```
 .pull-right[Art by Allison Horst]
 ---
@@ -644,7 +644,7 @@ knitr::include_graphics(path = "images/reprex.png")
 RStudio has a dedicated forum for questions related to R and RStudio: https://community.rstudio.com/
 
 ```{r rstudio-community, echo=FALSE, out.width="70%", out.height="70%"}
-knitr::include_graphics("images/rstudio-community.png")
+knitr::include_graphics("img/rstudio-community.png")
 ```
 
 
@@ -657,7 +657,7 @@ knitr::include_graphics("images/rstudio-community.png")
 Check out the questions tagged `r` on Stack Overflow: https://stackoverflow.com/questions/tagged/r
 
 ```{r r-tag-stackoverflow, echo=FALSE, out.width="90%", out.height="90%"}
-knitr::include_graphics("images/r-tag-stackoverflow.png")
+knitr::include_graphics("img/r-tag-stackoverflow.png")
 ```
 
 
@@ -668,7 +668,7 @@ knitr::include_graphics("images/r-tag-stackoverflow.png")
 If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/rstats
 
 ```{r welcome_to_rstats_twitter, echo=FALSE, out.width="50%", out.height="50%"}
-knitr::include_graphics("images/welcome_to_rstats_twitter.png")
+knitr::include_graphics("img/welcome_to_rstats_twitter.png")
 ```
 
 .pull-right[Art by Allison Horst]

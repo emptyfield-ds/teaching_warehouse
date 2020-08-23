@@ -107,11 +107,7 @@ distinct(ft_excess_deaths, country)
 
 ## Start small 
 
-Let's start by building a single plot like the ones in the FT graphic. Below is a graph for "UK" only (press green play button to see the image):
-
-```{r latest-data}
-knitr::include_graphics("img/latest-data.png")
-```
+Let's start by building a single plot like the ones in the FT graphic. Take a closer look at the UK panel in the article plot; we'll try to create just this panel first.
 
 In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `uk_excess_deaths`. 
 

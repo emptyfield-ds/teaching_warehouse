@@ -364,7 +364,7 @@ class: middle, center, inverse
 ## Writing functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("writing_functions.png")
+knitr::include_graphics("img/writing_functions.png")
 ```
 
 
@@ -373,7 +373,7 @@ knitr::include_graphics("writing_functions.png")
 ## Writing functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("writing_functions_args.png")
+knitr::include_graphics("img/writing_functions_args.png")
 ```
 
 
@@ -381,7 +381,7 @@ knitr::include_graphics("writing_functions_args.png")
 ## Writing functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("writing_functions_body_name.png")
+knitr::include_graphics("img/writing_functions_body_name.png")
 ```
 
 
@@ -389,7 +389,7 @@ knitr::include_graphics("writing_functions_body_name.png")
 ## Writing functions
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("writing_functions_inputs_output.png")
+knitr::include_graphics("img/writing_functions_inputs_output.png")
 ```
 
 
