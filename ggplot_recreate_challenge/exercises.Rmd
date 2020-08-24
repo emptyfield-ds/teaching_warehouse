@@ -113,6 +113,8 @@ In order to build this graph, we will need to filter `ft_excess_deaths` to only 
 ```{r create-uk_excess_deaths}
 uk_excess_deaths <- ft_excess_deaths %>%
   ____________
+
+uk_excess_deaths
 ```
 
 ### What can we learn from the labels? 
@@ -186,7 +188,7 @@ gg_uk_recent_years
 
 ### Layer 2: Excess deaths (2020)
 
-The second layer will be mean deaths per week in 2020 (in otherwords, during the coronavirus pandemic). 
+The second layer will be mean deaths per week in 2020 (in other words, during the coronavirus pandemic). 
 
 We'll build this data layer similar to the one above but for 2020. This time we will also get the mean `deaths` and the mean `expected_deaths`. 
 
