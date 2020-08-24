@@ -140,7 +140,7 @@ Use `summarise()` to compute three statistics about the gapminder data set:
 Extract the rows where `continent == "Europe"`. Then use `group_by()` to group by country. Finally, use `summarize()` to compute:
 
 1. The total number of observations for each country in Europe
-2. The lowest observed life expectency for each country 
+2. The lowest observed life expectancy for each country 
 
 ```{r}
 
