@@ -392,7 +392,7 @@ Want a little more challenge? Try making your own theme to add to your plot.
 
 Instead of `ft_theme(), use `theme()` to make the following changes to the graph. As a reminder, many of the `theme()` arguments take `element_()` functions. For help, check out the [themes chapter](https://ggplot2-book.org/polishing.html) of the ggplot2 book.
 
-1. Change the color of the `plot.background` and `panel.background` by setting `fill` to `"#FFF1E5"` inside `element_rect()`, 
+1. Change the fill of the `plot.background` and `panel.background` by setting `fill` to `"#FFF1E5"` inside `element_rect()`, 
 2. Change the color of the `panel.grid` to `"grey90"` inside `element_line()`
 3. Change the `axis.text` and `axis.title` font size to `7` and `11`, respectively, and the family to `"Courier"` inside `element_text()`
 4. Change the font size to 15 and family to `"Verdana"` for the `plot.title`  inside `element_text()`, 
