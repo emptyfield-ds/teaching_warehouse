@@ -233,8 +233,8 @@ gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
   _______(
     data = uk_excess_deaths2020_wk,
     aes(ymin = _______, ymax = _______), 
-    fill = "tomato", 
-    alpha = 0.5
+    fill = "_______", 
+    alpha = ___
   )
   
 gg_uk_total_excess_deaths
