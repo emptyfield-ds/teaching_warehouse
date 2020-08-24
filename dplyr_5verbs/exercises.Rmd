@@ -47,7 +47,7 @@ select(gapminder, year, lifeExp)
 
 ## Show of Hands
 
-Which of these is NOT a way to select the `name` and `n` columns together?
+Which of these is NOT a way to select the `country` and `continent` columns together?
 
 ```{r}
 select(gapminder, -c(year, lifeExp, pop, gdpPercap))
