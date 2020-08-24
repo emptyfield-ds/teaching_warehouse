@@ -207,9 +207,7 @@ uk_excess_deaths2020_wk <- uk_excess_deaths %>%
 uk_excess_deaths2020_wk
 ```
 
-Now, we'll add another layer to the existing ggplot2 object (`gg_uk_recent_years`), but we'll change the aesthetics for this layer to `x = week`, `y = deaths`, `group = year` (inside the `geom_line()`) . 
- 
-For this layer, we'll use the same aesthetics but with this new data. Each geom inherits data from `ggplot()`, but you can use a different dataset using the `data` argument directly, in the geom.
+Now, we'll add another layer to the existing ggplot2 object (`gg_uk_recent_years`). For this layer, we'll use the same aesthetics but with this new data. Each geom inherits data from `ggplot()`, but you can use a different dataset using the `data` argument directly, in the geom.
 
 Add an additional `geom_line(). Set the `data` argument to `uk_excess_deaths2020_wk`. Additionally, Set the `color` argument to "firebrick". Then, take a look at the plot. 
 
