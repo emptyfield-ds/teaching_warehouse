@@ -175,7 +175,7 @@ name_of_project
 class: inverse
 
 1. Raw data separate from cleaned data
-1. Reports and scrips are separated
+1. Reports and scripts are separated
 1. Generated and imported figures has its own place
 1. Numbered using 2 digits
 1. Reusable and easily understandable
