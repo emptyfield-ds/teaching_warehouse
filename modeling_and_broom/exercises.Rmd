@@ -71,7 +71,7 @@ _Bonus_: Add a regression line with geom_smooth(method = "lm"). Remember that wi
 mod_wh <- lm(glyhb ~ waist_hip + gender + age, data = diabetes)
 
 mod_wh %>% 
-  ________(data = diabetes) %>% 
+  ________(data = drop_na(diabetes, glyhb, waist_hip, gender, age)) %>% 
   ggplot(aes(x = ______, y = _______)) +
     geom_point()
 ```
