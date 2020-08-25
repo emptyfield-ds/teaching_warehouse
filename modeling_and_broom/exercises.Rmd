@@ -63,7 +63,7 @@ Use a broom function and ggplot2 to make a scatter plot of `glyhb` vs `.fitted` 
 
 Try it with `.resid` vs `.fitted`. How does it look?
 
-_Bonus_: Add a regresssion line with geom_smooth(method = "lm"). Remember that with ggplot2, you add functions with `+` and not `%>%`
+_Bonus_: Add a regression line with geom_smooth(method = "lm"). Remember that with ggplot2, you add functions with `+` and not `%>%`
 
 ```{r}
 # notice that here, `data = diabetes`, not `.`. 
