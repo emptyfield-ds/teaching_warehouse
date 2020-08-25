@@ -902,7 +902,7 @@ plot_hist(lifeExp)
 ## Your turn 9
 
 ```{r}
-top_barplot <- function(variable, .year) {
+top_scatter_plot <- function(variable, .year) {
   gapminder %>%
     filter(year == .year) %>% #<<
     arrange(desc({{variable}})) %>% 
@@ -918,7 +918,7 @@ top_barplot <- function(variable, .year) {
 ## Your turn 9
 
 ```{r}
-top_barplot <- function(variable, .year) {
+top_scatter_plot <- function(variable, .year) {
   gapminder %>%
     filter(year == .year) %>% 
     arrange(desc({{variable}})) %>% #<<
@@ -935,7 +935,7 @@ top_barplot <- function(variable, .year) {
 ## Your turn 9
 
 ```{r, fig.height=3.5}
-top_barplot(lifeExp, 2002)
+top_scatter_plot(lifeExp, 2002)
 ```
 
 ---
@@ -943,7 +943,7 @@ top_barplot(lifeExp, 2002)
 ## Your turn 9
 
 ```{r, fig.height=3.5}
-top_barplot(lifeExp, 2002) + 
+top_scatter_plot(lifeExp, 2002) + 
   labs(x = "Life Expectancy", y = "Country")
 ```
 

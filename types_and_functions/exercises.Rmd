@@ -182,7 +182,7 @@ filter_summarize(_______, _______(country, " and "))
 3. Make a scatter plot. Use `variable` for x. For y, we'll use `country`, but to keep it in the order we arranged it by, we'll turn it into a factor. Wrap the the `factor()` call with `fct_inorder()`. Check the help page if you want to know more about what this is doing.
 
 ```{r}
-top_barplot <- function(variable, .year) {
+top_scatter_plot <- function(variable, .year) {
   gapminder %>%
     ___________ %>% 
     arrange(desc(______)) %>% 
@@ -193,10 +193,10 @@ top_barplot <- function(variable, .year) {
       theme_minimal()
 }
 
-top_barplot(lifeExp, 2002)
+top_scatter_plot(lifeExp, 2002)
 
 # add more ggplot layers just like any other plot!
-top_barplot(lifeExp, 2002) + 
+top_scatter_plot(lifeExp, 2002) + 
   labs(x = "Life Expectancy", y = "Country")
 ```
 
