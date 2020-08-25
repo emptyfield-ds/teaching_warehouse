@@ -211,7 +211,7 @@ Finish early? Try this exercise.
 5. Make a bar plot with `y` set to `n_countries` and `x` set to `continent.` Make `continent` an in-order factor using the pattern above (`fct_inorder(factor(var))`). Use `geom_col()` instead of `geom_bar()` since you are specifying two variables.
 6. Set the theme to `theme_minimal()`. 
 7. Set the axis title for y to `element_blank()` using `theme()`
-8. Use `paste()` to make a label for the y axis. (Wait, didn't we just turn that off? Hang on...)
+8. Use `paste()` to make a label for the y axis. (Wait, didn't we just turn that off? Hang on...). For instance, for 2002, the axis should read something like "n Countries in 2002".
 9. Rotate the plot with `coord_flip()`
 10. Finally, plot the number of countries per continent for 2002
 
