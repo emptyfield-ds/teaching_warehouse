@@ -208,7 +208,7 @@ Finish early? Try this exercise.
 2. Group by `continent`
 3. Summarize the number of countries per continent. Call the new variable `n_countries`
 4. Arrange the data `n_countries`
-5. Make a bar plot with `y` set to `n_countries` and `x` set to continent. Make `continent` an in-order factor using the pattern above (`fct_inorder(factor(var))`). Use `geom_col()` instead of `geom_bar()` since you are specifying two variables.
+5. Make a bar plot with `y` set to `n_countries` and `x` set to `continent.` Make `continent` an in-order factor using the pattern above (`fct_inorder(factor(var))`). Use `geom_col()` instead of `geom_bar()` since you are specifying two variables.
 6. Set the theme to `theme_minimal()`. 
 7. Set the axis title for y to `element_blank()` using `theme()`
 8. Use `paste()` to make a label for the y axis. (Wait, didn't we just turn that off? Hang on...)
