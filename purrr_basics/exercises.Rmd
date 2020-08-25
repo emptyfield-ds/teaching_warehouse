@@ -43,9 +43,9 @@ measurements$blood_glucose
 
 ```{r}
 list(
-  sum_blood_glucose = sum(measurements$blood_glucose),
-  sum_age = sum(measurements$age),
-  sum_heartrate = sum(measurements$heartrate)
+  blood_glucose = sum(measurements$blood_glucose),
+  age = sum(measurements$age),
+  heartrate = sum(measurements$heartrate)
 )
 ```
 

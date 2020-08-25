@@ -275,9 +275,9 @@ knitr::include_graphics("img/purr_x_input.png")
 
 ```{r slide-25, eval=FALSE}
 list(
-  sum_blood_glucose = sum(measurements$blood_glucose),
-  sum_age = sum(measurements$age),
-  sum_heartrate = sum(measurements$heartrate)
+  blood_glucose = sum(measurements$blood_glucose),
+  age = sum(measurements$age),
+  heartrate = sum(measurements$heartrate)
 )
 ```
 
