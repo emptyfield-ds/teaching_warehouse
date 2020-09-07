@@ -7,14 +7,7 @@ output:
 
 ```{r setup, include=FALSE}
 # knit options
-knitr::opts_chunk$set(
-  echo = TRUE,
-  eval = FALSE
-)
-knitr::opts_knit$set(
-  width = 78,
-  progress = FALSE
-)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Exercise
