@@ -89,7 +89,7 @@ Load the `ggfortify` package and use `autoplot()` on `mod_wh` to plot model diag
 
 ## Your Turn 7
 
-Diabetes is frequently defined as an A1c value of 7.0 or greater. Create a binary variable (0, 1) called `diabetic` indicating diabetes. Use the `ifelse` function. Use ?ifelse if you're  not sure how to use this function.
+Diabetes is frequently defined as an A1c value of 6.5 or greater. Create a binary variable (0, 1) called `diabetic` indicating diabetes. Use the `ifelse` function. Use ?ifelse if you're  not sure how to use this function.
 
 Fit a logistic regression model with `glm`. Use `diabetic` as the outcome, `waist_hip` as the exposure, and controlling for age and gender. Set the `family` argument equal to `binomial()`.
 
@@ -97,7 +97,7 @@ Tidy the results. What do you see? Try mutating `estimate` into odds ratios usin
 
 ```{r warning = FALSE, message = FALSE}
 diabetes %>% 
-  mutate(diabetic = ifelse(glyhb >= 7.0, ___, ___)) %>% 
+  mutate(diabetic = ifelse(glyhb >= 6.5, ___, ___)) %>% 
   _______ %>% 
   _______
 ```
