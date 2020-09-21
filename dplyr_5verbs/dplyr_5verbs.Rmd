@@ -382,70 +382,6 @@ mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 
 ---
 
-## `mutate(across())`
-
-
-```{r mutate-across-concept-map, eval=FALSE}
-mutate(
-  <DATA>, 
-  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) #<<
-)
-```
-
----
-
-
-```{r mutate-across-example-01, eval=FALSE}
-mutate(
-  diamonds, 
-  across(c("carat", "depth"), list(sd = sd, mean = mean)) #<<
-)
-```
-
----
-
-
-```{r mutate-across-example-output, highlight.output = c(15,16)}
-mutate(
-  diamonds, 
-  across(c("carat", "depth"), list(sd = sd, mean = mean))
-)
-```
-
----
-
-
-## `mutate(across(where()))`
-
-```{r mutate-across-where-concept-map, eval=FALSE}
-mutate(
-  <DATA>, 
-  across(where(<CONDITION>), list(<NAMES> = <FUNCTIONS>)) #<<
-)
-```
-
-
----
-
-```{r mutate-across-where-example-01, eval=FALSE}
-mutate(
-  gapminder, 
-  across(where(is.numeric), list(mean = mean, median = median)) #<<
-)
-```
-
-
----
-
-
-```{r mutate-across-where-example-output, highlight.output = c(15, 16)}
-mutate(
-  gapminder, 
-  across(where(is.numeric), list(mean = mean, median = median)) #<<
-)
-```
-
----
 
 ## The main verbs of `dplyr`
 
@@ -798,6 +734,59 @@ gapminder %>%
   ggplot(aes(x = year, y = mean_le, col = continent)) +
     geom_line() + 
     scale_color_manual(values = continent_colors)
+```
+---
+
+## `mutate(across())`
+
+--
+
+```{r mutate-across-concept-map, eval=FALSE}
+mutate(
+  <DATA>, 
+  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) #<<
+)
+```
+
+---
+
+```{r mutate-across-example-01, eval=FALSE}
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean)) #<<
+)
+```
+
+---
+
+```{r mutate-across-example-output, highlight.output = c(15,16)}
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean))
+)
+```
+
+---
+
+## `mutate(across(where()))`
+
+--
+
+```{r mutate-across-where-example-01, eval=FALSE}
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
+```
+
+
+---
+
+```{r mutate-across-where-example-output, highlight.output = c(15, 16)}
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
 ```
 
 ---

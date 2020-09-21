@@ -190,8 +190,10 @@ ______ ___
     theme_minimal() +
     #  put the legend at the bottom
     #  make the column/row text bold
-    theme(legend.position = "bottom",
-          strip.text = element_text(face = "bold"))
+    theme(
+      legend.position = "bottom",
+      strip.text = element_text(face = "bold")
+    )
 ```
 
 Paired plots contain a lot of information, which is a pro and a con. What do you see? 
@@ -239,7 +241,7 @@ Let's save a cleaned up table of the model results. We'll get the estimates and 
 
 2. Select only the term, estimate, and the upper and lower CIs. To get the confidence intervals, you can enter in the names directly or use dplyr helpers like `starts_with()`.
 
-3. Exponentiate any variable that's numeric. The function for exponentiating is `exp()`.
+3. Exponentiate any variable that's numeric. The function for exponentiating is `exp()`. `across()` uses functional programming, though, so we won't include the `()` part of `exp`. (If you're curious about this, look at the next line and how it uses the `round()` function.)
 
 4. Round any variable that's numeric.
 
@@ -280,7 +282,7 @@ Let's look at it from a different perspective: variable importance. In a linear 
 First, we need to re-tidy `survived_model2` because we got rid of `statistic`. Then, we'll create the variable importance variable and plot it.
 
 1. Tidy the model
-2. Sort the data frame using the absolute value of `statistic`. 
+2. Arrange the data frame using the absolute value of `statistic`. 
 3. Create a new variable called `importance` that is defined by `abs(statistic)`
 4. Plot `term` on the x-axis and `importance` on the y-axis. (Notice that in the final plot we flipped the coordinates with `coord_flip()`, so actually it ends up the reverse of this!)
 

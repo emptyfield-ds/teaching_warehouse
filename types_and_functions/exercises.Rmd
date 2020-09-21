@@ -19,9 +19,9 @@ cols <- ________
 gapminder %>% 
   mutate(rwanda = ifelse(country == "Rwanda", TRUE, FALSE)) %>% 
   ggplot(aes(year, lifeExp, color = rwanda, group = country)) + 
-    geom_line() +
-    ____________ + 
-    theme_minimal()
+  geom_line() +
+  ____________ + 
+  theme_minimal()
 ```
 
 ## Your Turn 2
@@ -178,7 +178,7 @@ filter_summarize(_______, _______(country, " and "))
 ## Your turn 9
 
 1. Filter gapminder by `year` using the value of `.year` (notice the period before hand!). You do NOT need curly-curly for this. (Why is that?)
-2. Arrange it by the variable. Don't forget to wrap it in curly-curly!
+2. Arrange it by the variable. This time, *do* wrap it in curly-curly!
 3. Make a scatter plot. Use `variable` for x. For y, we'll use `country`, but to keep it in the order we arranged it by, we'll turn it into a factor. Wrap the the `factor()` call with `fct_inorder()`. Check the help page if you want to know more about what this is doing.
 
 ```{r}
@@ -189,8 +189,8 @@ top_scatter_plot <- function(variable, .year) {
     #  take the 10 lowest values
     tail(10) %>% 
     ggplot(aes(x = ______, y = ______(factor(country)))) +
-      ______() +
-      theme_minimal()
+    ______() +
+    theme_minimal()
 }
 
 top_scatter_plot(lifeExp, 2002)

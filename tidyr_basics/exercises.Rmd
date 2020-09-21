@@ -53,7 +53,7 @@ table2 %>%
 
 ## Your Turn 3
 
-Pivot the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `country`, `year`, `codes` and `n` variables.
+Pivot the 5th through 60th columns of `who` so that the names of the columns go into a new variable called `codes` and the values go into a new variable called `n`. Then select just the `country`, `year`, `codes` and `n` variables.
 
 ```{r}
 who

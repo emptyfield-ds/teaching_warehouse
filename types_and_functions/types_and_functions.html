@@ -3,7 +3,7 @@
   <head>
     <title>Types, vectors, and functions in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2020-09-20" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -13,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Types, vectors, and functions in R
-### 2020-08-22
+### 2020-09-20
 
 ---
 
@@ -451,7 +451,7 @@ class: middle, center, inverse
 #### Create a function called `sim_data` that doesn't take any arguments.
 #### In the function body, we'll return a `tibble`. 
 #### For `x`, have `rnorm()` return 50 random numbers.  
-#### For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector. for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you 3. account for that.
+#### For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector. for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you account for that.
 #### For `age()` use the `sample()` function to sample 50 numbers from 25 to 50 with replacement.
 #### Call `sim_data()`
 
@@ -530,18 +530,18 @@ sim_data()
 
 ```
 ## # A tibble: 50 x 3
-##           x sex      age
-##       &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;
-##  1  0.933   male      49
-##  2 -0.478   female    44
-##  3  0.957   male      48
-##  4 -0.403   female    36
-##  5 -0.933   male      46
-##  6  0.0577  female    46
-##  7  0.456   male      32
-##  8  0.768   female    44
-##  9  0.00982 male      26
-## 10  0.0312  female    48
+##          x sex      age
+##      &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;
+##  1 -0.0348 male      36
+##  2  0.229  female    37
+##  3 -1.54   male      37
+##  4 -1.13   female    45
+##  5 -0.0451 male      44
+##  6  0.687  female    43
+##  7 -0.347  male      43
+##  8  0.813  female    43
+##  9  0.407  male      42
+## 10  1.38   female    49
 ## # … with 40 more rows
 ```
 
@@ -1088,7 +1088,7 @@ plot_hist(lifeExp)
 
 
 ```r
-top_barplot &lt;- function(variable, .year) {
+top_scatter_plot &lt;- function(variable, .year) {
   gapminder %&gt;%
 *   filter(year == .year) %&gt;%
     arrange(desc({{variable}})) %&gt;% 
@@ -1105,7 +1105,7 @@ top_barplot &lt;- function(variable, .year) {
 
 
 ```r
-top_barplot &lt;- function(variable, .year) {
+top_scatter_plot &lt;- function(variable, .year) {
   gapminder %&gt;%
     filter(year == .year) %&gt;% 
 *   arrange(desc({{variable}})) %&gt;%
@@ -1123,7 +1123,7 @@ top_barplot &lt;- function(variable, .year) {
 
 
 ```r
-top_barplot(lifeExp, 2002)
+top_scatter_plot(lifeExp, 2002)
 ```
 
 &lt;img src="types_and_functions_files/figure-html/unnamed-chunk-64-1.png" style="display: block; margin: auto;" /&gt;
@@ -1134,7 +1134,7 @@ top_barplot(lifeExp, 2002)
 
 
 ```r
-top_barplot(lifeExp, 2002) + 
+top_scatter_plot(lifeExp, 2002) + 
   labs(x = "Life Expectancy", y = "Country")
 ```
 

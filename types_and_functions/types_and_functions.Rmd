@@ -894,7 +894,7 @@ plot_hist(lifeExp)
 ## Your turn 9
 
 ### Filter gapminder by `year` using the value of `.year` (notice the period before hand!). You do NOT need curly-curly for this. (Why is that?)
-### Arrange it by the variable. Don't forget to wrap it in curly-curly!
+### Arrange it by the variable. This time, do wrap it in curly-curly!
 ### Make a scatter plot. Use `variable` for x. For y, we'll use `country`, but to keep it in the order we arranged it by, we'll turn it into a factor. Wrap the the `factor()` call with `fct_inorder()`. Check the help page if you want to know more about what this is doing.
 
 ---
@@ -909,8 +909,8 @@ top_scatter_plot <- function(variable, .year) {
     #  take the 10 lowest values
     tail(10) %>% 
     ggplot(aes(x = {{variable}}, y = fct_inorder(factor(country)))) +
-      geom_point() +
-      theme_minimal()
+    geom_point() +
+    theme_minimal()
 }
 ```
 ---
@@ -925,8 +925,8 @@ top_scatter_plot <- function(variable, .year) {
     #  take the 10 lowest values
     tail(10) %>% 
     ggplot(aes(x = {{variable}}, y = fct_inorder(factor(country)))) + #<<
-      geom_point() +
-      theme_minimal()
+    geom_point() +
+    theme_minimal()
 }
 ```
 

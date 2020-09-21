@@ -3,7 +3,7 @@
   <head>
     <title>Data Visualization in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2020-09-20" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # <span style="color:#E69F00">Data Visualization in R</span>
 ## <span style="color:#56B4E9">ggplot2 and the grammar of graphics</span> <br>
-### 2020-08-22
+### 2020-09-20
 
 ---
 
@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 
 
 
-&lt;img src="ggplot2_masterpiece.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/ggplot2_masterpiece.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 .pull-right[Art by Allison Horst]
 
 ---
@@ -44,7 +44,7 @@ class: inverse, center
 
 class: inverse, center
 
-background-image: url(tidyhex.png)
+background-image: url(img/tidyhex.png)
 
 ---
 background-image: url(http://hexb.in/hexagons/ggplot2.png)
@@ -114,7 +114,7 @@ as_tibble(mtcars)
 
 class: middle
 
-&lt;img src="new_data_alert_mtcars.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/new_data_alert_mtcars.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -135,8 +135,7 @@ ggplot()
 
 
 ```r
-ggplot(mtcars, 
-       aes(x = mpg, y = hp))
+ggplot(mtcars, aes(x = mpg, y = hp))
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-14-1.png" style="display: block; margin: auto;" /&gt;
@@ -145,8 +144,7 @@ ggplot(mtcars,
 
 
 ```r
-ggplot(mtcars, 
-       aes(x = mpg, y = hp)) +
+ggplot(mtcars, aes(x = mpg, y = hp)) +
   geom_point()
 ```
 
@@ -405,7 +403,7 @@ ggplot(diabetes, aes(x = glyhb)) +
 ```r
 diabetes %&gt;% 
   ggplot(aes(x = frame)) + 
-    geom_bar()
+  geom_bar()
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-36-1.png" style="display: block; margin: auto;" /&gt;
@@ -417,7 +415,7 @@ diabetes %&gt;%
 diabetes %&gt;% 
 * drop_na() %&gt;%
   ggplot(aes(x = frame)) + 
-    geom_bar()
+  geom_bar()
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-37-1.png" style="display: block; margin: auto;" /&gt;
@@ -443,7 +441,7 @@ diabetes %&gt;%
 diabetes %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar()
+  geom_bar()
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-39-1.png" style="display: block; margin: auto;" /&gt;
@@ -509,7 +507,7 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 diabetes %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar(position = "stack")
+  geom_bar(position = "stack")
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-45-1.png" style="display: block; margin: auto;" /&gt;
@@ -521,7 +519,7 @@ diabetes %&gt;%
 diabetes %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar(position = "dodge")
+  geom_bar(position = "dodge")
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-46-1.png" style="display: block; margin: auto;" /&gt;
@@ -533,7 +531,7 @@ diabetes %&gt;%
 diabetes %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar(position = "fill")
+  geom_bar(position = "fill")
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-47-1.png" style="display: block; margin: auto;" /&gt;
@@ -664,7 +662,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```r
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
-  geom_smooth(aes(linetype = gender), col = "black")
+  geom_smooth(aes(linetype = gender), color = "black")
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-58-1.png" style="display: block; margin: auto;" /&gt;
@@ -675,7 +673,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```r
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-59-1.png" style="display: block; margin: auto;" /&gt;
@@ -686,7 +684,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```r
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point(alpha = .2) +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-60-1.png" style="display: block; margin: auto;" /&gt;
@@ -697,7 +695,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```r
 ggplot(diabetes, aes(weight, hip)) + 
   geom_jitter(alpha = .2) +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
 &lt;img src="ggplot_basics_files/figure-html/slide-61-1.png" style="display: block; margin: auto;" /&gt;
@@ -708,7 +706,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```r
 ggplot(diabetes, aes(weight, hip)) + 
   geom_jitter(alpha = .2) +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE) +
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE) +
   theme_bw()
 ```
 
@@ -746,7 +744,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ```r
 diamonds %&gt;% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
 * facet_grid(rows = vars(cut), cols = vars(clarity))
 ```
@@ -756,7 +754,7 @@ diamonds %&gt;%
 
 ```r
 diamonds %&gt;% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_grid(rows = vars(cut), cols = vars(clarity))
 ```
@@ -794,7 +792,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ```r
 diamonds %&gt;% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
 * facet_wrap(vars(clarity))
 ```
@@ -836,7 +834,7 @@ datasaurus_dozen
 
 class: middle
 
-&lt;img src="new_data_alert_datasaurus.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/new_data_alert_datasaurus.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -934,9 +932,9 @@ corrs
 ```r
 datasaurus_dozen %&gt;% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-    geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-    facet_wrap(vars(dataset))
+  geom_point() + 
+  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
+  facet_wrap(vars(dataset))
 ```
 
 ---
@@ -945,9 +943,9 @@ datasaurus_dozen %&gt;%
 ```r
 datasaurus_dozen %&gt;% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-*   geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-    facet_wrap(vars(dataset))
+  geom_point() + 
+* geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
+  facet_wrap(vars(dataset))
 ```
 
 ---
@@ -956,9 +954,9 @@ datasaurus_dozen %&gt;%
 ```r
 datasaurus_dozen %&gt;% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-    geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-*   facet_wrap(vars(dataset))
+  geom_point() + 
+  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
+* facet_wrap(vars(dataset))
 ```
 
 ---
