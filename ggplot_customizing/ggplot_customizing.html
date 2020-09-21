@@ -3,7 +3,7 @@
   <head>
     <title>Data Visualization in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2020-09-20" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # <span style="color:#E69F00">Data Visualization in R</span>
 ## <span style="color:#56B4E9">customizing ggplot2</span> <br>
-### 2020-08-22
+### 2020-09-20
 
 ---
 
@@ -50,7 +50,7 @@ class: center, middle, inverse, title-slide
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() + 
   scale_color_brewer(palette = "Set2")
@@ -61,7 +61,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
 * scale_x_log10() +
   scale_color_brewer(palette = "Set2")
@@ -72,7 +72,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() +
 * scale_color_brewer(palette = "Set2")
@@ -83,7 +83,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() + 
   scale_color_brewer(palette = "Set2")
@@ -103,7 +103,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = weight)) + 
+  ggplot(aes(waist, hip, color = weight)) + 
   geom_point() 
 ```
 
@@ -112,7 +112,7 @@ diabetes %&gt;%
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = weight)) + 
+  ggplot(aes(waist, hip, color = weight)) + 
   geom_point() + 
   scale_color_viridis_c()
 ```
@@ -124,7 +124,7 @@ diabetes %&gt;%
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = gender)) + 
+  ggplot(aes(waist, hip, color = gender)) + 
   geom_point() + 
   scale_color_brewer()
 ```
@@ -136,7 +136,7 @@ diabetes %&gt;%
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = gender)) + 
+  ggplot(aes(waist, hip, color = gender)) + 
   geom_point() + 
   scale_color_manual(values = c("#E69F00", "#56B4E9"))
 ```
@@ -148,7 +148,7 @@ diabetes %&gt;%
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = gender)) + 
+  ggplot(aes(waist, hip, color = gender)) + 
   geom_point() + 
   scale_color_manual(name = "Sex", values = c("#E69F00", "#56B4E9"))
 ```
@@ -189,7 +189,7 @@ diabetes %&gt;%
 
 ```r
 *mtcars %&gt;%
-*ggplot(aes(hp, mpg, col = factor(cyl))) +
+* ggplot(aes(hp, mpg, color = factor(cyl))) +
 * geom_point(size = 3) +
   scale_x_log10() + 
   scale_colour_brewer(name = "Cylinders", palette = "Set2") + 
@@ -206,7 +206,7 @@ diabetes %&gt;%
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
 * scale_x_log10() +
 * scale_colour_brewer(name = "Cylinders", palette = "Set2") +
@@ -223,7 +223,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
   scale_colour_brewer(name = "Cylinders", palette = "Set2") +
@@ -240,7 +240,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
   scale_colour_brewer(name = "Cylinders", palette = "Set2") +
@@ -257,7 +257,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+  ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
   scale_colour_brewer(name = "Cylinders", palette = "Set2") +
@@ -274,7 +274,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 mtcars %&gt;% 
-ggplot(aes(hp, mpg, col = factor(cyl))) + 
+ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
   scale_colour_brewer(name = "Cylinders", palette = "Set2") +
@@ -312,7 +312,7 @@ ggplot(aes(hp, mpg, col = factor(cyl))) +
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = weight)) + 
+  ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c()
 ```
@@ -322,7 +322,7 @@ diabetes %&gt;%
 
 ```r
 diabetes %&gt;% 
-  ggplot(aes(waist, hip, col = weight)) + 
+  ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c() +
   theme_minimal() +

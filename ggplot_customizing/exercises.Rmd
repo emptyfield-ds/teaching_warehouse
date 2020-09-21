@@ -19,7 +19,7 @@ diabetes <- read_csv("diabetes.csv")
 
 ```{r}
 diabetes %>% 
-  ggplot(aes(waist, hip, col = weight)) + 
+  ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c()
 ```
@@ -33,7 +33,7 @@ diabetes %>%
 
 ```{r}
 diabetes %>% 
-  ggplot(aes(waist, hip, col = weight)) + 
+  ggplot(aes(waist, hip, color = weight)) + 
   geom_point() 
 ```
 
@@ -56,7 +56,7 @@ diamonds
 ## Your Turn 13
 
 1. Add a title. 
-2. Change the x and y axis labels to include the unites (inches for `hip` and pounds for `weight`). You can use either `labs()` or `xlab()` and `ylab()`
+2. Change the x and y axis labels to include the units (inches for `hip` and pounds for `weight`). You can use either `labs()` or `xlab()` and `ylab()`
 3. Add `scale_linetype()` and set the `name` argument to "Sex".
 
 ```{r}
