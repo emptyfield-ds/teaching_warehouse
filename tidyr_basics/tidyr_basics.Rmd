@@ -120,7 +120,7 @@ lotr %>%
 
 ---
 
-```{r, highlight.output = 2}
+```{r, highlight.output = 1:2}
 lotr %>%
   pivot_longer(
     names_to = "sex",
@@ -165,6 +165,16 @@ pivot_wider(<DATA>, <NAMES FROM>, <VALUES FROM>)
 
 ---
 
+class: center, middle
+
+
+```{r tidyr-longer-wider, out.height="65%", out.width="65%", echo = FALSE}
+knitr::include_graphics("img/tidyr-longer-wider.gif")
+```
+.pull-right[Animation by Mara Averick]
+
+---
+
 ## `pivot_wider()`
 
 ```{r, eval=FALSE}
@@ -201,7 +211,7 @@ lotr %>%
 
 ## `pivot_wider()`
 
-```{r, highlight.output=2}
+```{r, highlight.output=1:2}
 lotr %>%
   pivot_longer(
     names_to = "sex",
@@ -275,20 +285,9 @@ table2 %>%
 
 ---
 
-class: center, middle
-
-## `pivot_longer()` and `pivot_wider()`
-
-```{r tidyr-longer-wider, out.height="65%", out.width="65%", echo = FALSE}
-knitr::include_graphics("img/tidyr-longer-wider.gif")
-```
-.pull-right[Animation: Garrick Aden-Buie]
-
----
-
 ## Your Turn 3
 
-### Pivot the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
+### Pivot the 5th through 60th columns of `who` so that the names of the columns go into a new variable called `codes` and the values go into a new variable called `n`. Then select just the `country`, `year`, `codes` and `n` variables.
 
 ```{r, eval = FALSE}
 who
@@ -415,6 +414,39 @@ separate(cases, sex_age, into = c("sex", "age"), convert = TRUE) #<<
 #### Add a new variable called `race`. Remember that each data set corresponds to a single race.
 #### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
 #### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
+
+---
+
+## Your Turn 5: No solution 😈
+
+```{r, echo = FALSE, fig.width=6, fig.height=3.5, dpi = 320}
+breast_ca_black <- read_csv("breast_ca_black.csv")
+breast_ca_white <- read_csv("breast_ca_white.csv")
+breast_ca_black <- breast_ca_black %>% 
+  pivot_longer(
+    names_to = "year", 
+    values_to = "incidence", 
+    cols = everything()
+  ) %>% 
+  mutate(race = "black")
+
+breast_ca_white <- breast_ca_white %>% 
+  pivot_longer(
+    names_to = "year", 
+    values_to = "incidence", 
+    cols = everything()
+  ) %>% 
+  mutate(race = "white")
+
+breast_ca <- bind_rows(breast_ca_black, breast_ca_white)
+
+breast_ca %>% 
+  ggplot(aes(x = year, y = incidence, color = race, group = race)) + 
+  geom_point() +
+  geom_line() + 
+  scale_x_discrete(breaks = seq(1975, 2011, by = 5)) # show years by fives
+```
+
 
 ---
 

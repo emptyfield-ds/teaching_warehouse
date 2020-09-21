@@ -3,7 +3,7 @@
   <head>
     <title>Tidying Data</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2020-09-20" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Tidying Data
 ## <span style="color:#56B4E9">tidyr</span> <br>
-### 2020-08-22
+### 2020-09-20
 
 ---
 
@@ -26,7 +26,7 @@ background-position: 90% 10%
 
 &lt;!-- 
 TODO: Update the art slide when Allison makes a pivot version
-&lt;img src="tidyr_spread_gather.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/tidyr_spread_gather.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
 .pull-right[Art by Allison Horst]
 --&gt;
 
@@ -120,7 +120,7 @@ lotr
 
 ---
 
-&lt;img src="new_data_alert_lotr.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/new_data_alert_lotr.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -149,7 +149,7 @@ lotr %&gt;%
 ```
 
 ```
-## # A tibble: 18 x 4
+*## # A tibble: 18 x 4
 *##    film                       race   sex    words
 ##    &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;
 ##  1 The Fellowship Of The Ring Elf    female  1229
@@ -167,7 +167,7 @@ lotr %&gt;%
 
 ---
 
-&lt;img src="new_data_alert_tidyr.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/new_data_alert_tidyr.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -210,6 +210,14 @@ table4a %&gt;%
 ```r
 pivot_wider(&lt;DATA&gt;, &lt;NAMES FROM&gt;, &lt;VALUES FROM&gt;)
 ```
+
+---
+
+class: center, middle
+
+
+&lt;img src="img/tidyr-longer-wider.gif" width="65%" height="65%" style="display: block; margin: auto;" /&gt;
+.pull-right[Animation by Mara Averick]
 
 ---
 
@@ -266,7 +274,7 @@ lotr %&gt;%
 ```
 
 ```
-## # A tibble: 6 x 5
+*## # A tibble: 6 x 5
 *##   film                       sex      Elf Hobbit   Man
 ##   &lt;chr&gt;                      &lt;chr&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt;
 ## 1 The Fellowship Of The Ring female  1229     14     0
@@ -342,18 +350,9 @@ table2 %&gt;%
 
 ---
 
-class: center, middle
-
-## `pivot_longer()` and `pivot_wider()`
-
-&lt;img src="tidyr-longer-wider.gif" width="65%" height="65%" style="display: block; margin: auto;" /&gt;
-.pull-right[Animation: Garrick Aden-Buie]
-
----
-
 ## Your Turn 3
 
-### Pivot the 5th through 60th columns of `who` into a key column: value column pair named **codes** and **n**. Then select just the `county`, `year`, `codes` and `n` variables.
+### Pivot the 5th through 60th columns of `who` so that the names of the columns go into a new variable called `codes` and the values go into a new variable called `n`. Then select just the `country`, `year`, `codes` and `n` variables.
 
 
 ```r
@@ -523,6 +522,13 @@ cases &lt;- tribble(
 #### Add a new variable called `race`. Remember that each data set corresponds to a single race.
 #### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
 #### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
+
+---
+
+## Your Turn 5: No solution 😈
+
+&lt;img src="tidyr_basics_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 
