@@ -7,15 +7,9 @@ output:
 
 ```{r setup, include=FALSE}
 # knit options
-knitr::opts_chunk$set(
-  echo = TRUE,
-  eval = FALSE
-)
-knitr::opts_knit$set(
-  width = 78,
-  progress = FALSE
-)
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 # Exercise
 
@@ -187,7 +181,7 @@ gg_uk_recent_years
 
 ### Layer 2: Excess deaths (2020)
 
-The second layer will be mean deaths per week in 2020 (in otherwords, during the coronavirus pandemic). 
+The second layer will be mean deaths per week in 2020 (in other words, during the coronavirus pandemic). 
 
 We'll build this data layer similar to the one above but for 2020. This time we will also get the mean `deaths` and the mean `expected_deaths`. 
 
@@ -196,12 +190,7 @@ Filter the data to only include 2020. Then, group by week and year. Finally, sum
 ```{r create-uk_excess_deaths2020_wk}
 # create uk_excess_deaths2020_wk
 uk_excess_deaths2020_wk <- uk_excess_deaths %>%
-  filter(year == 2020) %>% 
-  group_by(week, year) %>%
-  summarise(
-    deaths = mean(deaths, na.rm = TRUE),
-    expected_deaths = mean(expected_deaths, na.rm = TRUE)
-  )
+  filter(year == 2020)
 
 uk_excess_deaths2020_wk
 ```
@@ -349,22 +338,13 @@ For the UK data, we made three data sets that we used in the plot. We'll need to
 
 ```{r facet-data}
 excess_deaths_prior_wk <- ft_excess_deaths %>%
-  filter(year != 2020) %>% 
-  group_by(country, week, year) %>%
-  summarize(deaths = mean(deaths, na.rm = TRUE))
+  filter(year != 2020)
 
 excess_deaths2020_wk <- ft_excess_deaths %>%
-  filter(year == 2020) %>%
-  group_by(country, week, year) %>%
-  summarise(
-    deaths = mean(deaths, na.rm = TRUE),
-    expected_deaths = mean(expected_deaths, na.rm = TRUE)
-  )
+  filter(year == 2020)
 
 excess_deaths_wk <- ft_excess_deaths %>%
-  filter(year == 2020) %>%
-  group_by(country, week) %>%
-  summarize(expected_deaths = mean(expected_deaths, na.rm = TRUE))
+  filter(year == 2020)
 ```
 
 ### Creating the plot and adding facets
