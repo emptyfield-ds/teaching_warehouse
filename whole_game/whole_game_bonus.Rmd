@@ -52,6 +52,8 @@ We need to re-impute age first.
 ```{r}
 imputed_titanic <- titanic %>%
   select(age, pclass, sex, sibsp, parch, embarked, title) %>%
+  # remove labels because mice doesn't like them
+  purrr::map_df(haven::zap_labels) %>% 
   mice(method = "norm") %>%
   complete()
 
