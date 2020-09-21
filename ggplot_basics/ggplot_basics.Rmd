@@ -114,15 +114,13 @@ ggplot()
 ---
 
 ```{r slide-14}
-ggplot(mtcars, 
-       aes(x = mpg, y = hp))
+ggplot(mtcars, aes(x = mpg, y = hp))
 ```
 
 ---
 
 ```{r slide-15}
-ggplot(mtcars, 
-       aes(x = mpg, y = hp)) +
+ggplot(mtcars, aes(x = mpg, y = hp)) +
   geom_point()
 ```
 
@@ -363,7 +361,7 @@ ggplot(diabetes, aes(x = glyhb)) +
 ```{r slide-36}
 diabetes %>% 
   ggplot(aes(x = frame)) + 
-    geom_bar()
+  geom_bar()
 ```
 
 ---
@@ -372,7 +370,7 @@ diabetes %>%
 diabetes %>% 
   drop_na() %>% #<<
   ggplot(aes(x = frame)) + 
-    geom_bar()
+  geom_bar()
 ```
 
 ---
@@ -394,7 +392,7 @@ diabetes %>%
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar()
+  geom_bar()
 ```
 
 ---
@@ -448,7 +446,7 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar(position = "stack")
+  geom_bar(position = "stack")
 ```
 
 ---
@@ -457,7 +455,7 @@ diabetes %>%
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar(position = "dodge")
+  geom_bar(position = "dodge")
 ```
 
 ---
@@ -466,7 +464,7 @@ diabetes %>%
 diabetes %>% 
   drop_na() %>% 
   ggplot(aes(x = frame, fill = gender)) + 
-    geom_bar(position = "fill")
+  geom_bar(position = "fill")
 ```
 
 ---
@@ -571,7 +569,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```{r slide-58}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
-  geom_smooth(aes(linetype = gender), col = "black")
+  geom_smooth(aes(linetype = gender), color = "black")
 ```
 
 ---
@@ -579,7 +577,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```{r slide-59}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
 ---
@@ -587,7 +585,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```{r slide-60}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point(alpha = .2) +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
 ---
@@ -595,7 +593,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```{r slide-61}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_jitter(alpha = .2) +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE)
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
 ---
@@ -603,7 +601,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ```{r slide-62}
 ggplot(diabetes, aes(weight, hip)) + 
   geom_jitter(alpha = .2) +
-  geom_smooth(aes(linetype = gender), col = "black", se = FALSE) +
+  geom_smooth(aes(linetype = gender), color = "black", se = FALSE) +
   theme_bw()
 ```
 
@@ -638,7 +636,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ```{r, eval = FALSE}
 diamonds %>% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_grid(rows = vars(cut), cols = vars(clarity)) #<<
 ```
@@ -647,7 +645,7 @@ diamonds %>%
 
 ```{r}
 diamonds %>% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_grid(rows = vars(cut), cols = vars(clarity))
 ```
@@ -678,7 +676,7 @@ ggplot(diabetes, aes(weight, hip)) +
 
 ```{r, eval=FALSE}
 diamonds %>% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_wrap(vars(clarity)) #<<
 ```
@@ -689,7 +687,7 @@ diamonds %>%
 
 ```{r, echo = FALSE}
 diamonds %>% 
-  ggplot(aes(x = carat, price)) + 
+  ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_wrap(vars(clarity))
 ```
@@ -782,9 +780,9 @@ corrs
 ```{r, eval=FALSE}
 datasaurus_dozen %>% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-    geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-    facet_wrap(vars(dataset))
+  geom_point() + 
+  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
+  facet_wrap(vars(dataset))
 ```
 
 ---
@@ -792,9 +790,9 @@ datasaurus_dozen %>%
 ```{r, eval=FALSE}
 datasaurus_dozen %>% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-    geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) + #<<
-    facet_wrap(vars(dataset))
+  geom_point() + 
+  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) + #<<
+  facet_wrap(vars(dataset))
 ```
 
 ---
@@ -802,9 +800,9 @@ datasaurus_dozen %>%
 ```{r, eval=FALSE}
 datasaurus_dozen %>% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-    geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-    facet_wrap(vars(dataset)) #<<
+  geom_point() + 
+  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
+  facet_wrap(vars(dataset)) #<<
 ```
 
 ---
@@ -812,8 +810,8 @@ datasaurus_dozen %>%
 ```{r, echo=FALSE, fig.height=5.8}
 datasaurus_dozen %>% 
   ggplot(aes(x, y)) + 
-    geom_point() + 
-    geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-    facet_wrap(vars(dataset)) + 
+  geom_point() + 
+  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
+  facet_wrap(vars(dataset)) + 
   theme(strip.text = element_text(margin = margin(t = 0.1)))
 ```
