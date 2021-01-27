@@ -15,5 +15,7 @@ output:
 ```{r, echo=FALSE, child="/Users/malcolmbarrett/Google Drive/Active/r_teaching_warehouse/intro_tidyverse/tidyverse.md"}
 ```
 
+---
+
 ```{r, echo=FALSE, child="/Users/malcolmbarrett/Google Drive/Active/r_teaching_warehouse/intro_exercises/exercises.md"}
 ```
