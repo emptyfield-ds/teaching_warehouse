@@ -323,7 +323,7 @@ Function            | Writes
 `write_stata()`     | Stata .dta files
 
 ```{r eval = FALSE}
-write_csv(diabetes, path = "diabetes-clean.csv") #<<
+write_csv(diabetes, file = "diabetes-clean.csv") #<<
 ```
 ---
 # Your Turn 4

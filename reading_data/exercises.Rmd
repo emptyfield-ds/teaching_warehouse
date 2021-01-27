@@ -141,7 +141,7 @@ To use a write function, first give it the name of the data frame to save, then 
 For example, if we want to save a file after cleaning the data in the `diabetes` data set, we can use `write_csv()`. Note 
 
 ```{r eval = FALSE}
-write_csv(diabetes, path = "diabetes-clean.csv")
+write_csv(diabetes, file = "diabetes-clean.csv")
 ```
 
 # Your Turn 4
