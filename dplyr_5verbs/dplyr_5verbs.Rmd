@@ -587,7 +587,7 @@ summarize(diamonds, n = n(), mean_price = mean(price))
 
 ## Your turn 7
 
-## Use `summarise()` to compute three statistics about the gapminder data set:
+## Use `summarise()` to compute these statistics about the gapminder data set:
 
 ### 1. The first (`min()`) year in the data
 ### 2. The last (`max()`) year in the data  
