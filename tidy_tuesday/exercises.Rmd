@@ -23,7 +23,7 @@ In this project, we'll start with a guided exploration of a TT dataset. Then, yo
 
 ## Part 1: European Energy
 
-We're going to explore a dataset about energy use in Europe from 2016 to 2018.  This dataset was the subject of Tidy Tuesday the week of 2020-08-04. You can find more details here: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-04/readme.md.
+We're going to explore a dataset about energy prduction in Europe from 2016 to 2018. This dataset was the subject of Tidy Tuesday the week of 2020-08-04. You can find more details, including a data dictionary, here: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-04/readme.md.
 
 First, let's read the data.
 
