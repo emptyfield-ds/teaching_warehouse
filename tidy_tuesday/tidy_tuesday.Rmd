@@ -1,0 +1,36 @@
+---
+title: "Tidy Tuesday"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Tidy Tuesday
+
+> The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions. While we understand that the two are related, the focus of this practice is purely on building skills with real-world data.
+
+--
+
+## See more at https://github.com/rfordatascience/tidytuesday
+
+--
+
+## Follow along at https://twitter.com/search?q=%23TidyTuesday
+
+---
+
+### *Exercise*
+
+#### The purpose of this exercise is to practice your R wrangling and visualization skills with real data sets
+
+#### We'll first use a guided exercise from a Tidy Tuesday data set. Then, you'll find one of your own. 
+
+
+
+

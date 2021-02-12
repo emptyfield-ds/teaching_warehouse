@@ -125,7 +125,7 @@ How many rows and columns are in your new data set?
 
 ## Your Turn 7
 
-Use `summarise()` to compute three statistics about the gapminder data set:
+Use `summarise()` to compute these statistics about the gapminder data set:
 
 1. The first (`min()`) year in the data
 2. The last (`max()`) year in the data  
