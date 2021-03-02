@@ -17,19 +17,19 @@ output:
 
 --
 
-## See more at https://github.com/rfordatascience/tidytuesday
+### See more at https://github.com/rfordatascience/tidytuesday
 
 --
 
-## Follow along at https://twitter.com/search?q=%23TidyTuesday
+### Follow along at https://twitter.com/search?q=%23TidyTuesday
 
 ---
 
 ### *Exercise*
 
-#### The purpose of this exercise is to practice your R wrangling and visualization skills with real data sets
+### The purpose of this exercise is to practice your R wrangling and visualization skills with real data sets
 
-#### We'll first use a guided exercise from a Tidy Tuesday data set. Then, you'll find one of your own. 
+### We'll first use a guided exercise from a Tidy Tuesday data set. Then, you'll find one of your own. 
 
 
 
