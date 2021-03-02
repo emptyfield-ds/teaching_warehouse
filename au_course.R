@@ -21,7 +21,7 @@ modules <- c(
   "ggplot_customizing",
   "ggplot_recreate_challenge",
   "tidyr_basics",
-  "modeling_and_broom",
+  "tidy_tuesday",
   "types_and_functions",
   "purrr_basics",
   "rmarkdown_basics",
