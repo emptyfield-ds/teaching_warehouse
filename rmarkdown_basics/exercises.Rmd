@@ -75,7 +75,8 @@ Gapminder observed data over \_\_\_\_\_\_\_\_\_ different years.
 
 ## Your turn 6
 
-1.  Set figure chunk options to the code chunk below, such as `dpi`, `fig.width`, and `fig.height`. Run `knitr::opts_chunk$get()` in the console to see the defaults.
+1.  Set figure chunk options to the code chunk below, such as `dpi`, `fig.width`, and `fig.height`.
+    Run `knitr::opts_chunk$get()` in the console to see the defaults.
 
 2.  Add your name to the YAML header using `author: Your Name`.
 
