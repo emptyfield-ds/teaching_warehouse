@@ -42,9 +42,11 @@ Open up that file and follow along with these exercises:
 
 3.  At the top of the document, change `output: html_document` to this code (be mindful to keep the indents as is):
 
-        output: 
-          bookdown::html_document2:
-            number_sections: false
+    ``` {.yaml}
+    output: 
+      bookdown::html_document2:
+        number_sections: false
+    ```
 
 4.  In "figure-one", add a chunk option: `fig.cap = "A1c and diabetes status by WH ratio"` .
     Then, where it says "Figure \_\_\_\_\_", add \@ref(fig:figure-one)
