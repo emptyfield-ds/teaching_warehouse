@@ -3,7 +3,7 @@
   <head>
     <title>Dynamic documents in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2021-03-02" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Dynamic documents in R
 ## reproducible research with R Markdown
-### 2020-08-22
+### 2021-03-02
 
 ---
 
@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 
 
 
-&lt;img src="rmarkdown_wizards.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/rmarkdown_wizards.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 .pull-right[Artwork by @allison_horst]
 
@@ -66,7 +66,7 @@ class: middle, center
 
 class: middle
 
-&lt;img src="rmarkdown_components.png" width="130%" height="130%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/rmarkdown_components.png" width="130%" height="130%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -91,6 +91,11 @@ background-position: 93% 10%
 
 ---
 
+# Visual R Markdown
+
+&lt;img src="img/visual-editing.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+---
 
 # Basic Markdown Syntax
 
@@ -118,20 +123,6 @@ _italic_   __bold__
 # Basic Markdown Syntax
 
 ```
-* Item 1
-* Item 2
-    + Item 2a
-    + Item 2b
-    
-1. Item 1
-2. Item 2
-```
-
----
-
-# Basic Markdown Syntax
-
-```
 http://example.com
 
 [linked phrase](http://example.com)
@@ -140,45 +131,17 @@ http://example.com
 
 ---
 
-# Basic Markdown Syntax
+class: center, middle, inverse
 
-```
-![](http://example.com/logo.png)
-
-![optional caption text](figures/img.png)
-```
+## *Learn more about Markdown Syntax with the ten-twenty minute tutorial on markdown at https://commonmark.org/help/tutorial.*
 
 ---
 
-# Basic Markdown Syntax
+## Your turn 2 (open **`exercises.Rmd`**)
 
-```
-$equation$
+## Read this short introduction to Visual R Markdown: https://rstudio.github.io/visual-markdown-editing/#/intro?id=getting-started
 
-$$ equation $$
-```
-
----
-
-# Basic Markdown Syntax
-
-```
-superscript^2^
-
-~~strikethrough~~
-```
-
----
-
-## Your turn 2
-
-## Do the ten minute tutorial on markdown at https://commonmark.org/help/tutorial. Let us know if you need help!
-
----
-
-## Your turn 3
-
-## Use Markdown syntax to stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below. Experiment with bolding, italicizing, making lists, etc.
+## Use Visual R Markdown to stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below. Experiment with bolding, italicizing, making lists, etc.
 
 ---
 
@@ -195,19 +158,19 @@ background-position: 93% 10%
 
 ### Code chunks
 
-&lt;img src="code_chunk.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/code_chunk.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ### Code chunks
 
-&lt;img src="code_chunk_fences.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/code_chunk_fences.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ### Code chunks
 
-&lt;img src="code_chunk_opts.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/code_chunk_opts.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -237,17 +200,17 @@ Option       | Effect
 ## Insert code chunks with **`cmd/ctrl + alt/option + I`**
 
 
-&lt;img src="rmarkdown_knit.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/rmarkdown_knit.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Edit code chunk options
 
-&lt;img src="chunk_setup_gui.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/chunk_setup_gui.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Your turn 4 (open **`exercises.Rmd`**)
+## Your turn 3
 
 ### Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above. Put the following code in it:
 
@@ -260,7 +223,7 @@ gapminder %&gt;%
 
 ---
 
-## Your turn 5
+## Your turn 4
   
 ### Add `echo = FALSE` to the code chunk above and re-knit
 
@@ -275,17 +238,17 @@ gapminder %&gt;%
 
 ### Inline Code
 
-&lt;img src="inline_code.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/inline_code.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ### Inline Code
 
-&lt;img src="inline_code_highlight.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/inline_code_highlight.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-### Your turn 6
+### Your turn 5
 
 ### Remove `eval = FALSE` so that R Markdown evaluates the code.
 ### Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
@@ -320,23 +283,23 @@ output:
 ---
 
 
-&lt;img src="yaml_example.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/yaml_example.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="yaml_example_noted.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/yaml_example_noted.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="yaml_example_noted2.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/yaml_example_noted2.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="yaml_example_noted3.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/yaml_example_noted3.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="yaml_example_noted4.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/yaml_example_noted4.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -357,11 +320,12 @@ Function       | Outputs
 
 ---
 
-## Your turn 7
+## Your turn 6
 
-### Set figure chunk options such as `dpi`, `fig.width`, and `fig.height`.  Run `knitr::opts_chunk$get()` in the console to see the defaults.
-### Change the YAML header above from `output: html_document` to another output type like `pdf_document` or `word_document`.
-### Add your name to the YAML header using `author: Your Name`.
+#### Set figure chunk options to the code chunk below, such as dpi, fig.width, and fig.height. Run knitr::opts_chunk$get() in the console to see the defaults.
+#### Add your name to the YAML header using author: Your Name.
+#### Change the YAML header above from output: html_document to output: distill::distill_article.
+#### Set distill::distill_article to use the toc and code_folding options and re-knit 
 
 ---
 
@@ -394,7 +358,7 @@ params$data
 
 ---
 
-### Your turn 8
+### Your turn 7
 
 ###  Change the `params` option in the YAML header to use a different continent. Re-knit
 
@@ -418,13 +382,13 @@ gapminder %&gt;%
 
 ## Bibliographies and citations
 
-## *Bibliography files*: **`.bib`**, **End Note**, **others**
+## *Bibliography files*: **`.bib`**, **Zotero**, **others**
 
 ---
 
 ## Bibliographies and citations
 
-## ~~Bibliography files: `.bib`, End Note, others~~
+## ~~Bibliography files: `.bib`, Zotero, others~~
 ## *Citation styles*: **`.csl`**
 
 
@@ -432,10 +396,14 @@ gapminder %&gt;%
 
 ## Bibliographies and citations
 
-## ~~Bibliography files: `.bib`, End Note, others~~
+## ~~Bibliography files: `.bib`, Zotero, others~~
 ## ~~Citation styles: `.csl`~~
 
 ## **`[@citation-label]`**
+
+--
+
+## Or just use Visual R Markdown's citation wizard!
 
 ---
 
@@ -448,19 +416,19 @@ csl: file.csl
 ---
 ```
 
----
+--
 
-### Your turn 9
-
-### Cite the Causal Inference book in text below in the format ```[@citation-label]```. The label for the citation is `hernan_causal_2019`
-
-###  Add the American Journal of Epidemiology CSL to the YAML using `csl: aje.csl`
+## *Visual R Markdown can also manage this for you.*
 
 ---
 
-class: middle
+### Your turn 8
 
-# Check out the citr package for easy citation insertion and .bib management
+### Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources &gt; Bibliography. 
+
+### Add the American Journal of Epidemiology CSL to the YAML using csl: `aje.csl`
+
+### Re-knit
 
 ---
 
