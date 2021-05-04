@@ -18,8 +18,7 @@ ui <- fluidPage(
         "Year range:",
         min = 1952,
         max = 2007,
-        value = c(1952, 2007),
-        sep = ""
+        value = c(1952, 2007)
       )
     ),
     mainPanel(
@@ -37,8 +36,7 @@ server <- function(input, output) {
     gapminder %>%
       filter(
         continent %in% input$continent,
-        year >= input$year[1],
-        year <= input$year[2],
+        between(year, input$year[[1]], input$year[[2]])
       )
   })
 

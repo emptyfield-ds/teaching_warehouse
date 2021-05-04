@@ -24,8 +24,11 @@ modules <- c(
   "modeling_and_broom",
   "types_and_functions",
   "purrr_basics",
+  "rmarkdown_whole_game",
   "rmarkdown_basics",
+  "ds_whole_game",
   "shiny_basics",
+  "shiny_challenge",
   "shiny_challenge",
   "r_best_practices"
 )
@@ -33,6 +36,8 @@ modules <- c(
 rforepi <- "/Users/malcolmbarrett/Desktop/rforepi"
 
 if (dir_exists(rforepi)) dir_delete(rforepi)
+
+dir_create(rforepi)
 
 walk2(
   modules,

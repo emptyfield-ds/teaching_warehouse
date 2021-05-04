@@ -35,7 +35,7 @@ The Titanic data is in the folder in a Stata file (.dta). Load the data, saving 
 
 ```{r}
 # import the data
-titanic <- read_dta("titanic3.dta")
+titanic <- read_dta("../ds_whole_game/titanic3.dta")
 ```
 
 Let's look at how many people survived. `survived` and `pclass` are stored as integers, so let's first transform them to factors (see the chapter on factors in [R for Data Science](https://r4ds.had.co.nz/factors.html)). Then, summarize how many people survived and how many died. You can use dplyr to group by survival and then summarize with `n()` or use the `table()` function on `titanic$survived`. 
@@ -131,6 +131,7 @@ This chunk can take a while to run. Set the code chunk option `cache = TRUE` for
 ```{r}
 imputed_titanic <- titanic %>% 
   select(age, pclass, sex, sibsp, parch, embarked, title) %>% 
+  purrr::map_dfc(haven::zap_labels) %>% 
   mice(method = "norm") %>% 
   complete() 
 

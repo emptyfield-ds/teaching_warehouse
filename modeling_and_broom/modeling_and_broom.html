@@ -3,7 +3,7 @@
   <head>
     <title>Modeling in R and Tidying Results</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2021-03-03" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Modeling in R and Tidying Results
 ## <span style="color:#56B4E9">linear models and broom</span> <br>
-### 2020-08-22
+### 2021-03-03
 
 ---
 
@@ -29,25 +29,25 @@ class: inverse, middle, center
 
 ## Modeling in R
 
-&lt;img src="r_models.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/r_models.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Modeling in R
 
-&lt;img src="r_models_fnname.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/r_models_fnname.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Modeling in R
 
-&lt;img src="r_models_data.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/r_models_data.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Modeling in R
 
-&lt;img src="r_models_formula.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/r_models_formula.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -303,20 +303,20 @@ lm(price ~ carat, data = diamonds) %&gt;%
 
 ```
 *## # A tibble: 53,940 x 8
-*##    price carat .fitted .resid .std.resid    .hat .sigma
-##    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1   326 0.23  -472.     798.      0.516 4.52e-5  1549.
-##  2   326 0.21  -628.     954.      0.616 4.71e-5  1549.
-##  3   327 0.23  -472.     799.      0.516 4.52e-5  1549.
-##  4   334 0.290   -7.00   341.      0.220 3.98e-5  1549.
-##  5   335 0.31   148.     187.      0.121 3.82e-5  1549.
-##  6   336 0.24  -395.     731.      0.472 4.42e-5  1549.
-##  7   336 0.24  -395.     731.      0.472 4.42e-5  1549.
-##  8   337 0.26  -240.     577.      0.372 4.24e-5  1549.
-##  9   337 0.22  -550.     887.      0.573 4.61e-5  1549.
-## 10   338 0.23  -472.     810.      0.523 4.52e-5  1549.
+*##    price carat .fitted .resid      .hat .sigma     .cooksd
+##    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+##  1   326 0.23  -472.     798. 0.0000452  1549. 0.00000600 
+##  2   326 0.21  -628.     954. 0.0000471  1549. 0.00000892 
+##  3   327 0.23  -472.     799. 0.0000452  1549. 0.00000602 
+##  4   334 0.290   -7.00   341. 0.0000398  1549. 0.000000966
+##  5   335 0.31   148.     187. 0.0000382  1549. 0.000000278
+##  6   336 0.24  -395.     731. 0.0000442  1549. 0.00000493 
+##  7   336 0.24  -395.     731. 0.0000442  1549. 0.00000493 
+##  8   337 0.26  -240.     577. 0.0000424  1549. 0.00000294 
+##  9   337 0.22  -550.     887. 0.0000461  1549. 0.00000756 
+## 10   338 0.23  -472.     810. 0.0000452  1549. 0.00000618 
 ## # … with 53,930 more rows, and 1 more variable:
-## #   .cooksd &lt;dbl&gt;
+## #   .std.resid &lt;dbl&gt;
 ```
 
 ---

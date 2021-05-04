@@ -32,6 +32,6 @@ Additionally, this app should:
 There are many ways to solve this problem! My solution was just over 60 lines of code and looked like this (press the green play button to see a screenshot). Don't worry if yours doesn't look exactly like mine or if you have more or less lines of code; solve it the way you want to solve it!
 
 ```{r}
-knitr::include_graphics("img/screenshot.png")
+knitr::include_graphics("https://i.imgur.com/CNhPBeO.png")
 ```
 
