@@ -21,9 +21,8 @@ library(targets)
 # write a bibliography file for all the packages we're using
 knitr::write_bib(file = "packages.bib")
 
-# fill me in
-________(forest)
-________(brazil_causes_2010)
+tar_load(forest)
+tar_load(brazil_causes_2010)
 ```
 
 ## Methods
@@ -47,7 +46,7 @@ pull_net <- function(top_changes, country) {
 ```
 
 ```{r forest-map, fig.cap="Net Forest Conversion in 2010"}
-________(forest_map)
+tar_read(forest_map)
 ```
 
 Figure \@ref(fig:forest-map) presents a map of net forest conversion in 2010, as well as the 10 countries with the highest absolute change in forest.
@@ -61,14 +60,14 @@ pull_hect <- function(brazil_causes_2010, reason) {
     scales::comma()
 }
 
-________(brazil_causes_table)
+tar_read(brazil_causes_table)
 ```
 
 Table \@ref(tab:causes-table) shows the causes of deforestation in Brazil in 2010.
 The top cause was clearing for pasture (`r pull_hect(brazil_causes_2010, "Pasture")` hectacres), followed by fire (`r pull_hect(brazil_causes_2010, "Fire")` hectacres), then small scale clearing (`r pull_hect(brazil_causes_2010, "Small scale clearing")` hectacres).
 
 ```{r causes-hist, fig.cap="Causes of deforestation in Brazil over time, sorted by maximum loss"}
-________(brazil_causes_hist)
+tar_read(brazil_causes_hist)
 ```
 
 Figure \@ref(fig:causes-hist) shows that, while deforestation has decreased in Brazil since the early 2000s, it remains steady at over 1 million hectacres lost per year.

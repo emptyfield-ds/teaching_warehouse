@@ -3,73 +3,66 @@ title: "R Markdown: Whole Game"
 output: html_document
 ---
 
-```{r setup}
-library(tidyverse)
-```
-
-For this set of exercises, we'll work through an R Markdown report in `whole_game.Rmd`.
-Open up that file and follow along with these exercises:
+For this set of exercises, we'll work through a targets pipeline to run an analysis and generate an R Markdown report in `whole_game.Rmd`.
+Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
 ## Your Turn 1
 
-1.  Turn on Visual R Markdown mode for `exercises.Rmd` (this document) AND `whole_game.Rmd`
-2.  In your local R session, run the code in the code chunk called "prep-data". Look at the chunk options (everything after "r prep-data". What do you think setting the `include` option does?
-3.  Knit the document and take a look. Were you right?
+1.  Open `_targets.R` and take a look at the structure of the file. targets requires this file to run! You can also open this file at the console with `tar_edit()`.
+2.  Add "tidyverse" to the `packages` argument of `tar_option_set()`
+3.  We're going to add two targets to `tar_plan()`. First, add `tar_file(forest_file, "data/forest.csv")`. This creates a new target called `forest_file`: `tar_file()` essentially tells targets that "data/forest.csv" is a file we should keep an eye on.
+4.  Next, add `forest = read_csv(forest_file)`
+5.  Then, run `tar_visnetwork()` in the console (don't include this in your script). What do you see?
+6.  Run `tar_make()` in the console (not in your script)
+7.  In the console, run `tar_read(forest)`. What are you seeing?
 
 ## Your Turn 2
 
-1.  Add a citation to the methods section for the data. Use the citation wizard to search PubMed for an article called "Prevalence of coronary heart disease risk factors among rural blacks: A community-based study"
+1.  In `_targets.R`, we're sourcing `R/functions.R`. Open that file and take a look at the first function, `map_2010_forest_conversion()`. This function takes a dataframe---forest---and generates a map of forest conversion in 2010.
+2.  Let's add this map to our targets plan. First, add a few more packages that we need for this function to the `packages` argument of `tar_option_set()`: "maps", "sf", "scico".
+3.  Add `forest_map = map_2010_forest_conversion(forest)` as a target
+4.  Run `tar_visnetwork()` in the console. What's changed?
+5.  Run `tar_make()` in the console.
+6.  Run `tar_read(forest_map)` in the console.
 
 ## Your Turn 3
 
-1.  Take a look at the chunk called "descriptive-stats." What do you think `echo = FALSE` does, and how is it different from `include = FALSE`? What do you think `eval = FALSE` means?
-2.  Read the code in "descriptive-stats". What are we preparing?
-3.  Look at the narrative text right after "descriptive-stats". It's full of bits of code. What are we doing here, and what do you think the output should look like?
-4.  Change `eval` to `TRUE` in the "descriptive-stats" code chunk and re-knit. Look at this part of the document. What does the output look like?
+1.  The next function in `R/functions.R` , `barplot_top_10_change()`, takes `forest` and returns a barplot of the 10 countries with the highest absolute change in 2010. Add this function as a target called `top10_barplot`.
+2.  Take a look with `tar_visnetwork()`, then run `tar_make()`.
+3.  Use `tar_read()` to look at the the bar plot
 
 ## Your Turn 4
 
-1.  In the code chunk called "table-one", create a descriptive table with `tbl_summary()`
-2.  Pipe the results of `tbl_summary()` to `add_difference()`.
-3.  Change `eval` to `TRUE` and re-knit
+1.  Add patchwork to the packages argument at the top of `_targets.R`
+2.  Remove the `top10_barplot` target and change the `forest_map` target to use `plot_top_change_2010(forest)` instead.
+3.  Run `tar_visnetwork()` , `tar_make()`, and `tar_read()`
 
 ## Your Turn 5
 
-1.  In the code chunk called "figure-one", load the patchwork library
+1.  One at a time, running `tar_visnetwork()` , `tar_make()`, and `tar_read()` at each step, add five new targets:
 
-2.  At the end of the code chunk, include this code: `fig1a + fig1b` .
-    patchwork allows you to join ggplots with `+` (and more).
+    -   Add "data/brazil_loss.csv" as a file target called `brazil_loss_file`
 
-3.  At the top of the document, change `output: html_document` to this code (be mindful to keep the indents as is):
+    -   Read `brazil_loss_file` using `read_csv()`.
+        Call the target `brazil_loss`
 
-    ``` {.yaml}
-    output: 
-      bookdown::html_document2:
-        number_sections: false
-    ```
+    -   Add a new target called `brazil_causes_2010` using `clean_2010_causes()` on `brazil_loss`
 
-4.  In "figure-one", add a chunk option: `fig.cap = "A1c and diabetes status by WH ratio"` .
-    Then, where it says "Figure \_\_\_\_\_", add \@ref(fig:figure-one)
+    -   Add a new target called `brazil_causes_table` using `table_brazil_causes()` on `brazil_causes_2010`
 
-5.  In "figure-one", change `eval` to `TRUE` and re-knit
+    -   Add a new target called `brazil_causes_hist` using `plot_cause_hist()` on `brazil_loss`
 
 ## Your Turn 6
 
-1.  In the code chunk called "table-two", pass the results of both `lm()` and `glm()` to `tbl_regression()`
-2.  Merge the two model tables using `tbl_merge()`
-3.  change `eval` to `TRUE` and re-knit
-
-**Stretch goal**: The description for Table 2 is pretty sparse.
-It would probably be better to have some numbers included in the narrative text.
-Read gtsummary's [vignette on inline text](http://www.danieldsjoberg.com/gtsummary/articles/inline_text.html) and add a few important details.
+1.  Open `whole_game.Rmd` and take a look. This is a report that uses the targets we created in our pipeline.
+2.  Use `tar_load()` to load `forest` and `brazil_causes_2010` in the `setup` chunk. This time, you will include `tar_load()` directly in your code!
+3.  Use `tar_read()` in the following chunks: `forest-map`, `causes-table`, and `causes-hist`.
+4.  Add the report to your pipeline in `_targets.R`. The format for for rendering a R Markdown file is `tar_render(name_of_target, "name_of_report.Rmd")`.
+5.  Run `tar_visnetwork()` and `tar_make()`. Open your rendered report from the Files pane.
 
 ## Your Turn 7
 
-Previously, we only had data for one location in the study---Buckingham.
-We've just received data from the other site, Louisa, and we need to update the tables, figures, and narrative text...
-
-...but since we used R Markdown, we can just load the new data set, and R will update everything for us.
-
-1.  Change `read_csv()` to load `diabetes.csv` instead of `diabetes-buckingham.csv`
-2.  Add the `location` variable to Table 1
-3.  Re-knit. How's it look?
+1.  Run `tar_destroy()` in the console
+2.  Run `tar_visnetwork()`. What's different?
+3.  Run `tar_make()`
+4.  Take a look at your rendered report
