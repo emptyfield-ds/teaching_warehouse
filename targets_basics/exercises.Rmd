@@ -1,0 +1,16 @@
+---
+title: "Manage code pipelines with targets"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(gapminder)
+```
+
+## Your turn 1
+
+
+# Take aways
+
+-   
