@@ -85,4 +85,9 @@ Confirm that you can reproduce your entire pipeline from scratch. In the console
 
 # Take aways
 
--   
+- targets allows you to write a clear description of your analysis pipeline using function-based declarations
+- targets knows which parts of your code depend on the others, so it only re-runs what it needs to
+- `_targets.R` is how you tell targets what to run: end in a `list()` of `tar_target()`s or use `tarchetypes::tar_plan()` to use the format `target = action(other_target)`.
+- `tar_make()` renders your pipeline, and `tar_visnetwork()` visualizes it
+- Render R Markdown reports in targets with `tarcheypes::tar_render()`
+
