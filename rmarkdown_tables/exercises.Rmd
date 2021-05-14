@@ -8,11 +8,46 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(tidyverse)
 library(gapminder)
+library(gtsummary)
+library(broom)
+library(knitr)
 ```
 
-## Your turn 1
+## Your Turn 1
+
+1. Using Visual R Markdown, create a markdown table that represents these data: 
+2. Knit
+
+## Your Turn 2
+
+1. Using the `tidy()` function from broom, turn `response_model` and `marker_model` into dataframes.
+2. Bind the two resulting model dataframes on top of each other to create one dataframe
+3. Turn the resulting dataframe into a table using `kable()`
+4. Knit
+
+```{r}
+response_model <- glm(response ~ age + stage, data = trial, family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
+
+
+```
+
+## Your Turn 3
+
+1. Create a contingency table of `trial` (a dataset from gtsummary) using `tbl_cross()`: set `trt` to the rows and `response` to the columns.
+2. Add a p-value
+3. Knit
+
+```{r}
+
+```
+
+## Your Turn 4
+
+## Your Turn 5
+
+## Your Turn 6
 
 
 # Take aways
-
 - 
