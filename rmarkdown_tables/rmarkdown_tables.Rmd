@@ -18,6 +18,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dp
 library(tidyverse)
 library(gapminder)
 library(here)
+diabetes <- read_csv("diabetes.csv")
 ```
 
 
