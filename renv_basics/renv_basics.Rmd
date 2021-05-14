@@ -1,0 +1,54 @@
+---
+title: "Reproducing package environments"
+subtitle: "using renv to lock packages"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: false
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+library(tidyverse)
+library(gapminder)
+library(here)
+```
+
+---
+
+
+background-image: url(img/renv.svg)
+background-position: 93% 10%
+background-size: 300px 300px
+
+## *renv*
+
+<br><br><br>
+
+--
+
+## point 1
+
+--
+
+## point 2
+
+--
+
+## point 3
+
+
+---
+
+class: inverse, center
+
+# Resources
+## [renv: Getting started](https://rstudio.github.io/renv/articles/renv.html): A brief introduction to renv and its workflows
+## [renv: Project Environments for R (blog)](https://blog.rstudio.com/2019/11/06/renv-project-environments-for-r/): An RStudio blog post introducing renv
+## [renv: Project Environments for R (talk)](https://www.rstudio.com/resources/rstudioconf-2020/renv-project-environments-for-r/): A talk on renv from rstudio::conf() 2020 

@@ -1,0 +1,95 @@
+---
+title: "Tables in R Markdown"
+output: html_document
+---
+
+```{r setup, echo = FALSE, message = FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(tidyverse)
+library(gapminder)
+library(gtsummary)
+library(broom)
+library(knitr)
+```
+
+## Your Turn 1
+
+1.  Using Visual R Markdown, create a markdown table that represents these data: The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspiring, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.
+2.  Knit
+
+## Your Turn 2
+
+1.  Using the `tidy()` function from broom, turn `response_model` and `marker_model` into dataframes.
+2.  Bind the two resulting model dataframes on top of each other to create one dataframe
+3.  Turn the resulting dataframe into a table using `kable()`
+4.  Knit
+
+```{r broom-and-kable}
+response_model <- glm(response ~ age + stage, data = trial, family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
+
+
+```
+
+## Your Turn 3
+
+1.  Create a contingency table of `trial` (a dataset from gtsummary) using `tbl_cross()`: set `trt` to the rows and `response` to the columns.
+2.  Add a p-value with `add_p()`
+3.  Knit
+
+```{r cross-table}
+
+```
+
+## Your Turn 4
+
+1.  Create a summary table of `trial` by the `trt` variable.
+2.  Modify the label for "Grade" to say "Tumor Grade"
+3.  Add an overall column and a p-value
+4.  Modify the table to use Mean (SD) and n (%) via the `statistic argument:`list(all_continuous() \~ "{mean} ({sd})", all_categorical() \~ "{n} ({p}%)")\`
+5.  Bold the labels
+6.  Modify the header with `modify_spanning_header(c("stat_1", "stat_2") ~ "**Treatment Received**")`
+
+```{r table-one}
+trial %>% 
+  tbl_summary(
+    
+  )
+```
+
+## Your Turn 5
+
+1.  Create a regression table for `response model`; exponentiate the output with `exponentiate = TRUE`
+2.  Add a global P-value
+3.  Add the model statistics via `add_glance_source_note()`
+4.  Italicize the variable levels
+5.  Merge the table you just made with `marker_table` using `tbl_merge()`
+
+```{r table-two}
+response_table <- response_model %>% 
+  tbl_regression(
+    
+  )
+
+marker_table <- marker_model %>% 
+  tbl_regression() %>% 
+  add_global_p()
+
+both_tables <- list(________, marker_table)
+________
+```
+
+## Your Turn 6
+
+1.  Modify the YAML header to use `bookdown::html_document2` as the output
+2.  Add a caption to the merged table above using `modify_caption()`
+3.  Reference that table below using this format: \@ref(tab:name-of-chunk)
+
+In Table _______, we show two regression models: a linear model of participant markets and a logistic regression model of participant response.
+
+## Take aways
+- gtsummary makes it easy to create publication-ready tables in R
+- `tbl_summary()` and `tbl_regression()` are key functions for making tables in gtsummary
+- Each table can be further formatted or modified using helper functions like `add_overall()` and `bold_labels()`
+- The default output is gt, but you can also export to other table formats with `as_*()` functions, e.g. `as_flex_table()`.
