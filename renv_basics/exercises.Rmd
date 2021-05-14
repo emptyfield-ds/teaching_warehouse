@@ -7,11 +7,32 @@ output: html_document
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(tidyverse)
-library(gapminder)
 ```
 
-## Your turn 1
+## Your Turn 1
+
+1. Create a new project (in RStudio: File > New Project, or create one in the console with `usethis::create_project("path/to/name_of_project")`)
+2. Create a new file called `plot.R`. In that file, load ggplot2 and create a plot with `quickplot(mpg$displ)`.
+3. What packages does your project depend on? Make a prediction, then run `renv::dependencies()` in the console (*not* in `plot.R`!) to see if you were right.
+4. In the console, initiate a renv environment with `renv::init()`. 
+5. Open the file called `renv.lock`. What is this information?
+
+## Your Turn 2
+
+1. In `plot.R`, modify your code to load the patchwork library, then replace your previous plot with `quickplot(mpg$displ) + quickplot(as.factor(mpg$cyl))`
+2. Run `renv::status()` in the console
+3. Run `renv::snapshot()`. What's changed?
+
+## Your Turn 3
+
+1. Create a new project
+2. Load targets and run `tar_script()` in the console. Read `_targets.R` and predict what your dependencies are.
+3. Run `renv::dependencies()`
+4. Run `tar_renv()` and look at `_targets_packages.R`. What did targets do here? Why is that important? Run `renv::dependencies()` again and confirm that we can detect all of our dependencies.
+5. Run `renv::init()`
 
 # Take aways
 
-- 
+- renv locks your package environment to make it more reproducible when you update your packages
+- `init()` starts a renv environment, looking for packages that you use in your project via `dependencies()`; `snapshot()` updates your lock file; `restore()` restores the packages listed in your lock file
+- When using renv with targets, use `tar_renv()` to automatically generate a file of packages that helps renv determine your dependencies.
