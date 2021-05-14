@@ -1,0 +1,138 @@
+---
+title: "Reproduce Reports"
+output: html_document
+params: 
+  continent: Americas
+bibliography: citations.bib
+---
+
+Chunks named "setup" are a little special.
+They will always run first in R Notebooks and interactively if they haven't been run yet.
+
+```{r setup, echo = FALSE, message = FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(tidyverse)
+library(gapminder)
+```
+
+## Your turn 1
+
+Create a new R Markdown file.
+Go to File \> New File \> R Markdown.
+Press OK. Save the file and press the "Knit" button above.
+
+## Your turn 2
+
+Read this short introduction to Visual R Markdown: <https://rstudio.github.io/visual-markdown-editing/#/intro?id=getting-started>
+
+Turn on Visual R Markdown mode for this document.
+Then, stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below.
+Experiment with bolding, italicizing, making lists, etc.
+
+GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.
+The unit is in international dollars, fixed 2011 prices.
+The data is adjusted for inflation and differences in the cost of living between countries, so-called PPP dollars.
+The end of the time series, between 1990 and 2016, uses the latest GDP per capita data from the World Bank, from their World Development Indicators.
+To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
+
+## Your turn 3
+
+Create a code chunk.
+You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above.
+Put the following code in it:
+
+gapminder %\>% slice(1:5) %\>% knitr::kable()
+
+Knit the document
+
+## Your turn 4
+
+Add `echo = FALSE` to the code chunk above and re-knit
+
+Remove `echo = FALSE` from the code chunk and move it to `knitr::opts_chunk$set()` in the `setup` code chunk.
+Re-knit.
+What's different about this?
+Look around the rest of the document.
+
+When you've figured it out, remove `echo = FALSE` from `knitr::opts_chunk$set()`.
+
+## Your turn 5
+
+1.  Remove `eval = FALSE` so that R Markdown evaluates the code.
+2.  Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
+3.  Use inline code to describe the data set in the text below the code chunk and re-knit.
+
+```{r, eval = FALSE}
+___ ___ gapminder %>% 
+  _________ %>% 
+  # pull() extracts a column as a vector
+  # if no column is called, it uses the most recently created
+  pull()
+```
+
+Gapminder observed data over \_\_\_\_\_\_\_\_\_ different years.
+
+## Your turn 6
+
+1.  Set figure chunk options to the code chunk below, such as `dpi`, `fig.width`, and `fig.height`.
+    Run `knitr::opts_chunk$get()` in the console to see the defaults.
+
+2.  Add your name to the YAML header using `author: Your Name`.
+
+3.  Change the YAML header above from `output: html_document` to `output: distill::distill_article`.
+
+4.  Set `distill::distill_article` to use the `toc` and `code_folding` options and re-knit (see `?distill::distill_article` for details on these and other arguments. Add them to the YAML like this (be mindful of the indents! Also, make sure you have Visual R Markdown turned on or the code below might look a little different):
+
+    ``` {.yaml}
+    output: 
+      distill::distill_article:
+        _________: true
+        _________: true 
+    ```
+
+```{r}
+gapminder %>% 
+  filter(continent != "Oceania") %>% 
+  ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+  geom_line(lwd = 1, show.legend = FALSE) + 
+  facet_wrap(~ continent) +
+  # `country_colors` is an object included in gapminder
+  scale_color_manual(values = country_colors) + 
+  theme_minimal(14) + 
+  theme(strip.text = element_text(size = rel(1.1)))
+```
+
+## Your turn 7
+
+1.  Take a look at the output of this plot in the document you've knitted.
+2.  Now, change the `params` option in the YAML header to use a different continent.
+3.  Re-knit. What's changed?
+
+```{r}
+gapminder %>% 
+  filter(continent == params$continent) %>% 
+  ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+  geom_line(lwd = 1, show.legend = FALSE) + 
+  scale_color_manual(values = country_colors) +
+  theme_minimal(14) + 
+  theme(strip.text = element_text(size = rel(1.1))) +
+  ggtitle(paste("Continent:", params$continent))
+```
+
+## Your turn 8
+
+1.  Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources \> Bibliography.
+2.  Add the American Journal of Epidemiology CSL to the YAML using `csl: aje.csl`
+3.  Re-knit
+
+We calculated the average treatment effect using g-computation \_\_\_\_\_\_\_\_.
+
+# Take aways
+
+-   R Markdown has simple syntax that's easy to use
+-   Your analysis and narrative are easy to intertwine in R Markdown
+-   You can re-run your analysis with different inputs and outputs
+-   Code chunks provide a variety of options to change the resulting report
+-   Use YAML to set options for R Markdown
+-   R Markdown supports a powerful citation system. Find more CSL styles at <https://github.com/citation-style-language/styles>

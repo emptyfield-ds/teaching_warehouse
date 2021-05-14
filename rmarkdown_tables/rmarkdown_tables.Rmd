@@ -1,0 +1,61 @@
+---
+title: "Dynamic documents in R"
+subtitle: "Making tables in R Markdown"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: false
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+library(tidyverse)
+library(gapminder)
+library(here)
+```
+
+
+---
+
+background-image: url(img/gtsummary.png)
+background-position: 93% 10%
+
+## *gtsummary*
+
+<br><br><br>
+
+--
+
+## point 1
+
+--
+
+## point 2
+
+--
+
+## point 3
+
+---
+
+# Output formats
+
+```{r, out.width="70%", echo=FALSE}
+knitr::include_graphics("img/supported_formats.png")
+```
+
+
+---
+
+class: inverse, center
+
+# Resources
+## [R Markdown Cookbook: Tables](https://bookdown.org/yihui/rmarkdown-cookbook/tables.html): A series of recipes using `kable()` and friends 
+## [gtsummary Website](http://www.danieldsjoberg.com/gtsummary): Many vignettes to learn more about gtsummary
+## [gt Website](https://gt.rstudio.com/): Vignettes and a short course on learning gt
