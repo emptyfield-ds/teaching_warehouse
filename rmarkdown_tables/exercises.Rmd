@@ -15,7 +15,7 @@ library(knitr)
 
 ## Your Turn 1
 
-1. Using Visual R Markdown, create a markdown table that represents these data: 
+1. Using Visual R Markdown, create a markdown table that represents these data: The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspiring, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.
 2. Knit
 
 ## Your Turn 2
