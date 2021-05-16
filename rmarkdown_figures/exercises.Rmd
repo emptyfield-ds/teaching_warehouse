@@ -1,0 +1,115 @@
+---
+title: "Reproduce Reports: figures"
+output: 
+  html_document:
+    self_contained: false
+---
+
+## Your Turn 1
+
+1. Using the chunk option defaults we discussed, set the global chunk options using `knitr::opts_chunk$set()`
+2. Knit this document, and take a look at the first three figures. Do you like how they look?
+3. Modify `fig.width` for each chunk until you're satisfied
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(gapminder)
+library(patchwork)
+diabetes <- read_csv("diabetes.csv") %>% 
+  mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
+
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  dev = "ragg_png",
+  fig.width = 6,
+  fig.asp = 0.618,
+  fig.retina = 2,
+  fig.align = "center",
+  dpi = 320,
+  fig.show = "hold",
+  fig.path = here::here("figures/figure-")
+)
+```
+
+```{r gapminder, fig.cap="A lineplot of life expectancy over time by country"}
+library(ggplot2)
+
+ggplot(gapminder, aes(year, lifeExp, color = country)) + 
+  geom_line() + 
+  scale_color_manual(values = country_colors) +
+  theme_minimal(14) +
+  theme(legend.position = "none") +
+  labs(
+    x = "",
+    y = "Life expectancy"
+  )
+```
+
+---
+
+```{r ggdag, fig.cap="A causal diagram illustrating butterfly bias"}
+library(ggdag, warn.conflicts = FALSE)
+ggdag(butterfly_bias()) + 
+  theme_dag() + 
+  scale_x_continuous(expand = expansion(.3)) + 
+  scale_y_continuous(expand = expansion(.3))
+```
+
+```{r diabetes, fig.cap = "Understanding the relationship between diabetes and hip/waist ratio"}
+fig1a <- diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(ratio, glyhb)) + 
+  geom_point(shape = 21, fill = "grey80", color = "white", size = 2) + 
+  geom_smooth(
+    size = 1, 
+    color = "steelblue", 
+    se = FALSE, 
+    method = "lm", 
+    formula = y ~ x
+  ) + 
+  scale_x_log10() +
+  theme_minimal(14) +
+  labs(
+    x = "Hip/waist ratio",
+    y = "Hemoglobin A1c",
+    tag = "A"
+  )
+
+fig1b <- diabetes %>% 
+  drop_na() %>% 
+  mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) %>% 
+ggplot(aes(ratio, fill = diabetic)) + 
+  geom_density(color = "white", alpha = .8) +
+  theme_minimal(14) +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  ) +
+  labs(x = "Hip/waist ratio", tag = "B") +
+  scale_fill_manual(values = c("steelblue", "firebrick"))
+
+fig1a + fig1b
+```
+
+
+## Your Turn 2
+
+## Your Turn 3
+
+## Your Turn 4
+
+1. Include `img/r_rollercoaster.png` in the code chunk below. 
+2. Set `fig.alt` describing the image
+3. Knit
+
+```{r}
+
+```
+
+
+---
+
+# Take aways
+
+
+- 
