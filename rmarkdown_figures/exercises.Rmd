@@ -1,0 +1,124 @@
+---
+title: "Reproduce Reports: figures"
+output: html_document
+---
+
+## Your Turn 1
+
+1.  Using the chunk option defaults we discussed, set the global chunk options using `knitr::opts_chunk$set()`
+2.  Knit this document, and take a look at the first three figures. Do you like how they look?
+3.  Modify `fig.width` for each chunk until you're satisfied
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggdag, warn.conflicts = FALSE)
+library(gapminder)
+library(patchwork)
+diabetes <- read_csv("diabetes.csv") %>% 
+  mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
+
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  dev = "ragg_png",
+  fig.width = 6,
+  fig.asp = 0.618,
+  fig.retina = 2,
+  fig.align = "center",
+  dpi = 320,
+  fig.show = "hold",
+  fig.path = here::here("figures/figure-"), 
+  out.width = "80%"
+)
+```
+
+```{r gapminder, fig.cap="A lineplot of life expectancy over time by country"}
+ggplot(gapminder, aes(year, lifeExp, color = country)) + 
+  geom_line() + 
+  scale_color_manual(values = country_colors) +
+  theme_minimal(14) +
+  theme(legend.position = "none") +
+  labs(
+    x = "",
+    y = "Life expectancy"
+  )
+```
+
+```{r ggdag, fig.cap="A causal diagram illustrating butterfly bias"}
+ggdag(butterfly_bias()) + 
+  theme_dag()
+```
+
+```{r diabetes, fig.cap = "Understanding the relationship between diabetes and hip/waist ratio"}
+fig1a <- diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(ratio, glyhb)) + 
+  geom_point(shape = 21, fill = "grey80", color = "white", size = 2) + 
+  geom_smooth(
+    size = 1, 
+    color = "steelblue", 
+    se = FALSE, 
+    method = "lm", 
+    formula = y ~ x
+  ) + 
+  scale_x_log10() +
+  theme_minimal(14) +
+  labs(
+    x = "Hip/waist ratio",
+    y = "Hemoglobin A1c",
+    tag = "A"
+  )
+
+fig1b <- diabetes %>% 
+  drop_na() %>% 
+  mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) %>% 
+ggplot(aes(ratio, fill = diabetic)) + 
+  geom_density(color = "white", alpha = .8) +
+  theme_minimal(14) +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  ) +
+  labs(x = "Hip/waist ratio", tag = "B") +
+  scale_fill_manual(values = c("steelblue", "firebrick"))
+
+fig1a + fig1b
+```
+
+## Your Turn 2
+
+1.  Load the here package in the setup chunk. In the setup chunk, globally set `fig.path` to "figures/figure-" using `here()`. This will tell knitr to create figures in the "figures" folder with a prefix of "figures-".
+2.  Knit this document and take a look at the images in the `figures` folder.
+
+## Your Turn 3
+
+1.  Change the output type to use bookdown and cross-reference one of the figures above.
+
+<!-- Describe a figure below! -->
+
+<!-- These are HTML comments, by the way. R Markdown ignores them! -->
+
+## Your Turn 4
+
+1.  Include `img/r_rollercoaster.png` in the code chunk below.
+2.  Knit
+3.  Let's change a few chunk options:
+
+-   Add a chunk name
+-   Set `fig.alt` describing the image
+-   Modify `out.width` to use a different percentage than the default.
+
+4.  Knit again
+
+```{r}
+
+```
+
+------------------------------------------------------------------------
+
+# Take aways
+
+-   Getting figures to output exactly as you want is iterative, but a few sensible defaults can help
+-   When you use the suggested defaults, leverage `fig.width` to scale text and line size
+-   `ggsave()` and `ragg::agg_png()` also have scaling options
+-   ragg helps make crisper, more consistent plots across operating systems. Set it as your default in knitr with the chunk option `dev = "ragg_png"` and in the RStudio Viewer via `Tools > Global Options > Graphics > Backend > AGG`
+-   Use `knitr::include_graphics()` to include external graphics
