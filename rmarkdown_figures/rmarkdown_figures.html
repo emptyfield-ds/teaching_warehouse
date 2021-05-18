@@ -1,44 +1,30 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Dynamic documents in R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-05-17" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Dynamic documents in R
+## Making figures in R Markdown
+### 2021-05-17
+
 ---
-title: "Dynamic documents in R"
-subtitle: "Making figures in R Markdown"
-date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
----
+
 
 class: center, middle
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
-knitr::opts_chunk$set(
-  warning = FALSE, 
-  message = FALSE, 
-  dev = "ragg_png",
-  dpi = 320,
-  out.width = "80%",
-  fig.width = 6,
-  fig.asp = 0.618,
-  fig.retina = 2,
-  fig.align = "center",
-  fig.show = "hold"
-)
-
-library(tidyverse)
-library(gapminder)
-library(here)
-diabetes <- read_csv("diabetes.csv")
-```
 
 
-```{r, out.width="100%", echo=FALSE}
-knitr::include_graphics("img/rstudiovrmd.png")
-```
+
+&lt;img src="img/rstudiovrmd.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -46,7 +32,7 @@ knitr::include_graphics("img/rstudiovrmd.png")
 
 ### **Absolute size**: physical dimensions (inches, cm, etc)
 ### **Pixel size**: no inherent size!
-### **Resolution**: pixels per inch (ppi) or dots per inch (dpi); links absolute & pixel size
+### **Resolution**: pixels per inch (ppi) or dots per inch (dpi); links absolute &amp; pixel size
 ### **Pointsize**: absolute text size (1 pt = 1/72 inch)
 ### **Plot theming and aesthetics**: choices about text size, line size, margins, and so on.
 
@@ -70,25 +56,22 @@ See all of them at http://yihui.name/knitr/options/
 
 ## Tweaking figure options
 
-```{r, out.width="70%", echo=FALSE}
-knitr::include_graphics("https://media.giphy.com/media/kFuavIYvRQZGg/giphy.gif")
-```
+&lt;img src="https://media.giphy.com/media/kFuavIYvRQZGg/giphy.gif" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Getting a figure to look good in RStudio, Word, and slides
 
-```{r, out.width="50%", echo=FALSE}
-knitr::include_graphics("https://media.giphy.com/media/B2FBiUjiYiSMzJzmlL/giphy.gif")
-```
+&lt;img src="https://media.giphy.com/media/B2FBiUjiYiSMzJzmlL/giphy.gif" width="50%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
 ## A few reasonable defaults
 
-```{r, eval=FALSE}
-knitr::opts_chunk$set( #<<
+
+```r
+*knitr::opts_chunk$set(
   echo = FALSE, 
   dev = "ragg_png",
   dpi = 320, 
@@ -107,14 +90,15 @@ knitr::opts_chunk$set( #<<
 
 ## A few reasonable defaults
 
-```{r, eval=FALSE}
+
+```r
 knitr::opts_chunk$set(
   echo = FALSE, 
   dev = "ragg_png",
   dpi = 320, 
   out.width = "80%",
-  fig.width = 6, #<<
-  fig.asp = 0.618, #<<
+* fig.width = 6,
+* fig.asp = 0.618,
   fig.retina = 2,
   fig.align = "center",
   fig.show = "hold"
@@ -127,15 +111,16 @@ knitr::opts_chunk$set(
 
 ## A few reasonable defaults
 
-```{r, eval=FALSE}
+
+```r
 knitr::opts_chunk$set(
   echo = FALSE, 
   dev = "ragg_png",
-  dpi = 320, #<<
+* dpi = 320,
   out.width = "80%",
   fig.width = 6,
   fig.asp = 0.618,
-  fig.retina = 2, #<<
+* fig.retina = 2,
   fig.align = "center",
   fig.show = "hold"
 )
@@ -147,17 +132,18 @@ knitr::opts_chunk$set(
 
 ## A few reasonable defaults
 
-```{r, eval=FALSE}
+
+```r
 knitr::opts_chunk$set(
   echo = FALSE, 
   dev = "ragg_png",
   dpi = 320, 
-  out.width = "80%", #<<
+* out.width = "80%",
   fig.width = 6,
   fig.asp = 0.618,
   fig.retina = 2,
-  fig.align = "center", #<<
-  fig.show = "hold" #<<
+* fig.align = "center",
+* fig.show = "hold"
 )
 ```
 
@@ -167,7 +153,8 @@ knitr::opts_chunk$set(
 
 ## Plot scaling
 
-```{r, eval = FALSE}
+
+```r
 ggplot(mpg, aes(displ, hwy)) + geom_point()
 ```
 
@@ -177,28 +164,20 @@ class: center, middle
 
 .pull-left[
 ### `figure.width = 4`
-```{r, fig.width = 4, echo = FALSE}
-ggplot(mpg, aes(displ, hwy)) + geom_point()
-```
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 
 ### `figure.width = 8`
 
-```{r, fig.width = 8, echo = FALSE}
-ggplot(mpg, aes(displ, hwy)) + geom_point()
-```
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 ### `figure.width = 6`
-```{r, fig.width = 6, echo = FALSE}
-ggplot(mpg, aes(displ, hwy)) + geom_point()
-```
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ### `figure.width = 10`
-```{r, fig.width = 10, echo = FALSE}
-ggplot(mpg, aes(displ, hwy)) + geom_point()
-```
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -214,10 +193,11 @@ ggplot(mpg, aes(displ, hwy)) + geom_point()
 
 ## A few reasonable defaults
 
-```{r, eval=FALSE}
+
+```r
 knitr::opts_chunk$set(
   echo = FALSE, 
-  dev = "ragg_png", #<<
+* dev = "ragg_png",
   dpi = 320, 
   out.width = "80%", 
   fig.width = 6,
@@ -246,7 +226,7 @@ background-size: 200px 200px
 
 ## ragg: AGG Graphic Devices
 
-<br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
 ## *Faster than grDevices or Cairo*
 
@@ -258,7 +238,7 @@ background-size: 200px 200px
 
 ## ragg: AGG Graphic Devices
 
-<br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
 ## ~~Faster than grDevices or Cairo~~
 ## *Better system font access and text rendering*
@@ -271,7 +251,7 @@ background-size: 200px 200px
 
 ## ragg: AGG Graphic Devices
 
-<br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
 ## ~~Faster than grDevices or Cairo~~
 ## ~~Better system font access and text rendering~~
@@ -281,9 +261,7 @@ background-size: 200px 200px
 
 ## Setting ragg as your default in RStudio
 
-```{r, out.width="90%", echo=FALSE}
-knitr::include_graphics("img/ragg_rstudio.png")
-```
+&lt;img src="img/ragg_rstudio.png" width="90%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -327,45 +305,37 @@ class: middle, center
 
 ## Clipping (`fig.width = 4`)
 
-```{r, fig.width=4, echo = FALSE}
-library(ggdag, warn.conflicts = FALSE)
-ggdag(butterfly_bias()) + 
-  theme_dag()
-```
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-```{r, fig.width=4, eval=FALSE}
+
+```r
 library(ggdag, warn.conflicts = FALSE)
 ggdag(butterfly_bias()) + 
   theme_dag() + 
-  scale_x_continuous(expand = expansion(.2)) + #<<
-  scale_y_continuous(expand = expansion(.2)) #<<
+* scale_x_continuous(expand = expansion(.2)) +
+* scale_y_continuous(expand = expansion(.2))
 ```
 
 ---
 
 class: middle
 
-```{r, fig.width=4, echo=FALSE}
-library(ggdag, warn.conflicts = FALSE)
-ggdag(butterfly_bias()) + 
-  theme_dag() + 
-  scale_x_continuous(expand = expansion(.2)) +  
-  scale_y_continuous(expand = expansion(.2)) 
-```
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 .small[
-```{r}
-p <- gapminder %>% 
-  filter(year == 2007) %>% 
-  slice_max(lifeExp, n = 25) %>% #<<
-  mutate(country = fct_rev(fct_inorder(fct_drop(country)))) %>% 
+
+```r
+p &lt;- gapminder %&gt;% 
+  filter(year == 2007) %&gt;% 
+* slice_max(lifeExp, n = 25) %&gt;%
+  mutate(country = fct_rev(fct_inorder(fct_drop(country)))) %&gt;% 
   ggplot(aes(lifeExp, country)) +
-  geom_point(size = 3, color = "steelblue") + #<<
-  geom_text(aes(label = country), hjust = 0, nudge_x = .1, size = 3.5) + #<<
+* geom_point(size = 3, color = "steelblue") +
+* geom_text(aes(label = country), hjust = 0, nudge_x = .1, size = 3.5) +
   theme_minimal(16) +
   theme(
     axis.title.y = element_blank(), 
@@ -379,24 +349,33 @@ p <- gapminder %>%
 
 ---
 
-```{r}
+
+```r
 p
 ```
 
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
 ---
 
-```{r}
+
+```r
 p + 
-  xlim(NA, 83) #<<
+* xlim(NA, 83)
 ```
 
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
 ---
 
-```{r}
+
+```r
 p + 
   xlim(NA, 83) + 
-  coord_cartesian(clip = "off") #<<
+* coord_cartesian(clip = "off")
 ```
+
+&lt;img src="rmarkdown_figures_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -413,9 +392,7 @@ p +
 
 ---
 
-```{r, out.width="80%", echo=FALSE}
-knitr::include_graphics("img/here.png")
-```
+&lt;img src="img/here.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -441,13 +418,13 @@ knitr::include_graphics("img/here.png")
 
 ## *How do I create an RStudio Project again?*
 
-## In RStudio: *`File > New Project`*
+## In RStudio: *`File &gt; New Project`*
 
 ---
 
 ## *How do I create an RStudio Project again?*
 
-## ~~In RStudio: `File > New Project`~~
+## ~~In RStudio: `File &gt; New Project`~~
 ## Or, in the console: *`usethis::create_project("path/to/project")`*
 
 ---
@@ -573,9 +550,7 @@ my_project
 
 ## Including external images
 
-```{r, out.width="50%", echo = FALSE}
-knitr::include_graphics("img/vrmd_img.png")
-```
+&lt;img src="img/vrmd_img.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -599,3 +574,126 @@ class: inverse, center
 ## [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/): Includes various recipes for figures
 ## [Jumping Rivers Blog Series](https://www.jumpingrivers.com/blog/knitr-rmarkdown-image-size/): A blog series on images in R Markdown
 ## [Taking Control of Plot Scaling](https://www.tidyverse.org/blog/2020/08/taking-control-of-plot-scaling): A detailed blog on understanding scaling
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,18 +1,17 @@
 ---
 title: "Reproduce Reports: figures"
-output: 
-  html_document:
-    self_contained: false
+output: html_document
 ---
 
 ## Your Turn 1
 
-1. Using the chunk option defaults we discussed, set the global chunk options using `knitr::opts_chunk$set()`
-2. Knit this document, and take a look at the first three figures. Do you like how they look?
-3. Modify `fig.width` for each chunk until you're satisfied
+1.  Using the chunk option defaults we discussed, set the global chunk options using `knitr::opts_chunk$set()`
+2.  Knit this document, and take a look at the first three figures. Do you like how they look?
+3.  Modify `fig.width` for each chunk until you're satisfied
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(ggdag, warn.conflicts = FALSE)
 library(gapminder)
 library(patchwork)
 diabetes <- read_csv("diabetes.csv") %>% 
@@ -27,13 +26,12 @@ knitr::opts_chunk$set(
   fig.align = "center",
   dpi = 320,
   fig.show = "hold",
-  fig.path = here::here("figures/figure-")
+  fig.path = here::here("figures/figure-"), 
+  out.width = "80%"
 )
 ```
 
 ```{r gapminder, fig.cap="A lineplot of life expectancy over time by country"}
-library(ggplot2)
-
 ggplot(gapminder, aes(year, lifeExp, color = country)) + 
   geom_line() + 
   scale_color_manual(values = country_colors) +
@@ -45,14 +43,9 @@ ggplot(gapminder, aes(year, lifeExp, color = country)) +
   )
 ```
 
----
-
 ```{r ggdag, fig.cap="A causal diagram illustrating butterfly bias"}
-library(ggdag, warn.conflicts = FALSE)
 ggdag(butterfly_bias()) + 
-  theme_dag() + 
-  scale_x_continuous(expand = expansion(.3)) + 
-  scale_y_continuous(expand = expansion(.3))
+  theme_dag()
 ```
 
 ```{r diabetes, fig.cap = "Understanding the relationship between diabetes and hip/waist ratio"}
@@ -91,25 +84,41 @@ ggplot(aes(ratio, fill = diabetic)) +
 fig1a + fig1b
 ```
 
-
 ## Your Turn 2
+
+1.  Load the here package in the setup chunk. In the setup chunk, globally set `fig.path` to "figures/figure-" using `here()`. This will tell knitr to create figures in the "figures" folder with a prefix of "figures-".
+2.  Knit this document and take a look at the images in the `figures` folder.
 
 ## Your Turn 3
 
+1.  Change the output type to use bookdown and cross-reference one of the figures above.
+
+<!-- Describe a figure below! -->
+
+<!-- These are HTML comments, by the way. R Markdown ignores them! -->
+
 ## Your Turn 4
 
-1. Include `img/r_rollercoaster.png` in the code chunk below. 
-2. Set `fig.alt` describing the image
-3. Knit
+1.  Include `img/r_rollercoaster.png` in the code chunk below.
+2.  Knit
+3.  Let's change a few chunk options:
+
+-   Add a chunk name
+-   Set `fig.alt` describing the image
+-   Modify `out.width` to use a different percentage than the default.
+
+4.  Knit again
 
 ```{r}
 
 ```
 
-
----
+------------------------------------------------------------------------
 
 # Take aways
 
-
-- 
+-   Getting figures to output exactly as you want is iterative, but a few sensible defaults can help
+-   When you use the suggested defaults, leverage `fig.width` to scale text and line size
+-   `ggsave()` and `ragg::agg_png()` also have scaling options
+-   ragg helps make crisper, more consistent plots across operating systems. Set it as your default in knitr with the chunk option `dev = "ragg_png"` and in the RStudio Viewer via `Tools > Global Options > Graphics > Backend > AGG`
+-   Use `knitr::include_graphics()` to include external graphics
