@@ -325,7 +325,7 @@ class: inverse
 
 class: middle, center
 
-## Clipping (`fig.width = 4`)
+## Expanding scales (`fig.width = 4`)
 
 ```{r, fig.width=4, echo = FALSE}
 library(ggdag, warn.conflicts = FALSE)
@@ -402,6 +402,8 @@ p +
 
 ## Specify where R Markdown writes figures
 
+--
+
 ## *`fig.path = "folder/prefix-"`*
 
 ---
@@ -467,11 +469,6 @@ my_project
 ```
 ]
 
---
-
-## *`source("../R/read_data.R")`*
-## *`read_csv("data/data.csv")`*
-## *`ggsave("../figures/figure1.png")`*
 ---
 
 .large[
@@ -482,9 +479,28 @@ my_project
 |-- figures
     |-- figure1.png
 |-- reports
-    |-- manuscript.Rmd
+*   |-- manuscript.Rmd
 |-- R
-    |-- read_data.R
+*   |-- read_data.R
+|-- my_project.Rproj
+```
+]
+
+## *`source("../R/read_data.R")`*
+## *`read_csv("data/data.csv")`*
+## *`ggsave("../figures/figure1.png")`*
+---
+.large[
+```
+my_project
+|-- data
+    |-- data.csv
+|-- figures
+    |-- figure1.png
+|-- reports
+*   |-- manuscript.Rmd
+|-- R
+*   |-- read_data.R
 |-- my_project.Rproj
 ```
 ]
