@@ -3,7 +3,7 @@
   <head>
     <title>Code pipelines in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-05-18" />
+    <meta name="date" content="2021-05-19" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Code pipelines in R
 ## Managing code with targets
-### 2021-05-18
+### 2021-05-19
 
 ---
 
@@ -578,6 +578,15 @@ tar_outdated()
 
 ---
 
+
+```r
+tar_read(plot)
+```
+
+&lt;img src="targets_basics_files/figure-html/unnamed-chunk-37-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
 ## Your Turn 3
 
 ### Change `diabetes_file` to use `diabetes.csv` instead
@@ -585,6 +594,41 @@ tar_outdated()
 ### Predict which targets are going to re-run, then run `tar_make()`. Were you right?
 ### Confirm that `diabetes` has changed by looking at it with `tar_read()`
 
+
+---
+
+## Building up your pipeline
+
+--
+
+## *Good targets are meaningful units of your analysis or important dependencies like files*
+
+---
+
+## Building up your pipeline
+
+
+## ~~Good targets are meaningful units of your analysis or important dependencies like files~~
+## *Add one or two targets at a time*
+
+---
+
+## Building up your pipeline
+
+
+## ~~Good targets are meaningful units of your analysis or important dependencies like files~~
+## ~~Add one or two targets at a time~~
+## *Run `tar_make()` and `tar_visnetwork()` often*
+
+---
+
+## Building up your pipeline
+
+
+## ~~Good targets are meaningful units of your analysis or important dependencies like files~~
+## ~~Add one or two targets at a time~~
+## ~~Run `tar_make()` and `tar_visnetwork()` often~~
+## *Load all targets: `tar_load(everything())`*
 
 ---
 

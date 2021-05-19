@@ -606,6 +606,23 @@ tar_outdated()
 
 ---
 
+```{r, eval = FALSE}
+tar_read(plot)
+```
+
+```{r, echo = FALSE}
+gapminder %>%
+  filter(continent != "Oceania") %>%
+  ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+  geom_line(lwd = 1, show.legend = FALSE) +
+    scale_color_manual(values = country_colors) +
+  facet_wrap(~ continent) +
+  theme_minimal(14) +
+  theme(strip.text = element_text(size = rel(1.1)))
+```
+
+---
+
 ## Your Turn 3
 
 ### Change `diabetes_file` to use `diabetes.csv` instead
@@ -613,6 +630,41 @@ tar_outdated()
 ### Predict which targets are going to re-run, then run `tar_make()`. Were you right?
 ### Confirm that `diabetes` has changed by looking at it with `tar_read()`
 
+
+---
+
+## Building up your pipeline
+
+--
+
+## *Good targets are meaningful units of your analysis or important dependencies like files*
+
+---
+
+## Building up your pipeline
+
+
+## ~~Good targets are meaningful units of your analysis or important dependencies like files~~
+## *Add one or two targets at a time*
+
+---
+
+## Building up your pipeline
+
+
+## ~~Good targets are meaningful units of your analysis or important dependencies like files~~
+## ~~Add one or two targets at a time~~
+## *Run `tar_make()` and `tar_visnetwork()` often*
+
+---
+
+## Building up your pipeline
+
+
+## ~~Good targets are meaningful units of your analysis or important dependencies like files~~
+## ~~Add one or two targets at a time~~
+## ~~Run `tar_make()` and `tar_visnetwork()` often~~
+## *Load all targets: `tar_load(everything())`*
 
 ---
 
