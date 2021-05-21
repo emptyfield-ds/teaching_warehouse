@@ -37,9 +37,10 @@ rmarkdown_tables
 └── theme.css
 ```
 
-- [ ] These slides have already been created
+- [x] slides have already been created
 
-- [ ]
+- [x] `diabetes` data description  
+  * I took this from the `rmarkdown_whole_game` file, "*These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans.*
 
 - [ ]
 

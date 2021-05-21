@@ -3,7 +3,7 @@
   <head>
     <title>Dynamic documents in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-05-14" />
+    <meta name="date" content="2021-05-21" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Dynamic documents in R
 ## Making tables in R Markdown
-### 2021-05-14
+### 2021-05-21
 
 ---
 
@@ -22,36 +22,1073 @@ class: center, middle, inverse, title-slide
 
 
 
----
 
-background-image: url(img/gtsummary.png)
+
+background-image: url(img/rmarkdown.png)
 background-position: 93% 10%
+background-size: 8%
 
-## *gtsummary*
+## *RMarkdown* (refresher):
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 
---
-
-## point 1
-
---
-
-## point 2
-
---
-
-## point 3
+### Authoring framework: code and text in same document
+### Reproducible: re-run your analysis
+### Flexible: Output to different formats easily
 
 ---
+background-image: url(img/rmarkdown.png)
+background-position: 93% 10%
+background-size: 8%
+class: left, top
+
+# Visual RMarkdown 
+
+## Edit RMarkdown files using either source or _visual mode_
+
+.pull-left[
+
+### - Click on visual icon
+
+]
+
+.pull-right[
+
+&lt;img src="img/visual-icon.png" width="30%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+]
+
+&lt;br&gt;
+
+### - Or keyboard shortcut `Cmd/Ctrl+Shift+F4`
+
+---
+background-image: url(img/rmarkdown.png)
+background-position: 93% 10%
+background-size: 8%
+class: left, top
+
+# *When to use tables/graphs?*
+
+--
+
+.pull-left[
+
+### - Graphs: _numerical information in visual display_
+
+&lt;img src="img/ggplot2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+### - Tables: _make it easy to look up values_
+
+&lt;img src="img/table.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+background-image: url(img/rmarkdown.png)
+background-position: 93% 10%
+background-size: 8%
+class: left, top
+
+# The `diabetes` data 
+
+&lt;br&gt;
+
+The `diabetes` data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans.
+
+
+```r
+head(diabetes)
+```
+
+```
+## # A tibble: 6 x 19
+##      id  chol stab.glu   hdl ratio glyhb location     age
+##   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+## 1  1000   203       82    56  3.60  4.31 Buckingham    46
+## 2  1001   165       97    24  6.90  4.44 Buckingham    29
+## 3  1002   228       92    37  6.20  4.64 Buckingham    58
+## 4  1003    78       93    12  6.5   4.63 Buckingham    67
+## 5  1005   249       90    28  8.90  7.72 Buckingham    64
+## 6  1008   248       94    69  3.60  4.81 Buckingham    34
+## # … with 11 more variables: gender &lt;chr&gt;, height &lt;dbl&gt;,
+## #   weight &lt;dbl&gt;, frame &lt;chr&gt;, bp.1s &lt;dbl&gt;, bp.1d &lt;dbl&gt;, …
+```
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+## *Descriptive statistics table*
+
+### Create a table with descriptive statistics 
+
+
+```r
+descriptives &lt;- diabetes %&gt;% 
+  # remove missing 
+  filter(!is.na(glyhb)) %&gt;% 
+  mutate(
+    # create diabetic category based on A1c
+    diabetic = case_when(
+      glyhb &gt;= 6.5 ~ "Diabetic", glyhb &lt; 6.5 ~ "Healthy", 
+      NA ~ NA_character_), 
+    # calculate bmi
+    bmi = (weight / height^2) * 703) %&gt;% 
+  # group by new variable 
+  group_by(diabetic) %&gt;% 
+  # get average A1c, BMI, and age 
+  summarise(n = n(), across(c(glyhb, bmi, age), mean, na.rm = TRUE))
+```
+
+#### See [dplyr slides](https://master-r-epi.netlify.app/02-dplyr_5verbs/dplyr_5verbs.html#1) 
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+# Descriptive statistics table
+
+### View `descriptives` 
+
+
+```r
+descriptives
+```
+
+```
+## # A tibble: 2 x 5
+##   diabetic     n glyhb   bmi   age
+##   &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Diabetic    65  9.89  30.8  58.4
+## 2 Healthy    325  4.73  28.4  44.4
+```
+
+### - Standard `tibble` display 
+
+### - Useful in console, but not for reports or presentation
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+# `knitr::kable()`
+
+&lt;br&gt;
+
+### - the `kable()` function creates formatted tables from rectangular objects (data.frames, matrices, and tibbles)
+
+### - Formats include `pipe` ('`|`'), HTML (`html`), LaTeX (`latex`), and reStructuredText (`rst`)
+
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+# `knitr::kable("simple")`
+
+### Simple format 
+
+
+```r
+knitr::kable(x = descriptives, format = "simple")
+diabetic      n      glyhb        bmi        age 
+*---------  ----  ---------  ---------  ---------
+Diabetic     65   9.886615   30.80235   58.43077
+Healthy     325   4.730400   28.38114   44.44308
+```
+
+### - Introduces header (`---`) 
+
+### - First column is left-aligned
+
+### - Following columns are right-aligned
+
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+# `knitr::kable("pipe")`
+
+### pipe format 
+
+
+```r
+knitr::kable(x = descriptives, format = "pipe")
+|diabetic |   n|    glyhb|      bmi|      age|
+*|:--------|---:|--------:|--------:|--------:|
+|Diabetic |  65| 9.886615| 30.80235| 58.43077|
+|Healthy  | 325| 4.730400| 28.38114| 44.44308|
+```
+
+### - Similar to `"simple"` (different header)
+
+### - Both `"simple"` and `"pipe"` work in most output document formats
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+## *`knitr::kable()`: column names*
+
+&lt;br&gt;
+
+### Change column names with `col.names`
+
+&lt;br&gt;
+
+
+```r
+kable(x = descriptives, format = "pipe", 
+      col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age"))
+
+*|Diabetes Status |   N|      A1c|      BMI|      Age|
+|:---------------|---:|--------:|--------:|--------:|
+|Diabetic        |  65| 9.886615| 30.80235| 58.43077|
+|Healthy         | 325| 4.730400| 28.38114| 44.44308|
+```
+
+
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+## *`knitr::kable()`: add caption*
+
+&lt;br&gt;
+
+### Add caption with `caption`
+
+&lt;br&gt;
+
+
+```r
+kable(x = descriptives, format = "pipe", 
+      caption = c("Diabetes status count; average A1c, BMI &amp; Age "))
+
+*Table: Diabetes status count; average A1c, BMI &amp; Age
+
+|diabetic |   n|    glyhb|      bmi|      age|
+|:--------|---:|--------:|--------:|--------:|
+|Diabetic |  65| 9.886615| 30.80235| 58.43077|
+|Healthy  | 325| 4.730400| 28.38114| 44.44308|
+```
+
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+## *`knitr::kable()`: number format*
+
+&lt;br&gt;
+
+### Use `digits` for decimal place 
+
+&lt;br&gt;
+
+
+```r
+kable(x = descriptives, format = "pipe", digits =  1)
+
+|diabetic |   n| glyhb|  bmi|  age| 
+|:--------|---:|-----:|----:|----:|
+*|Diabetic |  65|   9.9| 30.8| 58.4|
+*|Healthy  | 325|   4.7| 28.4| 44.4|
+```
+
+
+---
+background-image: url(img/knitr.png)
+background-position: 93% 10%
+background-size: 8%
+
+# Other `knitr::kable()` formats
+
+### reStructuredText format
+
+
+```r
+knitr::kable(x = descriptives, format = "rst")
+*========  ===  ========  ========  ========
+diabetic    n     glyhb       bmi       age
+*========  ===  ========  ========  ========
+Diabetic   65  9.886615  30.80235  58.43077
+Healthy   325  4.730400  28.38114  44.44308
+*========  ===  ========  ========  ========
+```
+
+### - `"rst"` is not as portable as `"simple"` or `"pipe"`  
+
+### - Read more about `html` and `latex` formats  [here](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html)
+
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 93% 10%
+background-size: 20%
+
+# *gtsummary*
+
+&lt;br&gt;&lt;br&gt;
+
+--
+
+## - Built on the larger [`gt` package](https://gt.rstudio.com/index.html) 
+
+--
+
+## - Designed to "*&lt;i&gt;create publication-ready analytical and summary tables&lt;/i&gt;*" 
+
+--
+
+## - `tbl_summary()` function contains lots of argument options!
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 8%
+background-size: 12%
+
+# `tbl_summary()`: basic use
+
+
+```r
+library(gtsummary)
+d2 &lt;- diabetes %&gt;% select(diabetic, age, gender, bmi) 
+d2 %&gt;% tbl_summary()
+```
+
+
+
+&lt;img src="img/tbl_summary-basic.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 8%
+background-size: 12%
+
+# `tbl_summary()`: basic use
+
+.pull-left[
+
+### Adds header 
+
+### *Characteristic* = variable
+
+### *N* = `nrow(diabetes)`
+
+]
+
+.pull-right[
+
+&lt;img src="img/tbl_summary-header.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 8%
+background-size: 12%
+
+# `tbl_summary()`: basic use
+
+.pull-left[
+
+&lt;br&gt;&lt;br&gt;
+
+### Missing = *UNKNOWN* 
+
+]
+
+.pull-right[
+
+&lt;img src="img/tbl_summary-missing.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 8%
+background-size: 12%
+
+# `tbl_summary()`: basic use
+
+.pull-left[
+
+### Footnote = summary statistics
+
+### Cells contain:
+
+### - *n(%)* = `!is.na(var)`/403
+
+### - *Median* = `median(var)` 
+
+### - *IQR* = `IQR(var)`
+
+]
+
+.pull-right[
+
+&lt;img src="img/tbl_summary-footnote.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 8%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: variable names*
+
+### - `gtsummary` uses the [`labelled` package](https://larmarange.github.io/labelled/index.html)
+
+### - Variable names use the `"label"` attribute
+
+
+```r
+library(labelled) # for var_label()
+var_label(d2$diabetic) &lt;- "Diabetes Status"
+var_label(d2$diabetic)
+```
+
+```
+## [1] "Diabetes Status"
+```
+
+#### Check with `attr()`
+
+
+```r
+attr(d2$diabetic, which = "label")
+```
+
+```
+## [1] "Diabetes Status"
+```
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: variable names*
+
+
+
+.pull-left[
+
+### Set lables and create table
+
+
+```r
+var_label(d2$age) &lt;- "Age"
+var_label(d2$gender) &lt;- "Gender"
+var_label(d2$bmi) &lt;- "BMI"
+d2 %&gt;% 
+  select(diabetic, age, 
+         gender, bmi) %&gt;% 
+  tbl_summary()
+```
+
+]
+
+--
+
+.pull-right[
+
+
+
+&lt;img src="img/tbl_summary-names.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: variable levels*
+
+.pull-left[
+
+### Variable levels are indented 
+
+
+```r
+table(d2$diabetic)
+```
+
+```
+## 
+## Diabetic  Healthy 
+##       65      325
+```
+
+```r
+table(d2$gender)
+```
+
+```
+## 
+## female   male 
+##    234    169
+```
+
+
+
+]
+
+.pull-right[
+
+&lt;img src="img/tbl_summary-levels.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: split by groups*
+
+### Split the summary table by a grouping variable
+
+
+```r
+d2 %&gt;% 
+    select(diabetic, age, gender, bmi) %&gt;% 
+*   tbl_summary(by = diabetic)
+```
+
+&lt;img src="img/tbl_summary-by.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: tests &amp; p-values*
+
+### Add tests and p-values with `add_p()`
+
+
+```r
+d2 %&gt;% 
+    select(diabetic, age, gender, bmi) %&gt;% 
+    tbl_summary(by = diabetic) %&gt;% 
+*   add_p()
+```
+
+&lt;img src="img/tbl_summary-add_p.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: statistics*
+
+### Change summary statistics with `statistic =`
+
+
+```r
+d2 %&gt;% 
+    select(diabetic, age, gender, bmi) %&gt;% 
+    tbl_summary(
+        by = diabetic,
+*       statistic = all_continuous() ~ "{mean} ({sd})")
+```
+
+
+&lt;img src="img/tbl_summary-statistics.png" width="38%" style="display: block; margin: auto;" /&gt;
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: digits*
+
+### Change number formats with `digits =`
+
+
+```r
+d2 %&gt;% 
+    select(diabetic, age, gender, bmi) %&gt;% 
+    tbl_summary(by = diabetic,
+*   digits = all_continuous() ~ 1)
+```
+
+&lt;img src="img/tbl_summary-digits.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_summary()`: missing_text*
+
+### Rename missing values with `missing_text`
+
+
+```r
+d2 %&gt;% 
+    select(diabetic, age, gender, bmi) %&gt;% 
+    tbl_summary(by = diabetic,
+    missing_text = "(Missing)")
+```
+
+
+&lt;img src="img/tbl_summary-missing_text.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## Other *`tbl_summary()` options*
+
+### See the other options with `??tbl_summary()`
+
+<div id="cujnudmsca" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#cujnudmsca .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#cujnudmsca .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#cujnudmsca .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#cujnudmsca .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#cujnudmsca .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#cujnudmsca .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#cujnudmsca .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#cujnudmsca .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cujnudmsca .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cujnudmsca .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#cujnudmsca .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#cujnudmsca .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#cujnudmsca .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#cujnudmsca .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cujnudmsca .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cujnudmsca .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#cujnudmsca .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#cujnudmsca .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cujnudmsca .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#cujnudmsca .gt_left {
+  text-align: left;
+}
+
+#cujnudmsca .gt_center {
+  text-align: center;
+}
+
+#cujnudmsca .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#cujnudmsca .gt_font_normal {
+  font-weight: normal;
+}
+
+#cujnudmsca .gt_font_bold {
+  font-weight: bold;
+}
+
+#cujnudmsca .gt_font_italic {
+  font-style: italic;
+}
+
+#cujnudmsca .gt_super {
+  font-size: 65%;
+}
+
+#cujnudmsca .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Argument</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Description</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>label=</code></p>
+</div></td>
+<td class="gt_row gt_left">specify the variable labels printed in table</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>type=</code></p>
+</div></td>
+<td class="gt_row gt_left">specify the variable type (e.g. continuous, categorical, etc.)</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>statistic=</code></p>
+</div></td>
+<td class="gt_row gt_left">change the summary statistics presented</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>digits=</code></p>
+</div></td>
+<td class="gt_row gt_left">number of digits the summary statistics will be rounded to</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>missing=</code></p>
+</div></td>
+<td class="gt_row gt_left">whether to display a row with the number of missing observations</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>missing_text=</code></p>
+</div></td>
+<td class="gt_row gt_left">text label for the missing number row</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>sort=</code></p>
+</div></td>
+<td class="gt_row gt_left">change the sorting of categorical levels by frequency</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>percent=</code></p>
+</div></td>
+<td class="gt_row gt_left">print column, row, or cell percentages</td></tr>
+    <tr><td class="gt_row gt_left"><div class='gt_from_md'><p><code>include=</code></p>
+</div></td>
+<td class="gt_row gt_left">list of variables to include in summary table</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`*
+
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 8%
+background-size: 12%
 
 # Output formats
+
+&lt;br&gt;
 
 &lt;img src="img/supported_formats.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 
----
 
+
+
+---
 class: inverse, center
 
 # Resources
@@ -63,7 +1100,7 @@ class: inverse, center
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
-"highlightLines": false,
+"highlightLines": true,
 "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
@@ -130,7 +1167,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
