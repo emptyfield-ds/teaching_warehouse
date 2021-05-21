@@ -564,7 +564,9 @@ my_project
 ## ~~A named code chunk (`{r chunk-name}`)~~
 
 ## ~~Reference with `\@ref(fig:chunk-name)`~~
-## Also sets **`fig.alt = fig.cap`**
+## Also sets **`fig.alt = fig.cap`** (See [Writing Alt Text for Data Visualization](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81))
+
+
 
 ---
 
