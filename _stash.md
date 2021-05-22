@@ -8,45 +8,86 @@ From Malcolm:
 
 > Repo location: https://github.com/malcolmbarrett/r_teaching_warehouse/tree/master/rmarkdown_tables
 
-> * You won't have to do a lot of setting up the problem here, as people will have seen a bit on Rmd at this point and appreciate the reproducibility.
+> * [x] You won't have to do a lot of setting up the problem here, as people will have seen a bit on Rmd at this point and appreciate the reproducibility.
 
-> * The exercises first explore markdown tables then `kable()`, but the main focus should be gtsummary
+> * [x] The exercises first explore markdown tables then `kable()`, but the main focus should be gtsummary
 
-> * I think it would be good to include a slide near the end about gt, maybe with the hex sticker, so I can point people to that
+> * [x] I think it would be good to include a slide near the end about gt, maybe with the hex sticker, so I can point people to that
 
-> * I included the diabetes dataset, which I think will be good for slide examples. See the R Markdown whole game folder for a work up of this dataset that uses a couple of `gtsummary` tables
+> * [x] I included the diabetes dataset, which I think will be good for slide examples. See the R Markdown whole game folder for a work up of this dataset that uses a couple of `gtsummary` tables
 
-- `rmarkdown_tables` folder:
+## Outline
 
-```r
-rmarkdown_tables
-├── cheatsheet_rmarkdown-2.0.pdf
-├── cheatsheet_rmarkdown-reference.pdf
-├── diabetes.csv
-├── exercises.Rmd
-├── img
-│   ├── gtsummary.png
-│   └── supported_formats.png
-├── libs
-│   ├── header-attrs
-│   │   └── header-attrs.js
-│   └── remark-css
-│       └── default.css
-├── rmarkdown_tables.Rmd
-├── rmarkdown_tables.html
-└── theme.css
-```
+### "Making tables in R Markdown"
 
-- [x] slides have already been created
+### *RMarkdown* (refresher):
 
-- [x] `diabetes` data description  
-  * I took this from the `rmarkdown_whole_game` file, "*These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans.*
+### Visual RMarkdown 
 
-- [ ]
+### *When to use tables/graphs?*
 
-- [ ]
+### The `diabetes` data 
 
-- [ ]
+###  *Descriptive statistics table*
 
+### View `descriptives` 
 
+### `knitr::kable()`
 
+### `knitr::kable("simple")`
+
+### `knitr::kable("pipe")`
+
+### *`knitr::kable()`: column names*
+
+### *`knitr::kable()`: add caption*
+
+### *`knitr::kable()`: number format*
+
+### Other `knitr::kable()` formats
+
+### *gtsummary*
+
+### `tbl_summary()`: headr
+
+### `tbl_summary()`: missing
+
+### `tbl_summary()`: footnote
+
+### *`tbl_summary()`: variable names*
+
+### *`tbl_summary()`: variable levels*
+
+### *`tbl_summary()`: split by groups*
+
+### *`tbl_summary()`: tests & p-values*
+
+### *`tbl_summary()`: statistics*
+
+### *`tbl_summary()`: digits*
+
+### *`tbl_summary()`: missing_text*
+
+### Other *`tbl_summary()` arguments*
+
+### *`tbl_regression()`: : basic use*
+
+### *`tbl_regression()`: variable labels*
+
+### *`tbl_regression()`: options*
+
+### *`tbl_regression()`: broom::glance()*
+
+### *`tbl_regression()`: add options*
+
+### *`tbl_regression()`: format options*
+
+### *`tbl_regression()`: modify title*
+
+### *`tbl_regression()`: modify options*
+
+### `gtsummary`: Output formats
+
+### Also check out the [`gt` package](https://gt.rstudio.com/)!
+
+### Resources

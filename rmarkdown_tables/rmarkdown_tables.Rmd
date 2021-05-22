@@ -28,11 +28,12 @@ d2 <- diabetes %>%
       NA ~ NA_character_), 
     # calculate bmi
     bmi = (weight / height^2) * 703)
+d3 <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
 ```
 
 ```{r xaringan-inf_mr, echo=FALSE, eval=FALSE, include=FALSE, results='hide'}
 # i just drop this in so I can develop a little faster :) 
-xaringan::inf_mr() # for instant knitting and reviewing
+# xaringan::inf_mr() # for instant knitting and reviewing
 ```
 
 
@@ -90,7 +91,7 @@ class: left, top
 
 ### - Graphs: _numerical information in visual display_
 
-```{r , out.width="70%", echo=FALSE}
+```{r ggplot2.png, out.width="70%", echo=FALSE}
 knitr::include_graphics("img/ggplot2.png")
 ```
 
@@ -166,9 +167,9 @@ background-size: 8%
 descriptives
 ```
 
-### - Standard `tibble` display 
+### Standard `tibble` display 
 
-### - Useful in console, but not for reports or presentation
+### Useful in console, but not for reports or presentation
 
 ---
 background-image: url(img/knitr.png)
@@ -179,9 +180,9 @@ background-size: 8%
 
 <br>
 
-### - the `kable()` function creates formatted tables from rectangular objects (data.frames, matrices, and tibbles)
+### The `kable()` function creates formatted tables from rectangular objects (data.frames, matrices, and tibbles)
 
-### - Formats include `pipe` ('`|`'), HTML (`html`), LaTeX (`latex`), and reStructuredText (`rst`)
+### Formats include `pipe` ('`|`'), HTML (`html`), LaTeX (`latex`), and reStructuredText (`rst`)
 
 
 ---
@@ -193,7 +194,7 @@ background-size: 8%
 
 ### Simple format 
 
-```{r , eval=FALSE}
+```{r kable-simple, eval=FALSE}
 knitr::kable(x = descriptives, format = "simple")
 diabetic      n      glyhb        bmi        age 
 ---------  ----  ---------  ---------  --------- #<<
@@ -201,11 +202,11 @@ Diabetic     65   9.886615   30.80235   58.43077
 Healthy     325   4.730400   28.38114   44.44308
 ```
 
-### - Introduces header (`---`) 
+### Introduces header (`---`) 
 
-### - First column is left-aligned
+### First column is left-aligned
 
-### - Following columns are right-aligned
+### Following columns are right-aligned
 
 
 ---
@@ -217,7 +218,7 @@ background-size: 8%
 
 ### pipe format 
 
-```{r , eval=FALSE}
+```{r kable-pipe, eval=FALSE}
 knitr::kable(x = descriptives, format = "pipe")
 |diabetic |   n|    glyhb|      bmi|      age|
 |:--------|---:|--------:|--------:|--------:| #<<
@@ -225,9 +226,9 @@ knitr::kable(x = descriptives, format = "pipe")
 |Healthy  | 325| 4.730400| 28.38114| 44.44308|
 ```
 
-### - Similar to `"simple"` (different header)
+### Similar to `"simple"` (different header)
 
-### - Both `"simple"` and `"pipe"` work in most output document formats
+### Both `"simple"` and `"pipe"` work in most output document formats
 
 ---
 background-image: url(img/knitr.png)
@@ -242,7 +243,7 @@ background-size: 8%
 
 <br>
 
-```{r , eval=FALSE}
+```{r kable-col.names, eval=FALSE}
 kable(x = descriptives, format = "pipe", 
       col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age"))
 
@@ -267,7 +268,7 @@ background-size: 8%
 
 <br>
 
-```{r , eval=FALSE}
+```{r kable-caption, eval=FALSE}
 kable(x = descriptives, format = "pipe", 
       caption = c("Diabetes status count; average A1c, BMI & Age "))
 
@@ -293,7 +294,7 @@ background-size: 8%
 
 <br>
 
-```{r digits, eval=FALSE}
+```{r kable-digits, eval=FALSE}
 kable(x = descriptives, format = "pipe", digits =  1)
 
 |diabetic |   n| glyhb|  bmi|  age| 
@@ -312,7 +313,7 @@ background-size: 8%
 
 ### reStructuredText format
 
-```{r , eval=FALSE}
+```{r kable-rst, eval=FALSE}
 knitr::kable(x = descriptives, format = "rst")
 ========  ===  ========  ========  ======== #<<
 diabetic    n     glyhb       bmi       age
@@ -322,9 +323,9 @@ Healthy   325  4.730400  28.38114  44.44308
 ========  ===  ========  ========  ======== #<<
 ```
 
-### - `"rst"` is not as portable as `"simple"` or `"pipe"`  
+### `"rst"` is not as portable as `"simple"` or `"pipe"`  
 
-### - Read more about `html` and `latex` formats  [here](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html)
+### Read more about `html` and `latex` formats  [here](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html)
 
 
 
@@ -343,11 +344,13 @@ background-size: 20%
 
 --
 
-## - Designed to "*<i>create publication-ready analytical and summary tables</i>*" 
+## - consistent function names with lots of options (`add_`, `modify_`, `bold_`, etc.)!
 
 --
 
-## - `tbl_summary()` function contains lots of argument options!
+## - Designed to "*<i>create publication-ready analytical and summary tables</i>*"!
+
+
 
 ---
 background-image: url(img/gtsummary.png)
@@ -356,7 +359,7 @@ background-size: 12%
 
 # `tbl_summary()`: basic use
 
-```{r , eval=FALSE, message=FALSE, warning=FALSE}
+```{r baisc-tbl_summary, eval=FALSE, message=FALSE, warning=FALSE}
 library(gtsummary)
 d2 <- diabetes %>% select(diabetic, age, gender, bmi) 
 d2 %>% tbl_summary()
@@ -378,11 +381,11 @@ background-size: 12%
 
 .pull-left[
 
-### Adds header 
+### Automatically adds header: 
 
-### *Characteristic* = variable
+### - *Characteristic* = variable
 
-### *N* = `nrow(diabetes)`
+### - *N* = `nrow(diabetes)`
 
 ]
 
@@ -405,7 +408,7 @@ background-size: 12%
 
 <br><br>
 
-### Missing = *UNKNOWN* 
+### Missing = *Unknown* 
 
 ]
 
@@ -426,9 +429,7 @@ background-size: 12%
 
 .pull-left[
 
-### Footnote = summary statistics
-
-### Cells contain:
+### Footnote lists summary statistics:
 
 ### - *n(%)* = `!is.na(var)`/403
 
@@ -454,9 +455,9 @@ class: left, top
 
 ## *`tbl_summary()`: variable names*
 
-### - `gtsummary` uses the [`labelled` package](https://larmarange.github.io/labelled/index.html)
+### `gtsummary` uses the [`labelled` package](https://larmarange.github.io/labelled/index.html)
 
-### - Variable names use the `"label"` attribute
+#### Variable are named using the `"label"` attribute
 
 ```{r label-vars}
 library(labelled) # for var_label()
@@ -466,7 +467,7 @@ var_label(d2$diabetic)
 
 #### Check with `attr()`
 
-```{r}
+```{r attr-labels}
 attr(d2$diabetic, which = "label")
 ```
 
@@ -479,15 +480,15 @@ class: left, top
 
 ## *`tbl_summary()`: variable names*
 
-```{r , include=FALSE}
+```{r lib-gtsummary, include=FALSE}
 library(gtsummary)
 ```
 
 .pull-left[
 
-### Set lables and create table
+#### Set variable lables and create table
 
-```{r , eval=FALSE}
+```{r tbl_summary-var_label-mult, eval=FALSE}
 var_label(d2$age) <- "Age"
 var_label(d2$gender) <- "Gender"
 var_label(d2$bmi) <- "BMI"
@@ -522,7 +523,7 @@ class: left, top
 
 .pull-left[
 
-### Variable levels are indented 
+#### Variable levels are indented 
 
 ```{r table-diabetic}
 table(d2$diabetic)
@@ -552,7 +553,7 @@ class: left, top
 
 ### Split the summary table by a grouping variable
 
-```{r, eval=FALSE}
+```{r tbl_summary-by, eval=FALSE}
 d2 %>% 
     select(diabetic, age, gender, bmi) %>% 
     tbl_summary(by = diabetic) #<<
@@ -570,9 +571,9 @@ class: left, top
 
 ## *`tbl_summary()`: tests & p-values*
 
-### Add tests and p-values with `add_p()`
+### Add tests and p-values with one function!
 
-```{r , eval=FALSE}
+```{r add_p, eval=FALSE}
 d2 %>% 
     select(diabetic, age, gender, bmi) %>% 
     tbl_summary(by = diabetic) %>% 
@@ -589,20 +590,19 @@ background-position: 95% 6%
 background-size: 12%
 class: left, top
 
-## *`tbl_summary()`: statistics*
+## *`tbl_summary()`: statistic*
 
-### Change summary statistics with `statistic =`
+#### Consistent naming (`all_continuous()`, `all_categorical()`, `all_dichotomous()`, etc.
 
-```{r , eval=FALSE}
+```{r statistic, eval=FALSE}
 d2 %>% 
     select(diabetic, age, gender, bmi) %>% 
-    tbl_summary(
-        by = diabetic,
-        statistic = all_continuous() ~ "{mean} ({sd})") #<<
+    tbl_summary(by = diabetic, 
+                statistic = all_continuous() ~ "{mean} ({sd})") #<<
 ```
 
 
-```{r tbl_summary-statistics.png, out.width="38%", echo=FALSE}
+```{r tbl_summary-statistics.png, out.width="42%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-statistics.png")
 ```
 
@@ -614,16 +614,16 @@ class: left, top
 
 ## *`tbl_summary()`: digits*
 
-### Change number formats with `digits =`
+#### Change number formats with `digits`
 
-```{r , eval=FALSE}
+```{r digits, eval=FALSE}
 d2 %>% 
     select(diabetic, age, gender, bmi) %>% 
     tbl_summary(by = diabetic,
     digits = all_continuous() ~ 1) #<<
 ```
 
-```{r tbl_summary-digits.png, out.width="40%", echo=FALSE}
+```{r tbl_summary-digits.png, out.width="43%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-digits.png")
 ```
 
@@ -636,9 +636,9 @@ class: left, top
 
 ## *`tbl_summary()`: missing_text*
 
-### Rename missing values with `missing_text`
+#### Rename missing value label with `missing_text`
 
-```{r , eval=FALSE}
+```{r missing_text, eval=FALSE}
 d2 %>% 
     select(diabetic, age, gender, bmi) %>% 
     tbl_summary(by = diabetic,
@@ -646,7 +646,7 @@ d2 %>%
 ```
 
 
-```{r tbl_summary-missing_text.png, out.width="40%", echo=FALSE}
+```{r tbl_summary-missing_text.png, out.width="43%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-missing_text.png")
 ```
 
@@ -658,11 +658,11 @@ background-position: 95% 6%
 background-size: 12%
 class: left, top
 
-## Other *`tbl_summary()` options*
+## Other *`tbl_summary()` arguments*
 
 ### See the other options with `??tbl_summary()`
 
-```{r ,echo=FALSE}
+```{r tbl_summary-args,echo=FALSE}
 tibble::tribble(
   ~Argument,       ~Description,
   "`label=`",       "specify the variable labels printed in table",
@@ -685,7 +685,172 @@ background-position: 95% 6%
 background-size: 12%
 class: left, top
 
-## *`tbl_regression()`*
+## *`tbl_regression()`: : basic use*
+
+### Create `mod` with `lm()` 
+
+#### <i>`mod` = association of BMI and A1c adjusted for age</i>
+
+```{r mod-tbl_regression}
+d3 <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
+mod <- lm(glyhb ~ bmi + age, data = d3)
+tbl_regression(mod)
+```
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: variable labels*
+
+<br>
+
+#### Add labels just like `tbl_summary()`
+
+```{r tbl_regression-var_label}
+var_label(d3$bmi) <- "BMI"
+var_label(d3$glyhb) <- "A1c"
+var_label(d3$age) <- "Age"
+mod <- lm(glyhb ~ bmi + age, data = d3)
+tbl_regression(mod)
+```
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: options*
+
+#### Other regression table options
+
+```{r tbl_regression-options, echo=FALSE}
+tibble::tribble(
+  ~Argument,          ~Description,
+  "`label=`",            "modify variable labels in table", 
+  "`exponentiate=`",     "exponentiate model coefficients",
+  "`include=`",          "names of variables to include in output. Default is all variables",
+  "`show_single_row=`",  "By default, categorical variables are printed on multiple rows. If a variable is dichotomous and you wish to print the regression coefficient on a single row, include the variable name(s) here.", 
+  "`conf.level=`",       "confidence level of confidence interval",  
+  "`intercept=`",        "indicates whether to include the intercept",  
+  "`estimate_fun=`",     "function to round and format coefficient estimates",  
+  "`pvalue_fun=`",       "function to round and format p-values",
+  "`tidy_fun=`",         "function to specify/customize tidier function"
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = c(Argument))
+```
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: broom::glance()*
+
+<br>
+
+#### Add the model output from `broom::glance()` with `add_glance_source_note()`
+
+```{r add_glance_source_note}
+tbl_regression(mod) %>% add_glance_source_note()
+```
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: add options*
+
+<br>
+
+#### Other `add_` options
+
+<br>
+
+```{r add-options, echo=FALSE}
+tibble::tribble(
+  ~Function,                     ~Description,
+  "`add_global_p()`",           "adds the global p-value for a categorical variables",  
+  "`add_glance_source_note()`", "adds statistics from `broom::glance()` as source note",
+  "`add_vif()`",                "adds column of the variance inflation factors (VIF)",
+  "`add_q()`",                  "add a column of q values to control for multiple comparisons"   
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = c(Function))
+```
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: format options*
+
+<br>
+
+#### Format table contents 
+
+```{r tbl_regression-bold}
+tbl_regression(mod) %>% add_glance_source_note() %>% 
+  bold_p() %>% bold_labels()
+```
+
+
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: modify title*
+
+#### Customize the table title with `modify_caption()`
+
+```{r modify_caption}
+tbl_regression(mod) %>% add_glance_source_note() %>% 
+  bold_p() %>% bold_labels() %>%  
+  modify_caption("**Association of BMI and A1c adjusted for age**")
+```
+
+---
+background-image: url(img/gtsummary.png)
+background-position: 95% 6%
+background-size: 12%
+class: left, top
+
+## *`tbl_regression()`: modify options*
+
+<br>
+
+```{r modify-options, echo=FALSE}
+tibble::tribble(
+  ~Function,                     ~Description,
+  "`modify_header()`",           "update column headers",   
+  "`modify_footnote()`",         "update column footnote",   
+  "`modify_spanning_header()`",  "update spanning headers",   
+  "`modify_caption()`",          "update table caption/title",   
+  "`bold_labels()`",             "bold variable labels",  
+  "`bold_levels()`",             "bold variable levels",  
+  "`italicize_labels()`",        "italicize variable labels",  
+  "`italicize_levels()`",        "italicize variable levels",  
+  "`bold_p()`",                  "bold significant p-values"
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = c(Function))
+```
 
 
 
@@ -694,17 +859,24 @@ background-image: url(img/gtsummary.png)
 background-position: 95% 8%
 background-size: 12%
 
-# Output formats
+# `gtsummary`: Output formats
 
 <br>
 
-```{r, out.width="70%", echo=FALSE}
+```{r supported_formats.png, out.width="70%", echo=FALSE}
 knitr::include_graphics("img/supported_formats.png")
 ```
 
+---
+class: left, top
 
+# Also check out the [`gt` package](https://gt.rstudio.com/)!
 
+### *<i>"construct a wide variety of useful tables with a cohesive set of table parts"*</i>
 
+```{r gt_parts_of_a_table.png, out.width="70%", echo=FALSE}
+knitr::include_graphics("img/gt_parts_of_a_table.png")
+```
 
 ---
 class: inverse, center
