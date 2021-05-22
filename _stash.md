@@ -16,78 +16,31 @@ From Malcolm:
 
 > * [x] I included the diabetes dataset, which I think will be good for slide examples. See the R Markdown whole game folder for a work up of this dataset that uses a couple of `gtsummary` tables
 
-## Outline
+## Remove:
 
-### "Making tables in R Markdown"
+> * [ ] The R Markdown refresher and Visual R Markdown slides (I don't think I'll ever do this deck independent of Rmd, which introduces V RMD)
+When to use tables/graphs? (I mostly teach people who need to know how to make tables not why)
 
-### *RMarkdown* (refresher):
+> * [ ] The diabetes data slide (We use this lots, so this isn't the first time they'll be seeing these data)
 
-### Visual RMarkdown 
+> * [ ] The link to the dplyr slides
 
-### *When to use tables/graphs?*
+> * [ ] Remove the R Markdown and knitr hex stickers except for the knitr::kable() slide, and make the image a little bigger on that slide. (It's just inconsistent with how I normally do it.)
 
-### The `diabetes` data 
+> * [ ] For the gtsummary slides, just show the hex on the first slide
 
-###  *Descriptive statistics table*
+> * [ ] Remove some of the focus on kable() output types, as it's generally better to let knitr decide. The pipe format might be useful for a slide to show what's happening. I also think you should show the table output itself (with the exception of maybe the pipe slide), not the underlying structure
 
-### View `descriptives` 
+> * [ ] Remove the Check with attr() part of the labelled slides
 
-### `knitr::kable()`
+## Add/modify:
 
-### `knitr::kable("simple")`
+> * [ ] The your turn exercises, which should be interspersed throughout as appropriate. (See my other slides for examples.)
 
-### `knitr::kable("pipe")`
+> * [ ] Also, make sure you are teaching to those. Right now, the following your turns don't have matching content: Your Turn 1, Your Turn 3, Your Turn 6. You don't need to cover everything for those, but that basically means adding a slide on 1) markdown tables/tables with Visual Rmd 2) tbl_cross() and 3) cross-referencing tables (which means connecting that idea to modify_caption() and using \@ref(tab:name-of-chunk).
 
-### *`knitr::kable()`: column names*
+> * [ ] An example of making labels using the list() style (which is what I tend to use; put that first, but keep your slides on the labelled package, as the idea is helpful)
 
-### *`knitr::kable()`: add caption*
+> * [ ] I don't like the name d2. Can we call it table_data or something? I feel similarly about d3
 
-### *`knitr::kable()`: number format*
-
-### Other `knitr::kable()` formats
-
-### *gtsummary*
-
-### `tbl_summary()`: headr
-
-### `tbl_summary()`: missing
-
-### `tbl_summary()`: footnote
-
-### *`tbl_summary()`: variable names*
-
-### *`tbl_summary()`: variable levels*
-
-### *`tbl_summary()`: split by groups*
-
-### *`tbl_summary()`: tests & p-values*
-
-### *`tbl_summary()`: statistics*
-
-### *`tbl_summary()`: digits*
-
-### *`tbl_summary()`: missing_text*
-
-### Other *`tbl_summary()` arguments*
-
-### *`tbl_regression()`: : basic use*
-
-### *`tbl_regression()`: variable labels*
-
-### *`tbl_regression()`: options*
-
-### *`tbl_regression()`: broom::glance()*
-
-### *`tbl_regression()`: add options*
-
-### *`tbl_regression()`: format options*
-
-### *`tbl_regression()`: modify title*
-
-### *`tbl_regression()`: modify options*
-
-### `gtsummary`: Output formats
-
-### Also check out the [`gt` package](https://gt.rstudio.com/)!
-
-### Resources
+> * [ ] Please run styler on the code chunks
