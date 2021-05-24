@@ -665,7 +665,47 @@ tbl_summary(
 
 ---
 
-# Your turn 4
+# Add other elements to table
+
+```{r, echo = FALSE}
+tibble::tribble(
+  ~Function,             ~Description,
+  "`add_p()`",           "add p-values to the output comparing values across groups",
+  "`add_overall()`",     "add a column with overall summary statistics",
+  "`add_n()`",           "add a column with N (or N missing) for each variable",
+  "`add_difference()`",  "add column for difference between two group, confidence interval, and p-value",
+  "`add_stat_label()`",  "add label for the summary statistics shown in each row",
+  "`add_stat()`",        "generic function to add a column with user-defined values",
+  "`add_q()`",           "add a column of q values to control for multiple comparisons"
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = Function)
+```
+
+---
+
+# gtsummary functions to format table
+
+```{r echo = FALSE}
+tibble::tribble(
+  ~Function,                     ~Description,
+  "`modify_header()`",           "update column headers",   
+  "`modify_footnote()`",         "update column footnote",   
+  "`modify_spanning_header()`",  "update spanning headers",   
+  "`modify_caption()`",          "update table caption/title",   
+  "`bold_labels()`",             "bold variable labels",  
+  "`bold_levels()`",             "bold variable levels",  
+  "`italicize_labels()`",        "italicize variable labels",  
+  "`italicize_levels()`",        "italicize variable levels",  
+  "`bold_p()`",                  "bold significant p-values"
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = Function)
+```
+
+---
+
+## Your turn 4
 
 #### Create a summary table of `trial` by the `trt` variable.
 
@@ -682,7 +722,7 @@ tbl_summary(
 ---
 
 
-# Your Turn 4
+## Your Turn 4
 
 ```{r table-one, eval=FALSE}
 trial %>%
@@ -705,7 +745,7 @@ trial %>%
 ---
 
 
-## _Your Turn 4_
+## Your Turn 4
 
 ```{r your-turn-4.png, echo=FALSE, out.width='60%'}
 knitr::include_graphics("img/your-turn-4.png")
@@ -714,23 +754,22 @@ knitr::include_graphics("img/your-turn-4.png")
 
 ---
 
+## Other `tbl_summary()` arguments
 
-## Other *`tbl_summary()` arguments*
-
-### See the other options with `??tbl_summary()`
+### See the other options with *`?tbl_summary()`*
 
 ```{r tbl_summary-args,echo=FALSE}
 tibble::tribble(
   ~Argument, ~Description,
-  "`label=`", "specify the variable labels printed in table",
-  "`type=`", "specify the variable type (e.g. continuous, categorical, etc.)",
-  "`statistic=`", "change the summary statistics presented",
-  "`digits=`", "number of digits the summary statistics will be rounded to",
-  "`missing=`", "whether to display a row with the number of missing observations",
-  "`missing_text=`", "text label for the missing number row",
-  "`sort=`", "change the sorting of categorical levels by frequency",
-  "`percent=`", "print column, row, or cell percentages",
-  "`include=`", "list of variables to include in summary table"
+  "`label`", "specify the variable labels printed in table",
+  "`type`", "specify the variable type (e.g. continuous, categorical, etc.)",
+  "`statistic`", "change the summary statistics presented",
+  "`digits`", "number of digits the summary statistics will be rounded to",
+  "`missing`", "whether to display a row with the number of missing observations",
+  "`missing_text`", "text label for the missing number row",
+  "`sort`", "change the sorting of categorical levels by frequency",
+  "`percent`", "print column, row, or cell percentages",
+  "`include`", "list of variables to include in summary table"
 ) %>%
   gt::gt() %>%
   gt::fmt_markdown(columns = Argument)
@@ -738,51 +777,75 @@ tibble::tribble(
 
 ---
 
+# `tbl_regression()`
 
-# *`tbl_regression()`*
+--
 
-### Create `mod` with `lm()` 
-
-### <i>`mod` = association of BMI and A1c adjusted for age</i>
-
-```{r mod-tbl_regression}
+```{r mod-tbl_regression, eval = FALSE}
 model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
-mod <- lm(glyhb ~ bmi + age, data = model_data)
-tbl_regression(mod)
-```
-
-
----
-
-
-# *`tbl_regression()`: variable labels*
-
-### Add labels just like `tbl_summary()`
-
-```{r tbl_regression-var_label}
-var_label(model_data) <- list(bmi = "BMI", glyhb = "A1c", 
-                              age = "Age")
-mod <- lm(glyhb ~ bmi + age, data = model_data)
-tbl_regression(mod)
+glyhb_model <- lm(glyhb ~ bmi + age, data = model_data) #<<
+tbl_regression(glyhb_model) #<<
 ```
 
 ---
 
+# `tbl_regression()`
 
-# *`tbl_regression()`: other options*
+```{r mod-tbl_regression2}
+model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
+glyhb_model <- lm(glyhb ~ bmi + age, data = model_data)
+tbl_regression(glyhb_model)
+```
+
+---
+
+## `tbl_regression()`: variable labels
+
+### *Add labels just like `tbl_summary()`*
+
+```{r tbl_regression-var_label, eval = FALSE}
+var_label(model_data) <- list( #<<
+  bmi = "BMI", #<<
+  glyhb = "A1c", #<<
+  age = "Age"#<<
+) #<<
+glyhb_model <- lm(glyhb ~ bmi + age, data = model_data)
+tbl_regression(glyhb_model)
+```
+
+---
+
+## `tbl_regression()`: variable labels
+
+### *Add labels just like `tbl_summary()`*
+
+```{r tbl_regression-var_label2}
+var_label(model_data) <- list(
+  bmi = "BMI", 
+  glyhb = "A1c", 
+  age = "Age"
+)
+glyhb_model <- lm(glyhb ~ bmi + age, data = model_data)
+tbl_regression(glyhb_model)
+```
+
+---
+
+
+## `tbl_regression()`: other options
 
 ```{r tbl_regression-options, echo=FALSE}
 tibble::tribble(
   ~Argument, ~Description,
-  "`label=`", "modify variable labels in table",
-  "`exponentiate=`", "exponentiate model coefficients",
-  "`include=`", "names of variables to include in output. Default is all variables",
-  "`show_single_row=`", "By default, categorical variables are printed on multiple rows. If a variable is dichotomous and you wish to print the regression coefficient on a single row, include the variable name(s) here.",
-  "`conf.level=`", "confidence level of confidence interval",
-  "`intercept=`", "indicates whether to include the intercept",
-  "`estimate_fun=`", "function to round and format coefficient estimates",
-  "`pvalue_fun=`", "function to round and format p-values",
-  "`tidy_fun=`", "function to specify/customize tidier function"
+  "`label`", "modify variable labels in table",
+  "`exponentiate`", "exponentiate model coefficients",
+  "`include=", "names of variables to include in output. Default is all variables",
+  "`show_single_row`", "By default, categorical variables are printed on multiple rows. If a variable is dichotomous and you wish to print the regression coefficient on a single row, include the variable name(s) here.",
+  "`conf.level`", "confidence level of confidence interval",
+  "`intercept`", "indicates whether to include the intercept",
+  "`estimate_fun`", "function to round and format coefficient estimates",
+  "`pvalue_fun`", "function to round and format p-values",
+  "`tidy_fun`", "function to specify/customize tidier function"
 ) %>%
   gt::gt() %>%
   gt::fmt_markdown(columns = c(Argument))
@@ -791,27 +854,35 @@ tibble::tribble(
 
 ---
 
+## `tbl_regression()`: Model statistics
 
-# *`tbl_regression()`: broom::glance()*
+### Add model statistics from `broom::glance()`
 
-### Add the model output from `broom::glance()` as a source note with `add_glance_source_note()`
-
-```{r add_glance_source_note}
-tbl_regression(mod) %>% add_glance_source_note()
+```{r add_glance_source_note, eval = FALSE}
+tbl_regression(glyhb_model) %>% 
+  add_glance_source_note() #<<
 ```
 
 ---
 
+## `tbl_regression()`: Model statistics
 
-# *`tbl_regression()`: other add options*
+### Add model statistics from `broom::glance()`
 
-<br><br>
+```{r add_glance_source_note2}
+tbl_regression(glyhb_model) %>% 
+  add_glance_source_note() 
+```
+
+---
+
+## `tbl_regression()`: other add options
 
 ```{r other-add-options, echo=FALSE}
 tibble::tribble(
   ~Function, ~Description,
   "`add_global_p()`", "adds the global p-value for a categorical variables",
-  "`add_glance_source_note()`", "adds statistics from `broom::glance()` as source note",
+  "`add_glance_source_note()`", "adds statistics from `glance()` as source note",
   "`add_vif()`", "adds column of the variance inflation factors (VIF)",
   "`add_q()`", "add a column of q values to control for multiple comparisons"
 ) %>%
@@ -822,13 +893,21 @@ tibble::tribble(
 
 ---
 
+## `tbl_regression()`: format options
 
-# *`tbl_regression()`: format options*
+```{r tbl_regression-bold, eval = FALSE}
+tbl_regression(glyhb_model) %>%
+  add_glance_source_note() %>%
+  bold_p() %>% #<<
+  bold_labels() #<<
+```
 
-### Format table contents 
+---
 
-```{r tbl_regression-bold}
-tbl_regression(mod) %>%
+## `tbl_regression()`: format options
+
+```{r tbl_regression-bold2}
+tbl_regression(glyhb_model) %>%
   add_glance_source_note() %>%
   bold_p() %>%
   bold_labels()
@@ -836,35 +915,22 @@ tbl_regression(mod) %>%
 
 ---
 
+## `tbl_regression()`: modify caption
 
-# *`tbl_regression()`: other format options*
-
-<br><br>
-
-```{r , echo=FALSE}
-tibble::tribble(
-  ~Function, ~Description,
-  "`bold_labels()`", "bold variable labels",
-  "`bold_levels()`", "bold variable levels",
-  "`italicize_labels()`", "italicize variable labels",
-  "`italicize_levels()`", "italicize variable levels",
-  "`bold_p()`", "bold significant p-values"
-) %>%
-  gt::gt() %>%
-  gt::fmt_markdown(columns = c(Function))
+```{r modify_caption, eval = FALSE}
+tbl_regression(glyhb_model) %>%
+  add_glance_source_note() %>%
+  bold_p() %>%
+  bold_labels() %>%
+  modify_caption("**Association of BMI and A1c adjusted for age**") #<<
 ```
-
 
 ---
 
+## `tbl_regression()`: modify caption
 
-## *`tbl_regression()`: modify caption*
-
-
-### Customize the table title with `modify_caption()`
-
-```{r modify_caption}
-tbl_regression(mod) %>%
+```{r modify_caption2}
+tbl_regression(glyhb_model) %>%
   add_glance_source_note() %>%
   bold_p() %>%
   bold_labels() %>%
@@ -872,27 +938,6 @@ tbl_regression(mod) %>%
 ```
 
 ---
-
-
-# *`tbl_regression()`: other modify options*
-
-<br>
-
-```{r other-modify-options, echo=FALSE}
-tibble::tribble(
-  ~Function, ~Description,
-  "`modify_header()`", "update column headers",
-  "`modify_footnote()`", "update column footnote",
-  "`modify_spanning_header()`", "update spanning headers",
-  "`modify_caption()`", "update table caption/title"
-) %>%
-  gt::gt() %>%
-  gt::fmt_markdown(columns = c(Function))
-```
-
-
----
-
 
 # Your turn 5
 
@@ -903,7 +948,6 @@ tibble::tribble(
 ### Merge the table you just made with `marker_table` using `tbl_merge()`
 
 ---
-
 
 # Your turn 5
 
