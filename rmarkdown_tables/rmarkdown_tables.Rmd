@@ -890,7 +890,6 @@ tibble::tribble(
   gt::fmt_markdown(columns = c(Function))
 ```
 
-
 ---
 
 ## `tbl_regression()`: format options
@@ -973,9 +972,7 @@ both_tables <- list(response_table, marker_table)
 tbl_merge(both_tables)
 ```
 
-
 ---
-
 
 # Your turn 5
 
@@ -996,33 +993,49 @@ both_tables <- list(response_table, marker_table)
 tbl_merge(both_tables)
 ```
 
-
 ---
-
 
 ## Cross-referencing tables
 
-### A bookdown output format 
-#### - YAML set to `bookdown::html_document2`  
-### A table caption 
-#### - `caption = "table title"`, `modify_caption()`, etc.
-### A named code chunk  
-#### - `{r chunk-name}`  
+--
 
-### Reference with **`\@ref(tab:chunk-name)`**
+## A bookdown output format, e.g. **`bookdown::html_document2`**
+
+---
+
+## Cross-referencing tables
+
+## ~~A bookdown output format, e.g. `bookdown::html_document2`~~
+## A table caption (**`caption = "Table title"`**, **modify_caption()**)
+## A named code chunk (**`{r chunk-name}`**)
+
+---
+
+## Cross-referencing tables
+
+## ~~A bookdown output format, e.g. `bookdown::html_document2`~~
+## ~~A table caption (`caption = "Table title"`, `modify_caption()`)~~
+## A named code chunk (**`{r chunk-name}`**)
+
+---
+
+## Cross-referencing tables
+
+## ~~A bookdown output format, e.g. `bookdown::html_document2`~~
+## ~~A table caption (`caption = "Table title"`, modify_caption())~~
+## ~~A named code chunk (`{r chunk-name}`)~~
+## Reference with **`\@ref(tab:chunk-name)`**
 
 ---
 
 
-## _Your Turn 6_
+## *Your Turn 6*
 
 ### Modify the YAML header to use `bookdown::html_document2` as the output
 
 ### Add a caption to the merged table above using `modify_caption()`
 
 ### Reference that table below using this format: `\@ref(tab:name-of-chunk)`
-
-#### <i>In Table `_______`, we show two regression models: a linear model of participant markets and a logistic regression model of participant response.</i>
 
 
 ---
@@ -1037,12 +1050,7 @@ tbl_merge(both_tables) %>%
   )
 ```
 
-```{r your-turn-6.png, out.width="70%", echo=FALSE}
-knitr::include_graphics("img/your-turn-6.png")
-```
-
 ---
-
 
 # Your turn 6
 
@@ -1069,16 +1077,16 @@ knitr::include_graphics("img/supported_formats.png")
 
 ---
 
-
 # Also check out the [`gt` package](https://gt.rstudio.com/)!
 
-### *<i>"construct a wide variety of useful tables with a cohesive set of table parts"*</i>
+### "construct a wide variety of useful tables with a cohesive set of table parts"
 
 ```{r gt_parts_of_a_table.png, out.width="70%", echo=FALSE}
 knitr::include_graphics("img/gt_parts_of_a_table.png")
 ```
 
 ---
+
 class: inverse, center
 
 # Resources
