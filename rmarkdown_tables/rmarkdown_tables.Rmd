@@ -425,7 +425,7 @@ class: left, top
 
 ### Calculates descriptive statistics 
 
-### Returns 'publication ready' output
+### Can split calculations by groups (i.e. categorical or dichotomous variables)
 
 ### Multiple arguments for table options
 
@@ -610,7 +610,7 @@ class: left, top
 
 ## *`tbl_summary()`: tests & p-values*
 
-### Add tests and p-values with one function!
+#### Add tests and p-values (with one function!)
 
 ```{r add_p, eval=FALSE}
 table_data %>%
