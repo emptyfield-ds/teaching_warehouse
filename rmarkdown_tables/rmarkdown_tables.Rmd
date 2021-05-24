@@ -34,43 +34,30 @@ table_data <- diabetes %>%
     bmi = (weight / height^2) * 703
   )
 model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
-trial <- gtsummary::trial
-# xaringan::inf_mr() ----
 ```
 
+## *Working with descriptive tables*
 
----
-class: left, top
-
-## *Descriptive statistics table*
-
-### Create a table with descriptive statistics 
+--
 
 ```{r descriptives}
-descriptives <- diabetes %>%
-  # remove missing
+descriptives <- diabetes %>% #<<
   filter(!is.na(glyhb)) %>%
   mutate(
-    # create diabetic category based on A1c
     diabetic = case_when(
-      glyhb >= 6.5 ~ "Diabetic", glyhb < 6.5 ~ "Healthy",
+      glyhb >= 6.5 ~ "Diabetic", 
+      glyhb < 6.5 ~ "Healthy",
       NA ~ NA_character_
     ),
-    # calculate bmi
     bmi = (weight / height^2) * 703
   ) %>%
-  # group by new variable
-  group_by(diabetic) %>%
-  # get average A1c, BMI, and age
-  summarise(n = n(), across(c(glyhb, bmi, age), mean, na.rm = TRUE))
+  group_by(diabetic) %>% #<<
+  summarise(n = n(), across(c(glyhb, bmi, age), mean, na.rm = TRUE)) #<<
 ```
 
-
-
 ---
-class: left, top
 
-## _Descriptive statistics table_
+## *Descriptive statistics table*
 
 ### Standard `tibble` display 
 
@@ -78,45 +65,50 @@ class: left, top
 descriptives
 ```
 
-### Useful in console, but not for reports or presentation
+---
+
+## *Descriptive statistics table*
+
+### ~~Standard `tibble` display~~
+
+```{r view-descriptives2}
+descriptives
+```
+
+### *Useful in console, but less so for reports or presentation*
 
 ---
-class: left, top
 
 # Visual R Markdown tables
 
-### Insert table from toolbar 
+--
 
 ```{r vme-insert-table.png, echo=FALSE, out.width='30%'}
 knitr::include_graphics("img/vme-insert-table.png")
 ```
 
 ---
-class: left, top
 
 # Visual R Markdown tables
-
-### Set table options
 
 ```{r vme-table-options.png, echo=FALSE, out.width='70%'}
 knitr::include_graphics("img/vme-table-options.png")
 ```
 
 ---
-class: left, top
 
-## _Your turn 1_
+## Your turn 1
 
 ###  Using Visual R Markdown, create a markdown table that represents these data: 
 
-### <i>The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspirin, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.</i>
-
+### The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspirin, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.
 
 ---
+
 background-image: url(img/knitr.png)
 background-position: 93% 10%
 background-size: 15%
-class: left, top
+
 
 # `knitr::kable()`
 
@@ -124,45 +116,17 @@ class: left, top
 
 ### `kable()` creates formatted tables from rectangular objects (data.frames, matrices, and tibbles)
 
+--
+
 ```{r}
 kable(descriptives)
 ```
 
+--
+
 #### Formats include `pipe` ('`|`'), HTML (`html`), LaTeX (`latex`), and reStructuredText (`rst`)
 
-
-
 ---
-class: left, top
-
-# Your turn 2
-
-#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
-
-#### Bind the two resulting model dataframes on top of each other to create one dataframe
-
-#### Turn the resulting dataframe into a table using `kable()`
-
-#### Knit
-
-```{r}
-response_model <- glm(response ~ age + stage, data = trial, 
-                      family = binomial)
-marker_model <- lm(marker ~ trt + stage + age, data = trial)
-```
-
----
-class: left, top
-
-### _Your turn 2_
-
-```{r}
-models <- bind_rows(tidy(response_model), tidy(marker_model))
-kable(models)
-```
-
----
-class: left, top
 
 ## *`kable()`: underlying structure*
 
@@ -184,9 +148,7 @@ knitr::kable(x = descriptives, format = "pipe")
 |Healthy  | 325| 4.730400| 28.38114| 44.44308|
 ```
 
-
 ---
-class: left, top
 
 ## *`kable()` options: column names*
 
@@ -209,7 +171,6 @@ kable(descriptives,
 ```
 
 ---
-class: left, top
 
 ## *`kable()` options: number format*
 
@@ -227,13 +188,11 @@ kable(descriptives,
 
 --
 
-```{r , echo=FALSE}
+```{r, echo=FALSE}
 kable(descriptives, digits = 1)
 ```
 
-
 ---
-class: left, top
 
 ## *`kable()` options: add caption*
 
@@ -243,7 +202,7 @@ class: left, top
 
 ```{r , eval=FALSE}
 kable(descriptives,
-  caption = c("Descriptive statistics") #<<
+  caption = "Descriptive statistics" #<<
 )
 ```
 
@@ -253,7 +212,35 @@ kable(descriptives,
 knitr::include_graphics("img/kable-caption.png")
 ```
 
+---
 
+
+
+## Your turn 2
+
+#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
+
+#### Bind the two resulting model dataframes on top of each other to create one dataframe
+
+#### Turn the resulting dataframe into a table using `kable()`
+
+#### Knit
+
+```{r}
+response_model <- glm(response ~ age + stage, data = trial, 
+                      family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
+```
+
+---
+
+
+### Your turn 2
+
+```{r}
+models <- bind_rows(tidy(response_model), tidy(marker_model))
+kable(models)
+```
 
 ---
 background-image: url(img/gtsummary.png)
@@ -266,18 +253,19 @@ background-size: 20%
 
 --
 
-## - Built on the larger [`gt` package](https://gt.rstudio.com/index.html) 
+## Create publication-ready analytic and summary tables
+
 
 --
 
-## - consistent function names with lots of options (`add_`, `modify_`, `bold_`, etc.)!
+## Good support for wide variety of output formats
 
 --
 
-## - Designed to "*<i>create publication-ready analytical and summary tables</i>*"!
+## Built on the larger [`gt` package](https://gt.rstudio.com/index.html) 
 
 ---
-class: left, top
+
 
 # `tbl_cross()`
 
@@ -300,7 +288,7 @@ tbl_cross(
 
 
 ---
-class: left, top
+
 
 # `tbl_cross()`
 
@@ -320,7 +308,7 @@ table_data <- diabetes %>%
 
 
 ---
-class: left, top
+
 
 # `tbl_cross()`
 
@@ -333,7 +321,7 @@ table_data %>% tbl_cross(row = diabetic, col = gender)
 ```
 
 ---
-class: left, top
+
 
 # `tbl_cross()` output
 
@@ -360,7 +348,7 @@ knitr::include_graphics("img/tbl_cross.png")
 ]
 
 ---
-class: left, top
+
 
 ## *`tbl_cross()`: variable names*
 
@@ -376,7 +364,7 @@ var_label(table_data$diabetic)
 
 
 ---
-class: left, top
+
 
 ## *`tbl_cross()`: variable names*
 
@@ -392,7 +380,7 @@ table_data %>% tbl_cross(row = diabetic, col = gender)
 
 
 ---
-class: left, top
+
 
 # Your turn 3
 
@@ -404,7 +392,7 @@ class: left, top
 
 
 ---
-class: left, top
+
 
 # Your turn 3
 
@@ -417,7 +405,7 @@ trial %>%
 
 
 ---
-class: left, top
+
 
 # `tbl_summary()`
 
@@ -437,7 +425,7 @@ tbl_summary(data = , by = , statistic = , ...)
 
 
 ---
-class: left, top
+
 
 # `tbl_summary()`: basic use
 
@@ -452,7 +440,7 @@ knitr::include_graphics("img/tbl_summary-basic.png")
 
 
 ---
-class: left, top
+
 
 # `tbl_summary()`: basic use
 
@@ -475,7 +463,7 @@ knitr::include_graphics("img/tbl_summary-header.png")
 ]
 
 ---
-class: left, top
+
 
 # `tbl_summary()`: basic use
 
@@ -496,7 +484,7 @@ knitr::include_graphics("img/tbl_summary-missing.png")
 ]
 
 ---
-class: left, top
+
 
 # `tbl_summary()`: basic use
 
@@ -522,7 +510,7 @@ knitr::include_graphics("img/tbl_summary-footnote.png")
 
 
 ---
-class: left, top
+
 
 ## *`tbl_summary()`: variable levels*
 
@@ -547,7 +535,7 @@ knitr::include_graphics("img/tbl_summary-levels.png")
 
 
 ---
-class: left, top
+
 
 ## *`tbl_summary()`: split by groups*
 
@@ -564,7 +552,7 @@ knitr::include_graphics("img/tbl_summary-by.png")
 ```
 
 ---
-class: left, top
+
 
 ## *`tbl_summary()`: digits*
 
@@ -585,7 +573,7 @@ knitr::include_graphics("img/tbl_summary-digits.png")
 
 
 ---
-class: left, top
+
 
 ## *`tbl_summary()`: missing_text*
 
@@ -606,7 +594,7 @@ knitr::include_graphics("img/tbl_summary-missing_text.png")
 ```
 
 ---
-class: left, top
+
 
 ## *`tbl_summary()`: tests & p-values*
 
@@ -624,7 +612,7 @@ knitr::include_graphics("img/tbl_summary-add_p.png")
 ```
 
 ---
-class: left, top
+
 
 ## *`tbl_summary()`: statistic*
 
@@ -646,7 +634,7 @@ statistic = list(all_continuous() ~ "{mean} ({sd})"),
 ```
 
 ---
-class: left, top
+
 
 # Your turn 4
 
@@ -663,7 +651,7 @@ class: left, top
 ####  Modify the header with `modify_spanning_header(c("stat_1", "stat_2") ~ "**Treatment Received**")`
 
 ---
-class: left, top
+
 
 # Your Turn 4
 
@@ -686,7 +674,7 @@ trial %>%
 ```
 
 ---
-class: left, top
+
 
 ## _Your Turn 4_
 
@@ -696,7 +684,7 @@ knitr::include_graphics("img/your-turn-4.png")
 
 
 ---
-class: left, top
+
 
 ## Other *`tbl_summary()` arguments*
 
@@ -720,7 +708,7 @@ tibble::tribble(
 ```
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`*
 
@@ -736,7 +724,7 @@ tbl_regression(mod)
 
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: variable labels*
 
@@ -750,7 +738,7 @@ tbl_regression(mod)
 ```
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: other options*
 
@@ -773,7 +761,7 @@ tibble::tribble(
 
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: broom::glance()*
 
@@ -784,7 +772,7 @@ tbl_regression(mod) %>% add_glance_source_note()
 ```
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: other add options*
 
@@ -804,7 +792,7 @@ tibble::tribble(
 
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: format options*
 
@@ -818,7 +806,7 @@ tbl_regression(mod) %>%
 ```
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: other format options*
 
@@ -839,7 +827,7 @@ tibble::tribble(
 
 
 ---
-class: left, top
+
 
 ## *`tbl_regression()`: modify caption*
 
@@ -855,7 +843,7 @@ tbl_regression(mod) %>%
 ```
 
 ---
-class: left, top
+
 
 # *`tbl_regression()`: other modify options*
 
@@ -875,7 +863,7 @@ tibble::tribble(
 
 
 ---
-class: left, top
+
 
 # Your turn 5
 
@@ -886,7 +874,7 @@ class: left, top
 ### Merge the table you just made with `marker_table` using `tbl_merge()`
 
 ---
-class: left, top
+
 
 # Your turn 5
 
@@ -914,7 +902,7 @@ tbl_merge(both_tables)
 
 
 ---
-class: left, top
+
 
 # Your turn 5
 
@@ -937,7 +925,7 @@ tbl_merge(both_tables)
 
 
 ---
-class: left, top
+
 
 ## Cross-referencing tables
 
@@ -951,7 +939,7 @@ class: left, top
 ### Reference with **`\@ref(tab:chunk-name)`**
 
 ---
-class: left, top
+
 
 ## _Your Turn 6_
 
@@ -965,7 +953,7 @@ class: left, top
 
 
 ---
-class: left, top
+
 
 # Your turn 6
 
@@ -981,7 +969,7 @@ knitr::include_graphics("img/your-turn-6.png")
 ```
 
 ---
-class: left, top
+
 
 # Your turn 6
 
@@ -996,7 +984,7 @@ knitr::include_graphics("img/your-turn-6-ref.png")
 ```
 
 ---
-class: left, top
+
 
 # `gtsummary`: Output formats
 
@@ -1007,7 +995,7 @@ knitr::include_graphics("img/supported_formats.png")
 ```
 
 ---
-class: left, top
+
 
 # Also check out the [`gt` package](https://gt.rstudio.com/)!
 
