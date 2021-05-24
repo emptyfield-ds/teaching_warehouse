@@ -1006,8 +1006,7 @@ tbl_merge(both_tables)
 ## Cross-referencing tables
 
 ## ~~A bookdown output format, e.g. `bookdown::html_document2`~~
-## A table caption (**`caption = "Table title"`**, **modify_caption()**)
-## A named code chunk (**`{r chunk-name}`**)
+## A table caption (**`caption = "Table title"`**, **`modify_caption()`**)
 
 ---
 
@@ -1022,7 +1021,7 @@ tbl_merge(both_tables)
 ## Cross-referencing tables
 
 ## ~~A bookdown output format, e.g. `bookdown::html_document2`~~
-## ~~A table caption (`caption = "Table title"`, modify_caption())~~
+## ~~A table caption (`caption = "Table title"`, `modify_caption()`)~~
 ## ~~A named code chunk (`{r chunk-name}`)~~
 ## Reference with **`\@ref(tab:chunk-name)`**
 
