@@ -19,6 +19,8 @@ library(tidyverse)
 library(gapminder)
 library(here)
 library(knitr)
+library(broom)
+library(gtsummary)
 diabetes <- read_csv("diabetes.csv")
 # create table_data
 table_data <- diabetes %>%
@@ -32,25 +34,9 @@ table_data <- diabetes %>%
     bmi = (weight / height^2) * 703
   )
 model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
+trial <- gtsummary::trial
+# xaringan::inf_mr() ----
 ```
-
-```{r xaringan-inf_mr, echo=FALSE, eval=FALSE, include=FALSE, results='hide'}
-# i just drop this in so I can develop a little faster :)
-# xaringan::inf_mr() # for instant knitting and reviewing
-```
-
-
-background-image: url(img/rmarkdown.png)
-background-position: 93% 10%
-background-size: 15%
-
-## *RMarkdown* (refresher):
-
-<br><br><br>
-
-### Authoring framework: code and text in same document
-### Reproducible: re-run your analysis
-### Flexible: Output to different formats easily
 
 
 ---
@@ -119,13 +105,11 @@ knitr::include_graphics("img/vme-table-options.png")
 ---
 class: left, top
 
-# Your turn 1
+## _Your turn 1_
 
-### Create the table below using `descriptives` and the Visual R Markdown editor
+###  Using Visual R Markdown, create a markdown table that represents these data: 
 
-```{r vme-descriptives.png, echo=FALSE, out.width='90%'}
-knitr::include_graphics("img/vme-descriptives.png")
-```
+### <i>The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspirin, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.</i>
 
 
 ---
@@ -141,7 +125,7 @@ class: left, top
 ### `kable()` creates formatted tables from rectangular objects (data.frames, matrices, and tibbles)
 
 ```{r}
-descriptives %>% kable()
+kable(descriptives)
 ```
 
 #### Formats include `pipe` ('`|`'), HTML (`html`), LaTeX (`latex`), and reStructuredText (`rst`)
@@ -153,16 +137,51 @@ class: left, top
 
 # Your turn 2
 
-## Use `kable()` to view the `descriptives` table
+#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
 
-```{r , eval=FALSE}
-descriptives %>% kable()
+#### Bind the two resulting model dataframes on top of each other to create one dataframe
+
+#### Turn the resulting dataframe into a table using `kable()`
+
+#### Knit
+
+```{r}
+response_model <- glm(response ~ age + stage, data = trial, 
+                      family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
 ```
 
---
+---
+class: left, top
 
-```{r , echo=FALSE}
-descriptives %>% kable()
+### _Your turn 2_
+
+```{r}
+models <- bind_rows(tidy(response_model), tidy(marker_model))
+kable(models)
+```
+
+---
+class: left, top
+
+## *`kable()`: underlying structure*
+
+### Simple and pipe work in most output document formats
+
+```{r kable-simple, eval=FALSE}
+knitr::kable(x = descriptives, format = "simple")
+diabetic      n      glyhb        bmi        age
+---------  ----  ---------  ---------  --------- #<<
+Diabetic     65   9.886615   30.80235   58.43077
+Healthy     325   4.730400   28.38114   44.44308
+```
+
+```{r kable-pipe, eval=FALSE}
+knitr::kable(x = descriptives, format = "pipe")
+|diabetic |   n|    glyhb|      bmi|      age|
+|:--------|---:|--------:|--------:|--------:| #<<
+|Diabetic |  65| 9.886615| 30.80235| 58.43077|
+|Healthy  | 325| 4.730400| 28.38114| 44.44308|
 ```
 
 
@@ -177,16 +196,16 @@ class: left, top
 
 ```{r , eval=FALSE}
 kable(descriptives,
-  col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age")
-) #<<
+  col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age") #<<
+)
 ```
 
 --
 
 ```{r , echo=FALSE}
 kable(descriptives,
-  col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age")
-) #<<
+  col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age") #<<
+)
 ```
 
 ---
@@ -202,8 +221,8 @@ class: left, top
 
 ```{r kable-digits, eval=FALSE}
 kable(descriptives,
-  digits = 1
-) #<<
+  digits = 1 #<<
+)
 ```
 
 --
@@ -224,30 +243,14 @@ class: left, top
 
 ```{r , eval=FALSE}
 kable(descriptives,
-  caption = c("Descriptive statistics")
-) #<<
+  caption = c("Descriptive statistics") #<<
+)
 ```
 
 --
 
 ```{r kable-caption.png, echo=FALSE, out.width='90%'}
 knitr::include_graphics("img/kable-caption.png")
-```
-
----
-class: left, top
-
-## *`kable()`: underlying structure*
-
-```{r, eval=FALSE}
-kable(descriptives,
-  col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age"),
-  digits = 1, caption = c("Descriptive statistics")
-)
-```
-
-```{r kable-html.png, echo=FALSE, out.width='40%'}
-knitr::include_graphics("img/kable-html.png")
 ```
 
 
@@ -295,12 +298,13 @@ tbl_cross(
 )
 ```
 
+
 ---
 class: left, top
 
-# Your turn 3
+# `tbl_cross()`
 
-### `table_data` is created below
+### Create `table_data`
 
 ```{r}
 table_data <- diabetes %>%
@@ -314,17 +318,15 @@ table_data <- diabetes %>%
   select(diabetic, age, gender, bmi)
 ```
 
-### Create a cross-tabulation of `diabetic` and `gender` in `table_data`
-
 
 ---
 class: left, top
 
-# Your turn 3
+# `tbl_cross()`
 
 ### Create a cross-tabulation of `diabetic` and `gender` in `table_data`
 
---
+<br>
 
 ```{r}
 table_data %>% tbl_cross(row = diabetic, col = gender)
@@ -388,6 +390,30 @@ var_label(table_data) <- list(
 table_data %>% tbl_cross(row = diabetic, col = gender)
 ```
 
+
+---
+class: left, top
+
+# Your turn 3
+
+###  Create a contingency table of `trial` (a dataset from gtsummary) using `tbl_cross()`: set `trt` to the rows and `response` to the columns.
+
+###  Add a p-value with `add_p()`
+
+###  Knit
+
+
+---
+class: left, top
+
+# Your turn 3
+
+
+```{r}
+trial %>%
+  tbl_cross(row = trt, col = response) %>%
+  add_p()
+```
 
 
 ---
@@ -476,7 +502,7 @@ class: left, top
 
 .pull-left[
 
-### Footnote lists summary statistics:
+### Source note lists summary statistics:
 
 ### - *n(%)* = `!is.na(var)`/403
 
@@ -550,7 +576,7 @@ table_data %>%
   tbl_summary(
     by = diabetic,
     digits = all_continuous() ~ 1 #<<
-  ) 
+  )
 ```
 
 ```{r tbl_summary-digits.png, out.width="43%", echo=FALSE}
@@ -619,59 +645,53 @@ statistic = list(all_continuous() ~ "{mean} ({sd})"),
                  all_categorical() ~ "{n} ({p}%)")
 ```
 
-
-```{r statistic, eval=FALSE, include=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
-  tbl_summary(
-    by = diabetic,
-    statistic = list( 
-      all_continuous() ~ "{mean} ({sd})" #<<
-    ), 
-    all_categorical() ~ "{n} ({p}%)" #<<
-  ) 
-```
-
 ---
 class: left, top
 
 # Your turn 4
 
-### Create the following formats with `statistic` 
+#### Create a summary table of `trial` by the `trt` variable.
 
-### - Mean (SD)
+#### Modify the label for `grade` to say "Tumor Grade"
 
-### - N (%)
+#### Add an overall column and a p-value
+
+#### Modify the table to use Mean (SD) and n (%) via the `statistic` argument: `list(all_continuous() ~ "{mean} ({sd})", all_categorical() ~ "{n} ({p}%)")`
+
+#### Bold the labels
+
+####  Modify the header with `modify_spanning_header(c("stat_1", "stat_2") ~ "**Treatment Received**")`
 
 ---
 class: left, top
 
-# Your turn 4
+# Your Turn 4
 
-```{r , eval=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
+```{r table-one, eval=FALSE}
+trial %>%
   tbl_summary(
-    by = diabetic,
+    by = trt,
+    label = grade ~ "Tumor Grade",
     statistic = list(
-      all_continuous() ~ "{mean} ({sd})" #<<
-    ), 
-    all_categorical() ~ "{n} ({p}%)" #<<
-  ) 
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    )
+  ) %>%
+  bold_labels() %>%
+  modify_spanning_header(
+    c("stat_1", "stat_2") ~ "**Treatment Received**"
+  ) %>%
+  add_overall() %>%
+  add_p()
 ```
 
---
+---
+class: left, top
 
-```{r , echo=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
-  tbl_summary(
-    by = diabetic,
-    statistic = list( 
-      all_continuous() ~ "{mean} ({sd})" #<<
-    ), 
-    all_categorical() ~ "{n} ({p}%)" #<<
-  ) 
+## _Your Turn 4_
+
+```{r your-turn-4.png, echo=FALSE, out.width='60%'}
+knitr::include_graphics("img/your-turn-4.png")
 ```
 
 
@@ -702,11 +722,11 @@ tibble::tribble(
 ---
 class: left, top
 
-## *`tbl_regression()`*
+# *`tbl_regression()`*
 
 ### Create `mod` with `lm()` 
 
-#### <i>`mod` = association of BMI and A1c adjusted for age</i>
+### <i>`mod` = association of BMI and A1c adjusted for age</i>
 
 ```{r mod-tbl_regression}
 model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
@@ -718,27 +738,21 @@ tbl_regression(mod)
 ---
 class: left, top
 
-## *`tbl_regression()`: variable labels*
+# *`tbl_regression()`: variable labels*
 
-<br>
-
-#### Add labels just like `tbl_summary()`
+### Add labels just like `tbl_summary()`
 
 ```{r tbl_regression-var_label}
-var_label(model_data$bmi) <- "BMI"
-var_label(model_data$glyhb) <- "A1c"
-var_label(model_data$age) <- "Age"
+var_label(model_data) <- list(bmi = "BMI", glyhb = "A1c", 
+                              age = "Age")
 mod <- lm(glyhb ~ bmi + age, data = model_data)
 tbl_regression(mod)
 ```
 
-
 ---
 class: left, top
 
-## *`tbl_regression()`: options*
-
-#### Other regression table options
+# *`tbl_regression()`: other options*
 
 ```{r tbl_regression-options, echo=FALSE}
 tibble::tribble(
@@ -761,26 +775,9 @@ tibble::tribble(
 ---
 class: left, top
 
-# Your turn 5
+# *`tbl_regression()`: broom::glance()*
 
-<br>
-
-### Combine `tbl_regression()` with the output from `broom::glance()` as a source note
-
-```{r , eval=FALSE}
-tbl_regression(mod) %>% add_gla()
-```
-
----
-class: left, top
-
-# Your turn 5
-
-<br>
-
-## Just one function! 
-
-<br>
+### Add the model output from `broom::glance()` as a source note with `add_glance_source_note()`
 
 ```{r add_glance_source_note}
 tbl_regression(mod) %>% add_glance_source_note()
@@ -789,15 +786,11 @@ tbl_regression(mod) %>% add_glance_source_note()
 ---
 class: left, top
 
-## *`tbl_regression()`: add options*
+# *`tbl_regression()`: other add options*
 
-<br>
+<br><br>
 
-### Other `add_` options
-
-<br>
-
-```{r add-options, echo=FALSE}
+```{r other-add-options, echo=FALSE}
 tibble::tribble(
   ~Function, ~Description,
   "`add_global_p()`", "adds the global p-value for a categorical variables",
@@ -813,11 +806,9 @@ tibble::tribble(
 ---
 class: left, top
 
-## *`tbl_regression()`: format options*
+# *`tbl_regression()`: format options*
 
-<br>
-
-#### Format table contents 
+### Format table contents 
 
 ```{r tbl_regression-bold}
 tbl_regression(mod) %>%
@@ -826,6 +817,25 @@ tbl_regression(mod) %>%
   bold_labels()
 ```
 
+---
+class: left, top
+
+# *`tbl_regression()`: other format options*
+
+<br><br>
+
+```{r , echo=FALSE}
+tibble::tribble(
+  ~Function, ~Description,
+  "`bold_labels()`", "bold variable labels",
+  "`bold_levels()`", "bold variable levels",
+  "`italicize_labels()`", "italicize variable labels",
+  "`italicize_levels()`", "italicize variable levels",
+  "`bold_p()`", "bold significant p-values"
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = c(Function))
+```
 
 
 ---
@@ -847,6 +857,88 @@ tbl_regression(mod) %>%
 ---
 class: left, top
 
+# *`tbl_regression()`: other modify options*
+
+<br>
+
+```{r other-modify-options, echo=FALSE}
+tibble::tribble(
+  ~Function, ~Description,
+  "`modify_header()`", "update column headers",
+  "`modify_footnote()`", "update column footnote",
+  "`modify_spanning_header()`", "update spanning headers",
+  "`modify_caption()`", "update table caption/title"
+) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = c(Function))
+```
+
+
+---
+class: left, top
+
+# Your turn 5
+
+### Create a regression table for `response model`; exponentiate the output with `exponentiate = TRUE`
+### Add a global P-value
+### Add the model statistics via `add_glance_source_note()`
+### Italicize the variable levels
+### Merge the table you just made with `marker_table` using `tbl_merge()`
+
+---
+class: left, top
+
+# Your turn 5
+
+```{r rebuild-models, echo=FALSE, message=FALSE, warning=FALSE}
+response_model <- glm(response ~ age + stage, data = trial, family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
+```
+
+```{r your-turn-5-no-run, eval=FALSE}
+response_table <- response_model %>%
+  tbl_regression(
+    exponentiate = TRUE
+  ) %>%
+  add_global_p() %>%
+  add_glance_source_note() %>%
+  italicize_levels()
+
+marker_table <- marker_model %>%
+  tbl_regression() %>%
+  add_global_p()
+
+both_tables <- list(response_table, marker_table)
+tbl_merge(both_tables)
+```
+
+
+---
+class: left, top
+
+# Your turn 5
+
+```{r your-turn-5, echo=FALSE}
+response_table <- response_model %>%
+  tbl_regression(
+    exponentiate = TRUE
+  ) %>%
+  add_global_p() %>%
+  add_glance_source_note() %>%
+  italicize_levels()
+
+marker_table <- marker_model %>%
+  tbl_regression() %>%
+  add_global_p()
+
+both_tables <- list(response_table, marker_table)
+tbl_merge(both_tables)
+```
+
+
+---
+class: left, top
+
 ## Cross-referencing tables
 
 ### A bookdown output format 
@@ -861,57 +953,47 @@ class: left, top
 ---
 class: left, top
 
+## _Your Turn 6_
+
+### Modify the YAML header to use `bookdown::html_document2` as the output
+
+### Add a caption to the merged table above using `modify_caption()`
+
+### Reference that table below using this format: `\@ref(tab:name-of-chunk)`
+
+#### <i>In Table `_______`, we show two regression models: a linear model of participant markets and a logistic regression model of participant response.</i>
+
+
+---
+class: left, top
+
 # Your turn 6
 
-### Set `YAML` output to `bookdown::html_document2` 
-
-### Add the name `modify-caption` to the code chunk 
-
-```{r unnamed-chunk.png, out.width="80%", echo=FALSE}
-knitr::include_graphics("img/unnamed-chunk.png")
+```{r your-turn-code, eval=FALSE}
+tbl_merge(both_tables) %>%
+  modify_caption(
+    "Regression models of participant markets and response"
+  )
 ```
 
-### Reference named chunk using **`\@ref(tab:chunk-name)`**
+```{r your-turn-6.png, out.width="70%", echo=FALSE}
+knitr::include_graphics("img/your-turn-6.png")
+```
 
 ---
 class: left, top
 
 # Your turn 6
 
-<br><br>
-
-```{r chunk-label.png, out.width="80%", echo=FALSE}
-knitr::include_graphics("img/chunk-label.png")
+```{r your-turn-6.png-2, out.width="70%", echo=FALSE}
+knitr::include_graphics("img/your-turn-6.png")
 ```
 
-> "I can reference my table using \@ref(tab:modify-caption)"
+--
 
-
----
-class: left, top
-
-## *`tbl_regression()`: modify options*
-
-<br>
-
-```{r modify-options, echo=FALSE}
-tibble::tribble(
-  ~Function, ~Description,
-  "`modify_header()`", "update column headers",
-  "`modify_footnote()`", "update column footnote",
-  "`modify_spanning_header()`", "update spanning headers",
-  "`modify_caption()`", "update table caption/title",
-  "`bold_labels()`", "bold variable labels",
-  "`bold_levels()`", "bold variable levels",
-  "`italicize_labels()`", "italicize variable labels",
-  "`italicize_levels()`", "italicize variable levels",
-  "`bold_p()`", "bold significant p-values"
-) %>%
-  gt::gt() %>%
-  gt::fmt_markdown(columns = c(Function))
+```{r your-turn-6-ref.png, out.width="80%", echo=FALSE}
+knitr::include_graphics("img/your-turn-6-ref.png")
 ```
-
-
 
 ---
 class: left, top
