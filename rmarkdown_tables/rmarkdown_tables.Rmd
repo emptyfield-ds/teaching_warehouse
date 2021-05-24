@@ -355,6 +355,7 @@ var_label(table_data$diabetic) #<<
 ## *`tbl_cross()`: variable names*
 
 ### Set multiple variable lables with `list()`
+
 ```{r tbl_cross-var_label-mult}
 var_label(table_data) <- list( 
   gender = "Gender",
@@ -370,24 +371,17 @@ var_label(table_data) <- list(
 tbl_cross(table_data, diabetic, gender)
 ```
 
-
 ---
-
 
 ## Your turn 3
 
 ###  Create a contingency table of `trial` (a dataset from gtsummary) using `tbl_cross()`: set `trt` to the rows and `response` to the columns.
-
 ###  Add a p-value with `add_p()`
-
 ###  Knit
-
 
 ---
 
-
 # Your turn 3
-
 
 ```{r}
 trial %>%
@@ -395,46 +389,62 @@ trial %>%
   add_p()
 ```
 
+---
+
+## `tbl_summary()`
+
+--
+
+## *Calculates descriptive statistics *
+
+---
+
+## `tbl_summary()`
+
+## ~~Calculates descriptive statistics~~
+## *Can split calculations by groups (i.e. categorical or dichotomous variables)*
+---
+
+## `tbl_summary()`
+
+## ~~Calculates descriptive statistics~~
+## ~~Can split calculations by groups (i.e. categorical or dichotomous variables)~~
+## *Sensible defaults; easily customized*
+
+---
+
+## `tbl_summary()`: basic use
+
+```{r baisc-tbl_summary, message=FALSE, warning=FALSE, eval = FALSE}
+var_label(table_data) <- list( 
+  gender = "Gender",
+  diabetic = "Diabetes Status",
+  age = "Age",
+  bmi = "BMI"
+)
+
+tbl_summary(table_data) #<<
+```
+
+---
+
+## `tbl_summary()`: basic use
+
+```{r baisc-tbl_summary2, message=FALSE, warning=FALSE, echo = FALSE}
+var_label(table_data) <- list( 
+  gender = "Gender",
+  diabetic = "Diabetes Status",
+  age = "Age",
+  bmi = "BMI"
+)
+
+tbl_summary(table_data)
+```
 
 ---
 
 
-# `tbl_summary()`
-
-<br>
-
-### Calculates descriptive statistics 
-
-### Can split calculations by groups (i.e. categorical or dichotomous variables)
-
-### Multiple arguments for table options
-
-<br>
-
-```{r , eval=FALSE}
-tbl_summary(data = , by = , statistic = , ...)
-```
-
-
----
-
-
-# `tbl_summary()`: basic use
-
-```{r baisc-tbl_summary, eval=FALSE, message=FALSE, warning=FALSE}
-table_data %>% tbl_summary()
-```
-
-
-```{r tbl_summary-basic.png, out.width="20%", echo=FALSE}
-knitr::include_graphics("img/tbl_summary-basic.png")
-```
-
-
----
-
-
-# `tbl_summary()`: basic use
+## `tbl_summary()`: basic use
 
 .pull-left[
 
@@ -457,7 +467,7 @@ knitr::include_graphics("img/tbl_summary-header.png")
 ---
 
 
-# `tbl_summary()`: basic use
+## `tbl_summary()`: basic use
 
 .pull-left[
 
@@ -478,7 +488,7 @@ knitr::include_graphics("img/tbl_summary-missing.png")
 ---
 
 
-# `tbl_summary()`: basic use
+## `tbl_summary()`: basic use
 
 .pull-left[
 
@@ -500,11 +510,9 @@ knitr::include_graphics("img/tbl_summary-footnote.png")
 
 ]
 
-
 ---
 
-
-## *`tbl_summary()`: variable levels*
+## `tbl_summary()`: variable levels
 
 .pull-left[
 
@@ -525,11 +533,9 @@ knitr::include_graphics("img/tbl_summary-levels.png")
 
 ]
 
-
 ---
 
-
-## *`tbl_summary()`: split by groups*
+## `tbl_summary()`: split by groups
 
 ### Split the summary table by a grouping variable
 
@@ -539,6 +545,8 @@ table_data %>%
   tbl_summary(by = diabetic) #<<
 ```
 
+--
+
 ```{r tbl_summary-by.png, out.width="40%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-by.png")
 ```
@@ -546,7 +554,7 @@ knitr::include_graphics("img/tbl_summary-by.png")
 ---
 
 
-## *`tbl_summary()`: digits*
+## `tbl_summary()`: digits
 
 #### Change number formats with `digits`
 
@@ -559,15 +567,15 @@ table_data %>%
   )
 ```
 
+--
+
 ```{r tbl_summary-digits.png, out.width="43%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-digits.png")
 ```
 
-
 ---
 
-
-## *`tbl_summary()`: missing_text*
+## `tbl_summary()`: missing_text
 
 #### Rename missing value label with `missing_text`
 
@@ -580,6 +588,7 @@ table_data %>%
   )
 ```
 
+--
 
 ```{r tbl_summary-missing_text.png, out.width="43%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-missing_text.png")
@@ -587,8 +596,7 @@ knitr::include_graphics("img/tbl_summary-missing_text.png")
 
 ---
 
-
-## *`tbl_summary()`: tests & p-values*
+## `tbl_summary()`: tests & p-values
 
 #### Add tests and p-values (with one function!)
 
@@ -599,34 +607,63 @@ table_data %>%
   add_p() #<<
 ```
 
+--
+
 ```{r tbl_summary-add_p.png, out.width="45%", echo=FALSE}
 knitr::include_graphics("img/tbl_summary-add_p.png")
 ```
 
 ---
 
+## `tbl_summary()`: statistic
 
-## *`tbl_summary()`: statistic*
-
-<br>
-
-#### Supply `statistic` arguments in `list()`
-
-#### Access variables by type (`all_continuous()`, `all_categorical()`, `all_dichotomous()`, etc.
-
-#### Access statistic with curly brackets (i.e. `{mean}`, `{sd}`, etc.)
-
-#### Separate with `~`
-
-<br>
-
-```{r , eval=FALSE}
-statistic = list(all_continuous() ~ "{mean} ({sd})"),
-                 all_categorical() ~ "{n} ({p}%)")
+```{r, eval=FALSE}
+tbl_summary(
+  table_data,
+  statistic = list(all_continuous() ~ "{mean} ({sd})") #<<
+)
 ```
+
+## Supply **`statistic`** arguments in **`list()`** (separate with **`~`**)
 
 ---
 
+## `tbl_summary()`: statistic
+
+```{r, eval=FALSE}
+tbl_summary(
+  table_data,
+  statistic = list(all_continuous() ~ "{mean} ({sd})") #<<
+)
+```
+
+## Access variables by name or type (**`all_continuous()`**, **`all_categorical()`**, **`all_dichotomous()`**, etc.)
+
+---
+
+## `tbl_summary()`: statistic
+
+```{r, eval=FALSE}
+tbl_summary(
+  table_data,
+  statistic = list(all_continuous() ~ "{mean} ({sd})") #<<
+)
+```
+
+## Access statistic with curly brackets (i.e. **`{mean}`**, **`{sd}`**, etc.). See **`?tbl_summary`** for options
+
+---
+
+## `tbl_summary()`: statistic
+
+```{r, echo = FALSE}
+tbl_summary(
+  table_data,
+  statistic = list(all_continuous() ~ "{mean} ({sd})")
+)
+```
+
+---
 
 # Your turn 4
 
