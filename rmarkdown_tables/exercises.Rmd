@@ -15,12 +15,14 @@ library(knitr)
 
 ## Your Turn 1
 
-1.  Using Visual R Markdown, create a markdown table that represents these data: The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspiring, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.
+1.  Using Visual R Markdown, create a markdown table that represents these data: The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspirin, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.
+
 2.  Knit
 
 ## Your Turn 2
 
-1.  Using the `tidy()` function from broom, turn `response_model` and `marker_model` into dataframes.
+1.  Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
+
 2.  Bind the two resulting model dataframes on top of each other to create one dataframe
 3.  Turn the resulting dataframe into a table using `kable()`
 4.  Knit
@@ -28,8 +30,6 @@ library(knitr)
 ```{r broom-and-kable}
 response_model <- glm(response ~ age + stage, data = trial, family = binomial)
 marker_model <- lm(marker ~ trt + stage + age, data = trial)
-
-
 ```
 
 ## Your Turn 3
