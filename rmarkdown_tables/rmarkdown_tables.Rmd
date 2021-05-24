@@ -266,123 +266,115 @@ background-size: 20%
 
 ---
 
-
 # `tbl_cross()`
 
+### Creates a **cross-tabulation** of two categorical variables
 
-<br>
-
-### Creates a cross-tabulation of two categorical variables
-
-### Specify `row` and `col` arguments
-
-<br>
+--
 
 ```{r, eval=FALSE}
 library(gtsummary)
 tbl_cross(
-  row = `categorical variable`,
-  col = `categorical variable`
+  row = x,
+  col = y
 )
 ```
 
-
 ---
-
 
 # `tbl_cross()`
 
-### Create `table_data`
-
 ```{r}
-table_data <- diabetes %>%
+table_data <- diabetes %>% #<<
   mutate(
     # create diabetic category based on A1c and calculate bmi
-    diabetic = case_when(
-      glyhb >= 6.5 ~ "Diabetic", glyhb < 6.5 ~ "Healthy",
+    diabetic = case_when( #<<
+      glyhb >= 6.5 ~ "Diabetic", 
+      glyhb < 6.5 ~ "Healthy",
       NA ~ NA_character_
     ), bmi = (weight / height^2) * 703
   ) %>%
-  select(diabetic, age, gender, bmi)
+  select(diabetic, age, gender, bmi) #<<
 ```
 
-
 ---
-
 
 # `tbl_cross()`
 
-### Create a cross-tabulation of `diabetic` and `gender` in `table_data`
-
-<br>
-
-```{r}
-table_data %>% tbl_cross(row = diabetic, col = gender)
+```{r, eval = FALSE}
+tbl_cross(table_data, row = diabetic, col = gender) #<<
 ```
 
 ---
 
+# `tbl_cross()`
+
+```{r}
+tbl_cross(table_data, row = diabetic, col = gender)
+```
+
+---
+
+class: middle
 
 # `tbl_cross()` output
-
-<br>
-
-.pull-left[
-
-### `col` and `row` variable names as headers 
-
-### values as sub-headers 
-
-### `Total` by row and column
-
-### Missing = *Unknown* 
-
-]
-
-.pull-right[
 
 ```{r tbl_cross.png, echo=FALSE, out.weight='100%'}
 knitr::include_graphics("img/tbl_cross.png")
 ```
 
-]
-
 ---
-
 
 ## *`tbl_cross()`: variable names*
 
-### `gtsummary` uses the [`labelled` package](https://larmarange.github.io/labelled/index.html)
+### `gtsummary` uses the [`labelled` package](https://larmarange.github.io/labelled/index.html) to create labels
 
-#### Variable are named using the `"label"` attribute
+--
 
-```{r label-vars}
-library(labelled) # for var_label()
-var_label(table_data$diabetic) <- "Diabetes Status"
+```{r label-vars, eval = FALSE}
+library(labelled) 
+var_label(table_data$diabetic) <- "Diabetes Status" #<<
 var_label(table_data$diabetic)
 ```
 
+---
+
+## *`tbl_cross()`: variable names*
+
+### `gtsummary` uses the [`labelled` package](https://larmarange.github.io/labelled/index.html) to create labels
+
+```{r label-vars2, highlight.output=1}
+library(labelled) 
+var_label(table_data$diabetic) <- "Diabetes Status"
+var_label(table_data$diabetic) #<<
+```
 
 ---
 
 
 ## *`tbl_cross()`: variable names*
 
-#### Set multiple variable lables with `list()`
-
+### Set multiple variable lables with `list()`
 ```{r tbl_cross-var_label-mult}
-var_label(table_data) <- list(
+var_label(table_data) <- list( 
   gender = "Gender",
   diabetic = "Diabetes Status"
-)
-table_data %>% tbl_cross(row = diabetic, col = gender)
+) 
+```
+
+---
+
+## *`tbl_cross()`: variable names*
+
+```{r}
+tbl_cross(table_data, diabetic, gender)
 ```
 
 
 ---
 
 
-# Your turn 3
+## Your turn 3
 
 ###  Create a contingency table of `trial` (a dataset from gtsummary) using `tbl_cross()`: set `trt` to the rows and `response` to the columns.
 
