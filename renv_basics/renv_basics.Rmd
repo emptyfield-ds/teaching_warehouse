@@ -18,7 +18,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dp
 library(tidyverse)
 library(gapminder)
 library(here)
-# xaringan::inf_mr()
+# xaringan::inf_mr() ----
 ```
 
 ---
@@ -48,8 +48,6 @@ class: left, top
 
 # *renv:* some background
 
-<br><br>
-
 ### `renv` was developed to be an improvement to the [`Packrat` package](https://rstudio.github.io/packrat/)
 
 ### `packrat` stores project packages in a snapshot, which is portable to a different machine
@@ -59,16 +57,57 @@ class: left, top
 ---
 class: left, top
 
-# Why use *renv*?
+# What problem does `renv` solve?
 
-<br><br>
+## Example:
+
+--
+
+### You wrote some `dplyr` code
+
+```{r , eval=FALSE}
+add_rownames(data, var = "rowname")
+```
+
+--
+
+### Updates were made to the [`dplyr` package:](https://dplyr.tidyverse.org/news/index.html#deprecated)
+
+```
+Warning message:
+`add_rownames()` was deprecated in dplyr 1.0.0.
+Please use `tibble::rownames_to_column()` instead.
+```
+
+--
+
+### You don't want your code to break!!
+
+
+---
+class: left, top
+
+# How `renv` solves this problem
+
+### `renv` gives each project it's *<i>very own library of packages</i>*
+
+### Upgrades/changes to packages only affect the packages in each `renv` project
+
+### `renv` creates a `lockfile` that lists the packages and R version used in each project 
+
+### The `lockfile` allows us to capture and restore packages per project
+
+
+---
+class: left, top
+
+# Why use *renv*?
 
 ### 1. Each project gets it's own library (*isolated*)
 
 ### 2. The project library can be shipped with a self-contained lockfile, `renv.lock` (*portable*)
 
 ### 3. `renv.lock` can be captured with `renv::snapshot()` and used later with `renv::restore()` (*reproducible*)
-
 
 
 ---
@@ -93,15 +132,13 @@ class: left, top
 
 ## Your Turn 1
 
-<br><br>
-
 ### 4. In the console, initiate a `renv` environment with `renv::init()`
 
 ### 5. Open the file called `renv.lock`. 
 
 --
 
-### <i> What is this information?</i>
+## *<i>What is this information?</i>*
 
 ---
 class: left, top
@@ -140,45 +177,45 @@ class: left, top
 
 ## Your Turn 1 (cont)
 
-<br><br>
-
 ```{r plot-dot-r-file, echo=FALSE, out.width='100%'}
 knitr::include_graphics("img/plot-dot-r-file-01.png")
 ```
 
 --
 
-### <i>What packages does your project depend on?</i>
+### *<i>What packages does your project depend on?</i>*
 
 
 ---
 class: left, top
 
 ## Your Turn 1 (cont)
-
-<br><br>
 
 ### <i>Make a prediction, then run `renv::dependencies()` in the console (*not* in `plot.R`!) to see if you were right.</i>
 
 --
 
-<br><br>
 
 ```{r renv-dependencies-01, echo=FALSE, out.width='100%'}
 knitr::include_graphics("img/renv-dependencies-01.png")
 ```
 
+#### - The output lists the *Source* (`plot.R`), the *Package* (`ggplot2`), if it's *Require*d and the *Version* 
+
+#### - `Dev` by default only returns [runtime dependencies](https://rstudio.github.io/renv/reference/dependencies.html)
 
 ---
 class: left, top
 
 ## Your Turn 1 (cont)
 
-### <i>Initiate `renv`</i>
+### *<i>Initiate `renv`</i>*
 
 .pull-left[
 
-#### <i>1) locate package dependencies and create `renv` folder</i>
+### <i>- Find package dependencies</i>
+
+### <i>- Create `renv` folder (`cache`)</i>
 
 ]
 
@@ -199,13 +236,13 @@ class: left, top
 
 ## Your Turn 1 (cont)
 
-### <i>Initiate `renv`</i>
+### *<i>Initiate `renv`</i>*
 
 --
 
 .pull-left[
 
-#### <i>2) list packages in project library</i>
+### <i>- List packages in project library</i>
 
 ]
 
@@ -227,11 +264,13 @@ class: left, top
 
 ## Your Turn 1 (cont)
 
-### <i>Initiate `renv`</i>
+### *<i>Initiate `renv`</i>*
 
 .pull-left[
 
-#### <i>3) write `renv.lock` file and restart R</i>
+### <i>- Write `renv.lock` file</i>
+
+### <i>- Restart R</i>
 
 ]
 
@@ -271,11 +310,11 @@ knitr::include_graphics("img/renv-lock-expl.png")
 ---
 class: left, top
 
-## *`renv::init()`*
+# How `renv` works
 
-### Stores packages in project-local private library
+### Global package cache shared across `renv` projects 
 
-```{r renv-init-pkgs-01.png, echo=FALSE, out.width='49%', fig.align='center'}
+```{r renv-init-pkgs-01.png, echo=FALSE, out.width='50%', fig.align='center'}
 knitr::include_graphics("img/renv-init-pkgs-01.png")
 ```
 
@@ -284,9 +323,11 @@ class: left, top
 
 ## *`renv::init()`*
 
+### Creates local `renv` cache 
+
 ### Documents packages in `renv.lock`
 
-```{r renv-init-pkgs-02.png, echo=FALSE, out.width='69%', fig.align='center'}
+```{r renv-init-pkgs-02.png, echo=FALSE, out.width='53%', fig.align='center'}
 knitr::include_graphics("img/renv-init-pkgs-02.png")
 ```
 
@@ -676,5 +717,3 @@ class: inverse, left
 ### [renv: Getting started](https://rstudio.github.io/renv/articles/renv.html): A brief introduction to renv and its workflows
 ### [renv: Project Environments for R (blog)](https://blog.rstudio.com/2019/11/06/renv-project-environments-for-r/): An RStudio blog post introducing renv
 ### [renv: Project Environments for R (talk)](https://www.rstudio.com/resources/rstudioconf-2020/renv-project-environments-for-r/): A talk on renv from rstudio::conf() 2020 
-
-### [`targets` (talk)](https://www.youtube.com/watch?v=Gqn7Xn4d5NI) Reproducible Computation at Scale in R with Targets
