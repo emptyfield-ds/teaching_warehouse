@@ -338,13 +338,22 @@ class: left, top
 
 # *`renv::dependencies()`*
 
-### `renv::dependencies()` searches your project files looking for packages and related files
+--
 
+## `library(ggplot2)`
+## `targets::tar_target()`
+## `require(dplyr)`
+## `requireNamespace("devtools")`
 
+---
+class: left, top
 
-```{r renv-depend.png, echo=FALSE, out.width='60%', fig.align='center'}
-knitr::include_graphics("img/renv-depend.png")
-```
+# *`renv::dependencies()`*
+
+## ~~`library(`~~**`ggplot2`**~~`)`~~
+## **`targets`**~~`::tar_target()`~~
+## ~~`require(`~~**`dplyr`**~~`)`~~
+## ~~`requireNamespace("`~~**`devtools`**~~`")`~~
 
 ---
 class: left, top

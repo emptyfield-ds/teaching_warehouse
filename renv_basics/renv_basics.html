@@ -3,7 +3,7 @@
   <head>
     <title>Reproducing package environments</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-05-27" />
+    <meta name="date" content="2021-05-28" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Reproducing package environments
 ## using renv to lock packages
-### 2021-05-27
+### 2021-05-28
 
 ---
 
@@ -320,11 +320,22 @@ class: left, top
 
 # *`renv::dependencies()`*
 
-### `renv::dependencies()` searches your project files looking for packages and related files
+--
 
+## ~~`library(ggplot2)`~~
+## ~~`targets::tar_target()`~~
+## ~~`require(dplyr)`~~
+## ~~`requireNamespace("devtools")`~~
 
+---
+class: left, top
 
-&lt;img src="img/renv-depend.png" width="60%" style="display: block; margin: auto;" /&gt;
+# *`renv::dependencies()`*
+
+## ~~`library(`~~**`ggplot2`**~~`)`~~
+## **`targets`**~~`::tar_target()`~~
+## ~~`require(`~~**`dplyr`**~~`)`~~
+## ~~`requireNamespace("`~~**`devtools`**~~`")`~~
 
 ---
 class: left, top
