@@ -311,6 +311,29 @@ knitr::include_graphics("img/renv-snapshot-02.png")
 knitr::include_graphics("img/renv-snapshot-03.png")
 ```
 
+
+---
+
+class: inverse
+
+# renv workflow
+
+1. Create a project
+2. `renv::init()`
+3. Write code
+4. `renv::snapshot()`
+5. Iterate
+
+---
+
+class: inverse
+
+# Restoring project states
+
+1. Copy project
+2. `renv::restore()`
+3. That's it!
+
 ---
 
 ## Using renv with targets
