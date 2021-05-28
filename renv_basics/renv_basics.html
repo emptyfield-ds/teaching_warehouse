@@ -72,7 +72,11 @@ class: inverse
 
 1. Each project gets it's own library (*isolated*)
 
+--
+
 2. The project library can be shipped with a self-contained lockfile, `renv.lock` (*portable*)
+
+--
 
 3. `renv.lock` can be restored with `renv::restore()` (*reproducible*)
 
@@ -172,7 +176,6 @@ usethis::create_project("~/Projects/my-new-project") #&lt;&lt;
 
 ---
 
-
 ## Your Turn 1
 
 .pull-left[
@@ -180,8 +183,6 @@ usethis::create_project("~/Projects/my-new-project") #&lt;&lt;
 ### Packages in project library
 
 ]
-
---
 
 .pull-right[
 
@@ -339,7 +340,7 @@ class: inverse
 
 .large[
 ####  Create a new project
-#### Load `targets and run `tar_script()` in the console. Read `_targets.R` and predict what your dependencies are.&lt;/i&gt;
+#### Load targets and run `tar_script()` in the console. Read `_targets.R` and predict what your dependencies are.
 #### Run `renv::dependencies()`
 #### Run `tar_renv()` and look at `_targets_packages.R` What did targets do here? Why is that important? Run `renv::dependencies()` again and confirm that we can detect all of our dependencies.
 #### Run `renv::init()`
