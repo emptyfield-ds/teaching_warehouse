@@ -263,7 +263,7 @@ knitr::include_graphics("img/renv-snapshot-01.png")
 
 ## Your Turn 2
 
-### Modify `plot.R`In `plot.R`, modify your code to load the `patchwork` library, then replace your previous plot with `quickplot(mpg$displ) + quickplot(as.factor(mpg$cyl))`
+### In `plot.R`, modify your code to load the `patchwork` library, then replace your previous plot with `quickplot(mpg$displ) + quickplot(as.factor(mpg$cyl))`
 ### Run `renv::status()` in the console
 ### Run `renv::snapshot()`. What's changed?
 
