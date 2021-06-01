@@ -35,7 +35,7 @@ Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
 1.  Add patchwork to the packages argument at the top of `_targets.R`
 2.  Remove the `top10_barplot` target and change the `forest_map` target to use `plot_top_change_2010(forest)` instead.
-3.  Run `tar_visnetwork()` , `tar_make()`, and `tar_read()`
+3.  Run `tar_visnetwork()`, `tar_make()`, and `tar_read()`
 
 ## Your Turn 5
 
