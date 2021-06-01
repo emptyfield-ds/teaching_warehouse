@@ -18,16 +18,7 @@ diabetes <- read_csv("diabetes.csv") %>%
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 
 knitr::opts_chunk$set(
-  echo = FALSE, 
-  dev = "ragg_png",
-  fig.width = 6,
-  fig.asp = 0.618,
-  fig.retina = 2,
-  fig.align = "center",
-  dpi = 320,
-  fig.show = "hold",
-  fig.path = here::here("figures/figure-"), 
-  out.width = "80%"
+  
 )
 ```
 
