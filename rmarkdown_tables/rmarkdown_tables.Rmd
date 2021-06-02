@@ -272,6 +272,7 @@ background-size: 20%
 ```{r, eval=FALSE}
 library(gtsummary)
 tbl_cross(
+  data,
   row = x,
   col = y
 )
