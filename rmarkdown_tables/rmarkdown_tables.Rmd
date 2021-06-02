@@ -703,7 +703,7 @@ tibble::tribble(
 
 ---
 
-## Your turn 4
+## Your Turn 4
 
 #### Create a summary table of `trial` by the `trt` variable.
 
