@@ -534,8 +534,10 @@ my_project
 
 ## Your Turn 2
 
-### Load the here package in the setup chunk. In the setup chunk, globally set `fig.path` to "figures/figure-" using `here()`. This will tell knitr to create figures in the "figures" folder with a prefix of "figures-".
-### Knit this document and take a look at the images in the `figures` folder.
+.large[
+#### Load the here package in the setup chunk. In the setup chunk, globally set `fig.path` to "figures/figure-" using `here()`. This will tell knitr to create figures in the "figures" folder with a prefix of "figures-".
+#### Knit this document and take a look at the images in the `figures` folder.
+]
 
 ---
 
