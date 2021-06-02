@@ -605,7 +605,7 @@ knitr::include_graphics("img/vrmd_img.png")
 
 ## Your Turn 4
 
-### Include `img/r_rollercoaster.png` in the code chunk below.
+### Include `external_img/r_rollercoaster.png` in the code chunk below.
 ### Knit
 ### Let's change a few chunk options: 1) Add a chunk name 2) Set `fig.alt` describing the image 3) Modify `out.width` to use a different percentage than the default.
 
