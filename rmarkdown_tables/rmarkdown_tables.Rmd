@@ -218,12 +218,9 @@ knitr::include_graphics("img/kable-caption.png")
 
 ## Your turn 2
 
-#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
-
-#### Bind the two resulting model dataframes on top of each other to create one dataframe
-
+#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes, binding them together with `bind_rows()`
 #### Turn the resulting dataframe into a table using `kable()`
-
+#### Set the `eval` chunk option to `TRUE` 
 #### Knit
 
 ```{r}

@@ -21,15 +21,20 @@ library(knitr)
 
 ## Your Turn 2
 
-1.  Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
-
-2.  Bind the two resulting model dataframes on top of each other to create one dataframe
-3.  Turn the resulting dataframe into a table using `kable()`
+1.  Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes, binding them together with `bind_rows()`
+2.  Turn the resulting dataframe into a table using `kable()`
+3.  Set the `eval` chunk option to `TRUE` 
 4.  Knit
 
-```{r broom-and-kable}
+```{r broom-and-kable, eval = FALSE}
 response_model <- glm(response ~ age + stage, data = trial, family = binomial)
 marker_model <- lm(marker ~ trt + stage + age, data = trial)
+
+bind_rows(
+  _____(response_model),
+  _____(marker_model),
+) %>% 
+  _____()
 ```
 
 ## Your Turn 3
