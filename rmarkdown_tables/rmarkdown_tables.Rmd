@@ -885,7 +885,7 @@ tibble::tribble(
   "`add_q()`", "add a column of q values to control for multiple comparisons"
 ) %>%
   gt::gt() %>%
-  gt::fmt_markdown(columns = c(Function))
+  gt::fmt_markdown(columns = everything())
 ```
 
 ---
