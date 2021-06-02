@@ -90,7 +90,7 @@ fig1a + fig1b
 
 ## Your Turn 4
 
-1.  Include `img/r_rollercoaster.png` in the code chunk below.
+1.  Include `external_img/r_rollercoaster.png` in the code chunk below.
 2.  Knit
 3.  Let's change a few chunk options:
 
