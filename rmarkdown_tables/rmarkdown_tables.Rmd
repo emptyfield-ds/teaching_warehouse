@@ -218,12 +218,9 @@ knitr::include_graphics("img/kable-caption.png")
 
 ## Your turn 2
 
-#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
-
-#### Bind the two resulting model dataframes on top of each other to create one dataframe
-
+#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes, binding them together with `bind_rows()`
 #### Turn the resulting dataframe into a table using `kable()`
-
+#### Set the `eval` chunk option to `TRUE` 
 #### Knit
 
 ```{r}
@@ -275,6 +272,7 @@ background-size: 20%
 ```{r, eval=FALSE}
 library(gtsummary)
 tbl_cross(
+  data,
   row = x,
   col = y
 )
@@ -705,7 +703,7 @@ tibble::tribble(
 
 ---
 
-## Your turn 4
+## Your Turn 4
 
 #### Create a summary table of `trial` by the `trt` variable.
 
@@ -839,7 +837,7 @@ tibble::tribble(
   ~Argument, ~Description,
   "`label`", "modify variable labels in table",
   "`exponentiate`", "exponentiate model coefficients",
-  "`include=", "names of variables to include in output. Default is all variables",
+  "`include", "names of variables to include in output. Default is all variables",
   "`show_single_row`", "By default, categorical variables are printed on multiple rows. If a variable is dichotomous and you wish to print the regression coefficient on a single row, include the variable name(s) here.",
   "`conf.level`", "confidence level of confidence interval",
   "`intercept`", "indicates whether to include the intercept",
@@ -887,7 +885,7 @@ tibble::tribble(
   "`add_q()`", "add a column of q values to control for multiple comparisons"
 ) %>%
   gt::gt() %>%
-  gt::fmt_markdown(columns = c(Function))
+  gt::fmt_markdown(columns = everything())
 ```
 
 ---
