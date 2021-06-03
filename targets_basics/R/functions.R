@@ -35,7 +35,13 @@ create_figure_one <- function(diabetes) {
     drop_na() %>%
     ggplot(aes(ratio, glyhb)) +
     geom_point(shape = 21, fill = "grey80", color = "white", size = 2) +
-    geom_smooth(size = 1, color = "steelblue", se = FALSE, method = "lm") +
+    geom_smooth(
+      size = 1,
+      color = "steelblue",
+      se = FALSE,
+      method = "lm",
+      formula = y ~ x
+    ) +
     scale_x_log10() +
     theme_minimal(14) +
     labs(

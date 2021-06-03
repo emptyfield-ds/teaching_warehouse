@@ -99,12 +99,12 @@ copy_targets_template("your_turn_5.R")
 ## Your Turn 6
 
 1. Let's skip ahead in our analysis. Run this code to create a new `_targets.R` file that has most of the targets we want to create. Open the file to make sure it was created correctly. 
-2. Run `tar_make()` to catch up on the new targets.
 
 ```{r create-targets-r}
 copy_targets_template("your_turn_6.R")
 ```
 
+2. Run `tar_make()` to catch up on the new targets.
 3. Open `report.Rmd`. Which targets does this report depend on? Look for `tar_load()` and `tar_read()`.
 4. Add a new target to generate your report. The format for for rendering a R Markdown file is `tar_render(name_of_target, "name_of_report.Rmd")`.
 5.  Run `tar_visnetwork()` and `tar_make()`. Open your rendered report from the Files pane.
