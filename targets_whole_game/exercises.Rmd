@@ -50,7 +50,7 @@ copy_targets_template("your_turn_1.R")
 
 ## Your Turn 2
 
-Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+Something not quite working from the last exercise? Run this code to update `_targets.R` and catch up:
 
 ```{r}
 copy_targets_template("your_turn_2.R")
@@ -66,7 +66,7 @@ copy_targets_template("your_turn_2.R")
 
 ## Your Turn 3
 
-Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+Something not quite working from the last exercise? Run this code to update `_targets.R` and catch up:
 
 ```{r}
 copy_targets_template("your_turn_3.R")
@@ -78,7 +78,7 @@ copy_targets_template("your_turn_3.R")
 
 ## Your Turn 4
 
-Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+Something not quite working from the last exercise? Run this code to update `_targets.R` and catch up:
 
 ```{r}
 copy_targets_template("your_turn_4.R")
@@ -87,10 +87,11 @@ copy_targets_template("your_turn_4.R")
 1.  Add patchwork to the packages argument at the top of `_targets.R`
 2.  Remove the `top10_barplot` target and change the `forest_map` target to use `plot_top_change_2010(forest)` instead.
 3.  Run `tar_visnetwork()`, `tar_make()`, and `tar_read()`
+4.  We just got rid of `top10_barplot`, but if you run `tar_read(top10_barplot)`, you'll see it's still in our cache. Run `tar_prune()` to remove any targets that are no longer part of the pipeline. Confirm that it's gone with `tar_read()`.
 
 ## Your Turn 5
 
-Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+Something not quite working from the last exercise? Run this code to update `_targets.R` and catch up:
 
 ```{r}
 copy_targets_template("your_turn_5.R")
@@ -105,13 +106,16 @@ copy_targets_template("your_turn_5.R")
 
     -   Add a new target called `brazil_causes_2010` using `clean_2010_causes()` on `brazil_loss`
 
-    -   Add a new target called `brazil_causes_table` using `table_brazil_causes()` on `brazil_causes_2010`. For this target, we also need to add "gt" to the packages in `tar_option_set()` since we use the gt package for this table.
+    -   Add a new target called `brazil_causes_table` using `table_brazil_causes()` on `brazil_causes_2010`. 
+        For this target, we also need to add "gt" to the packages in `tar_option_set()` since we use the gt package in `table_brazil_causes()`.
 
-    -   Add a new target called `brazil_causes_hist` using `plot_cause_hist()` on `brazil_loss`. Note that when you look at ggplots, ggplot2 actually re-builds the plot on the fly. That means you may need to load the packages and functions we're using in your local environment, as well.
+    -   Add a new target called `brazil_causes_hist` using `plot_cause_hist()` on `brazil_loss`. 
+        Note that when you look at ggplots, ggplot2 actually re-builds the plot on the fly. 
+        That means you may need to load the packages and functions we're using in your local environment, as well.
 
 ## Your Turn 6
 
-Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+Something not quite working from the last exercise? Run this code to update `_targets.R` and catch up:
 
 ```{r}
 copy_targets_template("your_turn_6.R")
