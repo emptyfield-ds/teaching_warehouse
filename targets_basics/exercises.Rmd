@@ -49,7 +49,7 @@ copy_targets_template("your_turn_2.R")
   * Read the file in by adding this target (fill in the blank with the name of the file path target!):
 
 ```{r diabetes-target, eval = FALSE}
-diabetes = read_csv(__________) %>% 
+diabetes = read_csv(__________, col_types = cols()) %>% 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 ```
 
@@ -68,7 +68,7 @@ copy_targets_template("your_turn_3.R")
 1. Change `diabetes_file` to use `diabetes.csv` instead
 2. Run `tar_outdated()` in the console. What's this telling you? Confirm with `tar_visnetwork()`
 3. Predict which targets are going to re-run, then run `tar_make()`. Were you right?
-4. Confirm that `diabetes` has changed by looking at it with `tar_read()`
+4. Confirm that `diabetes` has changed by looking at it with `tar_read()`. The new dataset should have 403 rows and 20 columns.
 
 ## Your Turn 4
 
