@@ -1,6 +1,0 @@
-name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
-plot|stem|4045a6181bd3e167|2fb7e7ce3327943a|8b75a1fb39c7cc6b|1931196220||t18765.9367849473s|e9d81d1ca088c478|161862|rds|vector|||1.353||
-create_line_plot|function|ba135df9c60c1283||||||||||||||
-gapminder_file|stem|6de84973d50a8a9a|8abedcd8635d0df0|ef46db3751d8e999|1045370801|gapminder.csv|t18765.8114349794s|e2c152d8c0425b72|82097|file|vector|||1.314||
-gapminder|stem|52af4abb765f42fa|01c90fbf218710e6|3538b6b09d73cf53|1834825725||t18765.8210558058s|516caaefc925d35c|30008|rds|vector|||0.041||
-report|stem|7b9448a0689f1984|936b46ae5a9a3c39|bf76e7078ef8d663|-237041703|report.html*report.Rmd|t18765.9389544718s|56444c60cf4294e0|1160683|file|vector|||2.855||

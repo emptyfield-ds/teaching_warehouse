@@ -358,8 +358,8 @@ tar_make()
 
 --
 
-## **`tar_read(target_name)`**: return target results
-## **`tar_load(target_name)`**: load `target_name` into global environment
+## **`tar_read(`**_`target_name`_**`)`**: return target results
+## **`tar_load(`**_`target_name`_**`)`**: load `target_name` into global environment
 
 ---
 
@@ -540,7 +540,12 @@ gapminder %>%
 create_line_plot <- function(gapminder) {
   gapminder %>%
     filter(continent != "Oceania") %>%
-    ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+    ggplot(aes(
+      x = year, 
+      y = lifeExp, 
+      group = country, 
+      color = country
+    )) +
     geom_line(lwd = 1, show.legend = FALSE) +
     facet_wrap(~ continent) +
     scale_color_manual(values = country_colors) + #<< 
@@ -628,7 +633,7 @@ gapminder %>%
 ### Change `diabetes_file` to use `diabetes.csv` instead
 ### Run `tar_outdated()` in the console. What's this telling you? Confirm with `tar_visnetwork()`
 ### Predict which targets are going to re-run, then run `tar_make()`. Were you right?
-### Confirm that `diabetes` has changed by looking at it with `tar_read()`
+### Confirm that `diabetes` has changed by looking at it with `tar_read()`. The new dataset should have 403 rows and 20 columns.
 
 
 ---
@@ -681,7 +686,7 @@ gapminder %>%
 ## ~~`functions.R` only works well for small pipelines, but targets doesn't have a preference for you organize them~~
 
 .large[
-> While you’re free to arrange functions into files as you wish, [avoid]the two extremes... don’t put all functions into one file and don’t put each function into its own separate file. —[R Packages, 2nd Ed.](https://r-pkgs.org/r.html)
+> While you’re free to arrange functions into files as you wish, [avoid] the two extremes... don’t put all functions into one file and don’t put each function into its own separate file. —[R Packages, 2nd Ed.](https://r-pkgs.org/r.html)
 ]
 
 ---
@@ -704,6 +709,7 @@ class: inverse
 ## Your Turn 4
 
 ### Add `source("R/functions.R")` to `_targets.R`
+### Add "gtsummary" to the `packages` argument of `tar_option_set()`
 ### Create a new target called `table_one` using `create_table_one(diabetes)`
 ### Run `tar_visnetwork()` and `tar_make()`
 ### Take a look at the target you just created

@@ -3,7 +3,7 @@
   <head>
     <title>Code pipelines in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-05-19" />
+    <meta name="date" content="2021-06-03" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Code pipelines in R
 ## Managing code with targets
-### 2021-05-19
+### 2021-06-03
 
 ---
 
@@ -346,8 +346,8 @@ tar_make()
 
 --
 
-## **`tar_read(target_name)`**: return target results
-## **`tar_load(target_name)`**: load `target_name` into global environment
+## **`tar_read(`**_`target_name`_**`)`**: return target results
+## **`tar_load(`**_`target_name`_**`)`**: load `target_name` into global environment
 
 ---
 
@@ -511,7 +511,12 @@ tar_read(plot)
 create_line_plot &lt;- function(gapminder) {
   gapminder %&gt;%
     filter(continent != "Oceania") %&gt;%
-    ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+    ggplot(aes(
+      x = year, 
+      y = lifeExp, 
+      group = country, 
+      color = country
+    )) +
     geom_line(lwd = 1, show.legend = FALSE) +
     facet_wrap(~ continent) +
 *   scale_color_manual(values = country_colors) +
@@ -592,7 +597,7 @@ tar_read(plot)
 ### Change `diabetes_file` to use `diabetes.csv` instead
 ### Run `tar_outdated()` in the console. What's this telling you? Confirm with `tar_visnetwork()`
 ### Predict which targets are going to re-run, then run `tar_make()`. Were you right?
-### Confirm that `diabetes` has changed by looking at it with `tar_read()`
+### Confirm that `diabetes` has changed by looking at it with `tar_read()`. The new dataset should have 403 rows and 20 columns.
 
 
 ---
@@ -645,7 +650,7 @@ tar_read(plot)
 ## ~~`functions.R` only works well for small pipelines, but targets doesn't have a preference for you organize them~~
 
 .large[
-&gt; While you’re free to arrange functions into files as you wish, [avoid]the two extremes... don’t put all functions into one file and don’t put each function into its own separate file. —[R Packages, 2nd Ed.](https://r-pkgs.org/r.html)
+&gt; While you’re free to arrange functions into files as you wish, [avoid] the two extremes... don’t put all functions into one file and don’t put each function into its own separate file. —[R Packages, 2nd Ed.](https://r-pkgs.org/r.html)
 ]
 
 ---
@@ -668,6 +673,7 @@ class: inverse
 ## Your Turn 4
 
 ### Add `source("R/functions.R")` to `_targets.R`
+### Add "gtsummary" to the `packages` argument of `tar_option_set()`
 ### Create a new target called `table_one` using `create_table_one(diabetes)`
 ### Run `tar_visnetwork()` and `tar_make()`
 ### Take a look at the target you just created
