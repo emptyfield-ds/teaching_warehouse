@@ -114,6 +114,8 @@ copy_targets_template("your_turn_5.R")
         Note that when you look at ggplots, ggplot2 actually re-builds the plot on the fly. 
         That means you may need to load the packages and functions we're using in your local environment, as well.
 
+By the way, you can quickly load all of the targets in your pipeline into your global environment by running  `tar_load(everything())` in the console.
+
 ## Your Turn 6
 
 Something not quite working from the last exercise? Run this code to update `_targets.R` and catch up:
