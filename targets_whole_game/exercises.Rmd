@@ -56,7 +56,7 @@ Get a little lost on the last exercise? Run this code to update `_targets.R` and
 copy_targets_template("your_turn_2.R")
 ```
 
-1.  In `_targets.R`, we're sourcing `R/functions.R`. Open that file and take a look at the first function, `map_2010_forest_conversion()`. This function takes a dataframe---forest---and generates a map of forest conversion in 2010.
+1.  Open `R/functions.R` and take a look at the first function, `map_2010_forest_conversion()`. This function takes a dataframe---forest---and generates a map of forest conversion in 2010.
 2.  Let's add this map to our targets plan. First, add a few more packages that we need for this function to the `packages` argument of `tar_option_set()`: "maps", "sf", "scico".
 3.  We also need to load our custom functions. Add `source("R/functions.R")` after `tar_option_set()`.
 3.  Add `forest_map = map_2010_forest_conversion(forest)` as a target
