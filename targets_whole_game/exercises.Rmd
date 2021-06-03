@@ -6,6 +6,19 @@ output: html_document
 For this set of exercises, we'll work through a targets pipeline to run an analysis and generate an R Markdown report in `whole_game.Rmd`.
 Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
+```{r setup}
+library(targets)
+
+copy_targets_template <- function(template) {
+  file.copy(
+    file.path("templates", template),
+    "_targets.R",
+    overwrite = TRUE
+  )
+}
+```
+
+
 ## Your Turn 1
 
 1.  Open `_targets.R` and take a look at the structure of the file. targets requires this file to run! You can also open this file at the console with `tar_edit()`.
@@ -18,6 +31,13 @@ Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
 ## Your Turn 2
 
+Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+
+```{r}
+# this function is defined in the `setup` chunk above!
+copy_targets_template("your_turn_2.R")
+```
+
 1.  In `_targets.R`, we're sourcing `R/functions.R`. Open that file and take a look at the first function, `map_2010_forest_conversion()`. This function takes a dataframe---forest---and generates a map of forest conversion in 2010.
 2.  Let's add this map to our targets plan. First, add a few more packages that we need for this function to the `packages` argument of `tar_option_set()`: "maps", "sf", "scico".
 3.  We also need to load our custom functions. Add `source("R/functions.R")` after `tar_option_set()`.
@@ -28,17 +48,38 @@ Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
 ## Your Turn 3
 
+Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+
+```{r}
+# this function is defined in the `setup` chunk above!
+copy_targets_template("your_turn_3.R")
+```
+
 1.  The next function in `R/functions.R` , `barplot_top_10_change()`, takes `forest` and returns a barplot of the 10 countries with the highest absolute change in 2010. Add this function as a target called `top10_barplot`.
 2.  Take a look with `tar_visnetwork()`, then run `tar_make()`.
 3.  Use `tar_read()` to look at the the bar plot
 
 ## Your Turn 4
 
+Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+
+```{r}
+# this function is defined in the `setup` chunk above!
+copy_targets_template("your_turn_4.R")
+```
+
 1.  Add patchwork to the packages argument at the top of `_targets.R`
 2.  Remove the `top10_barplot` target and change the `forest_map` target to use `plot_top_change_2010(forest)` instead.
 3.  Run `tar_visnetwork()`, `tar_make()`, and `tar_read()`
 
 ## Your Turn 5
+
+Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+
+```{r}
+# this function is defined in the `setup` chunk above!
+copy_targets_template("your_turn_5.R")
+```
 
 1.  One at a time, running `tar_visnetwork()` , `tar_make()`, and `tar_read()` at each step, add five new targets:
 
@@ -54,6 +95,13 @@ Open `_targets.R`---our file to manage the targets pipeline---to get started.
     -   Add a new target called `brazil_causes_hist` using `plot_cause_hist()` on `brazil_loss`. Note that when you look at ggplots, ggplot2 actually re-builds the plot on the fly. That means you may need to load the packages and functions we're using in your local environment, as well.
 
 ## Your Turn 6
+
+Get a little lost on the last exercise? Run this code to update `_targets.R` and catch up:
+
+```{r}
+# this function is defined in the `setup` chunk above!
+copy_targets_template("your_turn_6.R")
+```
 
 1.  Open `whole_game.Rmd` and take a look. This is a report that uses the targets we created in our pipeline.
 2.  Use `tar_load()` to load `forest` and `brazil_causes_2010` in the `setup` chunk. This time, you will include `tar_load()` directly in your code!
