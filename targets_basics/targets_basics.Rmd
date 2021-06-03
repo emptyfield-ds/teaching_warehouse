@@ -358,8 +358,8 @@ tar_make()
 
 --
 
-## **`tar_read(target_name)`**: return target results
-## **`tar_load(target_name)`**: load `target_name` into global environment
+## **`tar_read(`**_`target_name`_**`)`**: return target results
+## **`tar_load(`**_`target_name`_**`)`**: load `target_name` into global environment
 
 ---
 
@@ -540,7 +540,12 @@ gapminder %>%
 create_line_plot <- function(gapminder) {
   gapminder %>%
     filter(continent != "Oceania") %>%
-    ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+    ggplot(aes(
+      x = year, 
+      y = lifeExp, 
+      group = country, 
+      color = country
+    )) +
     geom_line(lwd = 1, show.legend = FALSE) +
     facet_wrap(~ continent) +
     scale_color_manual(values = country_colors) + #<< 
