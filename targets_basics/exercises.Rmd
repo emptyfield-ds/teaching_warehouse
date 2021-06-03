@@ -4,8 +4,6 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
-library(gapminder)
 library(targets)
 
 copy_targets_template <- function(template) {
