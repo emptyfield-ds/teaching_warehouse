@@ -681,7 +681,7 @@ gapminder %>%
 ## ~~`functions.R` only works well for small pipelines, but targets doesn't have a preference for you organize them~~
 
 .large[
-> While you’re free to arrange functions into files as you wish, [avoid]the two extremes... don’t put all functions into one file and don’t put each function into its own separate file. —[R Packages, 2nd Ed.](https://r-pkgs.org/r.html)
+> While you’re free to arrange functions into files as you wish, [avoid] the two extremes... don’t put all functions into one file and don’t put each function into its own separate file. —[R Packages, 2nd Ed.](https://r-pkgs.org/r.html)
 ]
 
 ---
