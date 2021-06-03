@@ -597,7 +597,7 @@ tar_read(plot)
 ### Change `diabetes_file` to use `diabetes.csv` instead
 ### Run `tar_outdated()` in the console. What's this telling you? Confirm with `tar_visnetwork()`
 ### Predict which targets are going to re-run, then run `tar_make()`. Were you right?
-### Confirm that `diabetes` has changed by looking at it with `tar_read()`
+### Confirm that `diabetes` has changed by looking at it with `tar_read()`. The new dataset should have 403 rows and 20 columns.
 
 
 ---
@@ -673,6 +673,7 @@ class: inverse
 ## Your Turn 4
 
 ### Add `source("R/functions.R")` to `_targets.R`
+### Add "gtsummary" to the `packages` argument of `tar_option_set()`
 ### Create a new target called `table_one` using `create_table_one(diabetes)`
 ### Run `tar_visnetwork()` and `tar_make()`
 ### Take a look at the target you just created
