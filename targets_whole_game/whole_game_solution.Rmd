@@ -1,6 +1,8 @@
 ---
 title: "Whole Game: Analyzing deforestation"
-output: bookdown::html_document2
+output: 
+  bookdown::html_document2:
+    number_sections: false
 bibliography: packages.bib
 nocite: |
   @*
@@ -15,7 +17,18 @@ Check `exercises.Rmd` for guidance on creating this report!
 This will be an intentionally simplified report: we'll focus on the basics of creating output as targets and including them here as rendered material.
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  dev = "ragg_png",
+  dpi = 320, 
+  out.width = "80%",
+  fig.width = 6,
+  fig.asp = 0.618,
+  fig.retina = 2,
+  fig.align = "center",
+  fig.show = "hold"
+)
+
 library(targets)
 
 # write a bibliography file for all the packages we're using
@@ -45,7 +58,7 @@ pull_net <- function(top_changes, country) {
 }
 ```
 
-```{r forest-map, fig.cap="Net Forest Conversion in 2010"}
+```{r forest-map, fig.cap="Net Forest Conversion in 2010", fig.width = 9}
 tar_read(forest_map)
 ```
 
@@ -66,7 +79,7 @@ tar_read(brazil_causes_table)
 Table \@ref(tab:causes-table) shows the causes of deforestation in Brazil in 2010.
 The top cause was clearing for pasture (`r pull_hect(brazil_causes_2010, "Pasture")` hectacres), followed by fire (`r pull_hect(brazil_causes_2010, "Fire")` hectacres), then small scale clearing (`r pull_hect(brazil_causes_2010, "Small scale clearing")` hectacres).
 
-```{r causes-hist, fig.cap="Causes of deforestation in Brazil over time, sorted by maximum loss"}
+```{r causes-hist, fig.cap="Causes of deforestation in Brazil over time, sorted by maximum loss", fig.width = 9}
 tar_read(brazil_causes_hist)
 ```
 
