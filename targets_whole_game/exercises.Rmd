@@ -49,7 +49,7 @@ Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
     -   Add a new target called `brazil_causes_2010` using `clean_2010_causes()` on `brazil_loss`
 
-    -   Add a new target called `brazil_causes_table` using `table_brazil_causes()` on `brazil_causes_2010`
+    -   Add a new target called `brazil_causes_table` using `table_brazil_causes()` on `brazil_causes_2010`. For this target, we also need to add "gt" to the packages in `tar_option_set()` since we use the gt package for this table.
 
     -   Add a new target called `brazil_causes_hist` using `plot_cause_hist()` on `brazil_loss`
 
