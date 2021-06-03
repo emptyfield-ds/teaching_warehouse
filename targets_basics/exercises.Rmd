@@ -79,9 +79,10 @@ copy_targets_template("your_turn_4.R")
 ```
 
 1. Add `source("R/functions.R")` to `_targets.R`
-2. Create a new target called `table_one` using `create_table_one(diabetes)`
-3. Run `tar_visnetwork()` and `tar_make()`
-4. Take a look at the target you just created
+2. Add "gtsummary" to the `packages` argument of `tar_option_set()`
+3. Create a new target called `table_one` using `create_table_one(diabetes)`
+4. Run `tar_visnetwork()` and `tar_make()`
+5. Take a look at the target you just created
 
 ## Your Turn 5
 
