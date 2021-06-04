@@ -113,7 +113,7 @@ copy_targets_template("your_turn_5.R")
     -   Add a new target called `brazil_causes_hist` using `plot_cause_hist()` on `brazil_loss`. 
         Note that when you look at ggplots, ggplot2 actually re-builds the plot on the fly. 
         That means you may need to load the packages and functions we're using in your local environment, as well.
-        You can easily load everything called in `_targets.R` by running `tar_load_globals()` in the console.
+        You can easily load everything set up in `_targets.R` by running `tar_load_globals()` in the console.
 
 By the way, you can quickly load all of the targets in your pipeline into your global environment by running  `tar_load(everything())` in the console.
 
