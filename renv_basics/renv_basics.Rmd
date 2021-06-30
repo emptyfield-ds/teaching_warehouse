@@ -8,7 +8,7 @@ output:
     lib_dir: libs
     nature:
       highlightStyle: github
-      highlightLines: false
+      highlightLines: true
       countIncrementalSlides: false
 ---
 

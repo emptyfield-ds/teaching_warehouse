@@ -3,7 +3,7 @@
   <head>
     <title>Reproducing package environments</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-05-28" />
+    <meta name="date" content="2021-06-23" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Reproducing package environments
 ## using renv to lock packages
-### 2021-05-28
+### 2021-06-23
 
 ---
 
@@ -144,7 +144,7 @@ class: inverse
 
 
 ```r
-usethis::create_project("~/Projects/my-new-project") #&lt;&lt;
+*usethis::create_project("~/Projects/my-new-project")
 
 ✓ Creating '~/Projects/my-new-project/'
 ✓ Setting active project to '~/Projects/my-new-project'
@@ -242,7 +242,7 @@ usethis::create_project("~/Projects/my-new-project") #&lt;&lt;
 
 ## Your Turn 2
 
-### Modify `plot.R`In `plot.R`, modify your code to load the `patchwork` library, then replace your previous plot with `quickplot(mpg$displ) + quickplot(as.factor(mpg$cyl))`
+### In `plot.R`, modify your code to load the `patchwork` library, then replace your previous plot with `quickplot(mpg$displ) + quickplot(as.factor(mpg$cyl))`
 ### Run `renv::status()` in the console
 ### Run `renv::snapshot()`. What's changed?
 
@@ -445,7 +445,7 @@ class: inverse, left
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
-"highlightLines": false,
+"highlightLines": true,
 "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
@@ -512,7 +512,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
