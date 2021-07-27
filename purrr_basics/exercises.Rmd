@@ -15,7 +15,7 @@ diabetes <- read_csv("diabetes.csv")
 
 Here is a list:
 
-```{r}
+```{r YT-00-create-measurement-list}
 measurements <- list(
   blood_glucose = rnorm(10, mean = 140, sd = 10), 
   age = rnorm(5, mean = 40, sd = 5), 
@@ -27,21 +27,39 @@ measurements
 
 There are two ways to subset lists: dollar signs and brackets. Try to subset `blood_glucose` from `measurements` using these approaches. Are they different? What about `measurements[["blood_glucose"]]`?
 
-```{r}
+```{r YT-subset-brackets}
 measurements["blood_glucose"]
 ```
 
-```{r}
+```{r YT-subset-dollar-sign}
 measurements$blood_glucose
 ```
 
 
 ## Your Turn 2
 
+### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Name the new columns `bp_` + `mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
+
+View the diabetes data below with `glimpse()`
+
+```{r YT2-glimpse-diabetes}
+glimpse(diabetes)
+```
+
+```{r YT2-summarise-across}
+diabetes %>% 
+  group_by(______) %>% 
+    summarise(across(starts_with("__"), list(____ = mean), 
+      na.rm = TRUE, .names = "_______"))
+```
+
+
+## Your Turn 3
+
 1. Read the code in the first chunk and predict what will happen.
 2. Run the code in the first chunk. What does it return?
 
-```{r}
+```{r YT3-01-map-recreate}
 list(
   blood_glucose = sum(measurements$blood_glucose),
   age = sum(measurements$age),
@@ -51,65 +69,77 @@ list(
 
 3. Now, use `map()` to create the same output.
 
-```{r}
+```{r YT3-02-map-recreate}
 map(measurements, ___)
 ```
 
-## Your Turn 3
+## Your Turn 4
 
 Pass diabetes to `map()` and map using `class()`. What are these results telling you?
 
-```{r}
+```{r YT4-01-map-class}
 
 ```
 
+## Your Turn 5 
 
-## Your Turn 4
+Use `group_modify()` and `lm()` to model `chol` (the outcome) with `ratio`, grouped by `location`
+
+```{r YT5}
+diabetes %>% 
+  group_by(__________) %>% 
+  group_modify(~ broom::tidy(lm(____ ~ ______, data = .x)))
+```
+
+
+
+## Your Turn 6
 
 Write a function that returns the mean and standard deviation of a numeric vector.
 1. Give the function a name
 2. Find the mean and SD of `x`
 3. Map your function to `measurements`
 
-```{r}
+```{r YT5-00-write-mean-sd-function-list}
 _______ <- function(x) {
   x_mean <- _______
   x_sd <- _______
   tibble(mean = x_mean, sd = x_sd)
 }
-  
-
-
-```
-
-## Your Turn 5
-
-Do the same as #3 above but return a vector instead of a list. 
-
-```{r}
-
-```
-
-
-## Your Turn 6
-
-Check `diabetes` for any missing data. 
-
-1. Using the ~.f(.x) shorthand, check each column for any missing values using `is.na()` and `any()`
-2. Return a logical vector. Are any columns missing data? What happens if you don't include `any()`? Why?
-3. Try counting the number of missing, returning an integer vector
-
-```{r}
-
 ```
 
 ## Your Turn 7
 
+Do the same as #4 above but return a vector instead of a list. 
+
+```{r YT5-01-write-mean-sd-function-vector}
+
+```
+
+
+## Your Turn 8
+
+Check `diabetes` for any missing data. 
+
+1. Using the `~.f(.x)` shorthand, check each column for any missing values using `is.na()` and `any()`
+
+2. Return a logical vector. Are any columns missing data? What happens if you don't include `any()`? Why?
+
+3. Try counting the number of missing, returning an integer vector
+
+```{r YT8-check-missing}
+
+```
+
+## Your Turn 9
+
 1. Turn `diabetes` into a list split by `location` using the `split()` function. Check its length.
+
 2. Fill in the `model_lm` function to model `chol` (the outcome) with `ratio` and pass the `.data` argument to `lm()`
+
 3. map `model_lm` to `diabetes_list` so that it returns a data frame (by row).
 
-```{r}
+```{r YT7-00-model_lm-map}
 diabetes_list <- ____(diabetes, diabetes$location)
 length(_____)
 model_lm <- function(.data) {
@@ -117,16 +147,17 @@ model_lm <- function(.data) {
   # get model statistics
   broom::glance(mdl)
 }
-  
 ```
 
-## Your Turn 8
+## Your Turn 10
 
-1. Split the gapminder dataset into a list by country
+1. Split the `gapminder` dataset into a list by `country`
+
 2. Create a list of models using `map()`. For the first argument, pass `gapminder_countries`. For the second, use the `~.f()` notation to write a model with `lm()`. Use `lifeExp` on the left hand side of the formula and `year` on the second. Pass `.x` to the `data` argument.
+
 3. Use `map2()` to take the models list and the data set list and map them to `predict()`. Since we're not adding new arguments, you don't need to use `~.f()`.
 
-```{r}
+```{r YT8-00}
 gapminder_countries <- ____(gapminder, gapminder$country)
 models <- map(________, ~ ________)
 preds <- map2(________, ________, ________)
@@ -135,11 +166,11 @@ preds <- map2(________, ________, ________)
 head(preds)
 ```
 
-## Your turn 9
+## Your turn 11
 
 1. Create a new directory using the fs package. Call it "figures".
 
-```{r}
+```{r YT9-00}
 fs::dir_create(_______)
 ```
 
@@ -147,7 +178,7 @@ fs::dir_create(_______)
 3. Create a character vector that has the three variables we'll plot: "lifeExp", "pop", and "gdpPercap".
 4. Use `walk()` to save a plot for each of the variables
 
-```{r}
+```{r YT9-01}
 ggsave_gapminder <- ________(variable) {
   #  we're using `aes_string()` so we don't need the curly-curly syntax
   p <- ggplot(gapminder, aes_string(x = "year", y = ____, color = "country")) + 
@@ -165,17 +196,17 @@ ______(_______, ________)
 ```
 
 
-## Your Turn 10: Bonus!
+## Your Turn 12: Bonus!
 
 Finish the exercises early? Try this bonus exercise to work with nested columns
 
-Do the same as #7, but use a nested data frame.
+Do the same as #9, but use a nested data frame.
 1. Create a nested data frame. What does it look like?
 2. Use `map()` in `dplyr::mutate()` to map `data` to `model_lm`. 
 3. What does `nested_glance` look like?
 4. Unnest the data
 
-```{r}
+```{r YT10-00}
 diabetes_nested <- diabetes %>% 
   group_by(location) %>% 
   nest()

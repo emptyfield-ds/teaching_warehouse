@@ -21,15 +21,20 @@ library(knitr)
 
 ## Your Turn 2
 
-1.  Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes.
-
-2.  Bind the two resulting model dataframes on top of each other to create one dataframe
-3.  Turn the resulting dataframe into a table using `kable()`
+1.  Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes, binding them together with `bind_rows()`
+2.  Turn the resulting dataframe into a table using `kable()`
+3.  Set the `eval` chunk option to `TRUE` 
 4.  Knit
 
-```{r broom-and-kable}
+```{r broom-and-kable, eval = FALSE}
 response_model <- glm(response ~ age + stage, data = trial, family = binomial)
 marker_model <- lm(marker ~ trt + stage + age, data = trial)
+
+bind_rows(
+  _____(response_model),
+  _____(marker_model),
+) %>% 
+  _____()
 ```
 
 ## Your Turn 3
@@ -44,14 +49,15 @@ marker_model <- lm(marker ~ trt + stage + age, data = trial)
 
 ## Your Turn 4
 
-1.  Create a summary table of `trial` by the `trt` variable.
+1.  Create a summary table of `trial` by the `trt` variable. 
 2.  Modify the label for "Grade" to say "Tumor Grade"
 3.  Add an overall column and a p-value
 4.  Modify the table to use Mean (SD) and n (%) via the `statistic argument:`list(all_continuous() \~ "{mean} ({sd})", all_categorical() \~ "{n} ({p}%)")\`
 5.  Bold the labels
 6.  Modify the header with `modify_spanning_header(c("stat_1", "stat_2") ~ "**Treatment Received**")`
+7. Set the `eval` chunk option to `TRUE`
 
-```{r table-one}
+```{r table-one, eval = FALSE}
 trial %>% 
   tbl_summary(
     
@@ -65,8 +71,9 @@ trial %>%
 3.  Add the model statistics via `add_glance_source_note()`
 4.  Italicize the variable levels
 5.  Merge the table you just made with `marker_table` using `tbl_merge()`
+6. Set the `eval` chunk option to `TRUE`
 
-```{r table-two}
+```{r table-two, eval = FALSE}
 response_table <- response_model %>% 
   tbl_regression(
     
