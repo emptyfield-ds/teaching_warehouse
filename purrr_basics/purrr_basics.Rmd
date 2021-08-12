@@ -327,7 +327,8 @@ select(diabetes, matches("\\d"))
 ```{r slide-24-code, eval=FALSE}
 gapminder %>% 
   group_by(continent) %>% 
-    summarise(across(c("lifeExp", "gdpPercap"), median)) #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+      iqr = IQR))) #<<
 ```
 
 --
@@ -335,7 +336,8 @@ gapminder %>%
 ```{r slide-24-output, echo=FALSE, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
-    summarise(across(c("lifeExp", "gdpPercap"), median))
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, 
+      iqr = IQR)))
 ```
 
 ---
@@ -348,7 +350,7 @@ gapminder %>%
 ```{r slide-25-code, eval=FALSE, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
-    summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
       iqr = IQR))) #<<
 ```
 
@@ -357,7 +359,7 @@ gapminder %>%
 ```{r slide-25-output, echo=FALSE, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
-    summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
       iqr = IQR))) #<<
 ```
 
@@ -370,7 +372,7 @@ gapminder %>%
 ```{r slide-26-code, eval=FALSE}
 gapminder %>% 
   group_by(continent) %>% 
-    summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
       iqr = IQR) .names = "{.fn}_{.col}")) #<<
 ```
 
@@ -379,8 +381,8 @@ gapminder %>%
 ```{r slide-26-output, echo=FALSE, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
-    summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
-      iqr = IQR), .names = "{.fn}_{.col}")) #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+           iqr = IQR), .names = "{.fn}_{.col}")) #<<
 ```
 
 ---
@@ -392,7 +394,7 @@ gapminder %>%
 ```{r slide-27-mutate-across-summarise-code, eval=FALSE}
 diabetes %>% 
   group_by(gender) %>% 
-    summarise(across(starts_with("bp"), mean)) #<<
+  summarise(across(starts_with("bp"), mean)) #<<
 ```
 
 --
@@ -400,7 +402,7 @@ diabetes %>%
 ```{r slide-27-mutate-across-summarise-code-02, eval=FALSE}
 diabetes %>% 
   group_by(gender) %>% 
-    summarise(across(starts_with("bp"), mean, #<<
+  summarise(across(starts_with("bp"), list(mean = mean), #<<
       na.rm = TRUE, .names = "{.fn}_{.col}")) #<<
 ```
 
@@ -409,7 +411,7 @@ diabetes %>%
 ```{r slide-27-mutate-across-summarise-highlight, echo=FALSE, highlight.output=c(2)}
 diabetes %>% 
   group_by(gender) %>% 
-    summarise(across(starts_with("bp"), mean, 
+  summarise(across(starts_with("bp"), list(mean = mean), 
       na.rm = TRUE, .names = "{.fn}_{.col}"))
 ```
 
@@ -429,7 +431,7 @@ diabetes %>%
 ```{r YT2-summarise-across}
 diabetes %>% 
   group_by(gender) %>% 
-    summarise(across(starts_with("bp"), list(mean = mean), 
+  summarise(across(starts_with("bp"), list(mean = mean), 
       na.rm = TRUE, .names = "{.col}_{.fn}"))
 ```
 
@@ -1206,34 +1208,45 @@ class: middle, center
 
 ### Use `group_walk()` for side effects across groups 
 
-```{r slide-98-group_walk, eval=TRUE}
-temp <- "temp"
+```{r group_walk, eval = FALSE}
+temp <- "temporary_folder"
 fs::dir_create(temp)
 gapminder %>%
   group_by(continent) %>%
-  group_walk(~ write_csv(x = .x, file = file.path(temp, 
-    paste0(.y$continent, ".csv"))))
+  group_walk( #<<
+    ~ write_csv( #<<
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
 ```
 
-```{r slide-98-group_walk-02, , echo = FALSE, eval=FALSE}
-temp <- "temp"
+---
+
+## `group_walk()`
+
+### Use `group_walk()` for side effects across groups 
+
+```{r group_walk_run, echo = FALSE}
+temp <- "temporary_folder"
 fs::dir_create(temp)
 gapminder %>%
-  group_by(continent) %>%
-  group_walk(write_csv, x = ., file = file.path(temp, 
-    paste0(".csv")))
+  group_by(continent) %>% #<<
+  group_walk( #<<
+    ~ write_csv( #<<
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
 ```
 
---
-
-```{r slide-98-temp-dir_tree, echo=FALSE}
+```{r temp-dir_tree, echo=FALSE}
 fs::dir_tree(temp, pattern = "csv$")
 ```
 
-```{r slide-98-remove-temp, include=FALSE}
+```{r remove-temp, include=FALSE}
 unlink(temp, recursive = TRUE, force = TRUE)
 ```
-
 
 ---
 
