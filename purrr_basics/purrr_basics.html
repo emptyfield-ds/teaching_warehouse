@@ -3,7 +3,7 @@
   <head>
     <title>Functional programming and iteration in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-07-27" />
+    <meta name="date" content="2021-08-12" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -13,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Functional programming and iteration in R
-### 2021-07-27
+### 2021-08-12
 
 ---
 
@@ -70,7 +70,7 @@ list(char = "hello", num = 1, fun = mean)
 ## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7ff3f23a5d90&gt;
+## &lt;bytecode: 0x1194a5e68&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -102,7 +102,8 @@ measurements["blood_glucose"]
 
 ```
 ## $blood_glucose
-##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337 134.3555 131.0996
+##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337
+##  [9] 134.3555 131.0996
 ```
 
 
@@ -111,7 +112,8 @@ measurements$blood_glucose
 ```
 
 ```
-##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337 134.3555 131.0996
+##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337
+##  [9] 134.3555 131.0996
 ```
 
 
@@ -120,7 +122,8 @@ measurements[["blood_glucose"]]
 ```
 
 ```
-##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337 134.3555 131.0996
+##  [1] 127.9293 142.7743 150.8444 116.5430 144.2912 145.0606 134.2526 134.5337
+##  [9] 134.3555 131.0996
 ```
 
 ]
@@ -211,7 +214,7 @@ mean
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7ff3f23a5d90&gt;
+## &lt;bytecode: 0x1194a5e68&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -225,7 +228,7 @@ sd
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x7ff3f23a4708&gt;
+## &lt;bytecode: 0x138740878&gt;
 ## &lt;environment: namespace:stats&gt;
 ```
 
@@ -249,7 +252,7 @@ f
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7ff3f23a5d90&gt;
+## &lt;bytecode: 0x1194a5e68&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -313,19 +316,20 @@ mutate(
 
 ```
 ## # A tibble: 53,940 × 14
-*##    carat cut     color clarity depth table price     x     y     z carat_sd carat_mean depth_sd
-##    &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-##  1  0.23 Ideal   E     SI2      61.5    55   326  3.95  3.98  2.43    0.474      0.798     1.43
-##  2  0.21 Premium E     SI1      59.8    61   326  3.89  3.84  2.31    0.474      0.798     1.43
-##  3  0.23 Good    E     VS1      56.9    65   327  4.05  4.07  2.31    0.474      0.798     1.43
-##  4  0.29 Premium I     VS2      62.4    58   334  4.2   4.23  2.63    0.474      0.798     1.43
-##  5  0.31 Good    J     SI2      63.3    58   335  4.34  4.35  2.75    0.474      0.798     1.43
-##  6  0.24 Very G… J     VVS2     62.8    57   336  3.94  3.96  2.48    0.474      0.798     1.43
-##  7  0.24 Very G… I     VVS1     62.3    57   336  3.95  3.98  2.47    0.474      0.798     1.43
-##  8  0.26 Very G… H     SI1      61.9    55   337  4.07  4.11  2.53    0.474      0.798     1.43
-##  9  0.22 Fair    E     VS2      65.1    61   337  3.87  3.78  2.49    0.474      0.798     1.43
-## 10  0.23 Very G… H     VS1      59.4    61   338  4     4.05  2.39    0.474      0.798     1.43
-*## # … with 53,930 more rows, and 1 more variable: depth_mean &lt;dbl&gt;
+*##    carat cut       color clarity depth table price     x     y     z carat_sd
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43    0.474
+##  2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31    0.474
+##  3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31    0.474
+##  4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63    0.474
+##  5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75    0.474
+##  6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48    0.474
+##  7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47    0.474
+##  8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53    0.474
+##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49    0.474
+## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39    0.474
+*## # … with 53,930 more rows, and 3 more variables: carat_mean &lt;dbl&gt;,
+## #   depth_sd &lt;dbl&gt;, depth_mean &lt;dbl&gt;
 ```
 
 ]
@@ -363,20 +367,21 @@ mutate(
 
 ```
 ## # A tibble: 1,704 × 14
-*##    country     continent  year lifeExp      pop gdpPercap year_mean year_median lifeExp_mean
-##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-##  1 Afghanistan Asia       1952    28.8  8425333      779.     1980.       1980.         59.5
-##  2 Afghanistan Asia       1957    30.3  9240934      821.     1980.       1980.         59.5
-##  3 Afghanistan Asia       1962    32.0 10267083      853.     1980.       1980.         59.5
-##  4 Afghanistan Asia       1967    34.0 11537966      836.     1980.       1980.         59.5
-##  5 Afghanistan Asia       1972    36.1 13079460      740.     1980.       1980.         59.5
-##  6 Afghanistan Asia       1977    38.4 14880372      786.     1980.       1980.         59.5
-##  7 Afghanistan Asia       1982    39.9 12881816      978.     1980.       1980.         59.5
-##  8 Afghanistan Asia       1987    40.8 13867957      852.     1980.       1980.         59.5
-##  9 Afghanistan Asia       1992    41.7 16317921      649.     1980.       1980.         59.5
-## 10 Afghanistan Asia       1997    41.8 22227415      635.     1980.       1980.         59.5
-*## # … with 1,694 more rows, and 5 more variables: lifeExp_median &lt;dbl&gt;, pop_mean &lt;dbl&gt;,
-*## #   pop_median &lt;dbl&gt;, gdpPercap_mean &lt;dbl&gt;, gdpPercap_median &lt;dbl&gt;
+*##    country     continent  year lifeExp      pop gdpPercap year_mean year_median
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.     1980.       1980.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.     1980.       1980.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.     1980.       1980.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.     1980.       1980.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.     1980.       1980.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.     1980.       1980.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.     1980.       1980.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.     1980.       1980.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.     1980.       1980.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.     1980.       1980.
+*## # … with 1,694 more rows, and 6 more variables: lifeExp_mean &lt;dbl&gt;,
+*## #   lifeExp_median &lt;dbl&gt;, pop_mean &lt;dbl&gt;, pop_median &lt;dbl&gt;,
+## #   gdpPercap_mean &lt;dbl&gt;, gdpPercap_median &lt;dbl&gt;
 ```
 
 ]
@@ -491,7 +496,7 @@ select(diabetes, matches("\\d"))
 ```r
 gapminder %&gt;% 
   group_by(continent) %&gt;% 
-*   summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
+* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
 *     iqr = IQR)))
 ```
 
@@ -520,7 +525,7 @@ gapminder %&gt;%
 ```r
 gapminder %&gt;% 
   group_by(continent) %&gt;% 
-*   summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
+* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
 *     iqr = IQR)))
 ```
 
@@ -548,7 +553,7 @@ gapminder %&gt;%
 ```r
 gapminder %&gt;% 
   group_by(continent) %&gt;% 
-*   summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
+* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
 *     iqr = IQR) .names = "{.fn}_{.col}"))
 ```
 
@@ -576,7 +581,7 @@ gapminder %&gt;%
 ```r
 diabetes %&gt;% 
   group_by(gender) %&gt;% 
-*   summarise(across(starts_with("bp"), list(mean = mean)))
+* summarise(across(starts_with("bp"), mean))
 ```
 
 --
@@ -585,7 +590,7 @@ diabetes %&gt;%
 ```r
 diabetes %&gt;% 
   group_by(gender) %&gt;% 
-*   summarise(across(starts_with("bp"), list(mean = mean),
+* summarise(across(starts_with("bp"), list(mean = mean),
 *     na.rm = TRUE, .names = "{.fn}_{.col}"))
 ```
 
@@ -617,7 +622,7 @@ diabetes %&gt;%
 ```r
 diabetes %&gt;% 
   group_by(gender) %&gt;% 
-    summarise(across(starts_with("bp"), list(mean = mean), 
+  summarise(across(starts_with("bp"), list(mean = mean), 
       na.rm = TRUE, .names = "{.col}_{.fn}"))
 ```
 
@@ -1273,12 +1278,14 @@ map_chr(diabetes, class)
 ```
 
 ```
-##          id        chol    stab.glu         hdl       ratio       glyhb    location 
-##   "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" "character" 
-##         age      gender      height      weight       frame       bp.1s       bp.1d 
-##   "numeric" "character"   "numeric"   "numeric" "character"   "numeric"   "numeric" 
-##       bp.2s       bp.2d       waist         hip    time.ppn 
-##   "numeric"   "numeric"   "numeric"   "numeric"   "numeric"
+##          id        chol    stab.glu         hdl       ratio       glyhb 
+##   "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+##    location         age      gender      height      weight       frame 
+## "character"   "numeric" "character"   "numeric"   "numeric" "character" 
+##       bp.1s       bp.1d       bp.2s       bp.2d       waist         hip 
+##   "numeric"   "numeric"   "numeric"   "numeric"   "numeric"   "numeric" 
+##    time.ppn 
+##   "numeric"
 ```
 
 ]
@@ -1305,10 +1312,12 @@ map_lgl(diabetes, ~any(is.na(.x)))
 ```
 
 ```
-##       id     chol stab.glu      hdl    ratio    glyhb location      age   gender   height 
-##    FALSE     TRUE    FALSE     TRUE     TRUE     TRUE    FALSE    FALSE    FALSE     TRUE 
-##   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip time.ppn 
-##     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
+##       id     chol stab.glu      hdl    ratio    glyhb location      age 
+##    FALSE     TRUE    FALSE     TRUE     TRUE     TRUE    FALSE    FALSE 
+##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
+##    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE 
+##    waist      hip time.ppn 
+##     TRUE     TRUE     TRUE
 ```
 
 ]
@@ -1325,10 +1334,12 @@ map_int(diabetes, ~sum(is.na(.x)))
 ```
 
 ```
-##       id     chol stab.glu      hdl    ratio    glyhb location      age   gender   height 
-##        0        1        0        1        1       13        0        0        0        5 
-##   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip time.ppn 
-##        1       12        5        5      262      262        2        2        3
+##       id     chol stab.glu      hdl    ratio    glyhb location      age 
+##        0        1        0        1        1       13        0        0 
+##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
+##        0        5        1       12        5        5      262      262 
+##    waist      hip time.ppn 
+##        2        2        3
 ```
 ]
 
@@ -1371,17 +1382,17 @@ model_lm &lt;- function(.data) {
 ```
 ## $Buckingham
 ## # A tibble: 1 × 12
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC deviance
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1     0.252         0.248  38.8      66.4 4.11e-14     1 -1009. 2025. 2034.  296206.
-## # … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;
+##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.252         0.248  38.8      66.4 4.11e-14     1 -1009. 2025. 2034.
+## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
 ## 
 ## $Louisa
 ## # A tibble: 1 × 12
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC deviance
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1     0.204         0.201  39.4      51.7 1.26e-11     1 -1033. 2072. 2082.  312638.
-## # … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;
+##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.204         0.201  39.4      51.7 1.26e-11     1 -1033. 2072. 2082.
+## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
 ```
 
 ]
@@ -1584,25 +1595,35 @@ class: middle, center
 
 
 ```r
-fs::dir_create(temp &lt;- "temp")
+temp &lt;- "temporary_folder"
+fs::dir_create(temp)
 gapminder %&gt;%
   group_by(continent) %&gt;%
-  group_walk(~ write_csv(x = .x, file = file.path(temp, 
-    paste0(.y$continent, ".csv"))))
+* group_walk(
+*   ~ write_csv(
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
 ```
 
---
+---
+
+## `group_walk()`
+
+### Use `group_walk()` for side effects across groups 
+
+
 
 
 ```
-## temp
+## temporary_folder
 ## ├── Africa.csv
 ## ├── Americas.csv
 ## ├── Asia.csv
 ## ├── Europe.csv
 ## └── Oceania.csv
 ```
-
 
 
 

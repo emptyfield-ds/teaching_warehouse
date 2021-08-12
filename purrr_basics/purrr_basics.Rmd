@@ -1208,7 +1208,7 @@ class: middle, center
 
 ### Use `group_walk()` for side effects across groups 
 
-```{r group_walk}
+```{r group_walk, eval = FALSE}
 temp <- "temporary_folder"
 fs::dir_create(temp)
 gapminder %>%
@@ -1216,12 +1216,29 @@ gapminder %>%
   group_walk( #<<
     ~ write_csv( #<<
       .x,
-      file = file.path(.,  paste0(.y$continent, ".csv"))
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
     )
   )
 ```
 
---
+---
+
+## `group_walk()`
+
+### Use `group_walk()` for side effects across groups 
+
+```{r group_walk_run, echo = FALSE}
+temp <- "temporary_folder"
+fs::dir_create(temp)
+gapminder %>%
+  group_by(continent) %>% #<<
+  group_walk( #<<
+    ~ write_csv( #<<
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
+```
 
 ```{r temp-dir_tree, echo=FALSE}
 fs::dir_tree(temp, pattern = "csv$")
@@ -1230,7 +1247,6 @@ fs::dir_tree(temp, pattern = "csv$")
 ```{r remove-temp, include=FALSE}
 unlink(temp, recursive = TRUE, force = TRUE)
 ```
-
 
 ---
 
