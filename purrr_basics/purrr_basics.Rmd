@@ -1,5 +1,5 @@
 ---
-title: "Functional programming and iteration with purrr"
+title: "Functional programming and iteration in R"
 subtitle: 
 date: "`r Sys.Date()`"
 output:
@@ -57,7 +57,7 @@ list(char = "hello", num = 1, fun = mean)
 
 ## Your Turn 1
 
-```{r}
+```{r slide-6-yt}
 measurements <- list(
   blood_glucose = rnorm(10, mean = 140, sd = 10), 
   age = rnorm(5, mean = 40, sd = 5), 
@@ -72,6 +72,7 @@ measurements <- list(
 ## Your Turn 1
 
 .small[
+
 ```{r slide-07-1}
 measurements["blood_glucose"]
 ```
@@ -83,7 +84,9 @@ measurements$blood_glucose
 ```{r slide-07-3}
 measurements[["blood_glucose"]]
 ```
+
 ]
+
 ---
 
 #  data frames are lists
@@ -128,13 +131,320 @@ head(gapminder[["pop"]])
 
 ---
 
+# programming with functions
+
+### View source code of a function
+
+```{r slide-13-00}
+mean
+```
+
+
+```{r slide-13-01}
+sd
+```
+
+
+---
+
+# programming with functions
+
+### functions are objects and can be assigned to variables
+
+```{r slide-14-00}
+f <- mean
+```
+
+```{r slide-14-01}
+f
+```
+
+```{r slide-14-02}
+identical(x = mean, y = f)
+```
+
+
+---
+
+```{r slide-15-dplyr_across, out.height="100%", out.width="100%", echo = FALSE}
+knitr::include_graphics("img/dplyr_across.png")
+```
+
+.pull-right[Art by Allison Horst]
+
+---
+
+## `mutate(across())`
+
+--
+
+```{r slide-16-mutate-across-concept-map, eval=FALSE}
+mutate(
+  <DATA>, 
+  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) #<<
+)
+```
+
+---
+
+## `mutate(across())`
+
+```{r slide-17-mutate-across-example, eval=FALSE}
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean)) #<<
+)
+```
+
+---
+
+## `mutate(across())`
+
+```{r slide-18-1-mutate-across-example-code, eval=FALSE}
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean)) #<<
+)
+```
+
+.small[
+
+
+```{r slide-18-2-mutate-across-example-output, highlight.output = c(2,14), echo=FALSE}
+mutate(
+  diamonds, 
+  across(c("carat", "depth"), list(sd = sd, mean = mean))
+)
+```
+
+]
+
+---
+
+## `mutate(across(where()))`
+
+--
+
+```{r slide-19-mutate-across-where-example, eval=FALSE}
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
+```
+
+
+---
+
+## `mutate(across(where()))`
+
+```{r slide-20-1-mutate-across-where-example-code, eval=FALSE}
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
+```
+
+
+.small[
+
+```{r slide-20-2-mutate-across-where-example-output, highlight.output = c(2, 14, 15), echo=FALSE}
+mutate(
+  gapminder, 
+  across(where(is.numeric), list(mean = mean, median = median)) #<<
+)
+```
+
+]
+
+
+---
+
+## Review: `tidyselect`
+
+### 'Behind the scenes' workhorse for `dplyr::select()`,  `dplyr::pull()`, and `tidyr::pivot_` functions
+
+### `starts_with()`, `ends_with()`, `contains()`, `matches()`, etc.
+
+--
+
+.pull-left[
+
+.small[
+
+```{r slide-21-left-tidyselect}
+# column names contain a word
+select(diabetes, ends_with("ht"))
+```
+
+]
+
+]
+
+--
+
+.pull-right[
+
+.small[
+
+```{r slide-21-right-tidyselect}
+# regular expression
+select(diabetes, matches("\\d")) 
+```
+
+]
+
+]
+
+---
+
+## `mutate(across())` & `summarise()`
+
+### Perform group-wise summaries with `mutate(across())`, `group_by()` and `summarise()`
+
+```{r slide-22-mutate-across-summarise-concept-map, eval=FALSE}
+<DATA> %>% 
+  group_by(<GROUPING VAR>) #<<
+  summarise(across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>))) 
+```
+
+---
+
+## `mutate(across())` & `summarise()`
+
+### Combine with `tidyselect()` helpers
+
+```{r slide-23-mutate-across-tidyselect-summarise-concept-map, eval=FALSE}
+<DATA> %>% 
+  group_by(<GROUPING VAR>) 
+  summarise(across(contains(<VARIABLES>), list(<NAMES> = #<<
+      <FUNCTIONS>))) 
+```
+
+---
+
+## `mutate(across())` & `summarise()`
+
+```{r slide-24-code, eval=FALSE}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+      iqr = IQR))) #<<
+```
+
+--
+
+```{r slide-24-output, echo=FALSE, highlight.output = c(2)}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, 
+      iqr = IQR)))
+```
+
+---
+
+## `mutate(across())` & `summarise()`
+
+
+### New column names are created with `_[function name]`
+
+```{r slide-25-code, eval=FALSE, highlight.output = c(2)}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+      iqr = IQR))) #<<
+```
+
+--
+
+```{r slide-25-output, echo=FALSE, highlight.output = c(2)}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+      iqr = IQR))) #<<
+```
+
+---
+
+## `mutate(across())` & `summarise()`
+
+### Control output names with `.names` argument 
+
+```{r slide-26-code, eval=FALSE}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+      iqr = IQR) .names = "{.fn}_{.col}")) #<<
+```
+
+--
+
+```{r slide-26-output, echo=FALSE, highlight.output = c(2)}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+           iqr = IQR), .names = "{.fn}_{.col}")) #<<
+```
+
+---
+
+## `mutate(across())` & `summarise()`
+
+### `tidyselect()` helpers and named columns
+
+```{r slide-27-mutate-across-summarise-code, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>% 
+  summarise(across(starts_with("bp"), mean)) #<<
+```
+
+--
+
+```{r slide-27-mutate-across-summarise-code-02, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>% 
+  summarise(across(starts_with("bp"), list(mean = mean), #<<
+      na.rm = TRUE, .names = "{.fn}_{.col}")) #<<
+```
+
+--
+
+```{r slide-27-mutate-across-summarise-highlight, echo=FALSE, highlight.output=c(2)}
+diabetes %>% 
+  group_by(gender) %>% 
+  summarise(across(starts_with("bp"), list(mean = mean), 
+      na.rm = TRUE, .names = "{.fn}_{.col}"))
+```
+
+---
+
+## Your Turn 2
+
+### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Name the new columns `bp_` + `mean` 
+
+### hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name
+
+
+---
+
+## Your Turn 2
+
+```{r YT2-summarise-across}
+diabetes %>% 
+  group_by(gender) %>% 
+  summarise(across(starts_with("bp"), list(mean = mean), 
+      na.rm = TRUE, .names = "{.col}_{.fn}"))
+```
+
+
+---
+
 #  vectorized functions don't work on lists
 
-```{r slide-13-1, include=FALSE}
+```{r slide-30-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r slide-13-2, error=TRUE, eval = FALSE}
+```{r slide-30-2, error=TRUE, eval = FALSE}
 sum(rnorm(10))
 ```
 
@@ -142,11 +452,11 @@ sum(rnorm(10))
 
 #  vectorized functions don't work on lists
 
-```{r slide-14-1, include=FALSE}
+```{r slide-31-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r slide-14-2, error=TRUE}
+```{r slide-31-2, error=TRUE}
 sum(rnorm(10))
 ```
 
@@ -154,15 +464,15 @@ sum(rnorm(10))
 
 #  vectorized functions don't work on lists
 
-```{r slide-15-1, include=FALSE}
+```{r slide-32-1-set-seed, include=FALSE}
 set.seed(1234)
 ```
 
-```{r slide-15-2, error=TRUE}
+```{r slide-32-2, error=TRUE}
 sum(rnorm(10))
 ```
 
-```{r slide-15-3, error=TRUE, eval = FALSE}
+```{r slide-32-3, error=TRUE, eval = FALSE}
 sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
 ```
 
@@ -170,15 +480,15 @@ sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
 
 #  vectorized functions don't work on lists
 
-```{r slide-16-1, include=FALSE}
+```{r slide-33-1, include=FALSE}
 set.seed(1234)
 ```
 
-```{r slide-16-2, error=TRUE}
+```{r slide-33-2, error=TRUE}
 sum(rnorm(10))
 ```
 
-```{r slide-16-3, error=TRUE}
+```{r slide-33-3, error=TRUE}
 sum(list(x = rnorm(10), y = rnorm(10), z = rnorm(10)))
 ```
 
@@ -205,7 +515,7 @@ background-position: 95% 2%
 
 # Using map()
 
-```{r slide-18, eval = FALSE}
+```{r slide-35-using-map, eval = FALSE}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
@@ -216,7 +526,7 @@ map(x_list, mean)
 
 # Using map()
 
-```{r slide-19, eval = FALSE}
+```{r slide-36-using-map, eval = FALSE}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10)) #<<
 
@@ -228,7 +538,7 @@ map(x_list, mean)
 
 # Using map()
 
-```{r slide-20, eval = FALSE}
+```{r slide-37-using-map, eval = FALSE}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
@@ -240,7 +550,7 @@ map(x_list, mean) #<<
 
 # Using map()
 
-```{r slide-21}
+```{r slide-38-using-map}
 library(purrr)
 x_list <- list(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
@@ -249,31 +559,30 @@ map(x_list, mean)
 
 ---
 
-```{r slide-22, echo=FALSE, out.width="50%", out.height="50%"}
+```{r slide-39-using-map, echo=FALSE, out.width="50%", out.height="50%"}
 knitr::include_graphics("img/purrr_list.png")
 ```
 
 ---
 
-```{r slide-23, echo=FALSE}
+```{r slide-40, echo=FALSE}
 knitr::include_graphics("img/purrr_f_list.png")
 ```
 
 ---
 
-```{r slide-24, echo=FALSE}
+```{r slide-41, echo=FALSE}
 knitr::include_graphics("img/purr_x_input.png")
 ```
 
 ---
 
-## Your Turn 2
+## Your Turn 3
 
 ### Read the code in the first chunk and predict what will happen 
-
 ### Run the code in the first chunk. What does it return?
 
-```{r slide-25, eval=FALSE}
+```{r YT3-slide-40, eval=FALSE}
 list(
   blood_glucose = sum(measurements$blood_glucose),
   age = sum(measurements$age),
@@ -285,9 +594,9 @@ list(
 
 ---
 
-## Your Turn 2
+## Your Turn 3
 
-```{r slide-26}
+```{r YT3-slide-41}
 map(measurements, sum)
 ```
 
@@ -297,7 +606,7 @@ map(measurements, sum)
 
 --
 
-```{r slide-27, eval=FALSE}
+```{r slide-42, eval=FALSE}
 library(dplyr)
 gapminder %>% 
   select(where(is.numeric)) %>%
@@ -308,7 +617,7 @@ gapminder %>%
 
 ## using `map()` with data frames
 
-```{r slide-28, eval=FALSE}
+```{r slide-43, eval=FALSE}
 library(dplyr)
 gapminder %>% #<<
   select(where(is.numeric)) %>%  #<<
@@ -319,7 +628,7 @@ gapminder %>% #<<
 
 ## using `map()` with data frames
 
-```{r, eval=FALSE}
+```{r slide-44, eval=FALSE}
 library(dplyr)
 gapminder %>% 
   select(where(is.numeric)) %>%
@@ -330,7 +639,7 @@ gapminder %>%
 
 ## using `map()` with data frames
 
-```{r}
+```{r slide-45}
 library(dplyr)
 gapminder %>% 
   select(where(is.numeric)) %>%
@@ -339,16 +648,16 @@ gapminder %>%
 
 ---
 
-## Your Turn 3
+## Your Turn 4
 
 ### Pass diabetes to `map()` and map using `class()`. What are these results telling you?
 
 ---
 
-## Your Turn 3
+## Your Turn 4
 
 
-```{r}
+```{r YT4-map-diabetes-class}
 head(
   map(diabetes, class), #<<
   3
@@ -357,9 +666,81 @@ head(
 
 ---
 
+## `group_map()` 
+
+### Apply a function across a grouping variable and return a list of grouped tibbles
+
+```{r slide-50-01, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+--
+
+.small[
+
+```{r slide-50-02, echo=FALSE, highlight.output=c(1,8)}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+]
+
+---
+
+## `group_modify()`
+
+###  Apply a function across grouped tibbles and return grouped tibbles
+
+```{r slide-51-01, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+--
+
+```{r slide-51-02, echo=FALSE, highlight.output=c(2)}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+
+
+---
+
+## Your Turn 5 
+
+### Use group_modify() and lm() to model chol (the outcome) with ratio, grouped by location
+
+---
+
+## Your Turn 5 
+
+
+```{r YT5-slide-53-code, eval=FALSE}
+diabetes %>% 
+  group_by(location) %>% #<<
+  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
+```
+
+--
+
+```{r YT5-slide-53-output, echo=FALSE, highlight.output=c(2)}
+diabetes %>% 
+  group_by(location) %>% #<<
+  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
+```
+
+
+---
+
 #  Review: writing functions
 
-```{r, eval = FALSE}
+```{r slide-54, eval = FALSE}
 x <- x^2
 x <- scale(x)
 x <- max(x)
@@ -369,7 +750,7 @@ x <- max(x)
 
 #  Review: writing functions
 
-```{r, eval = FALSE}
+```{r slide-55, eval = FALSE}
 x <- x^2
 x <- scale(x)
 x <- max(x)
@@ -388,7 +769,7 @@ z <- max(z)
 
 #  Review: writing functions
 
-```{r, eval = FALSE}
+```{r slide-56, eval = FALSE}
 x <- x^2
 x <- scale(x)
 x <- max(x)
@@ -406,7 +787,7 @@ z <- max(z)
 
 #  Review: writing functions
 
-```{r, eval = FALSE}
+```{r slide-57, eval = FALSE}
 x <- x^3 #<<
 x <- scale(x)
 x <- max(x)
@@ -424,7 +805,7 @@ z <- max(z)
 
 #  Review: writing functions
 
-```{r, eval = FALSE}
+```{r slide-58, eval = FALSE}
 .f <- function(x) {
   x <- x^3
   x <- scale(x)
@@ -445,7 +826,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 4
+## Your Turn 6
 
 ### Write a function that returns the mean and standard deviation of a numeric vector.
 ### Give the function a name
@@ -454,9 +835,9 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 4
+## Your Turn 6
 
-```{r, eval=FALSE}
+```{r YT6-slide-61, eval=FALSE}
 mean_sd <- function(x) {
   x_mean <- mean(x)
   x_sd <- sd(x)
@@ -467,9 +848,9 @@ map(measurements, mean_sd)
 ```
 ---
 
-## Your Turn 4
+## Your Turn 6
 
-```{r, echo=FALSE}
+```{r YT6-slide-62, echo=FALSE}
 mean_sd <- function(x) {
   x_mean <- mean(x)
   x_sd <- sd(x)
@@ -490,31 +871,31 @@ class: inverse
 
 ---
 
-```{r, echo=FALSE}
+```{r slide-64-purr_f_input1.png, echo=FALSE}
 knitr::include_graphics("img/purr_f_input1.png")
 ```
 
 ---
 
-```{r, echo=FALSE}
+```{r slide-65-purr_f_input2.png, echo=FALSE}
 knitr::include_graphics("img/purr_f_input2.png")
 ```
 
 ---
 
-```{r, echo=FALSE}
+```{r slide-66-purr_f_input3.png, echo=FALSE}
 knitr::include_graphics("img/purr_f_input3.png")
 ```
 
 ---
 
-```{r, eval = FALSE}
+```{r slide-67-code, eval = FALSE}
 map(gapminder, ~length(unique(.x)))
 ```
 
 ---
 
-```{r}
+```{r slide-68-output}
 map(gapminder, ~length(unique(.x)))
 ```
 
@@ -536,7 +917,7 @@ map(gapminder, ~length(unique(.x)))
 
 # Returning types
 
-```{r, eval = FALSE}
+```{r map_int-slide-70, eval = FALSE}
 map_int(gapminder, ~length(unique(.x)))
 ```
 
@@ -544,27 +925,31 @@ map_int(gapminder, ~length(unique(.x)))
 
 # Returning types
 
-```{r}
+```{r map_int-slide-71}
 map_int(gapminder, ~length(unique(.x)))
 ```
 
 ---
 
-## Your Turn 5
+## Your Turn 7
 
-### Do the same as #3 above but return a vector instead of a list. 
+### Do the same as #4 above but return a vector instead of a list. 
 
 ---
 
-## Your Turn 5
+## Your Turn 7
+
 .small[
-```{r}
+
+```{r YT7-73}
 map_chr(diabetes, class)
 ```
+
 ]
+
 ---
 
-## Your Turn 6
+## Your Turn 8
 
 ### Check `diabetes` for any missing data. 
 
@@ -574,35 +959,40 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 6
+## Your Turn 8
 
 .small[
-```{r}
+
+```{r YT8-map_lgl-any}
 map_lgl(diabetes, ~any(is.na(.x)))
 ```
+
 ]
+
 ---
 
-## Your Turn 6
+## Your Turn 8
 
 .small[
-```{r}
+
+```{r YT8-map_lgl-sum}
 map_int(diabetes, ~sum(is.na(.x)))
 ```
 ]
----
-
-## Your Turn 7
-
-### Turn `diabetes` into a list split by `location` using the `split()` function. Check its length.
-### Fill in the `model_lm` function to model `chol` (the outcome) with `ratio` and pass the `.data` argument to `lm()`
-### map `model_lm` to `diabetes_list` so that it returns a data frame (by row).
 
 ---
 
-## Your Turn 7
+## Your Turn 9
 
-```{r, eval=FALSE}
+### Turn diabetes into a list split by location using the split() function. Check its length.
+### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
+### map model_lm to diabetes_list so that it returns a data frame (by row).
+
+---
+
+## Your Turn 9
+
+```{r YT9-slide-78, eval=FALSE}
 diabetes_list <- split(diabetes, diabetes$location) #<<
 length(diabetes_list)
 model_lm <- function(.data) {
@@ -616,9 +1006,11 @@ map(diabetes_list, model_lm) #<<
 
 ---
 
-## Your Turn 7
+## Your Turn 9
+
 .small[
-```{r, echo=FALSE}
+
+```{r YT9-slide-79, echo=FALSE}
 diabetes_list <- split(diabetes, diabetes$location)
 length(diabetes_list)
 model_lm <- function(.data) {
@@ -629,6 +1021,7 @@ model_lm <- function(.data) {
 
 map(diabetes_list, model_lm)
 ```
+
 ]
 
 ---
@@ -650,19 +1043,19 @@ map(diabetes_list, model_lm)
 
 ---
 
-```{r, echo=FALSE, out.width="80%", out.height="80%"}
+```{r map2-img-slide-81, echo=FALSE, out.width="80%", out.height="80%"}
 knitr::include_graphics("img/purr_x2_input.png")
 ```
 
 ---
 
-```{r, echo=FALSE, out.width="80%", out.height="80%"}
+```{r map2-img-slide-82, echo=FALSE, out.width="80%", out.height="80%"}
 knitr::include_graphics("img/purr_x2_input_warn.png")
 ```
 
 ---
 
-```{r, echo=FALSE, out.width="80%", out.height="80%"}
+```{r map2-img-slide-83, echo=FALSE, out.width="80%", out.height="80%"}
 knitr::include_graphics("img/purr_f2_input.png")
 ```
 
@@ -670,7 +1063,7 @@ knitr::include_graphics("img/purr_f2_input.png")
 
 # map2()
 
-```{r, eval=FALSE}
+```{r map2_dbl-slide-84, eval=FALSE}
 means <- c(-3, 4, 2, 2.3)
 sds <- c(.3, 4, 2, 1)
   
@@ -681,7 +1074,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 # map2()
 
-```{r, eval=FALSE}
+```{r map2_dbl-slide-85, eval=FALSE}
 means <- c(-3, 4, 2, 2.3)
 sds <- c(.3, 4, 2, 1)
   
@@ -692,7 +1085,7 @@ map2_dbl(means, sds, rnorm, n = 1) #<<
 
 # map2()
 
-```{r}
+```{r map2_dbl-slide-86}
 means <- c(-3, 4, 2, 2.3)
 sds <- c(.3, 4, 2, 1)
   
@@ -701,17 +1094,19 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 8
+## Your Turn 10
 
 ### Split the gapminder dataset into a list by country
-### Create a list of models using `map()`. For the first argument, pass `gapminder_countries`. For the second, use the `~.f()` notation to write a model with `lm()`. Use `lifeExp` on the left hand side of the formula and `year` on the second. Pass `.x` to the `data` argument.
-### Use `map2()` to take the models list and the data set list and map them to `predict()`. Since we're not adding new arguments, you don't need to use `~.f()`.
+
+### Create a list of models using map(). For the first argument, pass gapminder_countries. For the second, use the ~.f() notation to write a model with lm(). Use lifeExp on the left hand side of the formula and year on the second. Pass .x to the data argument.
+
+### Use map2() to take the models list and the data set list and map them to predict(). Since we're not adding new arguments, you don't need to use ~.f().
 
 ---
 
-## Your Turn 8
+## Your Turn 10
 
-```{r,eval=FALSE}
+```{r YT10-slide-88,eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country) #<<
 models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x))
 preds <- map2(models, gapminder_countries, predict)
@@ -720,9 +1115,9 @@ head(preds, 3)
 
 ---
 
-## Your Turn 8
+## Your Turn 10
 
-```{r,eval=FALSE}
+```{r YT10-slide-89,eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
 models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x)) #<<
 preds <- map2(models, gapminder_countries, predict)
@@ -731,9 +1126,9 @@ head(preds, 3)
 
 ---
 
-## Your Turn 8
+## Your Turn 10
 
-```{r, eval=FALSE}
+```{r YT10-slide-90, eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
 models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x))
 preds <- map2(models, gapminder_countries, predict) #<<
@@ -742,9 +1137,9 @@ head(preds, 3)
 
 ---
 
-## Your Turn 8
+## Your Turn 10
 
-```{r, echo = FALSE}
+```{r YT10-slide-91, echo = FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
 models <- map(gapminder_countries, ~ lm(lifeExp ~ year, data = .x))
 preds <- map2(models, gapminder_countries, predict)
@@ -809,23 +1204,72 @@ class: middle, center
 
 ---
 
-## Your turn 9
+## `group_walk()`
+
+### Use `group_walk()` for side effects across groups 
+
+```{r group_walk, eval = FALSE}
+temp <- "temporary_folder"
+fs::dir_create(temp)
+gapminder %>%
+  group_by(continent) %>%
+  group_walk( #<<
+    ~ write_csv( #<<
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
+```
+
+---
+
+## `group_walk()`
+
+### Use `group_walk()` for side effects across groups 
+
+```{r group_walk_run, echo = FALSE}
+temp <- "temporary_folder"
+fs::dir_create(temp)
+gapminder %>%
+  group_by(continent) %>% #<<
+  group_walk( #<<
+    ~ write_csv( #<<
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
+```
+
+```{r temp-dir_tree, echo=FALSE}
+fs::dir_tree(temp, pattern = "csv$")
+```
+
+```{r remove-temp, include=FALSE}
+unlink(temp, recursive = TRUE, force = TRUE)
+```
+
+---
+
+## Your turn 11
 
 #### Create a new directory using the fs package. Call it "figures".
 
 #### Write a function to plot a line plot of a given variable in gapminder over time, faceted by continent. Then, save the plot (how do you save a ggplot?). For the file name, paste together the folder, name of the variable, and extension so it follows the pattern `"folder/variable_name.png"`
+
 #### Create a character vector that has the three variables we'll plot: "lifeExp", "pop", and "gdpPercap".
+
 #### Use `walk()` to save a plot for each of the variables
 
 ---
 
-## Your turn 9
+## Your turn 11
 
-```{r, eval = FALSE}
+```{r YT11-slide-100, eval = FALSE}
 fs::dir_create("figures")
 
 ggsave_gapminder <- function(variable) {
-  #  we're using `aes_string()` so we don't need the curly-curly syntax
+  #  we're using `aes_string()` so we don't need the 
+  #  curly-curly syntax
   p <- ggplot(
     gapminder, 
     aes_string(x = "year", y = variable, color = "country")
@@ -846,9 +1290,9 @@ ggsave_gapminder <- function(variable) {
 
 ---
 
-## Your turn 9
+## Your turn 11
 
-```{r, eval = FALSE}
+```{r YT11-slide-101, eval = FALSE}
 vars <- c("lifeExp", "pop", "gdpPercap")
 walk(vars, ggsave_gapminder)
 ```
@@ -879,12 +1323,12 @@ class: inverse
 
 ## Loops vs functional programming
 
-```{r, eval=FALSE}
+```{r slide-104-loops-vs-fp-01, eval=FALSE}
 x <- rnorm(10)
 y <- map(x, mean)
 ```
 
-```{r, eval=FALSE}
+```{r slide-104-loops-vs-fp-02, eval=FALSE}
 x <- rnorm(10)
 y <- vector("list", length(x))
 for (i in seq_along(x)) {
@@ -896,12 +1340,12 @@ for (i in seq_along(x)) {
 
 ## Loops vs functional programming
 
-```{r, eval=FALSE}
+```{r slide-105-loops-vs-fp-01, eval=FALSE}
 x <- rnorm(10)
 y <- map(x, mean)
 ```
 
-```{r, eval=FALSE}
+```{r slide-105-loops-vs-fp-02, eval=FALSE}
 x <- rnorm(10) 
 y <- vector("list", length(x)) #<<
 for (i in seq_along(x)) {
@@ -913,12 +1357,12 @@ for (i in seq_along(x)) {
 
 ## Loops vs functional programming
 
-```{r, eval=FALSE}
+```{r slide-106-loops-vs-fp-01, eval=FALSE}
 x <- rnorm(10)
 y <- map(x, mean)
 ```
 
-```{r, eval=FALSE}
+```{r slide-106-loops-vs-fp-02, eval=FALSE}
 x <- rnorm(10)
 y <- vector("list", length(x)) 
 for (i in seq_along(x)) {#<<
@@ -930,12 +1374,12 @@ for (i in seq_along(x)) {#<<
 
 ## Loops vs functional programming
 
-```{r, eval=FALSE}
+```{r slide-107-loops-vs-fp-01, eval=FALSE}
 x <- rnorm(10)
 y <- map(x, mean)
 ```
 
-```{r, eval=FALSE}
+```{r slide-107-loops-vs-fp-02, eval=FALSE}
 x <- rnorm(10)
 y <- vector("list", length(x)) 
 for (i in seq_along(x)) { 
@@ -955,7 +1399,7 @@ class: center, middle, inverse
 
 # Working with lists and nested data
 
-```{r, echo=FALSE}
+```{r slide-109-cheatsheet_lists.png, echo=FALSE}
 knitr::include_graphics("img/cheatsheet_lists.png")
 ```
 
@@ -963,7 +1407,7 @@ knitr::include_graphics("img/cheatsheet_lists.png")
 
 # Working with lists and nested data
 
-```{r, echo=FALSE}
+```{r slide-110-cheatsheet_nested.png, echo=FALSE}
 knitr::include_graphics("img/cheatsheet_nested.png")
 ```
 
@@ -971,7 +1415,7 @@ knitr::include_graphics("img/cheatsheet_nested.png")
 
 # Adverbs: Modify function behavior
 
-```{r, echo=FALSE}
+```{r slide-111-cheatsheet_adverbs.png, echo=FALSE}
 knitr::include_graphics("img/cheatsheet_adverbs.png")
 ```
 
