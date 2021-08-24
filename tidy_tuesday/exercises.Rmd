@@ -140,7 +140,7 @@ How you explore your data is up to you! Remember the whole toolkit you have at y
 * The graph should attempt to answer a specific question you have about the data. Clearly state the question the graph is trying to answer, perhaps as a title or a short description of the plot.
 * All labels should be clear and easy to read. That may mean that you need to replace, for example, the axes labels with descriptions rather than the name of the variable in the data set (e.g., I don't want to see "some_weird_variable_name2")
 * Likewise, all content on the graph should be reasonably legible
-* Include both the code (in this R Markdown file or a separate R script) and a `.png` file created with `ggsave()`. 
+* Include the code in this R Markdown file or a separate R script. You may also wish to create an image file with `ggsave()`. Make sure your image file outputs as you expect if you decide to create one.
 
 **Note**: Tidy Tuesday is a community event, so it's okay to draw inspiration from the work of others. *However, you must include a link to your inspiration, and you can't just copy and paste someone else's code.* For instance, in writing part 1, I was inspired by Dave's video, as well as this plot: https://twitter.com/dm_ferraro/status/1290852879247400961. You can find other people's work for Tidy Tuesday on the #TidyTuesday hashtag on Twitter (https://twitter.com/search?q=%23tidytuesday). Another helpful resource is David Robinson's Tidy Tuesday live stream, where he analyzes data live without previously looking at the data for the week: https://www.youtube.com/channel/UCeiiqmVK07qhY-wvg3IZiZQ
 
