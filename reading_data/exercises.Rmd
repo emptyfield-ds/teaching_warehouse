@@ -56,6 +56,24 @@ Find diabetes.csv on your computer. Then read it into an object. Then view the r
 
 ```
 
+## Your Turn 1: Bonus
+
+Finish early? Try this more advanced exercise
+
+The folder `additional_data` contains two CSV files. readr is able to read and bind multiple files at the same time when you provide the paths to multiple files. The fs package works with files and directories in a safe and consistent way; we'll use it to find the names of our files.
+
+1. Use `dir_ls()` to list all the files in `additional_data`. The first argument to `dir_ls()` is the name of the directory we want to list files for.
+2. Give `read_csv()` `both_files` to read in both datasets, then take a look. 
+
+```{r}
+library(fs)
+both_files <- ____("______")
+both_datasets <- read_csv(_____)
+
+both_datasets
+```
+
+
 ## Tibbles
 
 `read_csv()` reads the data into a **tibble**, which is a modern version of the data frame. In fact, a tibble is a data frame, so you don't need to do anything differently. The main benefit is that it prints more nicely to the screen.
