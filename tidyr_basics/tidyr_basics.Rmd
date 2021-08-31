@@ -10,6 +10,8 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+      navigation:
+        scroll: false 
 ---
 
 background-image: url(http://hexb.in/hexagons/tidyr.png)

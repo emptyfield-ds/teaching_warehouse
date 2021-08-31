@@ -10,6 +10,8 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+      navigation:
+        scroll: false 
 ---
 
 ```{r, echo=FALSE, child="/Users/malcolmbarrett/Google Drive/Active/r_teaching_warehouse/intro_tidyverse/tidyverse.md"}
