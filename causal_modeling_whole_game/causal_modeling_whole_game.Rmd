@@ -9,7 +9,8 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      
+      navigation:
+        scroll: false 
 ---
 
 class: inverse

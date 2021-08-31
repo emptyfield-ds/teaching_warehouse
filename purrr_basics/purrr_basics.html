@@ -3,7 +3,7 @@
   <head>
     <title>Functional programming and iteration in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-08-12" />
+    <meta name="date" content="2021-08-27" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -13,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Functional programming and iteration in R
-### 2021-08-12
+### 2021-08-27
 
 ---
 
@@ -70,7 +70,7 @@ list(char = "hello", num = 1, fun = mean)
 ## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7fcd94550030&gt;
+## &lt;bytecode: 0x134e302d8&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -214,7 +214,7 @@ mean
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7fcd94550030&gt;
+## &lt;bytecode: 0x134e302d8&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -228,7 +228,7 @@ sd
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x7fcd9672e278&gt;
+## &lt;bytecode: 0x1218a76d0&gt;
 ## &lt;environment: namespace:stats&gt;
 ```
 
@@ -252,7 +252,7 @@ f
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x7fcd94550030&gt;
+## &lt;bytecode: 0x134e302d8&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -496,21 +496,22 @@ select(diabetes, matches("\\d"))
 ```r
 gapminder %&gt;% 
   group_by(continent) %&gt;% 
-*   summarise(across(c("lifeExp", "gdpPercap"), median))
+* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
+*     iqr = IQR)))
 ```
 
 --
 
 
 ```
-## # A tibble: 5 × 3
-*##   continent lifeExp gdpPercap
-##   &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-## 1 Africa       47.8     1192.
-## 2 Americas     67.0     5466.
-## 3 Asia         61.8     2647.
-## 4 Europe       72.2    12082.
-## 5 Oceania      73.7    17983.
+## # A tibble: 5 × 5
+*##   continent lifeExp_med lifeExp_iqr gdpPercap_med gdpPercap_iqr
+##   &lt;fct&gt;           &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Africa           47.8       12.0          1192.         1616.
+## 2 Americas         67.0       13.3          5466.         4402.
+## 3 Asia             61.8       18.1          2647.         7492.
+## 4 Europe           72.2        5.88        12082.        13248.
+## 5 Oceania          73.7        6.35        17983.         8072.
 ```
 
 ---
@@ -524,7 +525,7 @@ gapminder %&gt;%
 ```r
 gapminder %&gt;% 
   group_by(continent) %&gt;% 
-*   summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
+* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
 *     iqr = IQR)))
 ```
 
@@ -552,7 +553,7 @@ gapminder %&gt;%
 ```r
 gapminder %&gt;% 
   group_by(continent) %&gt;% 
-*   summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
+* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
 *     iqr = IQR) .names = "{.fn}_{.col}"))
 ```
 
@@ -580,7 +581,7 @@ gapminder %&gt;%
 ```r
 diabetes %&gt;% 
   group_by(gender) %&gt;% 
-*   summarise(across(starts_with("bp"), mean))
+* summarise(across(starts_with("bp"), mean))
 ```
 
 --
@@ -589,7 +590,7 @@ diabetes %&gt;%
 ```r
 diabetes %&gt;% 
   group_by(gender) %&gt;% 
-*   summarise(across(starts_with("bp"), mean,
+* summarise(across(starts_with("bp"), list(mean = mean),
 *     na.rm = TRUE, .names = "{.fn}_{.col}"))
 ```
 
@@ -598,10 +599,10 @@ diabetes %&gt;%
 
 ```
 ## # A tibble: 2 × 5
-*##   gender `1_bp.1s` `1_bp.1d` `1_bp.2s` `1_bp.2d`
-##   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female      136.      82.5      153.      91.8
-## 2 male        138.      84.5      151.      93.5
+*##   gender mean_bp.1s mean_bp.1d mean_bp.2s mean_bp.2d
+##   &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+## 1 female       136.       82.5       153.       91.8
+## 2 male         138.       84.5       151.       93.5
 ```
 
 ---
@@ -621,7 +622,7 @@ diabetes %&gt;%
 ```r
 diabetes %&gt;% 
   group_by(gender) %&gt;% 
-    summarise(across(starts_with("bp"), list(mean = mean), 
+  summarise(across(starts_with("bp"), list(mean = mean), 
       na.rm = TRUE, .names = "{.col}_{.fn}"))
 ```
 
@@ -1594,28 +1595,35 @@ class: middle, center
 
 
 ```r
-temp &lt;- "temp"
+temp &lt;- "temporary_folder"
 fs::dir_create(temp)
 gapminder %&gt;%
   group_by(continent) %&gt;%
-  group_walk(~ write_csv(x = .x, file = file.path(temp, 
-    paste0(.y$continent, ".csv"))))
+* group_walk(
+*   ~ write_csv(
+      .x,
+      file = file.path(temp,  paste0(.y$continent, ".csv"))
+    )
+  )
 ```
 
+---
+
+## `group_walk()`
+
+### Use `group_walk()` for side effects across groups 
 
 
---
 
 
 ```
-## temp
+## temporary_folder
 ## ├── Africa.csv
 ## ├── Americas.csv
 ## ├── Asia.csv
 ## ├── Europe.csv
 ## └── Oceania.csv
 ```
-
 
 
 
