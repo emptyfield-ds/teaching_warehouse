@@ -40,12 +40,6 @@ measurements$blood_glucose
 
 ### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Name the new columns `bp_` + `mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
 
-View the diabetes data below with `glimpse()`
-
-```{r YT2-glimpse-diabetes}
-glimpse(diabetes)
-```
-
 ```{r YT2-summarise-across}
 diabetes %>% 
   group_by(______) %>% 
