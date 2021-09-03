@@ -988,7 +988,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ## Your Turn 9
 
-### Split the gapminder dataset into a list by country
+### Split the gapminder dataset into a list by country using the `split()` function
 
 ### Create a list of models using map(). For the first argument, pass gapminder_countries. For the second, use the ~.f() notation to write a model with lm(). Use lifeExp on the left hand side of the formula and year on the second. Pass .x to the data argument.
 

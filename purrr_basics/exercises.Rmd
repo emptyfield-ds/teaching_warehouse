@@ -141,7 +141,7 @@ diabetes %>%
 
 ## Your Turn 9
 
-1. Split the `gapminder` dataset into a list by `country`
+1. Split the `gapminder` dataset into a list by `country` using the `split()` function
 
 2. Create a list of models using `map()`. For the first argument, pass `gapminder_countries`. For the second, use the `~.f()` notation to write a model with `lm()`. Use `lifeExp` on the left hand side of the formula and `year` on the second. Pass `.x` to the `data` argument.
 
@@ -155,6 +155,17 @@ preds <- map2(________, ________, ________)
 # Look at the first six elements of the list 
 head(preds)
 ```
+
+By the way, we can also solve this problem with `group_map()` since `lm()` stores the data used in a given regression model:
+
+```{r}
+gapminder %>% 
+  group_by(country) %>% 
+  group_map(~ lm(lifeExp ~ year, data = .x)) %>% 
+  map(predict)
+```
+
+Both solutions are fine in this case, but it's useful to know both strategies more generally!
 
 ## Your turn 10
 
