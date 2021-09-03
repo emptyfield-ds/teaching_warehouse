@@ -49,8 +49,12 @@ glimpse(diabetes)
 ```{r YT2-summarise-across}
 diabetes %>% 
   group_by(______) %>% 
-    summarise(across(starts_with("__"), list(____ = mean), 
-      na.rm = TRUE, .names = "_______"))
+  summarise(across(
+    starts_with("__"), 
+    list(____ = mean), 
+    na.rm = TRUE, 
+    .names = "_______")
+  )
 ```
 
 
