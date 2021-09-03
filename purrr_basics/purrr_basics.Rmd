@@ -1,5 +1,5 @@
 ---
-title: "Functional programming and iteration in R"
+title: "Functional programming in R"
 subtitle: 
 date: "`r Sys.Date()`"
 output:
@@ -299,70 +299,20 @@ select(diabetes, matches("\\d"))
 
 ---
 
-## `mutate(across())` & `summarise()`
-
-### Perform group-wise summaries with `mutate(across())`, `group_by()` and `summarise()`
-
-```{r slide-22-mutate-across-summarise-concept-map, eval=FALSE}
-<DATA> %>% 
-  group_by(<GROUPING VAR>) #<<
-  summarise(across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>))) 
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-### Combine with `tidyselect()` helpers
-
-```{r slide-23-mutate-across-tidyselect-summarise-concept-map, eval=FALSE}
-<DATA> %>% 
-  group_by(<GROUPING VAR>) 
-  summarise(across(contains(<VARIABLES>), list(<NAMES> = #<<
-      <FUNCTIONS>))) 
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-```{r slide-24-code, eval=FALSE}
+```{r slide-24-code, eval=FALSE, highlight.output = c(2)}
 gapminder %>% 
-  group_by(continent) %>% 
-  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+  group_by(continent) %>% #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median,  #<<
       iqr = IQR))) #<<
 ```
 
---
+---
 
-```{r slide-24-output, echo=FALSE, highlight.output = c(2)}
+```{r slide-25-output, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
   summarise(across(c("lifeExp", "gdpPercap"), list(med = median, 
       iqr = IQR)))
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-
-### New column names are created with `_[function name]`
-
-```{r slide-25-code, eval=FALSE, highlight.output = c(2)}
-gapminder %>% 
-  group_by(continent) %>% 
-  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
-      iqr = IQR))) #<<
-```
-
---
-
-```{r slide-25-output, echo=FALSE, highlight.output = c(2)}
-gapminder %>% 
-  group_by(continent) %>% 
-  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
-      iqr = IQR))) #<<
 ```
 
 ---
@@ -385,36 +335,6 @@ gapminder %>%
   group_by(continent) %>% 
   summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
            iqr = IQR), .names = "{.fn}_{.col}")) #<<
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-### `tidyselect()` helpers and named columns
-
-```{r slide-27-mutate-across-summarise-code, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% 
-  summarise(across(starts_with("bp"), mean)) #<<
-```
-
---
-
-```{r slide-27-mutate-across-summarise-code-02, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% 
-  summarise(across(starts_with("bp"), list(mean = mean), #<<
-      na.rm = TRUE, .names = "{.fn}_{.col}")) #<<
-```
-
---
-
-```{r slide-27-mutate-across-summarise-highlight, echo=FALSE, highlight.output=c(2)}
-diabetes %>% 
-  group_by(gender) %>% 
-  summarise(across(starts_with("bp"), list(mean = mean), 
-      na.rm = TRUE, .names = "{.fn}_{.col}"))
 ```
 
 ---
@@ -668,78 +588,6 @@ head(
 
 ---
 
-## `group_map()` 
-
-### Apply a function across a grouping variable and return a list of grouped tibbles
-
-```{r slide-50-01, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
---
-
-.small[
-
-```{r slide-50-02, echo=FALSE, highlight.output=c(1,8)}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
-]
-
----
-
-## `group_modify()`
-
-###  Apply a function across grouped tibbles and return grouped tibbles
-
-```{r slide-51-01, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
---
-
-```{r slide-51-02, echo=FALSE, highlight.output=c(2)}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
-
-
----
-
-## Your Turn 5 
-
-### Use group_modify() and lm() to model chol (the outcome) with ratio, grouped by location
-
----
-
-## Your Turn 5 
-
-
-```{r YT5-slide-53-code, eval=FALSE}
-diabetes %>% 
-  group_by(location) %>% #<<
-  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
-```
-
---
-
-```{r YT5-slide-53-output, echo=FALSE, highlight.output=c(2)}
-diabetes %>% 
-  group_by(location) %>% #<<
-  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
-```
-
-
----
-
 #  Review: writing functions
 
 ```{r slide-54, eval = FALSE}
@@ -828,7 +676,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 ### Write a function that returns the mean and standard deviation of a numeric vector.
 ### Give the function a name
@@ -837,7 +685,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 ```{r YT6-slide-61, eval=FALSE}
 mean_sd <- function(x) {
@@ -850,7 +698,7 @@ map(measurements, mean_sd)
 ```
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 ```{r YT6-slide-62, echo=FALSE}
 mean_sd <- function(x) {
@@ -933,13 +781,13 @@ map_int(gapminder, ~length(unique(.x)))
 
 ---
 
-## Your Turn 7
+## Your Turn 6
 
 ### Do the same as #4 above but return a vector instead of a list. 
 
 ---
 
-## Your Turn 7
+## Your Turn 6
 
 .small[
 
@@ -951,7 +799,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 8
+## Your Turn 7
 
 ### Check `diabetes` for any missing data. 
 
@@ -961,7 +809,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 8
+## Your Turn 7
 
 .small[
 
@@ -973,7 +821,7 @@ map_lgl(diabetes, ~any(is.na(.x)))
 
 ---
 
-## Your Turn 8
+## Your Turn 7
 
 .small[
 
@@ -984,44 +832,86 @@ map_int(diabetes, ~sum(is.na(.x)))
 
 ---
 
-## Your Turn 9
+## `group_map()` 
 
-### Turn diabetes into a list split by location using the split() function. Check its length.
-### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
-### map model_lm to diabetes_list so that it returns a data frame (by row).
+### Apply a function across a grouping variable and return a list of grouped tibbles
+
+```{r slide-50-01, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>%
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x))) #<<
+```
 
 ---
 
-## Your Turn 9
+## `group_map()` 
+
+```{r slide-50-02, echo=TRUE, highlight.output=c(1,8)}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+---
+
+## `group_modify()`
+
+###  Apply a function across grouped tibbles and return grouped tibbles
+
+```{r slide-51-01, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+--
+
+```{r slide-51-02, echo=FALSE, highlight.output=c(2)}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+---
+
+## Your Turn 8
+
+### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
+### Group `diabetes` by `location`
+### Use `group_modify()` with `model_lm`
+
+---
+
+## Your Turn 8
 
 ```{r YT9-slide-78, eval=FALSE}
-diabetes_list <- split(diabetes, diabetes$location) #<<
-length(diabetes_list)
-model_lm <- function(.data) {
+model_lm <- function(.data, ...) {
   mdl <- lm(chol ~ ratio, data = .data) #<<
   # get model statistics
   broom::glance(mdl)
 }
 
-map(diabetes_list, model_lm) #<<
+diabetes %>% 
+  group_by(location) %>% #<<
+  group_modify(model_lm) #<<
 ```
 
 ---
 
-## Your Turn 9
+## Your Turn 8
 
 .small[
 
 ```{r YT9-slide-79, echo=FALSE}
-diabetes_list <- split(diabetes, diabetes$location)
-length(diabetes_list)
-model_lm <- function(.data) {
+model_lm <- function(.data, ...) {
   mdl <- lm(chol ~ ratio, data = .data)
   # get model statistics
   broom::glance(mdl)
 }
 
-map(diabetes_list, model_lm)
+diabetes %>% 
+  group_by(location) %>% 
+  group_modify(model_lm) 
 ```
 
 ]
@@ -1096,9 +986,9 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
-### Split the gapminder dataset into a list by country
+### Split the gapminder dataset into a list by country using the `split()` function
 
 ### Create a list of models using map(). For the first argument, pass gapminder_countries. For the second, use the ~.f() notation to write a model with lm(). Use lifeExp on the left hand side of the formula and year on the second. Pass .x to the data argument.
 
@@ -1106,7 +996,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-88,eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country) #<<
@@ -1117,7 +1007,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-89,eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
@@ -1128,7 +1018,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-90, eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
@@ -1139,7 +1029,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-91, echo = FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
@@ -1252,7 +1142,7 @@ unlink(temp, recursive = TRUE, force = TRUE)
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 #### Create a new directory using the fs package. Call it "figures".
 
@@ -1264,7 +1154,7 @@ unlink(temp, recursive = TRUE, force = TRUE)
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 ```{r YT11-slide-100, eval = FALSE}
 fs::dir_create("figures")
@@ -1292,7 +1182,7 @@ ggsave_gapminder <- function(variable) {
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 ```{r YT11-slide-101, eval = FALSE}
 vars <- c("lifeExp", "pop", "gdpPercap")
