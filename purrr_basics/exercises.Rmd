@@ -40,7 +40,7 @@ measurements$blood_glucose
 
 ### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Name the new columns `bp_` + `mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
 
-```{r YT2-summarise-across}
+```{r}
 diabetes %>% 
   group_by(______) %>% 
   summarise(across(
@@ -57,7 +57,7 @@ diabetes %>%
 1. Read the code in the first chunk and predict what will happen.
 2. Run the code in the first chunk. What does it return?
 
-```{r YT3-01-map-recreate}
+```{r}
 list(
   blood_glucose = sum(measurements$blood_glucose),
   age = sum(measurements$age),
@@ -67,7 +67,7 @@ list(
 
 3. Now, use `map()` to create the same output.
 
-```{r YT3-02-map-recreate}
+```{r}
 map(measurements, ___)
 ```
 
@@ -75,7 +75,7 @@ map(measurements, ___)
 
 Pass diabetes to `map()` and map using `class()`. What are these results telling you?
 
-```{r YT4-01-map-class}
+```{r}
 
 ```
 
@@ -86,7 +86,7 @@ Write a function that returns the mean and standard deviation of a numeric vecto
 2. Find the mean and SD of `x`
 3. Map your function to `measurements`
 
-```{r YT5-00-write-mean-sd-function-list}
+```{r}
 _______ <- function(x) {
   x_mean <- _______
   x_sd <- _______
@@ -98,7 +98,7 @@ _______ <- function(x) {
 
 Do the same as #4 above but return a vector instead of a list. 
 
-```{r YT5-01-write-mean-sd-function-vector}
+```{r}
 
 ```
 
@@ -113,7 +113,7 @@ Check `diabetes` for any missing data.
 
 3. Try counting the number of missing, returning an integer vector
 
-```{r YT8-check-missing}
+```{r}
 
 ```
 
@@ -125,7 +125,7 @@ Check `diabetes` for any missing data.
 
 3. Use `group_modify()` with `model_lm`
 
-```{r YT7-00-model_lm-map}
+```{r}
 model_lm <- function(.data, ...) {
   mdl <- lm(____, data = ____)
   # get model statistics
@@ -145,7 +145,7 @@ diabetes %>%
 
 3. Use `map2()` to take the models list and the data set list and map them to `predict()`. Since we're not adding new arguments, you don't need to use `~.f()`.
 
-```{r YT8-00}
+```{r}
 gapminder_countries <- ____(gapminder, gapminder$country)
 models <- map(________, ~ ________)
 preds <- map2(________, ________, ________)
@@ -169,7 +169,7 @@ Both solutions are fine in this case, but it's useful to know both strategies mo
 
 1. Create a new directory using the fs package. Call it "figures".
 
-```{r YT9-00}
+```{r}
 fs::dir_create(_______)
 ```
 
@@ -177,7 +177,7 @@ fs::dir_create(_______)
 3. Create a character vector that has the three variables we'll plot: "lifeExp", "pop", and "gdpPercap".
 4. Use `walk()` to save a plot for each of the variables
 
-```{r YT9-01}
+```{r}
 ggsave_gapminder <- ________(variable) {
   #  we're using `aes_string()` so we don't need the curly-curly syntax
   p <- ggplot(gapminder, aes_string(x = "year", y = ____, color = "country")) + 
@@ -207,7 +207,7 @@ Do the same as #9, but use a nested data frame.
 
 When might nesting be useful?
 
-```{r YT10-00}
+```{r}
 diabetes_nested <- diabetes %>% 
   group_by(location) %>% 
   nest()
