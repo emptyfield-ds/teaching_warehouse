@@ -70,7 +70,7 @@ list(char = "hello", num = 1, fun = mean)
 ## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x1227e2860&gt;
+## &lt;bytecode: 0x1162cf860&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -214,7 +214,7 @@ mean
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x1227e2860&gt;
+## &lt;bytecode: 0x1162cf860&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -228,7 +228,7 @@ sd
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x125589e08&gt;
+## &lt;bytecode: 0x11139cc60&gt;
 ## &lt;environment: namespace:stats&gt;
 ```
 
@@ -252,7 +252,7 @@ f
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x1227e2860&gt;
+## &lt;bytecode: 0x1162cf860&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -839,104 +839,6 @@ head(
 
 ---
 
-## `group_map()` 
-
-### Apply a function across a grouping variable and return a list of grouped tibbles
-
-
-```r
-diabetes %&gt;% 
-* group_by(gender) %&gt;%
-  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
---
-
-.small[
-
-
-```
-*## [[1]]
-## # A tibble: 2 × 5
-##   term        estimate std.error statistic   p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 (Intercept)   -73.8     59.2       -1.25 0.214    
-## 2 height          3.90     0.928      4.20 0.0000383
-## 
-*## [[2]]
-## # A tibble: 2 × 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)   -49.7     68.9      -0.722 0.471   
-## 2 height          3.35     0.995     3.37  0.000945
-```
-
-]
-
----
-
-## `group_modify()`
-
-###  Apply a function across grouped tibbles and return grouped tibbles
-
-
-```r
-diabetes %&gt;% 
-* group_by(gender) %&gt;%
-  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
---
-
-
-```
-## # A tibble: 4 × 6
-*## # Groups:   gender [2]
-##   gender term        estimate std.error statistic   p.value
-##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female (Intercept)   -73.8     59.2      -1.25  0.214    
-## 2 female height          3.90     0.928     4.20  0.0000383
-## 3 male   (Intercept)   -49.7     68.9      -0.722 0.471    
-## 4 male   height          3.35     0.995     3.37  0.000945
-```
-
-
-
----
-
-## Your Turn 5 
-
-### Use group_modify() and lm() to model chol (the outcome) with ratio, grouped by location
-
----
-
-## Your Turn 5 
-
-
-
-```r
-diabetes %&gt;% 
-* group_by(location) %&gt;%
-  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
-```
-
---
-
-
-```
-## # A tibble: 4 × 6
-*## # Groups:   location [2]
-##   location   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Buckingham (Intercept)    151.       7.17     21.1  2.13e-52
-## 2 Buckingham ratio           11.9      1.45      8.15 4.11e-14
-## 3 Louisa     (Intercept)    153.       8.50     18.0  1.05e-43
-## 4 Louisa     ratio           12.9      1.79      7.19 1.26e-11
-```
-
-
----
-
 #  Review: writing functions
 
 
@@ -1030,7 +932,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 ### Write a function that returns the mean and standard deviation of a numeric vector.
 ### Give the function a name
@@ -1053,7 +955,7 @@ map(measurements, mean_sd)
 ```
 ---
 
-## Your Turn 6
+## Your Turn 7
 
 
 ```
@@ -1170,13 +1072,13 @@ map_int(gapminder, ~length(unique(.x)))
 
 ---
 
-## Your Turn 7
+## Your Turn 8
 
 ### Do the same as #4 above but return a vector instead of a list. 
 
 ---
 
-## Your Turn 7
+## Your Turn 8
 
 .small[
 
@@ -1200,7 +1102,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 8
+## Your Turn 9
 
 ### Check `diabetes` for any missing data. 
 
@@ -1210,7 +1112,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 8
+## Your Turn 9
 
 .small[
 
@@ -1232,7 +1134,7 @@ map_lgl(diabetes, ~any(is.na(.x)))
 
 ---
 
-## Your Turn 8
+## Your Turn 9
 
 .small[
 
@@ -1253,54 +1155,108 @@ map_int(diabetes, ~sum(is.na(.x)))
 
 ---
 
-## Your Turn 9
+## `group_map()` 
 
-### Turn diabetes into a list split by location using the split() function. Check its length.
-### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
-### map model_lm to diabetes_list so that it returns a data frame (by row).
-
----
-
-## Your Turn 9
+### Apply a function across a grouping variable and return a list of grouped tibbles
 
 
 ```r
-*diabetes_list &lt;- split(diabetes, diabetes$location)
-length(diabetes_list)
-model_lm &lt;- function(.data) {
-* mdl &lt;- lm(chol ~ ratio, data = .data)
-  # get model statistics
-  broom::glance(mdl)
-}
-
-*map(diabetes_list, model_lm)
+diabetes %&gt;% 
+  group_by(gender) %&gt;%
+* group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
 ```
 
----
-
-## Your Turn 9
+--
 
 .small[
 
 
 ```
-## [1] 2
+*## [[1]]
+## # A tibble: 2 × 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   -73.8     59.2       -1.25 0.214    
+## 2 height          3.90     0.928      4.20 0.0000383
+## 
+*## [[2]]
+## # A tibble: 2 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   -49.7     68.9      -0.722 0.471   
+## 2 height          3.35     0.995     3.37  0.000945
 ```
 
+]
+
+---
+
+## `group_modify()`
+
+###  Apply a function across grouped tibbles and return grouped tibbles
+
+
+```r
+diabetes %&gt;% 
+* group_by(gender) %&gt;%
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
 ```
-## $Buckingham
-## # A tibble: 1 × 12
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.252         0.248  38.8      66.4 4.11e-14     1 -1009. 2025. 2034.
-## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
-## 
-## $Louisa
-## # A tibble: 1 × 12
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.204         0.201  39.4      51.7 1.26e-11     1 -1033. 2072. 2082.
-## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
+
+--
+
+
+```
+## # A tibble: 4 × 6
+*## # Groups:   gender [2]
+##   gender term        estimate std.error statistic   p.value
+##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 female (Intercept)   -73.8     59.2      -1.25  0.214    
+## 2 female height          3.90     0.928     4.20  0.0000383
+## 3 male   (Intercept)   -49.7     68.9      -0.722 0.471    
+## 4 male   height          3.35     0.995     3.37  0.000945
+```
+
+---
+
+## Your Turn 10
+
+### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
+### Group `diabetes` by `location`
+### Use `group_modify()` with `model_lm`
+
+---
+
+## Your Turn 10
+
+
+```r
+model_lm &lt;- function(.data, ...) {
+* mdl &lt;- lm(chol ~ ratio, data = .data)
+  # get model statistics
+  broom::glance(mdl)
+}
+
+diabetes %&gt;% 
+* group_by(location) %&gt;%
+* group_modify(model_lm)
+```
+
+---
+
+## Your Turn 10
+
+.small[
+
+
+```
+## # A tibble: 2 × 13
+## # Groups:   location [2]
+##   location   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC
+##   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 Buckingham     0.252         0.248  38.8      66.4 4.11e-14     1 -1009. 2025.
+## 2 Louisa         0.204         0.201  39.4      51.7 1.26e-11     1 -1033. 2072.
+## # … with 4 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;,
+## #   nobs &lt;int&gt;
 ```
 
 ]

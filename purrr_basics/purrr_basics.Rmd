@@ -588,78 +588,6 @@ head(
 
 ---
 
-## `group_map()` 
-
-### Apply a function across a grouping variable and return a list of grouped tibbles
-
-```{r slide-50-01, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
---
-
-.small[
-
-```{r slide-50-02, echo=FALSE, highlight.output=c(1,8)}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
-]
-
----
-
-## `group_modify()`
-
-###  Apply a function across grouped tibbles and return grouped tibbles
-
-```{r slide-51-01, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
---
-
-```{r slide-51-02, echo=FALSE, highlight.output=c(2)}
-diabetes %>% 
-  group_by(gender) %>% #<<
-  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
-```
-
-
-
----
-
-## Your Turn 5 
-
-### Use group_modify() and lm() to model chol (the outcome) with ratio, grouped by location
-
----
-
-## Your Turn 5 
-
-
-```{r YT5-slide-53-code, eval=FALSE}
-diabetes %>% 
-  group_by(location) %>% #<<
-  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
-```
-
---
-
-```{r YT5-slide-53-output, echo=FALSE, highlight.output=c(2)}
-diabetes %>% 
-  group_by(location) %>% #<<
-  group_modify(~ broom::tidy(lm(chol ~ ratio, data = .x)))
-```
-
-
----
-
 #  Review: writing functions
 
 ```{r slide-54, eval = FALSE}
@@ -748,7 +676,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 ### Write a function that returns the mean and standard deviation of a numeric vector.
 ### Give the function a name
@@ -770,7 +698,7 @@ map(measurements, mean_sd)
 ```
 ---
 
-## Your Turn 6
+## Your Turn 7
 
 ```{r YT6-slide-62, echo=FALSE}
 mean_sd <- function(x) {
@@ -853,13 +781,13 @@ map_int(gapminder, ~length(unique(.x)))
 
 ---
 
-## Your Turn 7
+## Your Turn 8
 
 ### Do the same as #4 above but return a vector instead of a list. 
 
 ---
 
-## Your Turn 7
+## Your Turn 8
 
 .small[
 
@@ -871,7 +799,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 8
+## Your Turn 9
 
 ### Check `diabetes` for any missing data. 
 
@@ -881,7 +809,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 8
+## Your Turn 9
 
 .small[
 
@@ -893,7 +821,7 @@ map_lgl(diabetes, ~any(is.na(.x)))
 
 ---
 
-## Your Turn 8
+## Your Turn 9
 
 .small[
 
@@ -904,44 +832,88 @@ map_int(diabetes, ~sum(is.na(.x)))
 
 ---
 
-## Your Turn 9
+## `group_map()` 
 
-### Turn diabetes into a list split by location using the split() function. Check its length.
-### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
-### map model_lm to diabetes_list so that it returns a data frame (by row).
+### Apply a function across a grouping variable and return a list of grouped tibbles
+
+```{r slide-50-01, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>%
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x))) #<<
+```
+
+--
+
+.small[
+
+```{r slide-50-02, echo=FALSE, highlight.output=c(1,8)}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+]
 
 ---
 
-## Your Turn 9
+## `group_modify()`
+
+###  Apply a function across grouped tibbles and return grouped tibbles
+
+```{r slide-51-01, eval=FALSE}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+--
+
+```{r slide-51-02, echo=FALSE, highlight.output=c(2)}
+diabetes %>% 
+  group_by(gender) %>% #<<
+  group_modify(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
+
+---
+
+## Your Turn 10
+
+### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
+### Group `diabetes` by `location`
+### Use `group_modify()` with `model_lm`
+
+---
+
+## Your Turn 10
 
 ```{r YT9-slide-78, eval=FALSE}
-diabetes_list <- split(diabetes, diabetes$location) #<<
-length(diabetes_list)
-model_lm <- function(.data) {
+model_lm <- function(.data, ...) {
   mdl <- lm(chol ~ ratio, data = .data) #<<
   # get model statistics
   broom::glance(mdl)
 }
 
-map(diabetes_list, model_lm) #<<
+diabetes %>% 
+  group_by(location) %>% #<<
+  group_modify(model_lm) #<<
 ```
 
 ---
 
-## Your Turn 9
+## Your Turn 10
 
 .small[
 
 ```{r YT9-slide-79, echo=FALSE}
-diabetes_list <- split(diabetes, diabetes$location)
-length(diabetes_list)
-model_lm <- function(.data) {
+model_lm <- function(.data, ...) {
   mdl <- lm(chol ~ ratio, data = .data)
   # get model statistics
   broom::glance(mdl)
 }
 
-map(diabetes_list, model_lm)
+diabetes %>% 
+  group_by(location) %>% 
+  group_modify(model_lm) 
 ```
 
 ]
