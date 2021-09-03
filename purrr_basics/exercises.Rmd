@@ -81,19 +81,7 @@ Pass diabetes to `map()` and map using `class()`. What are these results telling
 
 ```
 
-## Your Turn 5 
-
-Use `group_modify()` and `lm()` to model `chol` (the outcome) with `ratio`, grouped by `location`
-
-```{r YT5}
-diabetes %>% 
-  group_by(__________) %>% 
-  group_modify(~ broom::tidy(lm(____ ~ ______, data = .x)))
-```
-
-
-
-## Your Turn 6
+## Your Turn 5
 
 Write a function that returns the mean and standard deviation of a numeric vector.
 1. Give the function a name
@@ -108,7 +96,7 @@ _______ <- function(x) {
 }
 ```
 
-## Your Turn 7
+## Your Turn 6
 
 Do the same as #4 above but return a vector instead of a list. 
 
@@ -117,7 +105,7 @@ Do the same as #4 above but return a vector instead of a list.
 ```
 
 
-## Your Turn 8
+## Your Turn 7
 
 Check `diabetes` for any missing data. 
 
@@ -131,25 +119,27 @@ Check `diabetes` for any missing data.
 
 ```
 
-## Your Turn 9
+## Your Turn 8
 
-1. Turn `diabetes` into a list split by `location` using the `split()` function. Check its length.
+1. Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
 
-2. Fill in the `model_lm` function to model `chol` (the outcome) with `ratio` and pass the `.data` argument to `lm()`
+2. Group `diabetes` by `location`
 
-3. map `model_lm` to `diabetes_list` so that it returns a data frame (by row).
+3. Use `group_modify()` with `model_lm`
 
 ```{r YT7-00-model_lm-map}
-diabetes_list <- ____(diabetes, diabetes$location)
-length(_____)
-model_lm <- function(.data) {
+model_lm <- function(.data, ...) {
   mdl <- lm(____, data = ____)
   # get model statistics
   broom::glance(mdl)
 }
+
+diabetes %>% 
+  ________ %>% 
+  ________
 ```
 
-## Your Turn 10
+## Your Turn 9
 
 1. Split the `gapminder` dataset into a list by `country`
 
@@ -166,7 +156,7 @@ preds <- map2(________, ________, ________)
 head(preds)
 ```
 
-## Your turn 11
+## Your turn 10
 
 1. Create a new directory using the fs package. Call it "figures".
 
@@ -196,7 +186,7 @@ ______(_______, ________)
 ```
 
 
-## Your Turn 12: Bonus!
+## Your Turn 11: Bonus!
 
 Finish the exercises early? Try this bonus exercise to work with nested columns
 
@@ -205,6 +195,8 @@ Do the same as #9, but use a nested data frame.
 2. Use `map()` in `dplyr::mutate()` to map `data` to `model_lm`. 
 3. What does `nested_glance` look like?
 4. Unnest the data
+
+When might nesting be useful?
 
 ```{r YT10-00}
 diabetes_nested <- diabetes %>% 
