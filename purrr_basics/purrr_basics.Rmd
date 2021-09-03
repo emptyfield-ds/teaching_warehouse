@@ -308,7 +308,7 @@ gapminder %>%
 
 ---
 
-```{r slide-24-output, echo=FALSE, highlight.output = c(2)}
+```{r slide-25-output, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
   summarise(across(c("lifeExp", "gdpPercap"), list(med = median, 
@@ -685,7 +685,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 ```{r YT6-slide-61, eval=FALSE}
 mean_sd <- function(x) {
@@ -698,7 +698,7 @@ map(measurements, mean_sd)
 ```
 ---
 
-## Your Turn 7
+## Your Turn 5
 
 ```{r YT6-slide-62, echo=FALSE}
 mean_sd <- function(x) {
@@ -781,13 +781,13 @@ map_int(gapminder, ~length(unique(.x)))
 
 ---
 
-## Your Turn 8
+## Your Turn 6
 
 ### Do the same as #4 above but return a vector instead of a list. 
 
 ---
 
-## Your Turn 8
+## Your Turn 6
 
 .small[
 
@@ -799,7 +799,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 9
+## Your Turn 7
 
 ### Check `diabetes` for any missing data. 
 
@@ -809,7 +809,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 9
+## Your Turn 7
 
 .small[
 
@@ -821,7 +821,7 @@ map_lgl(diabetes, ~any(is.na(.x)))
 
 ---
 
-## Your Turn 9
+## Your Turn 7
 
 .small[
 
@@ -842,17 +842,15 @@ diabetes %>%
   group_map(~ broom::tidy(lm(weight ~ height, data = .x))) #<<
 ```
 
---
+---
 
-.small[
+## `group_map()` 
 
-```{r slide-50-02, echo=FALSE, highlight.output=c(1,8)}
+```{r slide-50-02, echo=TRUE, highlight.output=c(1,8)}
 diabetes %>% 
   group_by(gender) %>% #<<
   group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
 ```
-
-]
 
 ---
 
@@ -876,7 +874,7 @@ diabetes %>%
 
 ---
 
-## Your Turn 10
+## Your Turn 8
 
 ### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
 ### Group `diabetes` by `location`
@@ -884,7 +882,7 @@ diabetes %>%
 
 ---
 
-## Your Turn 10
+## Your Turn 8
 
 ```{r YT9-slide-78, eval=FALSE}
 model_lm <- function(.data, ...) {
@@ -900,7 +898,7 @@ diabetes %>%
 
 ---
 
-## Your Turn 10
+## Your Turn 8
 
 .small[
 
@@ -988,7 +986,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ### Split the gapminder dataset into a list by country
 
@@ -998,7 +996,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-88,eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country) #<<
@@ -1009,7 +1007,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-89,eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
@@ -1020,7 +1018,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-90, eval=FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
@@ -1031,7 +1029,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ```{r YT10-slide-91, echo = FALSE}
 gapminder_countries <- split(gapminder, gapminder$country)
@@ -1144,7 +1142,7 @@ unlink(temp, recursive = TRUE, force = TRUE)
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 #### Create a new directory using the fs package. Call it "figures".
 
@@ -1156,7 +1154,7 @@ unlink(temp, recursive = TRUE, force = TRUE)
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 ```{r YT11-slide-100, eval = FALSE}
 fs::dir_create("figures")
@@ -1184,7 +1182,7 @@ ggsave_gapminder <- function(variable) {
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 ```{r YT11-slide-101, eval = FALSE}
 vars <- c("lifeExp", "pop", "gdpPercap")

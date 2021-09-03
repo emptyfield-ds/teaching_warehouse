@@ -70,7 +70,7 @@ list(char = "hello", num = 1, fun = mean)
 ## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x1162cf860&gt;
+## &lt;bytecode: 0x156cbee60&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -214,7 +214,7 @@ mean
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x1162cf860&gt;
+## &lt;bytecode: 0x156cbee60&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -228,7 +228,7 @@ sd
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x11139cc60&gt;
+## &lt;bytecode: 0x1336932e0&gt;
 ## &lt;environment: namespace:stats&gt;
 ```
 
@@ -252,7 +252,7 @@ f
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x1162cf860&gt;
+## &lt;bytecode: 0x156cbee60&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -473,6 +473,13 @@ gapminder %&gt;%
 
 ---
 
+
+```r
+gapminder %&gt;% 
+  group_by(continent) %&gt;% 
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, 
+      iqr = IQR)))
+```
 
 ```
 ## # A tibble: 5 × 5
@@ -941,7 +948,7 @@ class: inverse, center, middle, takeaway
 
 ---
 
-## Your Turn 6
+## Your Turn 5
 
 
 ```r
@@ -955,7 +962,7 @@ map(measurements, mean_sd)
 ```
 ---
 
-## Your Turn 7
+## Your Turn 5
 
 
 ```
@@ -1072,13 +1079,13 @@ map_int(gapminder, ~length(unique(.x)))
 
 ---
 
-## Your Turn 8
+## Your Turn 6
 
 ### Do the same as #4 above but return a vector instead of a list. 
 
 ---
 
-## Your Turn 8
+## Your Turn 6
 
 .small[
 
@@ -1102,7 +1109,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 9
+## Your Turn 7
 
 ### Check `diabetes` for any missing data. 
 
@@ -1112,7 +1119,7 @@ map_chr(diabetes, class)
 
 ---
 
-## Your Turn 9
+## Your Turn 7
 
 .small[
 
@@ -1134,7 +1141,7 @@ map_lgl(diabetes, ~any(is.na(.x)))
 
 ---
 
-## Your Turn 9
+## Your Turn 7
 
 .small[
 
@@ -1166,10 +1173,16 @@ diabetes %&gt;%
 * group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
 ```
 
---
+---
 
-.small[
+## `group_map()` 
 
+
+```r
+diabetes %&gt;% 
+* group_by(gender) %&gt;%
+  group_map(~ broom::tidy(lm(weight ~ height, data = .x)))
+```
 
 ```
 *## [[1]]
@@ -1186,8 +1199,6 @@ diabetes %&gt;%
 ## 1 (Intercept)   -49.7     68.9      -0.722 0.471   
 ## 2 height          3.35     0.995     3.37  0.000945
 ```
-
-]
 
 ---
 
@@ -1218,7 +1229,7 @@ diabetes %&gt;%
 
 ---
 
-## Your Turn 10
+## Your Turn 8
 
 ### Fill in the model_lm function to model chol (the outcome) with ratio and pass the .data argument to lm()
 ### Group `diabetes` by `location`
@@ -1226,7 +1237,7 @@ diabetes %&gt;%
 
 ---
 
-## Your Turn 10
+## Your Turn 8
 
 
 ```r
@@ -1243,7 +1254,7 @@ diabetes %&gt;%
 
 ---
 
-## Your Turn 10
+## Your Turn 8
 
 .small[
 
@@ -1332,7 +1343,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 ### Split the gapminder dataset into a list by country
 
@@ -1342,7 +1353,7 @@ map2_dbl(means, sds, rnorm, n = 1)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 
 ```r
@@ -1354,7 +1365,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 
 ```r
@@ -1366,7 +1377,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 
 ```r
@@ -1378,7 +1389,7 @@ head(preds, 3)
 
 ---
 
-## Your Turn 10
+## Your Turn 9
 
 
 ```
@@ -1493,7 +1504,7 @@ gapminder %&gt;%
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 #### Create a new directory using the fs package. Call it "figures".
 
@@ -1505,7 +1516,7 @@ gapminder %&gt;%
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 
 ```r
@@ -1534,7 +1545,7 @@ ggsave_gapminder &lt;- function(variable) {
 
 ---
 
-## Your turn 11
+## Your turn 10
 
 
 ```r
