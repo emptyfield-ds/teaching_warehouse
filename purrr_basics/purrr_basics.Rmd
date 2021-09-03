@@ -1,5 +1,5 @@
 ---
-title: "Functional programming and iteration in R"
+title: "Functional programming in R"
 subtitle: 
 date: "`r Sys.Date()`"
 output:
@@ -299,70 +299,20 @@ select(diabetes, matches("\\d"))
 
 ---
 
-## `mutate(across())` & `summarise()`
-
-### Perform group-wise summaries with `mutate(across())`, `group_by()` and `summarise()`
-
-```{r slide-22-mutate-across-summarise-concept-map, eval=FALSE}
-<DATA> %>% 
-  group_by(<GROUPING VAR>) #<<
-  summarise(across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>))) 
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-### Combine with `tidyselect()` helpers
-
-```{r slide-23-mutate-across-tidyselect-summarise-concept-map, eval=FALSE}
-<DATA> %>% 
-  group_by(<GROUPING VAR>) 
-  summarise(across(contains(<VARIABLES>), list(<NAMES> = #<<
-      <FUNCTIONS>))) 
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-```{r slide-24-code, eval=FALSE}
+```{r slide-24-code, eval=FALSE, highlight.output = c(2)}
 gapminder %>% 
-  group_by(continent) %>% 
-  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
+  group_by(continent) %>% #<<
+  summarise(across(c("lifeExp", "gdpPercap"), list(med = median,  #<<
       iqr = IQR))) #<<
 ```
 
---
+---
 
 ```{r slide-24-output, echo=FALSE, highlight.output = c(2)}
 gapminder %>% 
   group_by(continent) %>% 
   summarise(across(c("lifeExp", "gdpPercap"), list(med = median, 
       iqr = IQR)))
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-
-### New column names are created with `_[function name]`
-
-```{r slide-25-code, eval=FALSE, highlight.output = c(2)}
-gapminder %>% 
-  group_by(continent) %>% 
-  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
-      iqr = IQR))) #<<
-```
-
---
-
-```{r slide-25-output, echo=FALSE, highlight.output = c(2)}
-gapminder %>% 
-  group_by(continent) %>% 
-  summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
-      iqr = IQR))) #<<
 ```
 
 ---
@@ -385,36 +335,6 @@ gapminder %>%
   group_by(continent) %>% 
   summarise(across(c("lifeExp", "gdpPercap"), list(med = median, #<<
            iqr = IQR), .names = "{.fn}_{.col}")) #<<
-```
-
----
-
-## `mutate(across())` & `summarise()`
-
-### `tidyselect()` helpers and named columns
-
-```{r slide-27-mutate-across-summarise-code, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% 
-  summarise(across(starts_with("bp"), mean)) #<<
-```
-
---
-
-```{r slide-27-mutate-across-summarise-code-02, eval=FALSE}
-diabetes %>% 
-  group_by(gender) %>% 
-  summarise(across(starts_with("bp"), list(mean = mean), #<<
-      na.rm = TRUE, .names = "{.fn}_{.col}")) #<<
-```
-
---
-
-```{r slide-27-mutate-across-summarise-highlight, echo=FALSE, highlight.output=c(2)}
-diabetes %>% 
-  group_by(gender) %>% 
-  summarise(across(starts_with("bp"), list(mean = mean), 
-      na.rm = TRUE, .names = "{.fn}_{.col}"))
 ```
 
 ---

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Functional programming and iteration in R</title>
+    <title>Functional programming in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-08-27" />
+    <meta name="date" content="2021-09-03" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -12,8 +12,8 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Functional programming and iteration in R
-### 2021-08-27
+# Functional programming in R
+### 2021-09-03
 
 ---
 
@@ -70,7 +70,7 @@ list(char = "hello", num = 1, fun = mean)
 ## $fun
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x134e302d8&gt;
+## &lt;bytecode: 0x1227e2860&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -214,7 +214,7 @@ mean
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x134e302d8&gt;
+## &lt;bytecode: 0x1227e2860&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -228,7 +228,7 @@ sd
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x1218a76d0&gt;
+## &lt;bytecode: 0x125589e08&gt;
 ## &lt;environment: namespace:stats&gt;
 ```
 
@@ -252,7 +252,7 @@ f
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## &lt;bytecode: 0x134e302d8&gt;
+## &lt;bytecode: 0x1227e2860&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -463,73 +463,15 @@ select(diabetes, matches("\\d"))
 
 ---
 
-## `mutate(across())` &amp; `summarise()`
-
-### Perform group-wise summaries with `mutate(across())`, `group_by()` and `summarise()`
-
-
-```r
-&lt;DATA&gt; %&gt;% 
-* group_by(&lt;GROUPING VAR&gt;)
-  summarise(across(c(&lt;VARIABLES&gt;), list(&lt;NAMES&gt; = &lt;FUNCTIONS&gt;))) 
-```
-
----
-
-## `mutate(across())` &amp; `summarise()`
-
-### Combine with `tidyselect()` helpers
-
-
-```r
-&lt;DATA&gt; %&gt;% 
-  group_by(&lt;GROUPING VAR&gt;) 
-* summarise(across(contains(&lt;VARIABLES&gt;), list(&lt;NAMES&gt; =
-      &lt;FUNCTIONS&gt;))) 
-```
-
----
-
-## `mutate(across())` &amp; `summarise()`
-
 
 ```r
 gapminder %&gt;% 
-  group_by(continent) %&gt;% 
+* group_by(continent) %&gt;%
 * summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
 *     iqr = IQR)))
 ```
 
---
-
-
-```
-## # A tibble: 5 × 5
-*##   continent lifeExp_med lifeExp_iqr gdpPercap_med gdpPercap_iqr
-##   &lt;fct&gt;           &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-## 1 Africa           47.8       12.0          1192.         1616.
-## 2 Americas         67.0       13.3          5466.         4402.
-## 3 Asia             61.8       18.1          2647.         7492.
-## 4 Europe           72.2        5.88        12082.        13248.
-## 5 Oceania          73.7        6.35        17983.         8072.
-```
-
 ---
-
-## `mutate(across())` &amp; `summarise()`
-
-
-### New column names are created with `_[function name]`
-
-
-```r
-gapminder %&gt;% 
-  group_by(continent) %&gt;% 
-* summarise(across(c("lifeExp", "gdpPercap"), list(med = median,
-*     iqr = IQR)))
-```
-
---
 
 
 ```
@@ -569,40 +511,6 @@ gapminder %&gt;%
 ## 3 Asia             61.8       18.1          2647.         7492.
 ## 4 Europe           72.2        5.88        12082.        13248.
 ## 5 Oceania          73.7        6.35        17983.         8072.
-```
-
----
-
-## `mutate(across())` &amp; `summarise()`
-
-### `tidyselect()` helpers and named columns
-
-
-```r
-diabetes %&gt;% 
-  group_by(gender) %&gt;% 
-* summarise(across(starts_with("bp"), mean))
-```
-
---
-
-
-```r
-diabetes %&gt;% 
-  group_by(gender) %&gt;% 
-* summarise(across(starts_with("bp"), list(mean = mean),
-*     na.rm = TRUE, .names = "{.fn}_{.col}"))
-```
-
---
-
-
-```
-## # A tibble: 2 × 5
-*##   gender mean_bp.1s mean_bp.1d mean_bp.2s mean_bp.2d
-##   &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-## 1 female       136.       82.5       153.       91.8
-## 2 male         138.       84.5       151.       93.5
 ```
 
 ---
@@ -1816,7 +1724,10 @@ class: inverse, center
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
