@@ -6,28 +6,6 @@ output: html_document
 ```{r setup}
 library(tidyverse)
 library(gapminder)
-
-# Toy datasets used in bonus joining material
-# use install.packages("nycflights13") if needed
-library(nycflights13)
-superheroes <- tribble(
-       ~name, ~alignment,  ~gender,          ~publisher,
-   "Magneto",      "bad",   "male",            "Marvel",
-     "Storm",     "good", "female",            "Marvel",
-  "Mystique",      "bad", "female",            "Marvel",
-    "Batman",     "good",   "male",                "DC",
-     "Joker",      "bad",   "male",                "DC",
-  "Catwoman",      "bad", "female",                "DC",
-   "Hellboy",     "good",   "male", "Dark Horse Comics"
-  )
-
-publishers <- tribble(
-  ~publisher, ~yr_founded,
-        "DC",       1934L,
-    "Marvel",       1939L,
-     "Image",       1992L
-  )
-
 ```
 
 ## gapminder
