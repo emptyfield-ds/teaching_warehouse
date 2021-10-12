@@ -1168,7 +1168,7 @@ ggsave_gapminder <- function(variable) {
   ) + 
     geom_line() + 
     scale_color_manual(values = country_colors) + 
-    facet_wrap(vars(continent.)) + 
+    facet_wrap(vars(continent)) + 
     theme(legend.position = "none")
     
   ggsave(
