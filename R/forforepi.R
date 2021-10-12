@@ -1,5 +1,5 @@
 library(fs)
-library(coursedeployr)
+library(shunyata)
 library(tidyverse)
 library(withr)
 
