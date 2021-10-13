@@ -5,6 +5,26 @@ output: html_document
 
 ```{r setup}
 library(tidyverse)
+
+copy_rmd_template <- function(template) {
+  copied <- file.copy(
+    file.path("templates", template),
+    "whole_game.Rmd",
+    overwrite = TRUE
+  )
+  
+  if (!copied) {
+    stop(
+      file.path("templates", template), " not found. ", 
+      "Are you sure you're in the right working directory?",
+      call. = FALSE
+    )
+  }
+  
+  template_r <- usethis::ui_path(file.path("templates", template))
+  targets_r <- usethis::ui_path("whole_game.Rmd")
+  usethis::ui_done("Copying {template_r} to {targets_r}")
+}
 ```
 
 For this set of exercises, we'll work through an R Markdown report in `whole_game.Rmd`.
@@ -22,6 +42,13 @@ Open up that file and follow along with these exercises:
 
 ## Your Turn 3
 
+Something not quite working from the last exercise?
+Run this code to update `whole_game.Rmd` and catch up
+
+```{r, eval=FALSE, echo = FALSE}
+copy_rmd_template("your_turn_3.Rmd")
+```
+
 1.  Take a look at the chunk called "descriptive-stats." What do you think `echo = FALSE` does, and how is it different from `include = FALSE`? What do you think `eval = FALSE` means?
 2.  Read the code in "descriptive-stats". What are we preparing?
 3.  Look at the narrative text right after "descriptive-stats". It's full of bits of code. What are we doing here, and what do you think the output should look like?
@@ -29,11 +56,25 @@ Open up that file and follow along with these exercises:
 
 ## Your Turn 4
 
+Something not quite working from the last exercise?
+Run this code to update `whole_game.Rmd` and catch up
+
+```{r, eval=FALSE, echo = FALSE}
+copy_rmd_template("your_turn_4.Rmd")
+```
+
 1.  In the code chunk called "table-one", create a descriptive table with `tbl_summary()`
 2.  Pipe the results of `tbl_summary()` to `add_difference()`.
 3.  Change `eval` to `TRUE` and re-knit
 
 ## Your Turn 5
+
+Something not quite working from the last exercise?
+Run this code to update `whole_game.Rmd` and catch up
+
+```{r, eval=FALSE, echo = FALSE}
+copy_rmd_template("your_turn_5.Rmd")
+```
 
 1.  In the code chunk called "figure-one", load the patchwork library
 
@@ -55,6 +96,13 @@ Open up that file and follow along with these exercises:
 
 ## Your Turn 6
 
+Something not quite working from the last exercise?
+Run this code to update `whole_game.Rmd` and catch up
+
+```{r, eval=FALSE, echo = FALSE}
+copy_rmd_template("your_turn_6.Rmd")
+```
+
 1.  In the code chunk called "table-two", pass the results of both `lm()` and `glm()` to `tbl_regression()`
 2.  Merge the two model tables using `tbl_merge()`
 3.  change `eval` to `TRUE` and re-knit
@@ -64,6 +112,13 @@ It would probably be better to have some numbers included in the narrative text.
 Read gtsummary's [vignette on inline text](http://www.danieldsjoberg.com/gtsummary/articles/inline_text.html) and add a few important details.
 
 ## Your Turn 7
+
+Something not quite working from the last exercise?
+Run this code to update `whole_game.Rmd` and catch up
+
+```{r, eval=FALSE, echo = FALSE}
+copy_rmd_template("your_turn_7.Rmd")
+```
 
 Previously, we only had data for one location in the study---Buckingham.
 We've just received data from the other site, Louisa, and we need to update the tables, figures, and narrative text...

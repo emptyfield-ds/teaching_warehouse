@@ -1,0 +1,137 @@
+---
+title: "Whole Game: Analyzing the diabetes data set"
+output: html_document
+bibliography: references.bib
+---
+
+# Introduction
+
+In this exercise, we'll look at a report generated completely in R using R Markdown.
+We're using an intentionally simplified report: what we're telling the readers, how we fit models, and so on, are all much simpler than you would use in practice.
+Instead, focus on the big idea here: reproducible reports!
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(gtsummary)
+```
+
+```{r prep-data, include = FALSE}
+diabetes <- read_csv("diabetes-buckingham.csv") %>% 
+  mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
+
+description <- list()
+```
+
+# Methods
+
+These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americansn[@Willems1997].
+We sought to assess the relationship between waist-to-hip ratio on hemoglobin A1c and diabetes diagnosis.
+In this truncated report, we include basic descriptive statistics on participants by diabetes status.
+We also fit two regression models: 1) an ordinary least-squares regression model of the impact of waist-to-hip ratio on hemoglobin A1c, and 2) a logistic regression model of the impact of waist-to-hip ratio on diabetes status.
+We adjusted both models for age.
+
+# Results
+
+```{r descriptive-stats, eval = TRUE, echo = FALSE}
+description <- diabetes %>% 
+  # calculate basic statistics by diabetes status
+  group_by(diabetic) %>% 
+  summarise(n = n(), across(c(glyhb, ratio, age), mean, na.rm = TRUE)) %>% 
+  # clean up data to include in text
+  mutate(
+    across(where(is.numeric), round),
+    diabetic = fct_explicit_na(diabetic, na_level = "Missing")
+  ) %>% 
+  # split into a list of data frames by diabetes status
+  split(.$diabetic)
+```
+
+There were `r description$Diabetic$n` participants with diabetes, who had an average A1c of `r description$Diabetic$glyhb`, and `r description$Healthy$n` participants with diabetes, who had an average A1c of `r description$Healthy$glyhb`.
+Non-diabetic participants were, on average, younger than those with diabetes (`r description$Healthy$age` vs `r description$Diabetic$age`), There were `r description$Missing$n` participants who were missing data.
+These participants were also younger, on average, than those with diabetes (`r description$Diabetic$age` vs `r description$Missing$age`) See Table 1.
+
+```{r table-one, eval = FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+lbls <- list(
+  diabetic ~ "Diabetes Status", 
+  glyhb ~ "Hemoglobin A1c",
+  ratio ~ "Waist/Hip Ratio", 
+  age ~ "Age", 
+  chol ~ "Cholestorol", 
+  gender ~ "Sex", 
+  frame ~ "Body Frame"
+)
+
+diabetes %>% 
+  select(diabetic, glyhb, ratio, age, chol, gender, frame) %>% 
+  filter(!is.na(diabetic)) %>% 
+  _______(by = diabetic, label = lbls, missing_text = "(Missing)") %>% 
+  _______()
+```
+
+```{r figure-one, eval = FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+library(_______)
+
+fig1a <- diabetes %>% 
+  drop_na() %>% 
+  ggplot(aes(ratio, glyhb)) + 
+  geom_point(shape = 21, fill = "grey80", color = "white", size = 2) + 
+  geom_smooth(size = 1, color = "steelblue", se = FALSE, method = "lm") + 
+  scale_x_log10() +
+  theme_minimal(14) +
+  labs(
+    x = "Hip/waist ratio",
+    y = "Hemoglobin A1c",
+    tag = "A"
+  )
+
+fig1b <- diabetes %>% 
+  drop_na() %>% 
+  mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) %>% 
+ggplot(aes(ratio, fill = diabetic)) + 
+  geom_density(color = "white", alpha = .8) +
+  theme_minimal(14) +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  ) +
+  labs(x = "Hip/waist ratio", tag = "B") +
+  scale_fill_manual(values = c("steelblue", "firebrick"))
+
+_______
+```
+
+In Figure \_\_\_\_\_\_\_a, we show the unadjusted relationship between A1c and waist-hip ratio (WH ratio is shown on the log scale).
+As WH ratio increases, A1c also increases.
+In Figure \_\_\_\_\_\_\_b, we show the density of WH ratio among those with and without diabetes.
+Participants with diabetes had a higher WH ratio than those without diabetes.
+
+```{r table-two, eval = FALSE, echo = FALSE}
+lbls_reg <- list(age ~ "Age", ratio ~ "Waist/Hip Ratio")
+
+diabetes <- diabetes %>% 
+  drop_na() %>% 
+  mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic")))
+
+linear_mod_tbl <- lm(glyhb ~ ratio + age, data = diabetes) %>% 
+  _______(label = lbls_reg)
+
+logistic_mod_tbl <- glm(factor(diabetic) ~ ratio + age, data = diabetes, family = binomial()) %>% 
+  _______(label = lbls_reg, exponentiate = TRUE)
+
+_______(
+  tbls = list(linear_mod_tbl, logistic_mod_tbl),
+  tab_spanner = c("**Linear model (HbA1c)**", "**Logistic model (Diabetes status)**")
+)
+```
+
+In Table 2, we present two regression models: linear and logistic.
+In the linear model, we analyze the association of WH ratio an A1c adjusted for age.
+In the logistic model, we analyze the association of WH ratio on diabetes status adjusted for age.
+Increased WH ratio was associated with both higher A1c and a higher likelihood of being diabetic.
+
+# Discussion
+
+In this R Markdown file, we generated a polished report of the diabetes dataset.
+Amazingly, when we were provided with an updated dataset, everything updated perfectly!
+
+# References
