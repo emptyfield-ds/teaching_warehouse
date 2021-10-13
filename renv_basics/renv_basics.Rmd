@@ -349,7 +349,7 @@ class: inverse
 
 ## Using renv with targets
 ## ~~targets encourages `tar_option_set(packages = "...")`~~
-## `tar_option_set()` is *efficient* but *unique to targets*
+## `tar_option_set()` is *efficient* but *works differently* than other ways of loading packages
 
 ---
 
@@ -360,12 +360,18 @@ class: inverse
 ## ~~`require(`~~**`dplyr`**~~`)`~~
 ## ~~`requireNamespace("`~~**`devtools`**~~`")`~~
 
+--
+
+## Recent updates to renv also support **`tar_option_set()`**!
+
 ---
 
 ## Using renv with targets
-## ~~targets encourages `tar_option_set(packages = "...")`~~
-## ~~`tar_option_set()` is efficient but unique to targets~~
-## *`tar_renv()`*
+## *`tar_renv()`* 
+
+--
+
+## Still helpful with recent updates because of interactive and suggested packages
 
 ---
 

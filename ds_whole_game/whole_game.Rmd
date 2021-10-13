@@ -6,7 +6,6 @@ output: html_document
 ```{r setup, message=FALSE}
 library(tidyverse)
 library(haven)
-library(stringr)
 library(visdat)
 library(GGally)
 library(mice)
@@ -166,7 +165,7 @@ titanic %>%
   ______ ___ 
   ______() %>% 
   ggplot(aes(x = value, color = ______, fill = ______)) +
-    geom_density(alpha = .7)
+  geom_density(alpha = .7)
 ```
 
 ## Exploratory analysis
@@ -187,13 +186,13 @@ ______ ___
   #  color by survival status.
   #  only show age, class, sex, and title.
   ggpairs(mapping = aes(color = _______), columns = 2:5, legend = 1) + 
-    theme_minimal() +
-    #  put the legend at the bottom
-    #  make the column/row text bold
-    theme(
-      legend.position = "bottom",
-      strip.text = element_text(face = "bold")
-    )
+  theme_minimal() +
+  #  put the legend at the bottom
+  #  make the column/row text bold
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold")
+  )
 ```
 
 Paired plots contain a lot of information, which is a pro and a con. What do you see? 
@@ -270,9 +269,9 @@ model_table %>%
   ______ %>% 
   mutate(term = ________(term)) %>% 
   ggplot(aes(x = ______, y = ______)) + 
-    geom_point(size = 2) +
-    geom_errorbarh(aes(xmin = ______, xmax = ______), height = 0) +
-    geom_vline(xintercept = 1)
+  geom_point(size = 2) +
+  geom_errorbarh(aes(xmin = ______, xmax = ______), height = 0) +
+  geom_vline(xintercept = 1)
 ```
 
 To know the real impact of a single variable on survival, we would need to thoughtfully create a model focused on getting an unbiased effect estimate. Since this is a prediction model, the individual odds ratios may or may not have a have a meaningful interpretation.
@@ -298,6 +297,6 @@ _______ %>%
     term = fct_inorder(term)
   ) %>% 
   ggplot(aes(x = _______, y = _______)) + 
-    geom_col() +
-    coord_flip()
+  geom_col() +
+  coord_flip()
 ```

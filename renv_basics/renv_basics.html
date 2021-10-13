@@ -3,7 +3,7 @@
   <head>
     <title>Reproducing package environments</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-06-23" />
+    <meta name="date" content="2021-10-12" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Reproducing package environments
 ## using renv to lock packages
-### 2021-06-23
+### 2021-10-12
 
 ---
 
@@ -316,7 +316,7 @@ class: inverse
 
 ## Using renv with targets
 ## ~~targets encourages `tar_option_set(packages = "...")`~~
-## `tar_option_set()` is *efficient* but *unique to targets*
+## `tar_option_set()` is *efficient* but *works differently* than other ways of loading packages
 
 ---
 
@@ -327,12 +327,20 @@ class: inverse
 ## ~~`require(`~~**`dplyr`**~~`)`~~
 ## ~~`requireNamespace("`~~**`devtools`**~~`")`~~
 
+--
+
+## Recent updates to renv also support **`tar_option_set()`**!
+
 ---
 
 ## Using renv with targets
 ## ~~targets encourages `tar_option_set(packages = "...")`~~
-## ~~`tar_option_set()` is efficient but unique to targets~~
-## *`tar_renv()`*
+## ~~`tar_option_set()` is efficient but works differently than other ways of loading packages~~
+## *`tar_renv()`* 
+
+--
+
+## Still helpful with recent updates because of interactive and suggested packages
 
 ---
 
@@ -446,7 +454,10 @@ class: inverse, left
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
