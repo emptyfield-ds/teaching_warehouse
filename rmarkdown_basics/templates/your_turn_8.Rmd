@@ -1,8 +1,12 @@
 ---
+author: "Malcolm Barrett"
 title: "Reproduce Reports"
-output: html_document
+output: 
+  distill::distill_article:
+    toc: true
+    code_folding: true 
 params: 
-  continent: Americas
+  continent: Africa
 bibliography: citations.bib
 ---
 
@@ -62,7 +66,9 @@ Create a code chunk.
 You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above.
 Put the following code in it:
 
-gapminder %\>% slice(1:5) %\>% knitr::kable()
+```{r, echo = FALSE}
+gapminder %>% slice(1:5) %>% knitr::kable()
+```
 
 Knit the document
 
@@ -99,15 +105,15 @@ In the code chunk below:
 2.  Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
 3.  Use inline code to describe the data set in the text below the code chunk and re-knit.
 
-```{r, eval = FALSE}
-___ ___ gapminder %>% 
-  _________ %>% 
+```{r}
+n_years <- gapminder %>% 
+  summarize(n_years = n_distinct(year)) %>% 
   # pull() extracts a column as a vector
   # if no column is called, it uses the most recently created
   pull()
 ```
 
-Gapminder observed data over \_\_\_\_\_\_\_\_\_ different years.
+Gapminder observed data over `r n_years` different years.
 
 ## Your turn 6
 
@@ -136,7 +142,7 @@ In the code chunk below:
         _________: true 
     ```
 
-```{r}
+```{r, dpi = 320, fig.width=6}
 gapminder %>% 
   filter(continent != "Oceania") %>% 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +

@@ -62,7 +62,9 @@ Create a code chunk.
 You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above.
 Put the following code in it:
 
-gapminder %\>% slice(1:5) %\>% knitr::kable()
+```{r, echo = FALSE}
+gapminder %>% slice(1:5) %>% knitr::kable()
+```
 
 Knit the document
 
