@@ -26,7 +26,7 @@ description <- list()
 
 # Methods
 
-These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americansn[@Willems1997].
+These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans [@Willems1997].
 We sought to assess the relationship between waist-to-hip ratio on hemoglobin A1c and diabetes diagnosis.
 In this truncated report, we include basic descriptive statistics on participants by diabetes status.
 We also fit two regression models: 1) an ordinary least-squares regression model of the impact of waist-to-hip ratio on hemoglobin A1c, and 2) a logistic regression model of the impact of waist-to-hip ratio on diabetes status.

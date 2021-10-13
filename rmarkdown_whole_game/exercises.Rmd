@@ -7,6 +7,13 @@ output: html_document
 library(tidyverse)
 
 copy_rmd_template <- function(template) {
+  if (template == "your_turn_3.Rmd") {
+    file.copy(
+      file.path("templates", "references.bib"),
+      "references.bib",
+      overwrite = TRUE
+    )
+  }
   copied <- file.copy(
     file.path("templates", template),
     "whole_game.Rmd",
@@ -27,104 +34,93 @@ copy_rmd_template <- function(template) {
 }
 ```
 
-For this set of exercises, we'll work through an R Markdown report in `whole_game.Rmd`.
-Open up that file and follow along with these exercises:
+*For this set of exercises, we'll work through an R Markdown report in `whole_game.Rmd`. Open up that file and follow along with these exercises:*
 
-## Your Turn 1
+## *Your Turn 1*
 
-1.  Turn on Visual R Markdown mode for `exercises.Rmd` (this document) AND `whole_game.Rmd`
-2.  In your local R session, run the code in the code chunk called "prep-data". Look at the chunk options (everything after "r prep-data". What do you think setting the `include` option does?
-3.  Knit the document and take a look. Were you right?
+1.  *Turn on Visual R Markdown mode for `exercises.Rmd` (this document) AND `whole_game.Rmd`*
+2.  *In your local R session, run the code in the code chunk called "prep-data". Look at the chunk options (everything after "r prep-data". What do you think setting the `include` option does?*
+3.  *Knit the document and take a look. Were you right?*
 
-## Your Turn 2
+## *Your Turn 2*
 
-1.  Add a citation to the methods section for the data. Use the citation wizard to search PubMed for an article called "Prevalence of coronary heart disease risk factors among rural blacks: A community-based study"
+1.  *Add a citation to the methods section for the data. Use the citation wizard to search PubMed for an article called "Prevalence of coronary heart disease risk factors among rural blacks: A community-based study"*
 
-## Your Turn 3
+## *Your Turn 3*
 
-Something not quite working from the last exercise?
-Run this code to update `whole_game.Rmd` and catch up
+*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
 
 ```{r, eval=FALSE, echo = FALSE}
 copy_rmd_template("your_turn_3.Rmd")
 ```
 
-1.  Take a look at the chunk called "descriptive-stats." What do you think `echo = FALSE` does, and how is it different from `include = FALSE`? What do you think `eval = FALSE` means?
-2.  Read the code in "descriptive-stats". What are we preparing?
-3.  Look at the narrative text right after "descriptive-stats". It's full of bits of code. What are we doing here, and what do you think the output should look like?
-4.  Change `eval` to `TRUE` in the "descriptive-stats" code chunk and re-knit. Look at this part of the document. What does the output look like?
+1.  *Take a look at the chunk called "descriptive-stats." What do you think `echo = FALSE` does, and how is it different from `include = FALSE`? What do you think `eval = FALSE` means?*
+2.  *Read the code in "descriptive-stats". What are we preparing?*
+3.  *Look at the narrative text right after "descriptive-stats". It's full of bits of code. What are we doing here, and what do you think the output should look like?*
+4.  *Change `eval` to `TRUE` in the "descriptive-stats" code chunk and re-knit. Look at this part of the document. What does the output look like?*
 
-## Your Turn 4
+## *Your Turn 4*
 
-Something not quite working from the last exercise?
-Run this code to update `whole_game.Rmd` and catch up
+*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
 
 ```{r, eval=FALSE, echo = FALSE}
 copy_rmd_template("your_turn_4.Rmd")
 ```
 
-1.  In the code chunk called "table-one", create a descriptive table with `tbl_summary()`
-2.  Pipe the results of `tbl_summary()` to `add_difference()`.
-3.  Change `eval` to `TRUE` and re-knit
+1.  *In the code chunk called "table-one", create a descriptive table with `tbl_summary()`*
+2.  *Pipe the results of `tbl_summary()` to `add_difference()`.*
+3.  *Change `eval` to `TRUE` and re-knit*
 
-## Your Turn 5
+## *Your Turn 5*
 
-Something not quite working from the last exercise?
-Run this code to update `whole_game.Rmd` and catch up
+*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
 
 ```{r, eval=FALSE, echo = FALSE}
 copy_rmd_template("your_turn_5.Rmd")
 ```
 
-1.  In the code chunk called "figure-one", load the patchwork library
+1.  *In the code chunk called "figure-one", load the patchwork library*
 
-2.  At the end of the code chunk, include this code: `fig1a + fig1b` .
-    patchwork allows you to join ggplots with `+` (and more).
+2.  *At the end of the code chunk, include this code: `fig1a + fig1b` . patchwork allows you to join ggplots with `+` (and more).*
 
-3.  At the top of the document, change `output: html_document` to this code (be mindful to keep the indents as is):
+3.  *At the top of the document, change `output: html_document` to this code (be mindful to keep the indents as is):*
 
-    ``` {.yaml}
-    output: 
-      bookdown::html_document2:
-        number_sections: false
-    ```
+``` {.yaml}
+output: 
+bookdown::html_document2:
+number_sections: false
+```
 
-4.  In "figure-one", add a chunk option: `fig.cap = "A1c and diabetes status by WH ratio"` .
-    Then, where it says "Figure \_\_\_\_\_", add \@ref(fig:figure-one)
+4.  *In "figure-one", add a chunk option: `fig.cap = "A1c and diabetes status by WH ratio"` . Then, where it says "Figure \_\_\_\_\_", add* \@ref(fig:figure-one)
 
-5.  In "figure-one", change `eval` to `TRUE` and re-knit
+5.  *In "figure-one", change `eval` to `TRUE` and re-knit*
 
-## Your Turn 6
+## *Your Turn 6*
 
-Something not quite working from the last exercise?
-Run this code to update `whole_game.Rmd` and catch up
+*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
 
 ```{r, eval=FALSE, echo = FALSE}
 copy_rmd_template("your_turn_6.Rmd")
 ```
 
-1.  In the code chunk called "table-two", pass the results of both `lm()` and `glm()` to `tbl_regression()`
-2.  Merge the two model tables using `tbl_merge()`
-3.  change `eval` to `TRUE` and re-knit
+1.  *In the code chunk called "table-two", pass the results of both `lm()` and `glm()` to `tbl_regression()`*
+2.  *Merge the two model tables using `tbl_merge()`*
+3.  *change `eval` to `TRUE` and re-knit*
 
-**Stretch goal**: The description for Table 2 is pretty sparse.
-It would probably be better to have some numbers included in the narrative text.
-Read gtsummary's [vignette on inline text](http://www.danieldsjoberg.com/gtsummary/articles/inline_text.html) and add a few important details.
+***Stretch goal**: The description for Table 2 is pretty sparse. It would probably be better to have some numbers included in the narrative text. Read gtsummary's [vignette on inline text](http://www.danieldsjoberg.com/gtsummary/articles/inline_text.html) and add a few important details.*
 
-## Your Turn 7
+## *Your Turn 7*
 
-Something not quite working from the last exercise?
-Run this code to update `whole_game.Rmd` and catch up
+*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
 
 ```{r, eval=FALSE, echo = FALSE}
 copy_rmd_template("your_turn_7.Rmd")
 ```
 
-Previously, we only had data for one location in the study---Buckingham.
-We've just received data from the other site, Louisa, and we need to update the tables, figures, and narrative text...
+*Previously, we only had data for one location in the study---Buckingham. We've just received data from the other site, Louisa, and we need to update the tables, figures, and narrative text...*
 
-...but since we used R Markdown, we can just load the new data set, and R will update everything for us.
+*...but since we used R Markdown, we can just load the new data set, and R will update everything for us.*
 
-1.  Change `read_csv()` to load `diabetes.csv` instead of `diabetes-buckingham.csv`
-2.  Add the `location` variable to Table 1
-3.  Re-knit. How's it look?
+1.  *Change `read_csv()` to load `diabetes.csv` instead of `diabetes-buckingham.csv`*
+2.  *Add the `location` variable to Table 1*
+3.  *Re-knit. How's it look?*
