@@ -1,5 +1,6 @@
 cheatsheets <- c(
   "dplyr_5verbs/cheatsheet_data-transformation.pdf",
+  "ggplot_basics/cheatsheet_data-visualization.pdf",
   "ggplot_customizing/cheatsheet_data-visualization.pdf",
   "ggplot_recreate_challenge/cheatsheet_data-visualization.pdf",
   "intro/cheatsheet_sas-to-r.pdf",
