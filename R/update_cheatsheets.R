@@ -40,3 +40,25 @@ download_cheatsheet <- function(.file) {
 }
 
 purrr::walk(cheatsheets, download_cheatsheet)
+
+modules <- c(
+  "dplyr_5verbs",
+  "ggplot_basics",
+  "ggplot_customizing",
+  "ggplot_recreate_challenge",
+  "intro",
+  "modeling_and_broom",
+  "purrr_basics",
+  "reading_data",
+  "rmarkdown_basics",
+  "rmarkdown_figures",
+  "rmarkdown_tables",
+  "shiny_basics",
+  # other shiny modules not currently hosted,
+  "tidy_tuesday",
+  "tidyr_basics",
+  "types_and_functions"
+)
+
+
+purrr::walk(modules, shunyata::sync_module)
