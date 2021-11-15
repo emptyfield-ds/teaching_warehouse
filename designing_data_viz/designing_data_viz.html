@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Designing data visualizations in R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-11-14" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Designing data visualizations in R
+## making clear figures that communicate
+### 2021-11-14
+
+---
+
+class: middle, inverse
+
+
+
+## "We need to do everything we can to help our readers understand the meaning of our visualizations and see the same patterns in the data that we see. This usually means less is more. *Simplify your figures* as much as possible. *Remove all features that are tangential to your story*"
+### &amp;mdash; Claus O. Wilke
+
+---
+
+class: center, inverse, takeaways
+
+## **act one: focus and declutter**
+
+---
+
+class: center, inverse, takeaways
+
+## ~~act one: focus and declutter~~
+## **act two: narrate and put in context**
+
+---
+
+
+class: middle, center, inverse
+
+## **The cast of characters**
+
+---
+
+class: inverse
+
+## Packages
+
+1. `ggplot2`
+1. `gghighlight`
+1. `cowplot`
+1. `ggtext`
+1. `prismatic`
+1. `patchwork`
+---
+
+
+class: inverse
+
+## data
+
+1. `emperors` (`data/emperors.csv`)
+1. `gapminder` (`library(gapminder)`)
+1. `nyc_squirrels` (`data/nyc_squirrels.csv` + `data/central_park/`)
+1. `diabetes` (`data/diabetes.csv`)
+1. `la_heat_income` (`data/los-angeles.geojson`)
+
+---
+
+## Themes
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Themes: cowplot
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Themes: cowplot
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Themes: cowplot
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Themes: cowplot
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Palettes
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+## Okabe-Ito (`ggokabeito::palette_okabe_ito()`)
+
+---
+
+## Palettes
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+## viridis inferno (`viridis::inferno()`)
+
+---
+
+## Palettes
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+## greys (`"grey**"`, `grey(.**)`)
+
+---
+
+class: middle, inverse, center
+
+## **act one: focus and declutter**
+
+--
+
+## **or: reducing mental burden in figures**
+
+---
+
+class: inverse, center
+
+## How do we reduce mental burden in our plots?
+
+---
+
+class: inverse, center
+
+## How do we reduce mental burden in our plots?
+## **simplify aesthetics and highlight**
+
+---
+
+
+```r
+emperors &lt;- read_csv(file.path("data", "emperors.csv"))
+
+emperors
+```
+
+```
+## # A tibble: 68 × 16
+##    index name      name_full birth      death      birth_cty
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;    
+##  1     1 Augustus  IMPERATO… 0062-09-23 0014-08-19 Rome     
+##  2     2 Tiberius  TIBERIVS… 0041-11-16 0037-03-16 Rome     
+##  3     3 Caligula  GAIVS IV… 0012-08-31 0041-01-24 Antitum  
+##  4     4 Claudius  TIBERIVS… 0009-08-01 0054-10-13 Lugdunum 
+##  5     5 Nero      NERO CLA… 0037-12-15 0068-06-09 Antitum  
+##  6     6 Galba     SERVIVS … 0002-12-24 0069-01-15 Terracina
+##  7     7 Otho      MARCVS S… 0032-04-28 0069-04-16 Terentin…
+##  8     8 Vitellius AVLVS VI… 0015-09-24 0069-12-20 Rome     
+##  9     9 Vespasian TITVS FL… 0009-11-17 0079-06-24 Falacrine
+## 10    10 Titus     TITVS FL… 0039-12-30 0081-09-13 Rome     
+## # … with 58 more rows, and 10 more variables:
+## #   birth_prv &lt;chr&gt;, rise &lt;chr&gt;, reign_start &lt;date&gt;,
+## #   reign_end &lt;date&gt;, cause &lt;chr&gt;, killer &lt;chr&gt;, …
+```
+
+---
+
+
+```r
+emperors %&gt;%
+* count(cause) %&gt;%
+  ggplot(aes(x = n, y = cause)) +
+* geom_col() +
+* geom_text(
+*   aes(label = n, x = n - .25),
+    color = "white",
+    size = 5,
+    hjust = 1
+  ) +
+  cowplot::theme_minimal_vgrid(16) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none"
+  ) +
+  xlab("number of emperors")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+emperors %&gt;%
+  count(cause) %&gt;%
+* arrange(n) %&gt;%
+* mutate(cause = fct_inorder(cause)) %&gt;%
+  ggplot(aes(x = n, y = cause)) +
+  geom_col() +
+  geom_text(
+    aes(label = n, x = n - .25),
+    color = "white",
+    size = 5,
+    hjust = 1
+  ) +
+  cowplot::theme_minimal_vgrid(16) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none"
+  ) +
+  xlab("number of emperors")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+emperors_assassinated &lt;- emperors %&gt;%
+  count(cause) %&gt;%
+  arrange(n) %&gt;%
+  mutate(
+*   assassinated = ifelse(cause == "Assassination", TRUE, FALSE),
+    cause = fct_inorder(cause)
+  )
+```
+
+---
+
+
+```r
+emperors_assassinated %&gt;%
+* ggplot(aes(x = n, y = cause, fill = assassinated)) +
+  geom_col() +
+  geom_text(
+    aes(label = n, x = n - .25),
+    color = "white",
+    size = 5,
+    hjust = 1
+  ) +
+  cowplot::theme_minimal_vgrid(16) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none"
+  ) +
+* scale_fill_manual(
+*   name = NULL,
+*   values = c("#B0B0B0D0", "#D55E00D0")
+  ) +
+  xlab("number of emperors")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Your Turn 1 
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Your Turn 1 
+
+#### Read in the emperors data (no need to change this part of the code)
+#### Sort the data using `arrange()` by the number of each type of killer
+#### Take a look at the data up until this point. Pick something you find interesting that you want to highlight. Then, in `mutate()`, create a new variable that is `TRUE` if `killer` matches the category you want to highlight and `FALSE` otherwise
+#### Use the variable you just created in the `fill` aesthetic of the ggplot call
+#### Finally, use `scale_fill_manual()` to add the fill colors. Set `values` to `c("#B0B0B0D0", "#D55E00D0")`.
+
+---
+
+
+```r
+emperor_killers &lt;- emperors %&gt;%
+  # group the least common killers to "other"
+  mutate(killer = fct_lump(killer, 10)) %&gt;%
+  count(killer) %&gt;%
+* arrange(n)
+```
+
+---
+
+
+```r
+emperor_killers
+```
+
+```
+## # A tibble: 14 × 2
+##    killer               n
+##    &lt;fct&gt;            &lt;int&gt;
+##  1 Aneurism             1
+##  2 Court Officials      1
+##  3 Fire                 1
+##  4 Heart Failure        1
+*##  5 Lightning            1
+##  6 Usurper              1
+##  7 Wife                 2
+##  8 Senate               3
+##  9 Own Army             5
+## 10 Unknown              5
+## 11 Opposing Army        6
+## 12 Praetorian Guard     7
+## 13 Disease             16
+## 14 Other Emperor       18
+```
+
+---
+
+
+```r
+lightning_plot &lt;- emperor_killers %&gt;%
+  mutate(
+*   lightning = ifelse(killer == "Lightning", TRUE, FALSE),
+    # use `fct_inorder()` to maintain the way we sorted the data
+    killer = fct_inorder(killer)
+  ) %&gt;%
+* ggplot(aes(x = n, y = killer, fill = lightning)) +
+  geom_col() +
+  geom_text(
+    aes(label = n, x = n - .25),
+    color = "white",
+    size = 5,
+    hjust = 1
+  ) +
+  cowplot::theme_minimal_vgrid(16) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none"
+  ) +
+* scale_fill_manual(values = c("#B0B0B0D0", "#D55E00D0")) +
+  xlab("number of emperors")
+
+lightning_plot
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center
+
+# Use color to focus attention
+
+&lt;br&gt;
+
+# *1 2 3 4* **5** *6 7 8 9*
+
+---
+
+class: inverse, center
+
+# Use color to focus attention
+
+&lt;br&gt;
+
+# ~~1 2 3 4 5 6 7 8 9~~
+
+&lt;br&gt;
+
+# ~~1 2~~ *3* ~~4 5 6 7 8 9~~
+
+---
+
+# ggtext: Improved text rendering in ggplot2
+
+
+```r
+library(ggtext)
+```
+
+## Use markdown in ggplot2 with `element_markdown()`
+## Allows styled text anywhere!
+## Can also insert images
+
+---
+
+
+```r
+library(glue)
+library(ggtext)
+
+emperors_assassinated &lt;- emperors_assassinated %&gt;%
+  mutate(
+*   cause = glue(
+*     "&lt;span style='color:{ifelse( \\
+*     cause == 'Assassination', \\
+*     '#D55E00D0', \\
+*     '#B0B0B0D0')}'&gt; \\
+*     {cause} \\
+*     &lt;/span&gt;"
+*   ),
+    cause = fct_inorder(cause)
+  )
+```
+
+
+
+---
+
+
+```r
+emperors_assassinated %&gt;%
+  ggplot(aes(x = n, y = cause, fill = assassinated)) +
+  geom_col() +
+  geom_text(
+    aes(label = n, x = n - .25),
+    color = "white",
+    size = 5,
+    hjust = 1
+  ) +
+  cowplot::theme_minimal_vgrid(16) +
+* theme(
+*   axis.text.y = element_markdown(),
+    axis.title.y = element_blank(),
+    legend.position = "none",
+  ) +
+  scale_fill_manual(
+    name = NULL,
+    values = c("#B0B0B0D0", "#D55E00D0")
+  ) +
+  xlab("number of emperors")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+class: inverse, center
+
+## How do we reduce mental burden in our plots?
+## ~~simplify aesthetics and highlight~~
+## **design figures without legends**
+
+---
+
+
+```r
+library(gapminder)
+gapminder
+```
+
+```
+## # A tibble: 1,704 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
+```
+
+---
+
+
+```r
+gapminder %&gt;%
+  filter(year == 2007) %&gt;%
+* ggplot(aes(log(gdpPercap), lifeExp)) +
+* geom_point(
+*   aes(color = country),
+    size = 3.5,
+    alpha = .9
+  ) +
+  theme_minimal(14) +
+  theme(panel.grid.minor = element_blank()) +
+  labs(
+    x = "log(GDP per capita)",
+    y = "life expectancy"
+  )
+```
+
+---
+
+class: center
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center
+
+# Direct labeling 
+
+1. Label data directly (maybe a subset)
+2. Remove the legend
+3. Use proximity and similarity (e.g. same color)
+
+---
+
+&lt;img src="img/direct_labeling.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/direct_labeling_geom_legend.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/direct_labeling_data.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+background-image: url(http://hexb.in/hexagons/ggrepel.png)
+background-position: 90% 52%
+
+# ggrepel: Repel overlapping text
+
+
+```r
+library(ggrepel)
+```
+
+--
+
+## `geom_text_repel()`
+&lt;br&gt;
+## `geom_label_repel()`
+
+---
+
+
+```r
+gapminder %&gt;%
+  filter(year == 2007) %&gt;%
+  ggplot(aes(log(gdpPercap), lifeExp)) +
+  geom_point(
+    size = 3.5,
+    alpha = .9,
+    shape = 21,
+    col = "white",
+    fill = "#0162B2"
+  ) +
+* geom_text_repel(aes(label = country)) +
+  theme_minimal(14) +
+  theme(panel.grid.minor = element_blank()) +
+  labs(
+    x = "log(GDP per capita)",
+    y = "life expectancy"
+  )
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 2
+
+
+### Use `sample()` to select 10 random countries to plot (run the `set.seed()` line first if you want the same results)
+### In the `mutate()` call, check if `country` is one of the countries in `ten_countries`. If it's not, make the label an empty string (""),
+### Add the text repel geom from ggrepel. Set the `label` aesthetic using the variable just created in `mutate()`
+
+---
+
+
+```r
+library(gapminder)
+library(ggrepel)
+
+set.seed(42)
+
+ten_countries &lt;- gapminder$country %&gt;%
+  levels() %&gt;%
+* sample(10)
+
+ten_countries
+```
+
+```
+##  [1] "Ghana"       "Italy"       "Lesotho"     "Swaziland"   "Zimbabwe"   
+##  [6] "Thailand"    "Gambia"      "Chile"       "Korea, Rep." "Paraguay"
+```
+
+---
+
+
+```r
+p1 &lt;- gapminder %&gt;%
+  filter(year == 2007) %&gt;%
+  mutate(
+*   label = ifelse(
+*     country %in% ten_countries,
+*     as.character(country),
+*     ""
+*   )
+  ) %&gt;%
+  ggplot(aes(log(gdpPercap), lifeExp)) +
+  geom_point(
+    size = 3.5,
+    alpha = .9,
+    shape = 21,
+    col = "white",
+    fill = "#0162B2"
+  )
+```
+
+---
+
+
+```r
+scatter_plot &lt;- p1 +
+* geom_text_repel(
+*   aes(label = label),
+    size = 4.5,
+*   max.overlaps = Inf,
+*   box.padding = .3,
+*   force = 1,
+*   min.segment.length = 0
+  ) +
+  theme_minimal(14) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    x = "log(GDP per capita)",
+    y = "life expectancy"
+  )
+
+scatter_plot
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/your_turn_2_no_overlap-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+
+```r
+p1 +
+* geom_text(
+*   data = function(x) filter(x, country == "Gabon"),
+    aes(label = country),
+    size = 4.5,
+*   hjust = 0,
+*   nudge_x = .06
+  ) +
+  theme_minimal(14) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    x = "log(GDP per capita)",
+    y = "life expectancy"
+  )
+```
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center
+
+## How do we reduce mental burden in our plots?
+## ~~simplify aesthetics and highlight~~
+## ~~design figures without legends~~
+## **hack geoms and legends and even the plot itself**
+
+---
+
+# Inserting plot objects into the axis
+
+
+```r
+library(cowplot)
+```
+
+---
+
+# Inserting plot objects into the axis
+
+
+```r
+library(cowplot)
+*marginal_histogram &lt;- axis_canvas(scatter_plot, "y") +
+* geom_histogram(
+    data = gapminder %&gt;% filter(year == 2007),
+    bins = 40,
+    aes(y = lifeExp),
+    fill = "#0162B2E6",
+    color = "white"
+  )
+
+scatter_plot %&gt;%
+* insert_yaxis_grob(marginal_histogram) %&gt;%
+* ggdraw()
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/axis_grob.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="img/axis_grob_canvas.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/axis_grob_insert.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/axis_grob_ggdraw.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Your Turn 3
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 3
+
+
+#### Calculate the placement of the labels: in the `summarize()` call, create a variable called `y` that is the maximum `lifeExp` value for every continent For the labels, we'll use the continent names, which will be retained automatically. 
+
+#### Remove the legend from the line plot. There are [several ways to do so in ggplot2](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29/#removing-the-legend). I like setting `legend.position = "none"` in `theme()`.
+
+#### `axis_canvas(line_plot, axis = "y")` creates a new ggplot2 canvas based on the y axis from `line_plot`. Add a text geom (using `+` as you normally would). In the text geom: set data to `direct_labels`; in `aes()`, set `y = y`, `label = continent`; Outside of `aes()` set `x` to `0.05` (to add a little buffer); Make the size of the text `4.5`; Set the horizontal justification to `0`
+
+#### Use `insert_yaxis_grob()` to take `lineplot` and insert `direct_labels_axis`. 
+
+#### Draw the new plot with `ggdraw()`
+
+---
+
+
+```r
+library(cowplot)
+
+# get the mean life expectancy by continent and year
+continent_data &lt;- gapminder %&gt;%
+  group_by(continent, year) %&gt;%
+  summarise(lifeExp = mean(lifeExp))
+
+direct_labels &lt;- continent_data %&gt;%
+  group_by(continent) %&gt;%
+* summarize(y = max(lifeExp))
+```
+
+---
+
+
+```r
+line_plot &lt;- continent_data %&gt;%
+  ggplot(aes(year, lifeExp, col = continent)) +
+  geom_line(size = 1) +
+  theme_minimal_hgrid() +
+* theme(legend.position = "none") +
+  scale_color_manual(values = continent_colors) +
+  scale_x_continuous(expand = expansion()) +
+  labs(y = "life expectancy")
+```
+
+---
+
+
+
+```r
+direct_labels_axis &lt;- axis_canvas(line_plot, axis = "y") +
+* geom_text(
+    data = direct_labels,
+    aes(y = y, label = continent),
+    x = .05,
+    size = 4.5,
+    hjust = 0
+  )
+
+*p_direct_labels &lt;- insert_yaxis_grob(line_plot, direct_labels_axis)
+
+*ggdraw(p_direct_labels)
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center
+
+## How do we reduce mental burden in our plots?
+## ~~simplify aesthetics and highlight~~
+## ~~design figures without legends~~
+## ~~hack geoms and legends and even the plot itself~~
+## **use facets and data shadows to plot overlapping data**
+
+---
+
+class: inverse, center
+
+# Using facets to declutter data
+
+1. Facets (or small multiples) are direct labeling for subsets
+2. Put them into context with data shadows
+
+---
+
+
+```r
+*nyc_squirrels &lt;- read_csv(file.path("data", "nyc_squirrels.csv"))
+*central_park &lt;- sf::read_sf(file.path("data", "central_park"))
+```
+
+--
+
+
+```r
+nyc_squirrels %&gt;%
+  drop_na(primary_fur_color) %&gt;%
+  ggplot() +
+* geom_sf(data = central_park, color = "grey85") +
+* geom_point(
+*   aes(x = long, y = lat, color = primary_fur_color),
+*   size = .8
+* ) +
+  cowplot::theme_map(16) +
+  ggokabeito::scale_color_okabe_ito(name = "primary fur color")
+```
+
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+nyc_squirrels %&gt;%
+  drop_na(primary_fur_color) %&gt;%
+  ggplot() +
+  geom_sf(data = central_park, color = "grey85") +
+  geom_point(
+    aes(x = long, y = lat, color = primary_fur_color),
+    size = .8
+  ) +
+* facet_wrap(vars(primary_fur_color)) +
+  cowplot::theme_map(16) +
+* theme(legend.position = "none") +
+  ggokabeito::scale_color_okabe_ito()
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+label_colors &lt;-
+  c("all squirrels" = "grey75", "highlighted group" = "#0072B2")
+
+nyc_squirrels %&gt;%
+  drop_na(primary_fur_color) %&gt;%
+  ggplot() +
+  geom_sf(data = central_park, color = "grey85") +
+* geom_point(
+*   data = function(x) select(x, -primary_fur_color),
+*   aes(x = long, y = lat, color = "all squirrels"),
+*   size = .8
+* ) +
+  geom_point(
+*   aes(x = long, y = lat, color = "highlighted group"),
+    size = .8
+  ) +
+  cowplot::theme_map(16) +
+  theme(
+    legend.position = "bottom",
+    legend.justification = "center"
+  ) +
+  facet_wrap(vars(primary_fur_color)) +
+  scale_color_manual(name = NULL, values = label_colors) +
+  guides(color = guide_legend(override.aes = list(size = 3)))
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/data_shadows.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="img/data_shadows_geoms.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/data_shadows_select.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/data_shadows_legend.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Your Turn 4
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 4
+#### Run the code below and take a look at the resulting plot.
+#### In the `ggplot()` function, add `y = after_stat(count)` to `aes()`
+#### Add an additional `geom_density()` to the plot. This should go *before* the existing `geom_density()` so that it shows up in the background.
+#### In the new `geom_density()`, set the `data` argument to be a function. This function should take a data frame and remove gender (which we're about to facet on).
+#### Use `aes()` to set `color` and `fill`. Both should equal "all participants", *not* `gender`.
+#### Use `facet_wrap()` to facet the plot by `gender`.
+
+---
+
+
+```r
+diabetes %&gt;%
+  drop_na(glyhb, gender) %&gt;%
+* ggplot(aes(glyhb, y = after_stat(count))) +
+* geom_density(
+*   data = function(x) select(x, -gender),
+*   aes(fill = "all participants", color = "all participants")
+* ) +
+  geom_density(aes(fill = gender, color = gender)) +
+* facet_wrap(vars(gender)) +
+  scale_x_log10(name = "glycosylated hemoglobin a1c") +
+  scale_color_manual(name = NULL, values = density_colors) +
+  scale_fill_manual(name = NULL, values = density_colors) +
+  theme_minimal_hgrid(16) +
+  theme(legend.position = "bottom", legend.justification = "center")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+title &lt;- glue(
+  "Among &lt;b style='color:{density_colors[3]}'&gt;\\
+ all participants&lt;/b&gt;, there were more \\
+ &lt;b style='color:{density_colors[2]}'&gt;females&lt;/b&gt;\\
+ than &lt;b style='color:{density_colors[1]}'&gt;\\
+ males&lt;/b&gt;"
+)
+
+previous_plot +
+  theme(
+    legend.position = "none",
+*   plot.title.position = "plot",
+*   plot.title = element_textbox_simple(size = 14)
+  ) +
+* ggtitle(title)
+```
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# gghighlight: Highlight geoms
+
+background-image: url(https://raw.githubusercontent.com/EmilHvitfeldt/prismatic/master/man/figures/logo.png)
+background-position: 90% 55%
+
+
+```r
+library(gghighlight)
+```
+
+## `gghighlight(predicate)`
+## Works with points, lines, and histograms
+## Facets well
+
+---
+
+## Your Turn 5
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-51-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 5
+
+#### Take a look at the first few paragraphs of code. First, we're subsetting only African countries and sorting them by their life expectancy in 1952. Then, we're pivoting the data to be able to compare life expectancy in 1992 to 2007, creating a new variable, `le_dropped`, that is `TRUE` if life expectancy was higher in 1992. Then, we join `le_dropped` back to the data so we can use it in `gghighlight()`. Run the code at each step.
+
+####  Remove the legend from the plot using the `legend.position` argument in `theme()`. Take a look at the base plot.
+
+####  Use `gghighlight()` to add direct labels to the plot. For the first argument, tell it which lines to highlight using `le_dropped`. Also add the arguments `use_group_by = FALSE` and `unhighlighted_params = list(color = "grey90")`. 
+
+####  Add `use_direct_label = FALSE` to `gghighlight()` and then facet the plot (using `facet_wrap()`) by country
+
+
+---
+
+
+
+
+
+
+
+
+
+```r
+le_line_plot +
+  gghighlight(
+    le_dropped,
+    use_group_by = FALSE,
+    unhighlighted_params = list(color = "grey90")
+  )
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-54-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+
+```r
+le_line_plot +
+  gghighlight(
+    le_dropped,
+    use_group_by = FALSE,
+    use_direct_label = FALSE,
+    unhighlighted_params = list(color = "grey90")
+  ) +
+  facet_wrap(vars(country))
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle, inverse, center
+
+## **intermission: working with colors**
+
+---
+
+background-image: url(https://raw.githubusercontent.com/EmilHvitfeldt/prismatic/master/man/figures/logo.png)
+background-position: 90% 55%
+
+# prismatic: manipulate colors in R
+
+
+```r
+library(prismatic)
+```
+
+---
+
+## Visualize palettes
+
+
+```r
+library(ggokabeito)
+library(prismatic)
+*palette_okabe_ito() %&gt;%
+* color() %&gt;%
+* plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-57-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Darken and lighten colors
+
+
+```r
+palette_okabe_ito() %&gt;%
+* clr_darken() %&gt;%
+  plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-58-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Saturate and desaturate colors
+
+
+```r
+palette_okabe_ito() %&gt;%
+* clr_desaturate() %&gt;%
+  plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-59-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Set transparency
+
+
+```r
+palette_okabe_ito() %&gt;%
+* clr_alpha(.5) %&gt;%
+  plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Simulate colorblindness
+
+
+```r
+palette_okabe_ito() %&gt;%
+* clr_deutan() %&gt;%
+  plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-61-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Simulate colorblindness
+
+
+```r
+*rainbow(8) %&gt;%
+  color() %&gt;% 
+  plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-62-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Simulate colorblindness
+
+
+```r
+rainbow(8) %&gt;%
+* clr_deutan() %&gt;%
+  plot()
+```
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle, inverse, center
+
+## **act two: narrate and put in context**
+
+--
+
+## **or: storytelling with data visualization**
+
+---
+
+class: middle, inverse, center
+
+## How do we augment plots to explain?
+
+---
+
+class: middle, inverse, center
+
+## How do we augment plots to explain?
+## **Annotate plots using text geoms and arrows**
+
+---
+
+## Squirrels and dogs
+
+
+```r
+dog_sighting &lt;- nyc_squirrels %&gt;%
+  mutate(dog = str_detect(other_activities, "dog")) %&gt;%
+  filter(dog)
+```
+
+---
+
+
+```r
+lbl &lt;- "All other dog sightings
+involved a squirrel hiding or
+being chased. This squirrel,
+however, was actively teasing
+a dog."
+
+dog_plot &lt;- nyc_squirrels %&gt;%
+  ggplot() +
+  geom_sf(data = central_park, color = "grey80") +
+  geom_point(aes(x = long, y = lat), size = .8) +
+  geom_point(
+    data = dog_sighting,
+    aes(
+      x = long,
+      y = lat,
+      color = "squirrel interacting\nwith a dog"
+    ),
+    size = 1.5
+  )
+```
+
+---
+
+
+```r
+dog_plot +
+* ggrepel::geom_label_repel(
+    data = filter(
+      dog_sighting,
+*     str_detect(other_activities, "teasing")
+    ),
+    aes(x = long, y = lat, label = lbl),
+    nudge_x = .015,
+    size = 3.5,
+    lineheight = .8,
+    segment.color = "grey70"
+  ) +
+  cowplot::theme_map() +
+  theme(legend.position = c(.05, .9)) +
+  scale_color_manual(name = NULL, values = "#FB1919")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-64-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+```r
+label &lt;- "Carus, Roman emperor from 282–283,
+allegedly died of a lightning strike while
+campaigning against the Empire of Iranians.
+He was succeded by his sons, Carinus, who
+died in battle, and Numerian, whose cause
+of death is unknown."
+
+lightning_plot +
+* geom_label(
+*   data = data.frame(x = 5.8, y = 5, label = label),
+    aes(x = x, y = y, label = label),
+    hjust = 0,
+    lineheight = .8,
+    inherit.aes = FALSE,
+    label.size = NA
+  ) +
+* geom_curve(
+*   data = data.frame(x = 5.6, y = 5, xend = 1.2, yend = 5),
+    mapping = aes(x = x, y = y, xend = xend, yend = yend),
+    colour = "grey75",
+    size = 0.5,
+    curvature = -0.1,
+    arrow = arrow(length = unit(0.01, "npc"), type = "closed"),
+    inherit.aes = FALSE
+  )
+```
+
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-65-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="img/annotating_ggplots.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/annotating_ggplots_df.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 6
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-68-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 6
+
+#### Run the first code chunk and take a look at the map of surface heat in Los Angeles.
+
+#### In the second code chunk, we need to create two new data frames to draw the annotations and arrows. Pick a name for each.
+
+#### Add `geom_text()` and `geom_curve()` to `base_map`. Give each geom the relevant data that you just named in (2).
+
+#### Let's clean up the geoms a bit. Reduce the `lineheight` of the text geom to `0.8`. Then, add arrows to the curve geom usiing the `arrow()` function. Give it two arguments: `length = unit(0.01, "npc")` and `type = "closed"`. Run the plot.
+
+#### One of the labels is being clipped because it runs off the main plotting panel. Add `coord_sf(clip = "off")` to prevent clipping the text.
+
+---
+
+
+
+
+```r
+*text_labels &lt;- tibble::tribble(
+  ~x,      ~y,    ~label,
+  -118.90, 34.00, west_label,
+  -118.20, 34.22, east_label
+)
+
+*arrows &lt;- tibble::tribble(
+  ~x, ~y, ~xend, ~yend,
+  -118.73, 34.035, -118.60, 34.10,
+  -118.21, 34.195, -118.35, 34.18,
+  -118.08, 34.185, -118.15, 34.10
+)
+```
+
+---
+
+
+```r
+base_map +
+* geom_text(
+*   data = text_labels,
+    aes(x, y, label = label),
+    hjust = 0,
+    vjust = 0.5,
+    lineheight = .8
+  ) +
+* geom_curve(
+*   data = arrows,
+    aes(x = x, y = y, xend = xend, yend = yend),
+    colour = "grey75",
+    size = 0.3,
+    curvature = -0.1,
+    arrow = arrow(length = unit(0.01, "npc"), type = "closed")
+  ) +
+* coord_sf(clip = "off")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-71-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle, inverse, center
+
+## How do we augment plots to explain?
+## ~~Annotate plots using text geoms and arrows~~
+## **Combine plots to build a cohesive narrative**
+
+---
+
+class: inverse, center
+
+## Combine plots to tell a story
+
+1. Build plots up from simpler to more complex
+2. Don't use the same type of plot in each panel
+3. Use consistent color
+
+---
+
+background-image: url(https://raw.githubusercontent.com/thomasp85/patchwork/master/man/figures/logo.png)
+background-position: 90% 55%
+
+# patchwork: Compose ggplots
+
+
+```r
+library(patchwork)
+```
+
+---
+
+&lt;img src="img/patchwork.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/patchwork_combine.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="img/patchwork_control.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-80-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+#### Run the first code chunk. `label_frames()` will help us label the `frame` variable better. `theme_multiplot()` is the theme we'll add to each plot. We'll use `diabetes_complete` for the plots (removing the missing values of the variables we're plotting produce the same plots as `diabetes` would, but it prevents ggplot2 from warning us that it's dropping the data internally). Nothing to change here!
+#### Run the code for `plot_a` and take a look. Nothing to change here, either! 
+#### The colors in `plot_b` don't match `plot_a`. Add `scale_color_manual()` to make the colors consistent. 
+#### Also add `scale_fill_manual()`. For the fill colors, we'll add a bit of transparency. Paste "B3" to the end of the colors in `plot_colors`. "B3" is equivalent to 70% transparency (or `alpha = .7`) in hex code (see [this GitHub page with translations from percent to hex](https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4), but note that in R you need to put the transparency at the end of the six character hex code).
+#### This plot doesn't have a `tag` label like the other two plots. Add one to the `labs()` call.
+#### The legend isn't working well, but let's take advantage of it. We'll move the legend to *above* the plot by setting `legend.position` to `c(1, 1.25)` in `theme()`. We wont' be able to see it in `plot_c`, but it will show up in the combined plot!
+
+#### Finally, combine the 3 plots using patchwork. Have `plot_a` and `plot_b` on top and `plot_c` on the bottom.
+
+---
+
+
+```r
+plot_b &lt;- diabetes_complete %&gt;%
+  ggplot(
+    aes(fct_rev(frame),
+      waist / hip,
+      fill = gender,
+      col = gender
+    )
+  ) +
+  geom_boxplot(
+    outlier.color = NA,
+    alpha = .8,
+    width = .5
+  ) +
+  theme_multiplot() +
+  theme(axis.title.x = element_blank()) +
+* scale_color_manual(values = plot_colors) +
+* scale_fill_manual(values = paste0(plot_colors, "B0")) +
+  scale_x_discrete(labels = label_frames) +
+  labs(tag = "B")
+
+plot_b
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-81-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+&lt;div style = 'font-size: 73%'&gt;
+
+```r
+plot_c &lt;- diabetes_complete %&gt;%
+  ggplot(aes(waist / hip, glyhb, col = gender)) +
+  geom_point(
+    shape = 21,
+    col = "white",
+    fill = "grey80",
+    size = 2.5
+  ) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x,
+    se = FALSE,
+    size = 1.1
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+*   legend.position = c(1, 1.25),
+    legend.justification = c(1, 0),
+    legend.direction = "horizontal",
+    panel.grid.minor = element_blank()
+  ) +
+  facet_wrap(~ fct_rev(frame), labeller = as_labeller(label_frames)) +
+  scale_y_log10(breaks = c(3.5, 5.0, 7.0, 10.0, 14.0)) +
+  scale_color_manual(name = "", values = plot_colors) +
+  guides(color = guide_legend(override.aes = list(size = 5))) +
+* labs(y = "hemoglobin a1c", tag = "C")
+
+plot_c
+```
+&lt;/span&gt;
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-82-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+library(patchwork)
+*(plot_a + plot_b) / plot_c
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-83-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center
+
+# Resources
+## [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/) by Claus O. Wilke
+## [Storytelling with Data](http://www.storytellingwithdata.com/) by Cole Nussbaumer Knaflic 
+## [Better Presentations](https://policyviz.com/better-presentations/) by Jonathan Schwabish
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,412 @@
+---
+title: "Designing ggplots"
+output: html_document
+---
+
+```{r setup}
+library(tidyverse)
+```
+
+## Your Turn 1
+
+1. Read in the emperors data (no need to change this part of the code)
+2. Sort the data using `arrange()` by the number of each type of killer
+3. Take a look at the data up until this point. Pick something you find interesting that you want to highlight. Then, in `mutate()`, create a new variable that is `TRUE` if `killer` matches the category you want to highlight and `FALSE` otherwise
+4. Use the variable you just created in the `fill` aesthetic of the ggplot call
+5. Finally, use `scale_fill_manual()` to add the fill colors. Set `values` to `c("#B0B0B0D0", "#D55E00D0")`.
+
+```{r}
+emperors <- read_csv(file.path("data", "emperors.csv"))
+
+emperor_killers <- emperors %>%
+  # group the least common killers to "other"
+  mutate(killer = fct_lump(killer, 10)) %>%
+  count(killer) %>%
+  ___________ 
+
+emperor_killers
+
+emperor_killers %>% 
+  mutate(
+    ___________ = ifelse(killer == "___________", TRUE, FALSE),
+    # use `fct_inorder()` to maintain the way we sorted the data
+    killer = fct_inorder(killer)
+  ) %>%
+  ggplot(aes(x = n, y = killer, fill = ___________)) +
+  geom_col() +
+  geom_text(
+    aes(label = n, x = n - .25), 
+    color = "white", 
+    size = 5,
+    hjust = 1
+  ) +
+  cowplot::theme_minimal_vgrid(16) +
+  theme(
+    axis.title.y = element_blank(), 
+    legend.position = "none" 
+  ) +
+  ___________(values = ___________) +
+  xlab("number of emperors")
+```
+
+
+## Your Turn 2
+
+1. Use `sample()` to select 10 random countries to plot (run the `set.seed()` line first if you want the same results)
+2. In the `mutate()` call, check if `country` is one of the countries in `ten_countries`. If it's not, make the label an empty string (""),
+3. Add the text repel geom from ggrepel. Set the `label` aesthetic using the variable just created in `mutate()`
+
+```{r}
+library(gapminder)
+library(ggrepel)
+
+set.seed(42)
+
+ten_countries <- gapminder$country %>% 
+  levels() %>% 
+  ______ 
+
+gapminder %>%
+  filter(year == 2007) %>%
+  mutate(
+    label = ifelse(_______  %in% _______, as.character(country), _______)
+  ) %>%
+  ggplot(aes(log(gdpPercap), lifeExp)) +
+  geom_point(size = 3.5, alpha = .9, shape = 21, col = "white", fill = "#0162B2") +
+  ___________(
+    ___________, 
+    size = 4.5,
+    point.padding = .2, 
+    box.padding = .3, 
+    force = 1,
+    min.segment.length = 0
+  ) +
+  theme_minimal(14) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    x = "log(GDP per capita)",
+    y = "life expectancy"
+  )
+```
+
+
+## Your Turn 3
+
+1. Calculate the placement of the labels: in the `summarize()` call, create a variable called `y` that is the maximum `lifeExp` value for every continent For the labels, we'll use the continent names, which will be retained automatically. 
+
+2. Remove the legend from the line plot. There are [several ways to do so in ggplot2](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29/#removing-the-legend). I like setting `legend.position = "none"` in `theme()`.
+
+3. `axis_canvas(line_plot, axis = "y")` creates a new ggplot2 canvas based on the y axis from `line_plot`. Add a text geom (using `+` as you normally would). In the text geom: 
+  * set data to `direct_labels`
+  * in `aes()`, set `y = y`, `label = continent`
+  * Outside of `aes()` set `x` to `0.05` (to add a little buffer)
+  * Make the size of the text `4.5`
+  * Set the horizontal justification to `0`
+  
+4. Use `insert_yaxis_grob()` to take `lineplot` and insert `direct_labels_axis`. 
+
+5. Draw the new plot with `ggdraw()`
+
+```{r}
+library(cowplot)
+
+# get the mean life expectancy by continent and year
+continent_data <- gapminder %>%
+  group_by(continent, year) %>%
+  summarise(lifeExp = mean(lifeExp))
+
+direct_labels <- continent_data %>%
+  group_by(continent) %>%
+  summarize(_________)
+
+line_plot <- continent_data %>%
+  ggplot(aes(year, lifeExp, col = continent)) +
+  geom_line(size = 1) +
+  theme_minimal_hgrid() +
+  __________________ +
+  scale_color_manual(values = continent_colors) +
+  scale_x_continuous(expand = expansion()) +
+  labs(y = "life expectancy")
+
+direct_labels_axis <- axis_canvas(line_plot, axis = "y") ___
+  __________________
+
+
+p_direct_labels <- insert_yaxis_grob(________, _________)
+
+_________(p_direct_labels)
+```
+
+
+## Your Turn 4
+
+1. Run the code below and take a look at the resulting plot.
+2. In the `ggplot()` function, add `y = after_stat(count)` to `aes()`
+3. Add an additional `geom_density()` to the plot. This should go *before* the existing `geom_density()` so that it shows up in the background.
+4. In the new `geom_density()`, set the `data` argument to be a function. This function should take a data frame and remove gender (which we're about to facet on).
+5. Use `aes()` to set `color` and `fill`. Both should equal "all participants", *not* `gender`.
+6. Use `facet_wrap()` to facet the plot by `gender`.
+
+```{r}
+diabetes <- read_csv(file.path("data", "diabetes.csv"))
+
+density_colors <- c(
+  "male" = "#56B4E9",
+  "female" = "#009E73",
+  "all participants" = grey(.85)
+)
+
+diabetes %>%
+  drop_na(glyhb, gender) %>% 
+  ggplot(aes(glyhb)) +
+  geom_density(aes(fill = gender, color = gender)) +
+  scale_x_log10(name = "glycosylated hemoglobin a1c") +
+  scale_color_manual(name = NULL, values = density_colors) +
+  scale_fill_manual(name = NULL, values = density_colors) +
+  theme_minimal_hgrid(16) +
+  theme(legend.position = "bottom", legend.justification = "center")
+```
+
+## Your Turn 5
+
+1. Take a look at the first few paragraphs of code. First, we're subsetting only African countries and sorting them by their life expectancy in 1952. Then, we're pivoting the data to be able to compare life expectancy in 1992 to 2007, creating a new variable, `le_dropped`, that is `TRUE` if life expectancy was higher in 1992. Then, we join `le_dropped` back to the data so we can use it in `gghighlight()`. Run the code at each step.
+
+2. Remove the legend from the plot using the `legend.position` argument in `theme()`. Take a look at the base plot.
+
+3. Use `gghighlight()` to add direct labels to the plot. For the first argument, tell it which lines to highlight using `le_dropped`. Also add the arguments `use_group_by = FALSE` and `unhighlighted_params = list(color = "grey90")`. 
+
+4. Add `use_direct_label = FALSE` to `gghighlight()` and then facet the plot (using `facet_wrap()`) by country
+
+
+```{r}
+library(gghighlight)
+
+africa <- gapminder %>%
+  filter(continent == "Africa") %>% 
+  # sort by life expectancy in 1952
+  arrange(year, desc(lifeExp)) %>% 
+  mutate(country = fct_inorder(factor(country)))
+
+# find the African countries that had better life expectancy in 1992 compared to 2007
+life_expectancy_dropped <- africa %>%
+  pivot_wider(country, names_from = year, values_from = lifeExp) %>%
+  transmute(country, le_dropped = `1992` > `2007`)
+
+# join `le_dropped` to each observation for each country
+africa <- left_join(africa, life_expectancy_dropped, by = "country")
+
+le_line_plot <- africa %>%
+  ggplot(aes(year, lifeExp, color = country, group = country)) +
+  geom_line(size = 1.2, alpha = .9, color = "#E58C23") +
+  theme_minimal(base_size = 14) +
+  theme(
+    ________________,
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank()
+  ) +
+  labs(y = "life expectancy", caption = "sorted by life expectancy in 1952") +
+  xlim(1950, 2015)
+
+le_line_plot
+
+le_line_plot + 
+  _____________
+```
+
+
+## Your Turn 6
+
+1. Run the first code chunk and take a look at the map of surface heat in Los Angeles.
+
+```{r}
+la_heat_income <- sf::read_sf(file.path("data", "los-angeles.geojson"))
+kelvin2farenheit <- function(k) (9/5) * (k - 273) + 32
+
+base_map <- la_heat_income %>%
+  mutate(temp = kelvin2farenheit(X_median)) %>%
+  ggplot() +
+  geom_sf(aes(fill = temp), color = "white", size = .2) +
+  cowplot::theme_map() +
+  theme(legend.position = c(.9, .2)) +
+  scale_fill_viridis_c(option = "inferno") 
+
+base_map
+```
+
+2. In the second code chunk, we need to create two new data frames to draw the annotations and arrows. Pick a name for each.
+3. Add `geom_text()` and `geom_curve()` to `base_map`. Give each geom the relevant data that you just named in (2).
+4. Let's clean up the geoms a bit. Reduce the `lineheight` of the text geom to `0.8`. Then, add arrows to the curve geom usiing the `arrow()` function. Give it two arguments: `length = unit(0.01, "npc")` and `type = "closed"`. Run the plot. 
+5. One of the labels is being clipped because it runs off the main plotting panel. Add `coord_sf(clip = "off")` to prevent clipping the text.
+
+
+```{r}
+# adding line breaks here will automatically add `\n` to the text, which will insert a linebreak when printed
+# or you can add them yourself or use a function like `str_wrap()`
+
+west_label <- "The coolest corridor, from Santa Monica
+to Griffith Park, was also the richest,
+with higher median household income
+than the rest of Los Angeles"
+
+east_label <- "Census tracts in the north and southeast
+of Los Angeles were its hottest. Like a lot
+of US cities, these are also the places
+where its poorest residents live."
+
+# a data frame to draw the text annotations
+__________ <- tibble::tribble(
+  ~x,      ~y,    ~label,
+  -118.90, 34.00, west_label,
+  -118.20, 34.22, east_label
+)
+
+# a data frame to draw the curved arrows
+__________ <- tibble::tribble(
+  ~x,      ~y,    ~xend,    ~yend,
+  -118.73, 34.035, -118.60, 34.10, # west side, pointing northeast
+  -118.21, 34.195, -118.35, 34.18, # northeast, pointing northwest
+  -118.08, 34.185, -118.15, 34.10  # northeast, pointing southwest
+)
+
+
+base_map +
+  __________(
+    data = __________,
+    aes(x, y, label = label),
+    hjust = 0,
+    vjust = 0.5,
+    __________
+  ) + 
+  __________(
+    data = __________,
+    aes(x =x, y = y, xend = xend, yend = yend),
+    colour = "grey75",
+    size = 0.3,
+    curvature = -0.1,
+    arrow = __________
+  )
+```
+
+
+## Your Turn 7
+
+1. Run the first code chunk. `label_frames()` will help us label the `frame` variable better. `theme_multiplot()` is the theme we'll add to each plot. We'll use `diabetes_complete` for the plots (removing the missing values of the variables we're plotting produce the same plots as `diabetes` would, but it prevents ggplot2 from warning us that it's dropping the data internally). Nothing to change here!
+
+```{r}
+plot_colors <- c(female = "#009E73", male = "#0072B2")
+
+label_frames <- function(lbl) paste(lbl, "\nframe")
+
+theme_multiplot <- function(base_size = 14, ...) {
+  theme_minimal(base_size = base_size, ...) %+replace%
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor = element_blank(),
+      legend.position = "none"
+    )
+}
+
+diabetes_complete <- diabetes %>% 
+  drop_na(waist, hip, gender, frame, glyhb)
+```
+
+
+2. Run the code for `plot_a` and take a look. Nothing to change here, either! 
+
+```{r}
+plot_a <- diabetes_complete %>% 
+  ggplot(aes(waist/hip, fill = gender)) + 
+    geom_density(
+      col = "white", 
+      alpha = .7, 
+      size = .75
+     ) + 
+    theme_multiplot() +
+    scale_fill_manual(values = plot_colors) + 
+    annotate(
+       "text", 
+       x = c(.75, .98), 
+       y = c(5, 5.70), 
+       label = names(plot_colors), 
+       color = plot_colors,
+       size = 5
+      ) + 
+    labs(tag = "A") 
+
+plot_a
+```
+
+3. The colors in `plot_b` don't match `plot_a`. Add `scale_color_manual()` to make the colors consistent. 
+4. Also add `scale_fill_manual()`. For the fill colors, we'll add a bit of transparency. Paste "B3" to the end of the colors in `plot_colors`. "B3" is equivalent to 70% transparency (or `alpha = .7`) in hex code (see [this GitHub page with translations from percent to hex](https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4), but note that in R you need to put the transparency at the end of the six character hex code).
+
+
+```{r}
+plot_b <- diabetes_complete %>% 
+  ggplot(aes(fct_rev(frame), waist/hip, fill = gender, col = gender)) + 
+    geom_boxplot(
+      outlier.color = NA, 
+      alpha = .8, 
+      width = .5
+     ) +
+    theme_multiplot() +
+    theme(axis.title.x = element_blank()) + 
+    scale_x_discrete(labels = label_frames) + 
+    labs(tag = "B")
+
+plot_b
+```
+
+5. This plot doesn't have a `tag` label like the other two plots. Add one to the `labs()` call.
+6. The legend isn't working well, but let's take advantage of it. We'll move the legend to *above* the plot by setting `legend.position` to `c(1, 1.25)` in `theme()`. We wont' be able to see it in `plot_c`, but it will show up in the combined plot!
+
+
+```{r}
+plot_c <- diabetes_complete %>% 
+  ggplot(aes(waist/hip, glyhb,  col = gender)) +
+    geom_point(
+      shape = 21, 
+      col = "white", 
+      fill = "grey80", 
+      size = 2.5
+     ) + 
+    geom_smooth(
+      method = "lm", 
+      formula = y ~ x,
+      se = FALSE, 
+      size = 1.1
+    ) + 
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.justification = c(1, 0),
+      legend.direction = "horizontal",
+      panel.grid.minor = element_blank()
+     ) + 
+    facet_wrap(~fct_rev(frame), labeller = as_labeller(label_frames)) +
+    scale_y_log10(breaks = c(3.5, 5.0, 7.0, 10.0, 14.0)) +
+    scale_color_manual(name = "", values = plot_colors) +
+    guides(color = guide_legend(override.aes = list(size = 5))) +
+    labs(y = "hemoglobin a1c") 
+    
+plot_c
+```
+
+7. Finally, combine the 3 plots using patchwork. Have `plot_a` and `plot_b` on top and `plot_c` on the bottom.
+
+
+```{r}
+library(patchwork)
+
+```
+
+
+
+***
+
+# Take aways
+* Reduce the mental burden of your figures using focused color, direct labels, and sensible ordering
+* Make annotations and direct labels with `geom_text()` and `geom_label()`, facets, ggrepel, and `annotate()`
+* Create highlighted plots using two geoms + facets or with gghighlight
+* Combine plots with patchwork: make sure they're consistent and that you change up the geoms. Go from closer to the raw data to more derived as you build up your combined plots.
