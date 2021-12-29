@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
-    <title>R Packages: Whole Game</title>
+    <title>R Packages: What’s next?</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-24" />
+    <meta name="date" content="2021-12-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -11,112 +12,58 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# R Packages: Whole Game
-### 2020-01-24
+# R Packages: What’s next?
+### 2021-12-29
 
 ---
 
-class: middle, center
+
+class: inverse, center, middle
 
 
 
-&lt;img src="img/where_are_we_00.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
-
----
-
-class: middle, center, inverse
-
-# We're going to make a package *right now*
+# submitting to CRAN
 
 ---
 
-class: middle, center, inverse, 
+# Key helper functions:
 
-# **`usethis::create_package("mbmisc2")`**
+## `usethis::use_release_issue()`
+## `devtools::check_win_devel()`
+## `devtools::submit_cran()`
 
----
+--
 
-class: middle, center, inverse, 
-
-# **`library(devtools)`**
-# **`library(usethis)`**
-
----
-
-class: middle, center, inverse, 
-
-# **`use_r("labs_wrap")`**
+## Also see https://github.com/ThinkR-open/prepare-for-cran
 
 ---
 
-class: middle, center, inverse, 
+# Sharing in other ways
 
-# **`use_package("ggplot2")`**
-# **`use_package("tibble")`**
-# **`use_package("dplyr")`**
-# **`use_package("stringr")`**
-
----
-
-class: middle, center, inverse, 
-
-# 🔨 **Build**
-# ✔️ **R CMD Check**
+## GitHub or other git service
+## RStudio Package Manager
+## Talk to your IT and DevOps people
 
 ---
 
-class: middle, center, inverse, 
+# Tell people about it!
 
-# **Edit DESCRIPTION**
+## **No one will use your helpful new package if they don’t know that it exists.** —Hadley Wickham and Jenny Bryan
 
----
+--
 
-class: middle, center, inverse, 
+## Tweet it on #rstats, blog about it, share it on R Weekly or another venue
 
-# **`use_mit_license("Your Name")`**
-
----
-
-class: middle, center, inverse, 
-
-# **`use_roxygen_md()`**
-# **`document()`**
-
----
-
-class: middle, center, inverse, 
-
-# 🔨 **Build**
-# ✔️ **R CMD Check**
-
----
-
-class: middle, center, inverse, 
-
-# **`use_test("labs_wrap")`**
-# **`test()`**
-
----
-
-class: middle, center, inverse, 
-
-# **`use_git()`**
-# **`use_github()`**
-
----
-
-class: inverse, center
-
-# Resources
-## [R Packages, 2nd Edition](https://r-pkgs.org/): The work-in-progress second edition of R Packages. Uses the most cutting edge tools to make your life easier. Free online.
-## [R Packages, 1st Edition](http://r-pkgs.had.co.nz/): The first edition of R Packages. Still very good! Free online.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -157,6 +104,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -174,17 +147,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

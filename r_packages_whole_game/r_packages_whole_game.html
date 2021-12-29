@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>R Packages: Whole Game</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-08-29" />
+    <meta name="date" content="2021-12-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
@@ -12,20 +13,21 @@
 class: center, middle, inverse, title-slide
 
 # R Packages: Whole Game
-### 2019-08-29
+### 2021-12-29
 
 ---
 
-class: middle, center, inverse, 
+class: middle, center, inverse
 
 
 
 # We're going to make a package *right now*
 
 ---
+
 class: middle, center, inverse, 
 
-# **`usethis::create_package("evalue")`**
+# **`usethis::create_package("mbmisc2")`**
 
 ---
 
@@ -38,8 +40,16 @@ class: middle, center, inverse,
 
 class: middle, center, inverse, 
 
-# **`use_r("evalue")`**
-# http://bit.ly/evalue_function
+# **`use_r("labs_wrap")`**
+
+---
+
+class: middle, center, inverse, 
+
+# **`use_package("ggplot2")`**
+# **`use_package("tibble")`**
+# **`use_package("dplyr")`**
+# **`use_package("stringr")`**
 
 ---
 
@@ -65,6 +75,7 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_roxygen_md()`**
+# **`document()`**
 
 ---
 
@@ -77,14 +88,8 @@ class: middle, center, inverse,
 
 class: middle, center, inverse, 
 
-# **`use_testthat()`**
-# **`use_test("evalue_works")`**
-
----
-
-class: middle, center, inverse, 
-
-# **`use_package("purrr")`**
+# **`use_test("labs_wrap")`**
+# **`test()`**
 
 ---
 
@@ -106,7 +111,10 @@ class: inverse, center
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -146,9 +154,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -157,7 +181,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

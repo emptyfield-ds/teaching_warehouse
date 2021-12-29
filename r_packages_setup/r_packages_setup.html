@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Setup R Packages</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-21" />
+    <meta name="date" content="2021-12-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -17,206 +19,8 @@ class: inverse, shadow
 
 
 
-<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
-@import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
-
-body {
-  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
-}
-
-a, a > code {
-  color: #EC99C6;
-  text-decoration: none;
-}
-
-strong {
-  color: #E69F00;
-}
-
-em {
-  color: #56B4E9;
-  font-style: normal;
-  font-weight: bold;
-}
-
-del {
-  color: #E5E5E5;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.remark-code {
-  font-family: 'IBM Plex Mono', 'Lucida Console', Monaco, monospace;
-  font-size: 100%;
-}
-
-.remark-inline-code {
-  font-family: 'Fira Sans', 'Lucida Console', Monaco, monospace;
-  font-weight: 400;
-  font-size: 100%;
-}
-
-.remark-code-line-highlighted {
-  background-color: #CEE9FF;
-  font-weight: 500;
-}
-
-.large { font-size: 130% }
-.medium { font-size: 115% }
-.small { font-size: 70% }
-
-
-.remark-slide-content {
-  color: #474747;
-  font-weight: 300;
-  font-weight: 300;
-  padding: 1em 2em 1em 2em
-}
-
-h1 {
-  color: #56B4E9;
-  font-weight: 500;
-}
-
-h2 {
-  font-weight: 500;
-}
-
-.remark-slide-number {
-  font-size: 20px;
-}
-
-.title-slide .remark-slide-number {
-  display: none;
-}
-
-.inverse.title-slide {
-  background-size: cover;
-  color: #EDEEEF;
-}
-
-.inverse.title-slide h1  {
-  color: #E69F00;
-  font-size: 72px;
-  text-shadow: none;
-  text-align: left;
-  vertical-align: bottom;
-}
-.inverse.title-slide h2  {
-  color: #56B4E9;
-  text-shadow: none;
-  font-size: 48px;
-  text-align: left;
-  font-weight: bold;
-}
-.inverse.title-slide h3  {
-  color: #EDEEEF;
-  text-shadow: none;
-  font-size: 36px;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.inverse.title-slide h4  {
-  color: #EDEEEF;
-  text-shadow: none;
-  font-size: 24px;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.inverse {
-  background-size: cover;
-  background-color: #23373B;
-  color: #EDEEEF;
-  font-weight: bold;
-  text-shadow: none;
-}
-
-.inverse-ns {
-  background-size: cover;
-  background-color: #23373B;
-  color: #EDEEEF;
-  text-shadow: none;
-  font-weight: bold;
-}
-
-
-
-.takeaways {
-  padding-top: 80px;
-}
-
-.inverse h2, .inverse h3  {
-  color: #EDEEEF;
-  font-weight: 500;
-}
-
-.inverse del {
-  color: #6C7B7F;
-}
-
-.shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
-
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-ul {
-  font-size: 48px;
-  list-style-type: none;
-  text-align: left;
-  font-weight: 500;
-  padding-top: 40px;
-}
-
-ul li {
-  padding-bottom: 40px;
-}
-
-ol {
-  counter-reset: my-counter;
-  list-style: none;
-  padding-left: 40px;
-  font-size: 45px;
-  font-weight: bold;
-  text-align: left;
-}
-
-ol li {
-  counter-increment: my-counter;
-  padding-left: 40px;
-  position: relative;
-  font-size: 45px;
-  margin: 20px 0;
-  display: block;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-}
-
-ol li::before {
-  content: counter(my-counter);
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  position: absolute;
-  left: -25px;
-  line-height: 50px;
-  width: 50px;
-  height: 50px;
-  top: 0;
-  background: #56B4E9;
-  border-radius: 50%;
-  text-align: center;
-}</style>
-
-# My Organization's First R package
+# Developing R Packages
 ## Setup R Packages
-## `rstudio::conf(2020L)`
 
 ---
 
@@ -225,12 +29,19 @@ background-position: 90% 10%
 
 # [devtools](https://devtools.r-lib.org/)
 
---
+---
 
-.pull-left[
+background-image: url(http://hexb.in/hexagons/devtools.png)
+background-position: 90% 10%
+
+# [devtools](https://devtools.r-lib.org/)
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+
 ## Tools to make an R developer's life easier
-## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`* throughout the day.
-]
+## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`*.
 
 ---
 
@@ -239,25 +50,30 @@ background-position: 90% 10%
 
 # [usethis](https://usethis.r-lib.org/)
 
---
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
 
-.pull-left[
 ## Set up commonly used 📦 components
-## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more throughout the day.
-]
+## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more.
 
 ---
 
 background-image: url(img/hex-shinRa.png)
 background-position: 90% 10%
-background-size: 30%
+background-size: 20%
 
 # shinRa
-.pull-left[
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
 ## An R package for the data science team at the Shinra Electric Power Company, also known as Shinra, Inc. 
 
 ## What will it do? Custom ggplot2 themes, reports, data connections and filtering, and more.
-]
+
 ---
 
 #  `create_package("shinRa")`
@@ -279,34 +95,55 @@ create_package("shinRa")
 .small[
 
 ```
-## ✔ Creating '/var/folders/03/9x7925g54mncswxx06wpkxl00000gn/T/Rtmps6CMKz/ file14b3d54cf1ad2/shi...
-## ✔ Setting active project to '/private/var/folders/ 03/9x7925g54mncswxx06wpkxl00000gn/T/Rtmps6C...
-## ✔ Creating 'R/'
-## ✔ Writing 'DESCRIPTION'```
+## ✔ ✓ Creating '/var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T/RtmpTB0HRv/filed72033155045/shi...```
+
+```
+## ✔ ✓ Setting active project to '/private/var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T/RtmpTB...```
+
+```
+## ✔ ✓ Creating 'R/'```
+
+```
+## ✔ ✓ Writing 'DESCRIPTION'```
 
 ```
 ## Package: shinRa
 ## Title: What the Package Does (One Line, Title Case)
 ## Version: 0.0.0.9000
 ## Authors@R (parsed):
-##     * First Last &lt;first.last@example.com&gt; [aut, cre] (&lt;https://orcid.org/YOUR-ORCID-ID&gt;)
+##     * First Last &lt;first.last@example.com&gt; [aut, cre] (YOUR-ORCID-ID)
 ## Description: What the package does (one paragraph).
 ## License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
 ##     license
 ## Encoding: UTF-8
-## LazyData: true
 ## Roxygen: list(markdown = TRUE)
+## RoxygenNote: 7.1.2
 ```
 
 ```
-## ✔ Writing 'NAMESPACE'
-## ✔ Writing 'shinRa.Rproj'
-## ✔ Adding '.Rproj.user' to '.gitignore'
-## ✔ Adding '^shinRa\\.Rproj$', '^\\.Rproj\\.user$' to '.Rbuildignore'
-## ✔ Setting active project to '&lt;no active project&gt;'```
+## ✔ ✓ Writing 'NAMESPACE'```
 
 ```
-## /var/folders/03/9x7925g54mncswxx06wpkxl00000gn/T//Rtmps6CMKz/file14b3d54cf1ad2/shinRa
+## ✔ ✓ Writing 'shinRa.Rproj'```
+
+```
+## ✔ ✓ Adding '^shinRa\\.Rproj$' to '.Rbuildignore'```
+
+```
+## ✔ ✓ Adding '.Rproj.user' to '.gitignore'```
+
+```
+## ✔ ✓ Adding '^\\.Rproj\\.user$' to '.Rbuildignore'```
+
+```
+## ✔ ✓ Setting active project to '&lt;no active project&gt;'```
+
+```
+## /var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T//RtmpTB0HRv/filed72033155045/shinRa
+## ├── DESCRIPTION
+## ├── NAMESPACE
+## ├── R
+## └── shinRa.Rproj
 ```
 ]
 
@@ -548,17 +385,11 @@ Full list: http://www.loc.gov/marc/relators/relaterm.html
 
 ## Proprietary licenses
 
-### *Put this in your `DESCRIPTION` file:*
+### `use_proprietary_license("Shinra, Inc")`
 
 ```
 License: file LICENSE
 ```
-
---
-
-&lt;br&gt;&lt;br&gt;
-
-### *Put this in your `LICENSE` file:*
 
 ```
 Proprietary 
@@ -576,13 +407,13 @@ Do not distribute outside of Shinra, Inc.
 
 ## Your Turn 3
 
-## Run `use_mit_license("Shinra, Inc.")`. What changed?
+## Run `use_mit_license("AVALANCHE")`. What changed?
 
 ---
 
 ## Your Turn 3: Stretch Goal
 
-## Add "Shinra, Inc." as an author with the role of copyright holder.
+## Add "AVALANCHE" as an author with the role of copyright holder.
 ## Change the license to use the proprietary license above.
 
 ---
@@ -631,7 +462,10 @@ Do not distribute outside of Shinra, Inc.
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -672,6 +506,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -689,17 +549,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

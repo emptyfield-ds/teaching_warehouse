@@ -4,7 +4,7 @@ subtitle: ""
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["default"]
+    css: ["default", "theme.css"]
     seal: false
     lib_dir: libs
     nature:
@@ -52,22 +52,8 @@ residents_per_sector <-
   )
 ```
 
-
-```{r, css_theme, echo=FALSE}
-htmltools::includeCSS("https://raw.githubusercontent.com/malcolmbarrett/kakashi/master/kakashi.css")
-```
-
-# My Organization's First R package
+# Developing R Packages
 ## Write R Code
-## `rstudio::conf(2020L)`
-
----
-
-class: middle, center
-
-```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("img/where_are_we_02.png")
-```
 
 ---
 
@@ -230,8 +216,8 @@ use_r("db_con")
 ```{r, eval=FALSE}
 db_con <- function(dbname = "residents_per_sector") {
   dbname <- match.arg(dbname)
-  # We will set up real database connections later. For now, 
-  # we'll just return some hard-coded data instead.
+  # We'll pretend we've connected to a database
+  # and just return some hard-coded data instead.
   data.frame(
     sector = as.factor(1:8),
     residents = c(1000, 2034, 4594, 2304, 8093, 1200, 300, 2398)
@@ -321,6 +307,16 @@ if (requireNamespace("shiny", quietly = TRUE)) {
 }
 ```
 
+--
+
+## or `use_package("rlang")`
+
+```{r, eval=FALSE}
+# offers to install if not already installed
+rlang::check_installed("shiny")
+# ... shiny code
+```
+
 ---
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
@@ -377,11 +373,21 @@ ggplot(
 
 ---
 
-# Packages so good they get their own functions 
+# Importing functions directly 
+
+## `use_import_from("pkg.name", "fun")`
+
+--
+
+## Adds `@importFrom pkg.name fun`, letting you write `fun()` instead of `pkg.name::fun()`
+
+--
+
+## Import the whole package with `@import pkg.name`. Use this with caution!
 
 ---
 
-# Packages so good they get their own functions 
+# Commonly imported components 
 
 ## `use_tibble()`
 ## `use_data_table()`

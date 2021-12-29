@@ -4,7 +4,7 @@ subtitle: ""
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["default"]
+    css: ["default", "theme.css"]
     seal: false
     lib_dir: libs
     nature:
@@ -52,22 +52,8 @@ users_per_sector <-
   )
 ```
 
-```{r, css_theme, echo=FALSE}
-htmltools::includeCSS("https://raw.githubusercontent.com/malcolmbarrett/kakashi/master/kakashi.css")
-```
-
-
-# My Organization's First R package
+# Developing R Packages
 ## Test R Code
-## `rstudio::conf(2020L)`
-
----
-
-class: middle, center
-
-```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("img/where_are_we_04.png")
-```
 
 ---
 
@@ -79,7 +65,7 @@ class: inverse, center, middle
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 10%
+background-position: 90% 8%
 
 ## testthat: Unit tests for R
 <br><br>
@@ -87,38 +73,37 @@ background-position: 90% 10%
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 10%
+background-position: 90% 8%
 
 ## testthat: Unit tests for R
+<br><br>
 
-.pull-left[
 ## Automate tests (*`use_test()`*) using expectations
-]
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 10%
+background-position: 90% 8%
 
 ## testthat: Unit tests for R
+<br><br>
 
-.pull-left[
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## Run tests with *`test()`*, *`test_file()`*, *`Cmd/Ctrl + Shift + T`*.
-]
+
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 10%
+background-position: 90% 8%
 
 ## testthat: Unit tests for R
+<br><br>
 
-.pull-left[
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## ~~Run tests with `test()`, `test_file()`, `Cmd/Ctrl + Shift + T`.~~
 ## Also runs during R CMD Check (*`check()`*)
-]
+
 ---
 
 ```{r, out.height="100%", out.width="100%", echo = FALSE}
@@ -180,6 +165,10 @@ test_that("theme works", {
   expect_error(theme_mako(base_size = "14"))
 })
 ```
+
+---
+
+# Test files
 
 ```{r, eval = FALSE}
 test()
@@ -560,39 +549,36 @@ donations_test_data <- data.frame(
 
 # Test Coverage
 
-## ~~Lines of code tested (via the [covr](https://covr.r-lib.org/) R pkg)~~
-## `use_coverage()` (via [codecov](https://codecov.io/), [coveralls](https://coveralls.io/))
+## ~~Lines of code tested (via the covr R pkg)~~
 ## `test_coverage()`
+---
+
+# Test Coverage
+
+## ~~Lines of code tested (via the covr R pkg)~~
+## ~~`test_coverage()`~~
+## `use_coverage()` (via [codecov](https://codecov.io/), [coveralls](https://coveralls.io/))
 
 ---
 
-# Continuous Integration (CI)
+# GitHub Actions
 
 ## Run R CMD Check with every commit
-## Travis, Appveyor, others
 
 ---
 
-# Continuous Integration (CI)
+# GitHub Actions
 
 ## ~~Run R CMD Check with every commit~~
-## ~~Travis, Appveyor, others~~
-## `use_travis()`, `use_appveyor()`, etc
+## `use_github_action_check_standard()`
 
 ---
 
 # GitHub Actions
 
-## All of the above and more!
-## Newer service 
-
----
-
-# GitHub Actions
-
-## ~~All of the above and more!~~
-## ~~Newer service~~
-## `use_github_actions_*()`
+## ~~Run R CMD Check with every commit~~
+## ~~`use_github_action_check_standard()`~~
+## See also `use_github_action()` + [`r-lib/actions`](https://github.com/r-lib/actions) 
 
 ---
 
