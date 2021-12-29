@@ -4,7 +4,7 @@ subtitle: ""
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["default"]
+    css: ["default", "theme.css"]
     seal: false
     lib_dir: libs
     nature:
@@ -51,21 +51,8 @@ users_per_sector <-
   )
 ```
 
-```{r, css_theme, echo=FALSE}
-htmltools::includeCSS("https://raw.githubusercontent.com/malcolmbarrett/kakashi/master/kakashi.css")
-```
-
-# My Organization's First R package
+# Developing R Packages
 ## Document R Code
-## `rstudio::conf(2020L)`
-
----
-
-class: middle, center
-
-```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("img/where_are_we_03.png")
-```
 
 ---
 
@@ -82,14 +69,14 @@ knitr::include_graphics("img/help_page.png")
 ---
 
 background-image: url(http://hexb.in/hexagons/roxygen2.png)
-background-position: 90% 10%
+background-position: 90% 25%
 
 ## roxygen2: In-Line Documentation for R
 
 ---
 
 background-image: url(http://hexb.in/hexagons/roxygen2.png)
-background-position: 90% 10%
+background-position: 90% 25%
 
 ## roxygen2: In-Line Documentation for R
 
@@ -99,7 +86,7 @@ background-position: 90% 10%
 ---
 
 background-image: url(http://hexb.in/hexagons/roxygen2.png)
-background-position: 90% 10%
+background-position: 90% 25%
 
 ## roxygen2: In-Line Documentation for R
 
@@ -436,13 +423,13 @@ get_data <- function(x) {
 
 # Examples
 
-## If you don't want to run examples, wrap them in `dontrun{}` or `donttest{}`
+## If you don't want to run examples, wrap them in `\dontrun{}` or `\donttest{}`
 
 ```{r, eval=FALSE}
 #' [other roxygen code]
 #' @examples 
 #'
-#' dontrun{ #<<
+#' \dontrun{ #<<
 #'   get_data("daily_active_users") #<<
 #' } #<<
 get_data <- function(x) {
@@ -623,8 +610,8 @@ class: inverse
 # Strategies for documenting helper functions:
 
 1. Don't document them 🤷
-2. @keyword internal
-3. @nomd
+2. @keywords internal
+3. @noMd
 
 ---
 
@@ -780,31 +767,29 @@ knitr::include_graphics("img/help-tidyr.png")
 ---
 
 background-image: url(https://raw.githubusercontent.com/r-lib/pkgdown/master/man/figures/logo.png)
-background-position: 90% 10%
+background-position: 90% 4%
 
 # pkgdown
 
 ---
 
 background-image: url(https://raw.githubusercontent.com/r-lib/pkgdown/master/man/figures/logo.png)
-background-position: 90% 10%
+background-position: 90% 4%
 
 # pkgdown
 
 .pull-left[
-## `use_pkgdown()`
+## `use_pkgdown()`, `use_pkgdown_github_pages()`
 ## Renders documentation, README, vignettes, and more as a website.
 ]
 
 ---
 
 background-image: url(http://hexb.in/hexagons/roxygen2.png)
-background-position: 90% 10%
+background-position: 93% 8%
 
-.pull-left[
 # Here's a good example...
-
 ## https://roxygen2.r-lib.org/
+
 ## There are a lot more documentation tricks.
 ## Read the vignettes!
-]

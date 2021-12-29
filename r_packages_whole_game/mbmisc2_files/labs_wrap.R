@@ -5,5 +5,5 @@ labs_wrap <- function(..., width = 80) {
     tibble::deframe() %>%
     as.list()
 
-  ggplot2::labs(x)
+  ggplot2::labs(!!!x)
 }

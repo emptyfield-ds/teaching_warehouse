@@ -95,7 +95,7 @@ gapminder %>%
 
 ## Your Turn 3
 
-1. Calculate the placement of the labels: in the `summarize()` call, create a variable called `y` that is the maximum `lifeExp` value for every continent For the labels, we'll use the continent names, which will be retained automatically. 
+1. Calculate the placement of the labels: in the `summarize()` call, create a variable called `y` that is the maximum `lifeExp` value for every continent. For the labels, we'll use the continent names, which will be retained automatically. 
 
 2. Remove the legend from the line plot. There are [several ways to do so in ggplot2](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29/#removing-the-legend). I like setting `legend.position = "none"` in `theme()`.
 
@@ -126,7 +126,6 @@ line_plot <- continent_data %>%
   ggplot(aes(year, lifeExp, col = continent)) +
   geom_line(size = 1) +
   theme_minimal_hgrid() +
-  __________________ +
   scale_color_manual(values = continent_colors) +
   scale_x_continuous(expand = expansion()) +
   labs(y = "life expectancy")

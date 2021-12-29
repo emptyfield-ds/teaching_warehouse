@@ -12,7 +12,7 @@ output:
       navigation:
         scroll: false 
 ---
-class: middle, center, inverse, 
+class: middle, center, inverse
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
@@ -22,9 +22,10 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dp
 # We're going to make a package *right now*
 
 ---
+
 class: middle, center, inverse, 
 
-# **`usethis::create_package("evalue")`**
+# **`usethis::create_package("mbmisc2")`**
 
 ---
 
@@ -37,8 +38,16 @@ class: middle, center, inverse,
 
 class: middle, center, inverse, 
 
-# **`use_r("evalue")`**
-# http://bit.ly/evalue_function
+# **`use_r("labs_wrap")`**
+
+---
+
+class: middle, center, inverse, 
+
+# **`use_package("ggplot2")`**
+# **`use_package("tibble")`**
+# **`use_package("dplyr")`**
+# **`use_package("stringr")`**
 
 ---
 
@@ -64,6 +73,7 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_roxygen_md()`**
+# **`document()`**
 
 ---
 
@@ -76,14 +86,8 @@ class: middle, center, inverse,
 
 class: middle, center, inverse, 
 
-# **`use_testthat()`**
-# **`use_test("evalue_works")`**
-
----
-
-class: middle, center, inverse, 
-
-# **`use_package("purrr")`**
+# **`use_test("labs_wrap")`**
+# **`test()`**
 
 ---
 

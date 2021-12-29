@@ -4,7 +4,7 @@ subtitle: ""
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["default"]
+    css: ["default", "theme.css"]
     seal: false
     lib_dir: libs
     nature:
@@ -58,24 +58,10 @@ data_dictionary <-
   )
 ```
 
-```{r, css_theme, echo=FALSE}
-htmltools::includeCSS("https://raw.githubusercontent.com/malcolmbarrett/kakashi/master/kakashi.css")
-```
-
-# My Organization's First R package
+# Developing R Packages
 ## Add data and files to R packages
-## `rstudio::conf(2020L)`
 
 ---
-
-class: middle, center
-
-```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("img/where_are_we_06.png")
-```
-
----
-
 
 # What else can I do with an R package?
 
@@ -585,9 +571,10 @@ data = list(rversion = glue::glue("{version$major}.{version$minor}")) #<<
 --
 
 ```{r, eval=FALSE}
-library(fs)
-dir_create(path("inst", "templates"))
-file_create(path("inst", "templates", "config.yml"))
+edit_template("config.yml")
+
+# run without arguments to open a menu of existing templates
+edit_template()
 ```
 
 --

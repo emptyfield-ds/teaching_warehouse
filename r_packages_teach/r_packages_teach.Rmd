@@ -4,7 +4,7 @@ subtitle: ""
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["default"]
+    css: ["default", "theme.css"]
     seal: false
     lib_dir: libs
     nature:
@@ -52,21 +52,8 @@ users_per_sector <-
   )
 ```
 
-```{r, css_theme, echo=FALSE}
-htmltools::includeCSS("https://raw.githubusercontent.com/malcolmbarrett/kakashi/master/kakashi.css")
-```
-
-# My Organization's First R package
+# Developing R Packages
 ## Teach your package
-## `rstudio::conf(2020L)`
-
----
-
-class: middle, center
-
-```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("img/where_are_we_05.png")
-```
 
 ---
 
@@ -128,13 +115,13 @@ class: center, middle
 
 --
 
-## If you don't want to run examples, wrap them in `dontrun{}` or `donttest{}`
+## If you don't want to run examples, wrap them in `\dontrun{}` or `\dontrun{}`
 
 ```{r, eval=FALSE}
 #' [other roxygen code]
 #' @examples 
 #'
-#' dontrun{ #<<
+#' \dontrun{ #<<
 #'   get_data("daily_active_users") #<<
 #' } #<<
 get_data <- function(x) {
@@ -146,18 +133,16 @@ get_data <- function(x) {
 
 # Examples revisted
 
-## Don't mess around with the user's directory. Use `tempfile()` or fs if you need to.
+## Don't mess around with the user's directory. Use `tempfile()` or withr if you need to.
 
-```{r}
-library(fs)
-dir <- file_temp()
-dir_create(dir)
+```{r, eval=FALSE}
+withr::with_tempdir(...)
 ```
 
 ---
 
 ```{r, message = TRUE}
-create_package(path(dir, "temp.package"))
+withr::with_tempdir(create_package("temp.package"))
 ```
 
 ---
@@ -166,31 +151,22 @@ create_package(path(dir, "temp.package"))
 
 --
 
-## Long-form documentation, written in [R Markdown](https://rmarkdown.rstudio.com/)
+## Long-form documentation, written in [R Markdown](https://rmarkdown.rstudio.com/): `use_vignette()`
 
 ---
 
 # Vignettes
 
-## ~~Long-form documentation, written in R Markdown~~
+## ~~Long-form documentation, written in R Markdown: `use_vignette()`~~
 ## Great for general introductions and complex topics you don't want buried in the documentation
 
 ---
 
 # Vignettes
 
-## ~~Long-form documentation, written in R Markdown~~
+## ~~Long-form documentation, written in R Markdown: `use_vignette()`~~
 ## ~~Great for general introductions and complex topics you don't want buried in the documentation~~
 ## Get rendered on pkgdown sites. See also `use_article()`
-
----
-
-# Vignettes
-
-## ~~Long-form documentation, written in R Markdown~~
-## ~~Great for general introductions and complex topics you don't want buried in the documentation~~
-## ~~Get rendered on pkgdown sites. See also `use_article()`~~
-## `use_vignette()`
 
 ---
 

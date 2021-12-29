@@ -15,7 +15,7 @@ strong {
 }
 
 em {
-  color: #56B4E9;  
+  color: #56B4E9;
   font-style: normal;
   font-weight: bold;
 }
@@ -122,7 +122,7 @@ h2 {
 }
 
 .takeaways {
-  padding-top: 80px;
+  padding-top: 250px;
 }
 
 .inverse h2, .inverse h3  {
@@ -165,7 +165,7 @@ ol li {
   counter-increment: my-counter;
   padding-left: 40px;
   position: relative;
-  font-size: 45px;
+  font-size: 40px;
   margin: 20px 0;
   display: block;
   margin-block-start: 0.83em;
@@ -177,7 +177,7 @@ ol li {
 ol li::before {
   content: counter(my-counter);
   color: #fff;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   position: absolute;
   left: -25px;

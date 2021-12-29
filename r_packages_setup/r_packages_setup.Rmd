@@ -4,7 +4,7 @@ subtitle: ""
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["default"]
+    css: ["default", "theme.css"]
     seal: false
     lib_dir: libs
     nature:
@@ -44,21 +44,8 @@ process_usethis_messages <- function(x, options) {
 knitr::knit_hooks$set(message = process_usethis_messages)
 ```
 
-```{r, css_theme, echo=FALSE}
-htmltools::includeCSS("https://raw.githubusercontent.com/malcolmbarrett/kakashi/master/kakashi.css")
-```
-
-# My Organization's First R package
+# Developing R Packages
 ## Setup R Packages
-## `rstudio::conf(2020L)`
-
----
-
-class: middle, center
-
-```{r, out.height="100%", out.width="100%", echo = FALSE}
-knitr::include_graphics("img/where_are_we_01.png")
-```
 
 ---
 
@@ -67,12 +54,19 @@ background-position: 90% 10%
 
 # [devtools](https://devtools.r-lib.org/)
 
---
+---
 
-.pull-left[
+background-image: url(http://hexb.in/hexagons/devtools.png)
+background-position: 90% 10%
+
+# [devtools](https://devtools.r-lib.org/)
+
+</br>
+</br>
+</br>
+
 ## Tools to make an R developer's life easier
-## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`* throughout the day.
-]
+## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`*.
 
 ---
 
@@ -81,25 +75,30 @@ background-position: 90% 10%
 
 # [usethis](https://usethis.r-lib.org/)
 
---
+</br>
+</br>
+</br>
+</br>
 
-.pull-left[
 ## Set up commonly used 📦 components
-## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more throughout the day.
-]
+## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more.
 
 ---
 
 background-image: url(img/hex-shinRa.png)
 background-position: 90% 10%
-background-size: 30%
+background-size: 20%
 
 # shinRa
-.pull-left[
+
+</br>
+</br>
+</br>
+</br>
 ## An R package for the data science team at the Shinra Electric Power Company, also known as Shinra, Inc. 
 
 ## What will it do? Custom ggplot2 themes, reports, data connections and filtering, and more.
-]
+
 ---
 
 #  `create_package("shinRa")`
@@ -379,17 +378,11 @@ knitr::include_graphics("img/description_license.png")
 
 ## Proprietary licenses
 
-### *Put this in your `DESCRIPTION` file:*
+### `use_proprietary_license("Shinra, Inc")`
 
 ```
 License: file LICENSE
 ```
-
---
-
-<br><br>
-
-### *Put this in your `LICENSE` file:*
 
 ```
 Proprietary 

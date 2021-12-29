@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Write R Code</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-01-21" />
+    <meta name="date" content="2021-12-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -19,207 +21,8 @@ class: inverse, shadow
 
 
 
-
-<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
-@import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
-
-body {
-  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
-}
-
-a, a > code {
-  color: #EC99C6;
-  text-decoration: none;
-}
-
-strong {
-  color: #E69F00;
-}
-
-em {
-  color: #56B4E9;
-  font-style: normal;
-  font-weight: bold;
-}
-
-del {
-  color: #E5E5E5;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.remark-code {
-  font-family: 'IBM Plex Mono', 'Lucida Console', Monaco, monospace;
-  font-size: 100%;
-}
-
-.remark-inline-code {
-  font-family: 'Fira Sans', 'Lucida Console', Monaco, monospace;
-  font-weight: 400;
-  font-size: 100%;
-}
-
-.remark-code-line-highlighted {
-  background-color: #CEE9FF;
-  font-weight: 500;
-}
-
-.large { font-size: 130% }
-.medium { font-size: 115% }
-.small { font-size: 70% }
-
-
-.remark-slide-content {
-  color: #474747;
-  font-weight: 300;
-  font-weight: 300;
-  padding: 1em 2em 1em 2em
-}
-
-h1 {
-  color: #56B4E9;
-  font-weight: 500;
-}
-
-h2 {
-  font-weight: 500;
-}
-
-.remark-slide-number {
-  font-size: 20px;
-}
-
-.title-slide .remark-slide-number {
-  display: none;
-}
-
-.inverse.title-slide {
-  background-size: cover;
-  color: #EDEEEF;
-}
-
-.inverse.title-slide h1  {
-  color: #E69F00;
-  font-size: 72px;
-  text-shadow: none;
-  text-align: left;
-  vertical-align: bottom;
-}
-.inverse.title-slide h2  {
-  color: #56B4E9;
-  text-shadow: none;
-  font-size: 48px;
-  text-align: left;
-  font-weight: bold;
-}
-.inverse.title-slide h3  {
-  color: #EDEEEF;
-  text-shadow: none;
-  font-size: 36px;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.inverse.title-slide h4  {
-  color: #EDEEEF;
-  text-shadow: none;
-  font-size: 24px;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.inverse {
-  background-size: cover;
-  background-color: #23373B;
-  color: #EDEEEF;
-  font-weight: bold;
-  text-shadow: none;
-}
-
-.inverse-ns {
-  background-size: cover;
-  background-color: #23373B;
-  color: #EDEEEF;
-  text-shadow: none;
-  font-weight: bold;
-}
-
-
-
-.takeaways {
-  padding-top: 80px;
-}
-
-.inverse h2, .inverse h3  {
-  color: #EDEEEF;
-  font-weight: 500;
-}
-
-.inverse del {
-  color: #6C7B7F;
-}
-
-.shadow { text-shadow: 0 0 20px rgba(51,51,51,0.35) }
-
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-ul {
-  font-size: 48px;
-  list-style-type: none;
-  text-align: left;
-  font-weight: 500;
-  padding-top: 40px;
-}
-
-ul li {
-  padding-bottom: 40px;
-}
-
-ol {
-  counter-reset: my-counter;
-  list-style: none;
-  padding-left: 40px;
-  font-size: 45px;
-  font-weight: bold;
-  text-align: left;
-}
-
-ol li {
-  counter-increment: my-counter;
-  padding-left: 40px;
-  position: relative;
-  font-size: 45px;
-  margin: 20px 0;
-  display: block;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-}
-
-ol li::before {
-  content: counter(my-counter);
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  position: absolute;
-  left: -25px;
-  line-height: 50px;
-  width: 50px;
-  height: 50px;
-  top: 0;
-  background: #56B4E9;
-  border-radius: 50%;
-  text-align: center;
-}</style>
-
-# My Organization's First R package
+# Developing R Packages
 ## Write R Code
-## `rstudio::conf(2020L)`
 
 ---
 
@@ -368,8 +171,8 @@ use_r("db_con")
 ```r
 db_con &lt;- function(dbname = "residents_per_sector") {
   dbname &lt;- match.arg(dbname)
-  # We will set up real database connections later. For now, 
-  # we'll just return some hard-coded data instead.
+  # We'll pretend we've connected to a database
+  # and just return some hard-coded data instead.
   data.frame(
     sector = as.factor(1:8),
     residents = c(1000, 2034, 4594, 2304, 8093, 1200, 300, 2398)
@@ -430,6 +233,17 @@ if (requireNamespace("shiny", quietly = TRUE)) {
 }
 ```
 
+--
+
+## or `use_package("rlang")`
+
+
+```r
+# offers to install if not already installed
+rlang::check_installed("shiny")
+# ... shiny code
+```
+
 ---
 
 &lt;img src="img/description_depends.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
@@ -471,15 +285,25 @@ theme_avalanche &lt;- function() {
 
 ## Your Turn 3
 
-&lt;img src="r_packages_write_code_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="r_packages_write_code_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-# Packages so good they get their own functions 
+# Importing functions directly 
+
+## `use_import_from("pkg.name", "fun")`
+
+--
+
+## Adds `@importFrom pkg.name fun`, letting you write `fun()` instead of `pkg.name::fun()`
+
+--
+
+## Import the whole package with `@import pkg.name`. Use this with caution!
 
 ---
 
-# Packages so good they get their own functions 
+# Commonly imported components 
 
 ## `use_tibble()`
 ## `use_data_table()`
@@ -577,13 +401,17 @@ data.table::is.data.table(res_data)
 ## *`zzz.R`*, *`.onLoad`*
 
 See [R Packages, ed. 2](https://r-pkgs.org/r.html#when-you-do-need-side-effects) for more.
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -624,6 +452,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -641,17 +495,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

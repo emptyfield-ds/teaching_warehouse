@@ -3,7 +3,7 @@
   <head>
     <title>Web apps in R with Shiny</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2020-08-22" />
+    <meta name="date" content="2021-12-10" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -13,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # Web apps in R with Shiny
-### 2020-08-22
+### 2021-12-10
 
 ---
 
@@ -65,29 +65,29 @@ background-position: 90% 10%
 
 ## Anatomy of a shiny app
 
-&lt;img src="shiny_skeleton.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/shiny_skeleton.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Anatomy of a shiny app
 
-&lt;img src="shiny_skeleton_ui.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/shiny_skeleton_ui.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Anatomy of a shiny app
 
-&lt;img src="shiny_skeleton_server.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/shiny_skeleton_server.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Anatomy of a shiny app
 
-&lt;img src="shiny_skeleton_runapp.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/shiny_skeleton_runapp.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="new_data_alert_movies.png" width="844" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/new_data_alert_movies.png" width="844" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -102,7 +102,7 @@ background-position: 90% 10%
 
 # `movies_01.R`
 
-&lt;img src="sidebar.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/sidebar.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
 .pull-right[Image by Hadley Wickham]
 
 ---
@@ -379,12 +379,12 @@ output$scatterplot &lt;- renderPlot({
 class: center, middle
 
 .pull-left[
-&lt;img src="cheatsheet.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/cheatsheet.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 
 .pull-right[
-&lt;img src="cheatsheet_inputs.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/cheatsheet_inputs.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -432,12 +432,12 @@ output$scatterplot &lt;- renderPlot({
 class: center, middle
 
 .pull-left[
-&lt;img src="cheatsheet.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/cheatsheet.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 
 .pull-right[
-&lt;img src="cheatsheet_outputs.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/cheatsheet_outputs.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -614,7 +614,7 @@ output$scatterplot &lt;- renderPlot({
 
 ### Click on the 'Tokens' option under your username (upper right corner)
 
-&lt;img src="tokens.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/tokens.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -624,7 +624,7 @@ output$scatterplot &lt;- renderPlot({
 ### Click 'Show' button on the 'Token' page
 ### Copy this to the clipboard, paste it into the console in the RStudio IDE, hit Enter
 
-&lt;img src="tokens2.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/tokens2.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -642,7 +642,10 @@ class: inverse, center
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
