@@ -725,17 +725,9 @@ theme_avalanche_v <- function(base_size = 14, ...) {
 
 ## `use_package_doc()`
 
-```{r, include=FALSE, R.options = list(usethis.description = NULL), message=FALSE}
-dir <- tempfile()
-fs::dir_create(dir)
-create_package(file.path(dir, "shinRa"), open = FALSE, rstudio = TRUE)
-```
+-- 
 
-```{r, echo=FALSE, R.options = list(usethis.description = NULL), message=TRUE}
-withr::with_dir(file.path(dir, "shinRa"), use_package_doc())
-
-unlink(dir)
-```
+### usethis also likes this for `use_import_from()` and other metadata
 
 ---
 
