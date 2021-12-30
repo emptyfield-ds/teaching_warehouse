@@ -1,11 +1,8 @@
 ---
 title: "Add data and files to R packages"
-subtitle: ""
-date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
-    seal: false
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -14,11 +11,6 @@ output:
       navigation:
         scroll: false 
 ---
-
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
@@ -57,11 +49,6 @@ data_dictionary <-
     description = c("Active reactor-using households", "Midgar Sector #"),
   )
 ```
-
-# Developing R Packages
-## Add data and files to R packages
-
----
 
 # What else can I do with an R package?
 
@@ -311,7 +298,7 @@ create_dir: false
 
 # xaringan template: **`skeleton.Rmd`**
 
-```{r, out.height="70%", out.width="70%", echo = FALSE}
+```{r, out.height="60%", out.width="60%", echo = FALSE}
 knitr::include_graphics("img/skeleton_rmd.png")
 ```
 
@@ -371,22 +358,22 @@ use_rmarkdown_template(
 
 # On `inst/`
 
-## We can put *any* arbitrary file in `inst/`.
+### We can put *any* arbitrary file in `inst/`.
 
 ---
 
 # On `inst/`
 
-## ~~We can put any arbitrary file in `inst/`.~~
-## Be careful not to name the folders the same as any of the top-level package folders, e.g. `R/` or `data/`.
+### ~~We can put any arbitrary file in `inst/`.~~
+### Be careful not to name the folders the same as any of the top-level package folders, e.g. `R/` or `data/`.
 
 ---
 
 # On `inst/`
 
-## ~~We can put any arbitrary file in `inst/`.~~
-## ~~Be careful not to name the folders the same as any of the top-level package folders, e.g. `R/` or `data/`.~~
-## Access content with *`system.file()`* or *`fs::path_package()`*
+### ~~We can put any arbitrary file in `inst/`.~~
+### ~~Be careful not to name the folders the same as any of the top-level package folders, e.g. `R/` or `data/`.~~
+### Access content with *`system.file()`* or *`fs::path_package()`*
 
 ---
 
@@ -522,7 +509,6 @@ system.file("templates", package = "usethis") %>%
 
 --
 
-.small[
 ```{r, eval=FALSE}
 whisker::whisker.render(
 "## Test environments
@@ -538,14 +524,12 @@ whisker::whisker.render(
 data = list(rversion = glue::glue("{version$major}.{version$minor}")) #<<
 )
 ```
-]
 
 ---
 
 
 ## whisker
 
-.small[
 ```{r, echo = FALSE, highlight.output=2:3}
 whisker::whisker.render(
 "## Test environments
@@ -562,7 +546,6 @@ data = list(rversion = glue::glue("{version$major}.{version$minor}")) #<<
 ) %>% 
   cat()
 ```
-]
 
 ---
 
@@ -658,11 +641,11 @@ description: A project to analyze reactor data
 
 #### Open `R/create_analysis.R`. `create_analysis()` is going to help us set up the project directory, but we need to complete it. In lines 22, 23, and 25, add the template names: "packages.R", "analysis.R", and "report.Rmd".
 
-#### Remember that "report.Rmd" has data to whisk. We need to tell it what to pass to the final file. The `data` argument takes a named list`. For this argument, write: `list(author = author, title = title)`.
+#### Remember that "report.Rmd" has data to whisk. We need to tell it what to pass to the final file. The `data` argument takes a named list. For this argument, write: `list(author = author, title = title)`.
 
 #### Below `create_analysis()` is a helper function, `usethis::use_template()`, to create files from templates. Change the `package` argument to "avalanchr".
 
-#### Re-build your package and run `create_analysis()` in the console. If something went wrong, just delete the folder `avalanche_analysis` and try again.
+#### Re-build your package and run `create_analysis()` in the console.
 
 ---
 
@@ -713,13 +696,13 @@ create_analysis()
 
 --
 
-## Add shiny app to `inst/shinyapps/` (or something similar)
+### Add shiny app to `inst/shinyapps/` (or something similar)
 
 ---
 
 # Shiny apps
-## ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
-## Then, use an R function like this to launch it:
+### ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
+### Then, use an R function like this to launch it:
 
 --
 
@@ -738,8 +721,8 @@ launch_app <- function(app) {
 ---
 
 # Shiny apps
-## ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
-## Then, use an R function like this to launch it:
+### ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
+### Then, use an R function like this to launch it:
 
 ```{r, eval=FALSE}
 launch_app <- function(app) {
@@ -756,8 +739,8 @@ launch_app <- function(app) {
 ---
 
 # Shiny apps
-## ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
-## Then, use an R function like this to launch it:
+### ~~Add shiny app to `inst/shinyapps/` (or something similar)~~
+### Then, use an R function like this to launch it:
 
 ```{r, eval=FALSE}
 launch_app <- function(app) {
@@ -819,21 +802,21 @@ launch_app()
 
 # With `inst/`, the world is yours
 
-## *Source files* with `inst/scripts` and `sys.source()`
+## Source files with `inst/scripts` and `sys.source()`
 
 ---
 
 # With `inst/`, the world is yours
 
 ## ~~Source files with `inst/scripts` and `sys.source()`~~
-## *Add citations* to `inst/CITATION`
+## Add citations to `inst/CITATION` (`use_citation()`)
 
 ---
 
 # With `inst/`, the world is yours
 
 ## ~~Source files with `inst/scripts` and `sys.source()`~~
-## ~~Add citations to `inst/CITATION`~~
+## ~~Add citations to `inst/CITATION` (`use_citation()`)~~
 ## Much more. See [R Packages, ed 2](https://r-pkgs.org/inst.html)
 
 ---
@@ -842,28 +825,28 @@ launch_app()
 
 --
 
-## *`use_build_ignore()`*: **don't include when building R package**
+## **`use_build_ignore()`**: don't include when building R package
 
 ---
 
 # Ignoring files at the top-level
 
 ## ~~`use_build_ignore()`: don't include when building R package~~
-## *`use_git_ignore()`*: **don't commit (credentials, certain rendered files, etc)**
+## **`use_git_ignore()`**: don't commit (credentials, certain rendered files, etc)
 ---
 
 # Ignoring files at the top-level
 
 ## ~~`use_build_ignore()`: don't include when building R package~~
 ## ~~`use_git_ignore()`: don't commit (credentials, certain rendered files, etc)~~
-## Try *`git_vaccinate()`*
+## Try **`git_vaccinate()`**
 
 ---
 
 # RStudio Add-ins
 
 ## Small shiny apps using `miniui` and RStudio. 
-## Create one with `use_addin()`
+## Create one with **`use_addin()`**
 
 --
 

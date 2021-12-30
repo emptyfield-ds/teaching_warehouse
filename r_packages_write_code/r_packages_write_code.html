@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Write R Code</title>
+    <title>R Packages: Write R Code</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-12-29" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
+class: center, middle, inverse, title-slide
 
-
-
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
-
-
-
-
-# Developing R Packages
-## Write R Code
+# R Packages: Write R Code
 
 ---
 
+
 class: middle, center, inverse
+
+
 
 # **Writing Functions: Review**
 
@@ -120,16 +112,11 @@ class: center, middle
 
 ---
 
-# ~~devtools: loading vs. building~~
-
-## ~~`load_all()`: fast, all functions available~~
-## ~~`build()`: builds and installs the package~~
-
-&lt;br&gt;
-
 # *Keyboard shortcuts*
-## `load_all()`: **`CMD/CTRL + Shift + L`**
-## `build()`: **`CMD/CTRL + Shift + B`**
+## `load_all()`: 
+### **`CMD/CTRL + Shift + L`**
+## `build()`: 
+### **`CMD/CTRL + Shift + B`**
 
 ---
 
@@ -188,7 +175,7 @@ db_con &lt;- function(dbname = "residents_per_sector") {
 
 ---
 
-class: inverse
+class: inverse, large
 
 # Using other packages
 
@@ -299,7 +286,7 @@ theme_avalanche &lt;- function() {
 
 --
 
-## Import the whole package with `@import pkg.name`. Use this with caution!
+### Import the whole package with `@import pkg.name`. *Use this with caution!*
 
 ---
 
@@ -383,14 +370,14 @@ data.table::is.data.table(res_data)
 
 ## Organizing `.R` files
 
-## *Less than 1:1, more than all:1*
+## Less than 1:1, more than all:1
 
 ---
 
 ## Organizing `.R` files
 
 ## ~~Less than 1:1, more than all:1~~
-## *`utils.R`*
+## `utils.R`
 
 ---
 
@@ -398,7 +385,7 @@ data.table::is.data.table(res_data)
 
 ## ~~Less than 1:1, more than all:1~~
 ## ~~`utils.R`~~
-## *`zzz.R`*, *`.onLoad`*
+## `zzz.R`, `.onLoad`
 
 See [R Packages, ed. 2](https://r-pkgs.org/r.html#when-you-do-need-side-effects) for more.
 

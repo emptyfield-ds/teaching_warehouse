@@ -1,11 +1,8 @@
 ---
-title: "Test R Code"
-subtitle: ""
-date: "`r Sys.Date()`"
+title: "R Packages: Test R Code"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
-    seal: false
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -15,11 +12,7 @@ output:
         scroll: false 
 ---
 
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
-
+class: inverse, center, middle
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
@@ -52,41 +45,34 @@ users_per_sector <-
   )
 ```
 
-# Developing R Packages
-## Test R Code
-
----
-
-class: inverse, center, middle
-
 # **It’s not that you don’t test your code, it’s that you don’t automate your tests.**
 .pull-right[—Hadley Wickham]
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-<br><br>
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-<br><br>
 
 ## Automate tests (*`use_test()`*) using expectations
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-<br><br>
 
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## Run tests with *`test()`*, *`test_file()`*, *`Cmd/Ctrl + Shift + T`*.
@@ -95,10 +81,10 @@ background-position: 90% 8%
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-<br><br>
 
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## ~~Run tests with `test()`, `test_file()`, `Cmd/Ctrl + Shift + T`.~~
@@ -324,7 +310,7 @@ segment_reactor_output <- function(reactor_num, data_table = FALSE) {
 
 class: center, middle, inverse
 
-# *`use_r()`* 🤝 **`use_test()`**
+# **`use_r()`** 🤝 **`use_test()`**
 
 ---
 
@@ -570,14 +556,14 @@ donations_test_data <- data.frame(
 # GitHub Actions
 
 ## ~~Run R CMD Check with every commit~~
-## `use_github_action_check_standard()`
+### `use_github_action_check_standard()`
 
 ---
 
 # GitHub Actions
 
 ## ~~Run R CMD Check with every commit~~
-## ~~`use_github_action_check_standard()`~~
+### ~~`use_github_action_check_standard()`~~
 ## See also `use_github_action()` + [`r-lib/actions`](https://github.com/r-lib/actions) 
 
 ---

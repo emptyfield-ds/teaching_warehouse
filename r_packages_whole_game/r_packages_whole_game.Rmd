@@ -1,6 +1,5 @@
 ---
 title: "R Packages: Whole Game"
-date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
@@ -25,7 +24,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dp
 
 class: middle, center, inverse, 
 
-# **`usethis::create_package("mbmisc2")`**
+### **`usethis::create_package("mbmisc2")`**
 
 ---
 
@@ -64,9 +63,8 @@ class: middle, center, inverse,
 
 ---
 
-class: middle, center, inverse, 
-
-# **`use_mit_license("Your Name")`**
+class: middle, center, inverse,
+### **`use_mit_license("Your Name")`**
 
 ---
 
