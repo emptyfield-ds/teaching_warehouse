@@ -3,42 +3,34 @@
   <head>
     <title>Setup R Packages</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-12-29" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
+class: center, middle, inverse, title-slide
 
-
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
-
-
-
-# Developing R Packages
-## Setup R Packages
+# Setup R Packages
 
 ---
 
+
 background-image: url(http://hexb.in/hexagons/devtools.png)
-background-position: 90% 10%
+background-position: 90% 3%
+background-size: 15%
+
+
 
 # [devtools](https://devtools.r-lib.org/)
 
 ---
 
 background-image: url(http://hexb.in/hexagons/devtools.png)
-background-position: 90% 10%
+background-position: 90% 3%
+background-size: 15%
 
 # [devtools](https://devtools.r-lib.org/)
-
-&lt;/br&gt;
-&lt;/br&gt;
-&lt;/br&gt;
 
 ## Tools to make an R developer's life easier
 ## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`*.
@@ -46,14 +38,10 @@ background-position: 90% 10%
 ---
 
 background-image: url(https://raw.githubusercontent.com/r-lib/usethis/master/man/figures/logo.png)
-background-position: 90% 10%
+background-position: 90% 3%
+background-size: 15%
 
 # [usethis](https://usethis.r-lib.org/)
-
-&lt;/br&gt;
-&lt;/br&gt;
-&lt;/br&gt;
-&lt;/br&gt;
 
 ## Set up commonly used 📦 components
 ## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more.
@@ -61,15 +49,11 @@ background-position: 90% 10%
 ---
 
 background-image: url(img/hex-shinRa.png)
-background-position: 90% 10%
-background-size: 20%
+background-position: 90% 3%
+background-size: 15%
 
 # shinRa
 
-&lt;/br&gt;
-&lt;/br&gt;
-&lt;/br&gt;
-&lt;/br&gt;
 ## An R package for the data science team at the Shinra Electric Power Company, also known as Shinra, Inc. 
 
 ## What will it do? Custom ggplot2 themes, reports, data connections and filtering, and more.
@@ -95,10 +79,10 @@ create_package("shinRa")
 .small[
 
 ```
-## ✔ ✓ Creating '/var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T/RtmpTB0HRv/filed72033155045/shi...```
+## ✔ ✓ Creating '/var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T/RtmpMZ4s3q/filef0977456e3ab/shi...```
 
 ```
-## ✔ ✓ Setting active project to '/private/var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T/RtmpTB...```
+## ✔ ✓ Setting active project to '/private/var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T/RtmpMZ...```
 
 ```
 ## ✔ ✓ Creating 'R/'```
@@ -139,7 +123,7 @@ create_package("shinRa")
 ## ✔ ✓ Setting active project to '&lt;no active project&gt;'```
 
 ```
-## /var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T//RtmpTB0HRv/filed72033155045/shinRa
+## /var/folders/w7/8yv1j00s0bb3pfhmqc_rvd980000gn/T//RtmpMZ4s3q/filef0977456e3ab/shinRa
 ## ├── DESCRIPTION
 ## ├── NAMESPACE
 ## ├── R
@@ -219,11 +203,11 @@ background-size: 30%
 class: inverse
 
 # Valid package names:
-
+.large[
 1. Consist of letters, numbers, or periods.
 2. Start with a letter.
 3. Do *not* end with a period
-
+]
 ---
 
 class: center, middle, inverse
@@ -378,8 +362,8 @@ Full list: http://www.loc.gov/marc/relators/relaterm.html
 # `use_*_licence()`
 
 ## ~~`use_mit_license("Company Name")`. Check the help page for more.~~
-## Help with open-source licenses: https://choosealicense.com/
-## Help with proprietary licenses: http://www.binpress.com/license-generator/
+### Help with open-source licenses: https://choosealicense.com/
+### Help with proprietary licenses: http://www.binpress.com/license-generator/
 
 ---
 

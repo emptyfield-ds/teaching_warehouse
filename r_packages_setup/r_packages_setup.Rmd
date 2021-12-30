@@ -1,11 +1,8 @@
 ---
 title: "Setup R Packages"
-subtitle: ""
-date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
-    seal: false
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -15,10 +12,9 @@ output:
         scroll: false 
 ---
 
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
+background-image: url(http://hexb.in/hexagons/devtools.png)
+background-position: 90% 3%
+background-size: 15%
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
@@ -44,26 +40,15 @@ process_usethis_messages <- function(x, options) {
 knitr::knit_hooks$set(message = process_usethis_messages)
 ```
 
-# Developing R Packages
-## Setup R Packages
-
----
-
-background-image: url(http://hexb.in/hexagons/devtools.png)
-background-position: 90% 10%
-
 # [devtools](https://devtools.r-lib.org/)
 
 ---
 
 background-image: url(http://hexb.in/hexagons/devtools.png)
-background-position: 90% 10%
+background-position: 90% 3%
+background-size: 15%
 
 # [devtools](https://devtools.r-lib.org/)
-
-</br>
-</br>
-</br>
 
 ## Tools to make an R developer's life easier
 ## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`*.
@@ -71,14 +56,10 @@ background-position: 90% 10%
 ---
 
 background-image: url(https://raw.githubusercontent.com/r-lib/usethis/master/man/figures/logo.png)
-background-position: 90% 10%
+background-position: 90% 3%
+background-size: 15%
 
 # [usethis](https://usethis.r-lib.org/)
-
-</br>
-</br>
-</br>
-</br>
 
 ## Set up commonly used 📦 components
 ## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more.
@@ -86,15 +67,11 @@ background-position: 90% 10%
 ---
 
 background-image: url(img/hex-shinRa.png)
-background-position: 90% 10%
-background-size: 20%
+background-position: 90% 3%
+background-size: 15%
 
 # shinRa
 
-</br>
-</br>
-</br>
-</br>
 ## An R package for the data science team at the Shinra Electric Power Company, also known as Shinra, Inc. 
 
 ## What will it do? Custom ggplot2 themes, reports, data connections and filtering, and more.
@@ -212,11 +189,11 @@ knitr::include_graphics("img/description_pkgname.png")
 class: inverse
 
 # Valid package names:
-
+.large[
 1. Consist of letters, numbers, or periods.
 2. Start with a letter.
 3. Do *not* end with a period
-
+]
 ---
 
 class: center, middle, inverse
@@ -371,8 +348,8 @@ knitr::include_graphics("img/description_license.png")
 # `use_*_licence()`
 
 ## ~~`use_mit_license("Company Name")`. Check the help page for more.~~
-## Help with open-source licenses: https://choosealicense.com/
-## Help with proprietary licenses: http://www.binpress.com/license-generator/
+### Help with open-source licenses: https://choosealicense.com/
+### Help with proprietary licenses: http://www.binpress.com/license-generator/
 
 ---
 

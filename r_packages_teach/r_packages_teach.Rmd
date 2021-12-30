@@ -1,7 +1,5 @@
 ---
-title: "Teach your package"
-subtitle: ""
-date: "`r Sys.Date()`"
+title: "Teach your R package"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
@@ -15,11 +13,7 @@ output:
         scroll: false 
 ---
 
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
-
+## Your Turn 1: Consider
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
@@ -51,13 +45,6 @@ users_per_sector <-
     users = c(1000, 2034, 4594, 2304, 8093, 1200, 300, 2398)
   )
 ```
-
-# Developing R Packages
-## Teach your package
-
----
-
-## Your Turn 1: Discussion
 
 ## What do you do when you want to learn a new package?
 
@@ -198,11 +185,11 @@ knitr::include_graphics("img/use_vignette_yaml_output.png")
 
 --
 
-## Interactive, 10-20 min tutorial: https://commonmark.org/help/tutorial/
+### Interactive, 10-20 min tutorial: https://commonmark.org/help/tutorial/
 
 --
 
-## The R Markdown [website](https://rmarkdown.rstudio.com/) or [book](https://bookdown.org/yihui/rmarkdown/)
+### The R Markdown [website](https://rmarkdown.rstudio.com/) or [book](https://bookdown.org/yihui/rmarkdown/)
 
 ---
 
@@ -297,8 +284,8 @@ knitr::include_graphics("img/readme_zhi.png")
 
 ## Your Turn 3
 
-## Run `use_readme_rmd()` to setup a README. Knit the file and take a look.
-## Let's add some badges. Run `use_lifecycle_badge("experimental")` and `use_cran_badge()`. Then, re-knit.
+### Run `use_readme_rmd()` to setup a README. Knit the file and take a look.
+### Let's add some badges. Run `use_lifecycle_badge("experimental")` and `use_cran_badge()`. Then, re-knit.
 
 ---
 

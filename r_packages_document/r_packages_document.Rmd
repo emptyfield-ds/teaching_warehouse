@@ -1,11 +1,8 @@
 ---
-title: "Document R Code"
-subtitle: ""
-date: "`r Sys.Date()`"
+title: "R Packages: Document R Code"
 output:
   xaringan::moon_reader:
     css: ["default", "theme.css"]
-    seal: false
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -14,11 +11,6 @@ output:
       navigation:
         scroll: false 
 ---
-
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
@@ -50,11 +42,6 @@ users_per_sector <-
     users = c(1000, 2034, 4594, 2304, 8093, 1200, 300, 2398)
   )
 ```
-
-# Developing R Packages
-## Document R Code
-
----
 
 # ?mean
 
@@ -108,12 +95,6 @@ background-position: 90% 25%
 
 ## ~~`Code > Insert Roxygen Skeleton`~~
 ## **Ctrl/Cmd + Shift + Alt/Opt + R**
-
---
-
-```{r, out.height="50%", out.width="50%", echo = FALSE}
-knitr::include_graphics("https://media.giphy.com/media/PkdsC1Qpw68erLum2M/giphy.gif")
-```
 
 ---
 
@@ -590,8 +571,8 @@ count_daus <- function(...) {
 
 --
 
-## *`library(shinRa)`*
-## *`plot_daus()`* ✔️ 
+## `library(shinRa)`
+## `plot_daus()` ✔️ 
 
 ---
 
@@ -601,8 +582,8 @@ count_daus <- function(...) {
 
 --
 
-## *`library(shinRa)`*
-## *`count_daus()`* 🤔🤔🤔🤔🤔🤔  
+## `library(shinRa)`
+## `count_daus()` 🤔🤔🤔🤔🤔🤔  
 ---
 
 class: inverse
@@ -767,28 +748,29 @@ knitr::include_graphics("img/help-tidyr.png")
 ---
 
 background-image: url(https://raw.githubusercontent.com/r-lib/pkgdown/master/man/figures/logo.png)
-background-position: 90% 4%
+background-position: 90% 3%
+background-size: 15%
 
 # pkgdown
 
 ---
 
 background-image: url(https://raw.githubusercontent.com/r-lib/pkgdown/master/man/figures/logo.png)
-background-position: 90% 4%
+background-position: 90% 3%
+background-size: 15%
 
 # pkgdown
 
-.pull-left[
 ## `use_pkgdown()`, `use_pkgdown_github_pages()`
 ## Renders documentation, README, vignettes, and more as a website.
-]
 
 ---
 
 background-image: url(http://hexb.in/hexagons/roxygen2.png)
-background-position: 93% 8%
+background-position: 90% 3%
+background-size: 15%
 
-# Here's a good example...
+# Here's a good example
 ## https://roxygen2.r-lib.org/
 
 ## There are a lot more documentation tricks.

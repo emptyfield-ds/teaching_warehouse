@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Test R Code</title>
+    <title>R Packages: Test R Code</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-12-29" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
+class: center, middle, inverse, title-slide
 
-
-background-image: url(https://i.imgur.com/CVIZGyY.jpg)
-background-position: top
-background-size: 100%
-class: inverse, shadow
-
-
-
-
-# Developing R Packages
-## Test R Code
+# R Packages: Test R Code
 
 ---
 
+
 class: inverse, center, middle
+
+
 
 # **It’s not that you don’t test your code, it’s that you don’t automate your tests.**
 .pull-right[—Hadley Wickham]
@@ -33,28 +26,28 @@ class: inverse, center, middle
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-&lt;br&gt;&lt;br&gt;
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-&lt;br&gt;&lt;br&gt;
 
 ## Automate tests (*`use_test()`*) using expectations
 
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-&lt;br&gt;&lt;br&gt;
 
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## Run tests with *`test()`*, *`test_file()`*, *`Cmd/Ctrl + Shift + T`*.
@@ -63,10 +56,10 @@ background-position: 90% 8%
 ---
 
 background-image: url(http://hexb.in/hexagons/testthat.png)
-background-position: 90% 8%
+background-position: 90% 3%
+background-size: 15%
 
 ## testthat: Unit tests for R
-&lt;br&gt;&lt;br&gt;
 
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## ~~Run tests with `test()`, `test_file()`, `Cmd/Ctrl + Shift + T`.~~
@@ -300,7 +293,7 @@ segment_reactor_output &lt;- function(reactor_num, data_table = FALSE) {
 
 class: center, middle, inverse
 
-# *`use_r()`* 🤝 **`use_test()`**
+# **`use_r()`** 🤝 **`use_test()`**
 
 ---
 
@@ -550,14 +543,14 @@ donations_test_data &lt;- data.frame(
 # GitHub Actions
 
 ## ~~Run R CMD Check with every commit~~
-## `use_github_action_check_standard()`
+### `use_github_action_check_standard()`
 
 ---
 
 # GitHub Actions
 
 ## ~~Run R CMD Check with every commit~~
-## ~~`use_github_action_check_standard()`~~
+### ~~`use_github_action_check_standard()`~~
 ## See also `use_github_action()` + [`r-lib/actions`](https://github.com/r-lib/actions) 
 
 ---
