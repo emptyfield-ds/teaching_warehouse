@@ -52,7 +52,6 @@ db_con <- function(dbname = "residents_per_sector") {
 3. Use `load_all()` to load the package function.
 4. Run this code to make sure it works:
 
-
 ```{r}
 ggplot(
   db_con(), 
@@ -67,7 +66,7 @@ ggplot(
 ## Your Turn 3
 
 1. Fix the code in `R/themes.R` to use `ggplot2::` instead of `library(ggplot2)`
-2. Run `use_package("ggplot")` to add ggplot2 to `Imports`
+2. Run `use_package("ggplot2")` to add ggplot2 to `Imports`
 3. Re-load the package (`Cmd/Ctrl+Shift+L`) and run this code to make sure it works:
 
 ```{r}
@@ -87,7 +86,7 @@ ggplot(
 1. We need roxygen2 for this exercise. We'll learn more about it in the next module. For now, just run `use_roxygen_md()`
 2. Run `use_tibble()` and `use_data_table()`
 3. In `R/get_data.R`, edit the function to be able to return a data table: Add the argument `data_table = FALSE`. If `data_table` is `TRUE`, convert the data frame with `data.table::as.data.table()`
-4. Run this code to make sure it works:
+4. Load the package and run this code to make sure it works:
 
 ```{r}
 res_data <- get_resident_data(data_table = TRUE)
