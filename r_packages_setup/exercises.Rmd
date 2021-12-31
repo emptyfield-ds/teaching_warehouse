@@ -46,7 +46,7 @@ Read the help page for `use_usethis()`. If there are any of these that you'd lik
 
 2. In DESCRIPTION, change the title to "Tools for the Avalanche Data Science Team"
 
-3. Change the Description field to "A set of tools to use within the Avalance Data Science team. This package contains functions for connecting to data bases, R markdown templates, ggplot2 themes, and more."
+3. Change the Description field to "A set of tools to use within the Avalanche Data Science team. This package contains functions for connecting to data bases, R markdown templates, ggplot2 themes, and more."
 
 4. Run `use_tidy_description()` to clean up the file. 
 
