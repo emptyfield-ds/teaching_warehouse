@@ -26,7 +26,6 @@ options(
   usethis.description = list(
     `Authors@R` = 'person("First", "Last", email = "email@example.com", role = c("aut", "cre"))',
     License = "MIT + file LICENSE",
-    Language =  "es"
   )
 )
 ```
@@ -59,12 +58,11 @@ Read the help page for `use_usethis()`. If there are any of these that you'd lik
 
 Add "AVALANCHE" as an author with the role of copyright holder.
 
-Change the license to use the proprietary license above.
-
+Change the license to use a proprietary license with `use_proprietary_license("AVALANCHE")`
 
 ## Take-aways
 
 * devtools and usethis make your life a lot easier as a package developer!
 * Use `create_package()` to create a new R package
 * Include DESCRIPTION defaults in your R profile (`edit_r_profile()`) to auto-populate your information
-* `use_*_license()` or use a proprietary license to create an appropriate license for your package
+* `use_*_license()` to create an appropriate license for your package
