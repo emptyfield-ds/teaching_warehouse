@@ -5,10 +5,6 @@ output:
     df_print: paged
 ---
 
-```{r setup}
-library(tidyverse)
-```
-
 ## Your Turn 1
 
 1. Let's create a data dictionary for avalanche and add the results to a vignette. First, run `use_data_raw()`. Call the data "data_dictionary". In the data processing file, put this code before the `use_data()` line. Then, source the script. This will run `use_data()` for you.
