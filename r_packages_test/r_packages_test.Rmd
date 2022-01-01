@@ -77,6 +77,10 @@ background-size: 15%
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## Run tests with *`test()`*, *`test_file()`*, *`Cmd/Ctrl + Shift + T`*.
 
+--
+
+## [testthat 3rd edition](https://testthat.r-lib.org/articles/third-edition.html)
+
 
 ---
 
