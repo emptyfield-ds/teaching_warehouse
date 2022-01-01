@@ -7,14 +7,14 @@
 #'
 #' @examples
 #'
-#' plot_donation()
+#' plot_donations()
 #'
 plot_donations <- function(...) {
   x <- count_donations(...)
 
   ggplot2::ggplot(x, ggplot2::aes(
-    forcats::fct_reorder(sector, donations),
-    donations
+    forcats::fct_reorder(.data$sector, .data$donations),
+    .data$donations
   )) +
     ggplot2::geom_col() +
     ggplot2::coord_flip() +
@@ -37,8 +37,8 @@ plot_resident_counts <- function(...) {
   x <- get_resident_data(...)
 
   ggplot2::ggplot(x, ggplot2::aes(
-    forcats::fct_reorder(sector, residents),
-    residents
+    forcats::fct_reorder(.data$sector, .data$residents),
+    .data$residents
   )) +
     ggplot2::geom_col() +
     ggplot2::coord_flip() +
