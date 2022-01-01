@@ -16,8 +16,7 @@ Description: A set of tools to use within the Avalance Data
     bases, R markdown templates, ggplot2 themes, and more.
 License: file LICENSE
 Encoding: UTF-8
-Language: es
-LazyData: true
+Language: en-US
 Roxygen: list(markdown = TRUE)
 Imports: 
     data.table,
