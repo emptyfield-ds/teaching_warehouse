@@ -7,3 +7,9 @@ labs_wrap <- function(..., width = 80) {
 
   ggplot2::labs(!!!x)
 }
+
+# tell R that we that `value` is a valid variable.
+# `utils::globalVariables()` is often helpful when
+# we're using non-standard evaluation, as is common
+# in the tidyverse
+utils::globalVariables(c("value"))

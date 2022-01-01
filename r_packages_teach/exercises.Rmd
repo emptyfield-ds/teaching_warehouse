@@ -5,12 +5,7 @@ output:
     df_print: paged
 ---
 
-```{r setup}
-library(tidyverse)
-```
-
-
-## Your Turn 1: Discussion
+## Your Turn 1: Consider
 
 1. What do you do when you want to learn a new package?
 

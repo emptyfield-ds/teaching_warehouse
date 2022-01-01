@@ -314,7 +314,7 @@ knitr::include_graphics("img/description_tidy.png")
 ## Your Turn 3
 
 #### Fix the code in `R/themes.R` to use `ggplot2::` instead of `library(ggplot2)`
-#### Run `use_package("ggplot")` to add ggplot2 to `Imports`
+#### Run `use_package("ggplot2")` to add ggplot2 to `Imports`
 #### Re-load the package (`Cmd/Ctrl+Shift+L`) and run this code to make sure it works
 
 ---
@@ -381,7 +381,7 @@ ggplot(
 #### We need roxygen2 for this exercise. We'll learn more about it in the next module. For now, just run `use_roxygen_md()`
 #### Run `use_tibble()` and `use_data_table()`
 #### In `R/get_data.R`, edit the function to be able to return a data table: Add the argument `data_table = FALSE`. If `data_table` is `TRUE`, convert the data frame with `data.table::as.data.table()`
-#### Run this code to make sure it works
+#### Load the package and run this code to make sure it works
 
 ---
 

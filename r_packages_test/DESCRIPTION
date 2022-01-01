@@ -23,9 +23,9 @@ Imports:
     rlang,
     tibble
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.0)
 Encoding: UTF-8
-Language: es
-LazyData: true
+Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.0
+RoxygenNote: 7.1.2
+Config/testthat/edition: 3

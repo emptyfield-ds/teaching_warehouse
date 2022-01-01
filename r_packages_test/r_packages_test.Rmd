@@ -77,6 +77,10 @@ background-size: 15%
 ## ~~Automate tests (`use_test()`) using expectations~~
 ## Run tests with *`test()`*, *`test_file()`*, *`Cmd/Ctrl + Shift + T`*.
 
+--
+
+## [testthat 3rd edition](https://testthat.r-lib.org/articles/third-edition.html)
+
 
 ---
 
@@ -242,7 +246,7 @@ test_that("theme works", {
 |  `expect_identical(x, y)` | the exact same |
 |  `expect_message/warning/error(x, y)` | a message, warning, or error |
 |  `expect_true(x)` | `TRUE` |
-|  `expect_is(x, y)` | `x` is class `y` |
+|  `expect_s3_class(x, y)` | `x` is class `y` |
 
 --
 
@@ -274,13 +278,13 @@ use_test("resident_connection")
 test_that("connection is returning valid data", {
   # `resident_data` is a tibble, isn't empty, and has the right columns
   resident_data <- get_resident_data()
-  expect_is(resident_data, c("tbl_df", "tbl", "data.frame"))
+  expect_s3_class(resident_data, c("tbl_df", "tbl", "data.frame"))
   expect_gt(nrow(resident_data), 0)
   expect_named(resident_data, c("sector", "residents"))
 
   # `resident_data_dt` is a data.table
   resident_data_dt <- get_resident_data(data_table = TRUE)
-  expect_is(resident_data_dt, c("data.table", "data.frame"))
+  expect_s3_class(resident_data_dt, c("data.table", "data.frame"))
 })
 
 ```
@@ -424,6 +428,7 @@ class: center, middle, inverse
 
 ```{r, eval=FALSE}
 use_package("dplyr")
+document()
 ```
 
 .small[

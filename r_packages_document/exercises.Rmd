@@ -5,10 +5,6 @@ output:
     df_print: paged
 ---
 
-```{r setup}
-library(tidyverse)
-```
-
 ## Your Turn 1
 
 1. Open the NAMESPACE file. What do you see?
@@ -27,7 +23,10 @@ Let's keep working on the documentation for `theme_avalanche()`:
 1. Remove `@param base_size` and replace it with: @inheritParams ggplot2::theme_minimal
 2. For `@param ...`, add: Additional arguments passed to [ggplot2::theme_minimal()]
 3. For `@return`, add: a ggplot theme.
-4. For `@examples`, add two line breaks (make sure the new lines have roxygen comments!). Add this code: `ggplot2::qplot(iris$Sepal.Length) + theme_avalanche()`
+4. For `@examples`, add two line breaks (make sure the new lines have roxygen comments!). Add this code:
+
+#' ggplot2::qplot(iris$Sepal.Length) + theme_avalanche()
+
 5. Rebuild the documentation and check the help page for `?theme_avalanche()`.
 
 ## Your Turn 3

@@ -16,12 +16,11 @@ Description: A set of tools to use within the Avalance Data
     bases, R markdown templates, ggplot2 themes, and more.
 License: file LICENSE
 Encoding: UTF-8
-Language: es
-LazyData: true
+Language: en-US
 Roxygen: list(markdown = TRUE)
 Imports: 
-    ggplot2,
     data.table,
-    tibble,
-    magrittr
-RoxygenNote: 7.0.0
+    ggplot2,
+    magrittr,
+    tibble
+RoxygenNote: 7.1.2

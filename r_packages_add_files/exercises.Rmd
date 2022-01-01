@@ -5,10 +5,6 @@ output:
     df_print: paged
 ---
 
-```{r setup}
-library(tidyverse)
-```
-
 ## Your Turn 1
 
 1. Let's create a data dictionary for avalanche and add the results to a vignette. First, run `use_data_raw()`. Call the data "data_dictionary". In the data processing file, put this code before the `use_data()` line. Then, source the script. This will run `use_data()` for you.
@@ -101,6 +97,6 @@ Let's create a usethis-style function to help set up analysis projects.
 
 ## Take-aways
 
-* 
-* 
-* 
+* `use_data_raw()` and `use_data()` help add data to your package
+* `use_rmarkdown_templates()` generates boilerplate for an R Markdown template that gets included with your package
+* `inst/` is a place to put extra files, and usethis has special support for templates in the `inst/templates` folder. Create new templates with `edit_template()`

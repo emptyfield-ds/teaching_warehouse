@@ -38,6 +38,7 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_r("labs_wrap")`**
+## Copy the code in **`mbmisc2_files/labs_wrap.R`**
 
 ---
 
@@ -47,6 +48,7 @@ class: middle, center, inverse,
 # **`use_package("tibble")`**
 # **`use_package("dplyr")`**
 # **`use_package("stringr")`**
+# **`use_pipe()`**
 
 ---
 
@@ -71,6 +73,7 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_roxygen_md()`**
+# Copy the code in **`mbmisc2_files/roxygen.R`**
 # **`document()`**
 
 ---
@@ -85,6 +88,7 @@ class: middle, center, inverse,
 class: middle, center, inverse, 
 
 # **`use_test("labs_wrap")`**
+# Copy the code in **`mbmisc2_files/tests.R`**
 # **`test()`**
 
 ---

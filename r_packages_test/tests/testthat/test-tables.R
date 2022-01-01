@@ -11,5 +11,5 @@ donations_test_data <- data.frame(
 test_that("donations table is correct", {
   x <- gt_donations(donations_test_data)
 
-  expect_is(x, "gt_tbl")
+  expect_s3_class(x, "gt_tbl")
 })
