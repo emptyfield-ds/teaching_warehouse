@@ -17,6 +17,6 @@ Plot donation counts by sector
 }
 \examples{
 
-plot_donation()
+plot_donations()
 
 }
