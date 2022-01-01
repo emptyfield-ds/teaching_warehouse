@@ -97,6 +97,6 @@ Let's create a usethis-style function to help set up analysis projects.
 
 ## Take-aways
 
-* 
-* 
-* 
+* `use_data_raw()` and `use_data()` help add data to your package
+* `use_rmarkdown_templates()` generates boilerplate for an R Markdown template that gets included with your package
+* `inst/` is a place to put extra files, and usethis has special support for templates in the `inst/templates` folder. Create new templates with `edit_template()`

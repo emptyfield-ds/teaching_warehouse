@@ -10,8 +10,6 @@
 #'
 #' @return invisibly, the path of the analysis directory
 #' @export
-#'
-#' @examples
 create_analysis <- function(path = ".", folder = "avalanche_analysis", author = "Author", title = "Untitled Analysis") {
   analysis_path <- fs::path(path, folder)
   if (fs::dir_exists(analysis_path)) fs::dir_delete(analysis_path)
