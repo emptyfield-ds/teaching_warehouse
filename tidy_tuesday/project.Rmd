@@ -57,7 +57,7 @@ We will create a slope chart, which we can do in ggplot by combining point and l
 Using `energy_types_longer`:
 1. Create a ggplot with `year` on the x-axis, `gigawatts` on the y axis, and `group` set to `country.`
 2. Add lines. Set the color to "steelblue" and the size to 0.8.
-3. Add points. We'll use a hollow shape so we can change the border color of the points. Set the shape to 21, the fill to "steelblue", and the size to 2.
+3. Add points. We'll use a hollow shape so we can change the border color of the points. Set the shape to 21, the fill to "steelblue", color to "white", and size to 2.
 4. Facet the plot by `type`. Allow the y axis to be free.
 5. Let's clean up the labels. Using `scale_y_continuous()`, set the labels to `scales::comma`. What's different?
 6. For these plots, we'll use themes from the cowplot package. Set the theme to `theme_minimal_hgrid()`
