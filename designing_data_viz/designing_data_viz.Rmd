@@ -869,6 +869,33 @@ ggdraw(p_direct_labels) #<<
 
 ---
 
+# geomtextpath
+
+```{r, geomtextpath, eval = FALSE}
+library(geomtextpath) #<<
+set.seed(787)
+continent_data %>%
+  ggplot(aes(year, lifeExp, col = continent)) +
+  geom_textline( #<<
+    aes(label = continent), #<<
+    hjust = rnorm(60, .5, .3), #<<
+    vjust = -0.6, #<<
+    linewidth = 1 #<<
+  ) + #<<
+  theme_minimal_hgrid() +
+  scale_color_manual(values = continent_colors) +
+  scale_x_continuous(expand = expansion()) +
+  labs(y = "life expectancy") + 
+  theme(legend.position = "none")
+```
+
+---
+
+```{r, ref.label="geomtextpath", echo = FALSE}
+```
+
+---
+
 class: inverse, center
 
 ## How do we reduce mental burden in our plots?
@@ -1108,9 +1135,6 @@ diabetes %>%
 ---
 
 # gghighlight: Highlight geoms
-
-background-image: url(https://raw.githubusercontent.com/EmilHvitfeldt/prismatic/master/man/figures/logo.png)
-background-position: 90% 55%
 
 ```{r}
 library(gghighlight)
@@ -1435,6 +1459,11 @@ lightning_plot +
 ```{r, ref.label="lightning_label", echo=FALSE}
 ```
 
+---
+
+class: inverse, center, middle
+
+# We won't use it today, but the **ggannotate** package has an add-in to help place annotations with less trial and error
 
 ---
 
@@ -1726,7 +1755,7 @@ plot_b <- diabetes_complete %>%
   theme_multiplot() +
   theme(axis.title.x = element_blank()) +
   scale_color_manual(values = plot_colors) + #<<
-  scale_fill_manual(values = paste0(plot_colors, "B0")) + #<<
+  scale_fill_manual(values = clr_alpha(plot_colors, .69)) + #<<
   scale_x_discrete(labels = label_frames) +
   labs(tag = "B")
 

@@ -3,7 +3,7 @@
   <head>
     <title>Designing data visualizations in R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-11-14" />
+    <meta name="date" content="2022-01-12" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 
 # Designing data visualizations in R
 ## making clear figures that communicate
-### 2021-11-14
+### 2022-01-12
 
 ---
 
@@ -829,6 +829,33 @@ direct_labels_axis &lt;- axis_canvas(line_plot, axis = "y") +
 
 ---
 
+# geomtextpath
+
+
+```r
+*library(geomtextpath)
+set.seed(787)
+continent_data %&gt;%
+  ggplot(aes(year, lifeExp, col = continent)) +
+* geom_textline(
+*   aes(label = continent),
+*   hjust = rnorm(60, .5, .3),
+*   vjust = -0.6,
+*   linewidth = 1
+* ) +
+  theme_minimal_hgrid() +
+  scale_color_manual(values = continent_colors) +
+  scale_x_continuous(expand = expansion()) +
+  labs(y = "life expectancy") + 
+  theme(legend.position = "none")
+```
+
+---
+
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
 class: inverse, center
 
 ## How do we reduce mental burden in our plots?
@@ -873,7 +900,7 @@ nyc_squirrels %&gt;%
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -895,7 +922,7 @@ nyc_squirrels %&gt;%
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -929,7 +956,7 @@ nyc_squirrels %&gt;%
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -953,7 +980,7 @@ nyc_squirrels %&gt;%
 
 ## Your Turn 4
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -987,7 +1014,7 @@ diabetes %&gt;%
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1011,14 +1038,11 @@ previous_plot +
 ```
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 # gghighlight: Highlight geoms
-
-background-image: url(https://raw.githubusercontent.com/EmilHvitfeldt/prismatic/master/man/figures/logo.png)
-background-position: 90% 55%
 
 
 ```r
@@ -1033,7 +1057,7 @@ library(gghighlight)
 
 ## Your Turn 5
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-51-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-52-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1069,7 +1093,7 @@ le_line_plot +
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-54-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1088,7 +1112,7 @@ le_line_plot +
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1121,7 +1145,7 @@ library(prismatic)
 * plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-57-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-58-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1134,7 +1158,7 @@ palette_okabe_ito() %&gt;%
   plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-58-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-59-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1147,7 +1171,7 @@ palette_okabe_ito() %&gt;%
   plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-59-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1160,7 +1184,7 @@ palette_okabe_ito() %&gt;%
   plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-61-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1173,7 +1197,7 @@ palette_okabe_ito() %&gt;%
   plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-61-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-62-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1186,7 +1210,7 @@ palette_okabe_ito() %&gt;%
   plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-62-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1199,7 +1223,7 @@ rainbow(8) %&gt;%
   plot()
 ```
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-64-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1283,7 +1307,7 @@ dog_plot +
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-64-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-65-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -1320,8 +1344,13 @@ lightning_plot +
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-65-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-66-1.png" style="display: block; margin: auto;" /&gt;
 
+---
+
+class: inverse, center, middle
+
+# We won't use it today, but the **ggannotate** package has an add-in to help place annotations with less trial and error
 
 ---
 
@@ -1335,7 +1364,7 @@ lightning_plot +
 
 ## Your Turn 6
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-68-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-69-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1396,7 +1425,7 @@ base_map +
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-71-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-72-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1456,7 +1485,7 @@ library(patchwork)
 
 
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-80-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-81-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1489,7 +1518,7 @@ plot_b &lt;- diabetes_complete %&gt;%
   theme_multiplot() +
   theme(axis.title.x = element_blank()) +
 * scale_color_manual(values = plot_colors) +
-* scale_fill_manual(values = paste0(plot_colors, "B0")) +
+* scale_fill_manual(values = clr_alpha(plot_colors, .69)) +
   scale_x_discrete(labels = label_frames) +
   labs(tag = "B")
 
@@ -1498,7 +1527,7 @@ plot_b
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-81-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-82-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 &lt;div style = 'font-size: 73%'&gt;
@@ -1536,7 +1565,7 @@ plot_c
 &lt;/span&gt;
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-82-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-83-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1548,7 +1577,7 @@ library(patchwork)
 
 ---
 
-&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-83-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="designing_data_viz_files/figure-html/unnamed-chunk-84-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
