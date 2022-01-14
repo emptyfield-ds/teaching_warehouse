@@ -76,6 +76,7 @@ gapminder %>%
   ___________(
     ___________, 
     size = 4.5,
+    max.overlaps = Inf,
     point.padding = .2, 
     box.padding = .3, 
     force = 1,
