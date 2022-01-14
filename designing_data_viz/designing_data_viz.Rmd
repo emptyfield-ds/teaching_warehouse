@@ -1730,7 +1730,7 @@ library(patchwork)
 #### Run the first code chunk. `label_frames()` will help us label the `frame` variable better. `theme_multiplot()` is the theme we'll add to each plot. We'll use `diabetes_complete` for the plots (removing the missing values of the variables we're plotting produce the same plots as `diabetes` would, but it prevents ggplot2 from warning us that it's dropping the data internally). Nothing to change here!
 #### Run the code for `plot_a` and take a look. Nothing to change here, either! 
 #### The colors in `plot_b` don't match `plot_a`. Add `scale_color_manual()` to make the colors consistent. 
-#### Also add `scale_fill_manual()`. For the fill colors, we'll add a bit of transparency. Paste "B3" to the end of the colors in `plot_colors`. "B3" is equivalent to 70% transparency (or `alpha = .7`) in hex code (see [this GitHub page with translations from percent to hex](https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4), but note that in R you need to put the transparency at the end of the six character hex code).
+#### Also add `scale_fill_manual()`. For the fill colors, we'll add a bit of transparency. Use `clr_alpha(plot_colors, .69)` to make them slightly transparent.
 #### This plot doesn't have a `tag` label like the other two plots. Add one to the `labs()` call.
 #### The legend isn't working well, but let's take advantage of it. We'll move the legend to *above* the plot by setting `legend.position` to `c(1, 1.25)` in `theme()`. We wont' be able to see it in `plot_c`, but it will show up in the combined plot!
 

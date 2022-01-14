@@ -282,7 +282,7 @@ base_map +
   ) + 
   __________(
     data = __________,
-    aes(x =x, y = y, xend = xend, yend = yend),
+    aes(x = x, y = y, xend = xend, yend = yend),
     colour = "grey75",
     size = 0.3,
     curvature = -0.1,
@@ -340,7 +340,7 @@ plot_a
 ```
 
 3. The colors in `plot_b` don't match `plot_a`. Add `scale_color_manual()` to make the colors consistent. 
-4. Also add `scale_fill_manual()`. For the fill colors, we'll add a bit of transparency. Paste "B3" to the end of the colors in `plot_colors`. "B3" is equivalent to 70% transparency (or `alpha = .7`) in hex code (see [this GitHub page with translations from percent to hex](https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4), but note that in R you need to put the transparency at the end of the six character hex code).
+4. Also add `scale_fill_manual()`. For the fill colors, we'll add a bit of transparency. Use `clr_alpha(plot_colors, .69)` to make them slightly transparent.
 
 
 ```{r}
