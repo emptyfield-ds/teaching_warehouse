@@ -51,7 +51,7 @@ background-size: 15%
 # [devtools](https://devtools.r-lib.org/)
 
 ## Tools to make an R developer's life easier
-## Well be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`*.
+## We'll be using functions like *`load_all()`*, *`build()`*, *`document()`*, *`test()`*, and *`check()`*.
 
 ---
 
@@ -62,7 +62,7 @@ background-size: 15%
 # [usethis](https://usethis.r-lib.org/)
 
 ## Set up commonly used 📦 components
-## Well be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more.
+## We'll be using functions like *`create_package()`*, *`use_r()`*, *`use_test()`*, and many more.
 
 ---
 
