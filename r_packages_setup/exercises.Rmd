@@ -25,7 +25,7 @@ library(desc)
 options(
   usethis.description = list(
     `Authors@R` = 'person("First", "Last", email = "email@example.com", role = c("aut", "cre"))',
-    License = "MIT + file LICENSE",
+    License = "MIT + file LICENSE"
   )
 )
 ```
