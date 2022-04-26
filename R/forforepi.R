@@ -28,8 +28,9 @@ modules <- c(
   "rmarkdown_basics",
   "ds_whole_game",
   "shiny_basics",
-  "shiny_challenge",
-  "shiny_challenge",
+  "targets_whole_game",
+  "targets_basics",
+  "tidy_tuesday",
   "r_best_practices"
 )
 
