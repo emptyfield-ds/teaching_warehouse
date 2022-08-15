@@ -8,6 +8,7 @@ output:
 ```{r setup, include=FALSE}
 # knit options
 knitr::opts_chunk$set(echo = TRUE)
+options(styler.save_after_styling = TRUE)
 ```
 
 # Exercise

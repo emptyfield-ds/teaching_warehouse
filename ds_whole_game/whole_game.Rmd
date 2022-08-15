@@ -15,6 +15,7 @@ library(broom)
 # add options here to apply to all chunks
 # e.g. knitr::opts_chunk$set(echo = TRUE, dpi = 300)
 knitr::opts_chunk$set(echo = TRUE)
+options(styler.save_after_styling = TRUE)
 ```
 
 ## Playing the whole game

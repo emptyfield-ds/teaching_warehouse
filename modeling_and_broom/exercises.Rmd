@@ -8,6 +8,7 @@ output: html_document
 library(tidyverse)
 library(broom)
 library(ggfortify)
+options(styler.save_after_styling = TRUE)
 ```
 
 Modeling in R is a rich subject, including base R functions for common statistical analyses and many packages for almost any type of analysis you can think of. The tidyverse offers tools for understanding and presenting the results of your modeling. 
