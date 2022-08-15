@@ -26,7 +26,7 @@ diabetes <- diabetes %>%
   mutate(
     mean_sbp = (bp.1s + bp.2s) / 2,
     mean_dbp = (bp.1d + bp.2d) / 2,
-    bmi = (height / weight^2) * 703,
+    bmi = (weight / height^2) * 703,
     _______ = _______
   )
 
