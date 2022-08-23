@@ -81,7 +81,7 @@ Let's create a map of DC that includes information on computer session usage by 
 
 ```{r}
 # put your R code in this code chunk
-library_wards |> 
+library_wards %>% 
   ggplot(aes(fill = ______)) + 
   ______ + 
   ______(
