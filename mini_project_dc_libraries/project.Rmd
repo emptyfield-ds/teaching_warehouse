@@ -105,7 +105,7 @@ library_wards %>%
 
 ## Extension
 
-Each mini-project has an extension where you get to decide what to do next. This is your chance to practice what we've learned without prompts.
+Each mini-project has an extension where you get to decide what to do next. This is your chance to practice what we've learned without prompts. Extensions don't need to be long or complex; they're just a chance to try something new.
 
 A few ideas for this mini-project:
 * Answer a different question in the data
