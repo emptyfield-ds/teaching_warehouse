@@ -1,0 +1,112 @@
+---
+title: "Mini-Project: Publication Bias"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+# knit options
+knitr::opts_chunk$set(echo = TRUE)
+options(styler.save_after_styling = TRUE)
+```
+
+# Exercise
+
+In this mini-project, we'll look at data from a recent study on statistical tests in the field of sports medicine. These data are contained in the file `z_scores` in the `data` folder. These data contain the following variables:
+
+* `pubmed`: a PubMed ID for the journal article
+* `journal`: the name of journal in which the article appeared
+* `year`: the publication year.
+* `se`: the standard error of the statistical test in the article.
+* `z_score`: the z-value of the statistical test in the article. 
+
+Our goal in this project is to reproduce this plot:
+
+```{r}
+# run this chunk to see the image in RStudio
+# or go to this address in a web browser: https://i.imgur.com/AX5J5lw.png
+knitr::include_graphics("https://i.imgur.com/AX5J5lw.png")
+```
+
+This visualization is a demonstration of *publication bias*. You may or may not remember from stats 101 that z-values between -1.96 and 1.96 are statistically *non-significant* at a p-value of .05, a common cutoff in many fields of science. Presumably, we should see more of a normal distribution, with many studies being non-significant. Unfortunately, many null studies are never accepted for publication, a detriment to the scientific process. 
+
+Let's re-create this plot in R.
+
+## Load your packages
+
+1. Load the tidyverse
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Read in the data
+
+1. Read in `data/z_scores.csv`
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Prep the data
+
+Since we're trying to show the missing values at the center of the distribution (which are non-significant), let's filter out some values in the tails. You generally want to be careful when removing valid data from your analysis, but in this case, it's ok, since it would only widen the plot without adding to the interpretation.
+
+1. Filter the data such that it only contains z-scores between -7 and 7. There are lots of ways to do this, but the `between()` function might be helpful here.
+
+We also want to calculate a variable that represents whether or not a value is significant.
+
+2. Create a new variable called `significant`. Remember, values less than -1.96 and greater than 1.96 are statistically significant at the p = .05 level. 
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Visualize the z-scores by significance level
+
+Let's use ggplot2 to re-create the plot we saw earlier.
+
+1. Create a ggplot with `z_score` on the x-axis. Also set the `fill` aesthetic to use `significant`
+2. Add a geom that will create a histogram out of the data
+3. Label the x-axis "z-score"
+4. Add the following additional layers. Remember to use `+` to add these layers to the plot!
+  * `scale_fill_manual(values = c("firebrick", "steelblue")) `
+  * `theme_minimal(14)` 
+  * `theme(panel.grid.minor = element_blank())`
+
+```{r}
+# put your R code in this code chunk
+z_scores |> 
+  _______ + 
+  # pick a geom to use
+  _______(
+    # no need to change these arguments
+    binwidth = .05,
+    size = .01,
+    alpha = 0.7
+  ) +
+  # add labels
+  _______ + 
+  # add additional layers to the plot
+  
+```
+
+## Extension
+
+Each mini-project has an extension where you get to decide what to do next. This is your chance to practice what we've learned without prompts. Extensions don't need to be long or complex; they're just a chance to try something new.
+
+Here are a few ideas for this extension:
+
+* Make additional improvements to the plot 
+* Make a different plot incorporating year or journal
+* Answer a question using dplyr 
+
+```{r}
+# put your R code in this code chunk
+
+```
+
