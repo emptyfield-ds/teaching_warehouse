@@ -1,0 +1,119 @@
+---
+title: "Mini-Project: DC Public Library Resource Usage"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+# knit options
+knitr::opts_chunk$set(echo = TRUE)
+options(styler.save_after_styling = TRUE)
+```
+
+# Exercise
+
+In this mini-project, we'll look at data from Washington DC's public library system. We'll work with three datasets:
+
+* `data/libraries.csv`, information about each public library in DC, such as name, address, and election ward.
+* `data/library_resource_usage.csv`, data about library resource usage by fiscal year, including number of computer sessions, WiFi usage, and number of people entering the building.
+* `data/wards.shp`, spatial data on DC election wards during this time period (a `.shp` directory is called a shape file, which contains spatial data).
+
+## Load the tidyverse
+
+First, load the tidyverse and sf packages. We'll use the sf package for the spatial data.
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Import and join the data
+
+1. Import `data/libraries.csv` 
+2. Import `data/library_resource_usage.csv` 
+3. Left join `libraries` to `library_resource_usage`. Make sure you identify the key that you need to use. 
+
+Note: You should end up with a dataset that has 107 rows. 3 rows won't have a match in the join because "Library Express" -- one of the libraries in the dataset -- is closed now. We'll keep it in the data for now in case you want it later.
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Summarize the dataset
+
+Next, we'll do some calculations to get information at the ward-level.
+
+1. Group the joined dataset by `ward` and `fiscal_year`
+2. Calculate the sum of the `computer_sessions` variable. Include the argument `.groups = "drop"` in your `summarize()` call so that we ungroup the dataset.
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Read in mapping data for DC wards and join to the library data
+
+1. Use the `read_sf()` function, a tool to read in spatial data into R, to read in the ward spatial data. The first argument should be "data/wards.shp".
+
+Take a look at the resulting object. `read_sf()` returns a special type of data frame that contains spatial data. One cool thing about sf data is that we can still use joins.
+
+2. Use `right_join()` to connect the ward data to the library data. Hint: the keys for this join are called different things in the two datasets.
+
+Your result should:
+* Still be a simple feature collection. If you don't see spatial information when looking at the dataset in the console, make sure the ward data is the first argument of your join.
+* Now have 35 rows
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Visualize a map computer resources by year and ward
+
+Let's create a map of DC that includes information on computer session usage by year and ward.
+
+1. Fill by `computer_sessions`
+2. Use `geom_sf()` to automatically create a map and coordinates based on the spatial data in our data frame.
+3. Use `geom_sf_label()` to label the wards. Set the `label` aesthetic to the variable with the names of the wards.
+4. Facet the plot by `fiscal_year`
+
+```{r}
+# put your R code in this code chunk
+library_wards |> 
+  ggplot(aes(fill = ______)) + 
+  ______ + 
+  ______(
+    aes(label = ______), 
+    # make the label boxes smaller and neater
+    # no need to change these arguments!
+    size = 1.5, 
+    fill = "white", 
+    label.size = NA, 
+    label.padding = grid::unit(0.5, "mm")
+  ) +
+  # put your facet code here
+  ______ + 
+  # use the viridis palette and add commas to the legend
+  # no need to change this!
+  scale_fill_viridis_c(
+    name = "Computer Sessions", 
+    labels = scales::label_comma()
+  )
+```
+
+## Extension
+
+Each mini-project has an extension where you get to decide what to do next. This is your chance to practice what we've learned without prompts.
+
+A few ideas for this mini-project:
+* Answer a different question in the data
+* Visualize something else. This doesn't have to use the spatial data if you don't want.
+* Improve the plot we create
+
+```{r}
+# put your R code in this code chunk
+
+```
+
