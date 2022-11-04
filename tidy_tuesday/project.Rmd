@@ -85,7 +85,6 @@ Germany was far and away the most significant producer of wind energy in 2018. L
 1. Create a new variable, `germany`, that is `TRUE` if the country name is Germany and `FALSE` otherwise.
 2. Set the column geom's aesthetic to map `germany` to fill.
 3. In the theme, set `axis.text.y` to `element_markdown()`. This function comes from ggtext and activates the ability to use markdown and HTML in our plot.
-4. 
 
 ```{r}
 library(ggtext)
