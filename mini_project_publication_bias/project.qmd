@@ -53,7 +53,7 @@ Let's re-create this plot in R.
 
 ## Prep the data
 
-Since we're trying to show the missing values at the center of the distribution (which are non-significant), let's filter out some values in the tails. You generally want to be careful when removing valid data from your analysis, but in this case, it's ok, since it would only widen the plot without adding to the interpretation.
+Since we're trying to show the missing values at the center of the distribution (which are non-significant), let's filter out some values in the tails. You generally want to be careful when removing valid data from your analysis, but in this case, it's OK, since it would only widen the plot without adding to the interpretation.
 
 1. Filter the data such that it only contains z-scores between -7 and 7. There are lots of ways to do this, but the `between()` function might be helpful here.
 
@@ -103,7 +103,7 @@ Here are a few ideas for this extension:
 
 * Make additional improvements to the plot 
 * Make a different plot incorporating year or journal
-* Answer a question using dplyr 
+* Answer a question about the dataset using dplyr 
 
 ```{r}
 # put your R code in this code chunk
