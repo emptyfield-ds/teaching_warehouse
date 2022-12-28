@@ -503,7 +503,18 @@ diamonds
 --
 
 ## Insert *`|>`* with **`ctrl/cmd + shift + m`**
+## Tools > Global Options > Code
 
+```{r, echo=FALSE}
+knitr::include_graphics("img/native-pipe.png")
+```
+
+---
+
+## The magrittr pipe
+
+## In the wild, you'll see `%>%` a lot. This is the old pipe prior to when R had a built in one. Either pipe is fine, but we'll use the so-called native pipe `|>`
+## See [R for Data Science](https://r4ds.hadley.nz/workflow-pipes.html#magrittr-and-the-pipe) for more info
 
 ---
 
