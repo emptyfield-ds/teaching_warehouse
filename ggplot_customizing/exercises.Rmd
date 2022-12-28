@@ -18,7 +18,7 @@ diabetes <- read_csv("diabetes.csv")
 4. Change the legend title for the color legend. Use the `name` argument in whatever scale function you're using.
 
 ```{r}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c()
@@ -32,7 +32,7 @@ diabetes %>%
 4. Change the font size for the axis titles. Use `element_text()`. Check the help page if you don't know what option to change.
 
 ```{r}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() 
 ```

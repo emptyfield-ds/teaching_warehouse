@@ -361,10 +361,10 @@ ggdag(butterfly_bias()) +
 
 .small[
 ```{r}
-p <- gapminder %>% 
-  filter(year == 2007) %>% 
-  slice_max(lifeExp, n = 25) %>% #<<
-  mutate(country = fct_rev(fct_inorder(fct_drop(country)))) %>% 
+p <- gapminder |> 
+  filter(year == 2007) |> 
+  slice_max(lifeExp, n = 25) |> #<<
+  mutate(country = fct_rev(fct_inorder(fct_drop(country)))) |> 
   ggplot(aes(lifeExp, country)) +
   geom_point(size = 3, color = "steelblue") + #<<
   geom_text(aes(label = country), hjust = 0, nudge_x = .1, size = 3.5) + #<<

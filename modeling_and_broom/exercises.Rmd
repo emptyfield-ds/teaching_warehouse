@@ -22,7 +22,7 @@ Model the relationship between hemoglobin A1c (`glyhb`) and `waist_hip` using `l
 ```{r}
 diabetes <- _______
 
-diabetes <- diabetes %>% 
+diabetes <- diabetes |> 
   mutate(
     mean_sbp = (bp.1s + bp.2s) / 2,
     mean_dbp = (bp.1d + bp.2d) / 2,
@@ -30,12 +30,12 @@ diabetes <- diabetes %>%
     _______ = _______
   )
 
-model1 <- diabetes %>% 
+model1 <- diabetes |> 
   # tip: you can point the pipe to a specific spot in the next call using `.`
   # try adding `data = .` to `lm()`
   lm(_______)
 
-model1 %>% 
+model1 |> 
   _______
 ```
 
@@ -64,15 +64,15 @@ Use a broom function and ggplot2 to make a scatter plot of `glyhb` vs `.fitted` 
 
 Try it with `.resid` vs `.fitted`. How does it look?
 
-_Bonus_: Add a regression line with geom_smooth(). Remember that with ggplot2, you add functions with `+` and not `%>%`
+_Bonus_: Add a regression line with geom_smooth(). Remember that with ggplot2, you add functions with `+` and not `|>`
 
 ```{r}
 # notice that here, `data = diabetes`, not `.`. 
 # some people don't like to use pipes for a single command
 mod_wh <- lm(glyhb ~ waist_hip + gender + age, data = diabetes)
 
-mod_wh %>% 
-  ________(data = drop_na(diabetes, glyhb, waist_hip, gender, age)) %>% 
+mod_wh |> 
+  ________(data = drop_na(diabetes, glyhb, waist_hip, gender, age)) |> 
   ggplot(aes(x = ______, y = _______)) +
   geom_point()
 ```
@@ -99,9 +99,9 @@ Fit a logistic regression model with `glm`. Use `diabetic` as the outcome, `wais
 Tidy the results. What do you see? Try mutating `estimate` into odds ratios using `exp()`
 
 ```{r warning = FALSE, message = FALSE}
-diabetes %>% 
-  mutate(diabetic = ifelse(glyhb >= 6.5, ___, ___)) %>% 
-  _______ %>% 
+diabetes |> 
+  mutate(diabetic = ifelse(glyhb >= 6.5, ___, ___)) |> 
+  _______ |> 
   _______
 ```
 

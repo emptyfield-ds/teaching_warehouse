@@ -465,7 +465,7 @@ class: inverse, center
 
 # Detour: The Pipe
 
-# **`%>%`**
+# **`|>`**
 ## Passes the result on one function to another function
 
 ---
@@ -485,9 +485,9 @@ diamonds
 ## Detour: The Pipe
 
 ```{r with-pipes, eval=FALSE}
-diamonds <- diamonds %>% 
-  arrange(price) %>% 
-  filter(price > 300) %>% 
+diamonds <- diamonds |> 
+  arrange(price) |> 
+  filter(price > 300) |> 
   mutate(log_price = log(price))
 
 diamonds
@@ -502,14 +502,14 @@ diamonds
 
 --
 
-## Insert *`%>%`* with **`ctrl/cmd + shift + m`**
+## Insert *`|>`* with **`ctrl/cmd + shift + m`**
 
 
 ---
 
 ## Your turn 6
 
-### Use `%>%` to write a sequence of functions that: 
+### Use `|>` to write a sequence of functions that: 
 
 ### 1. Filter only countries that are in the continent of Oceania.
 ### 2. Select the `country`, `year` and `lifeExp` columns  
@@ -520,9 +520,9 @@ diamonds
 ## Your turn 6
 
 ```{r filter-select-arrange-your-turn-06}
-gapminder %>% 
-  filter(continent == "Oceania") %>% 
-  select(country, year, lifeExp) %>% 
+gapminder |> 
+  filter(continent == "Oceania") |> 
+  select(country, year, lifeExp) |> 
   arrange(desc(lifeExp))
 ```
 
@@ -539,18 +539,18 @@ gapminder %>%
 
 ```{r mutate-select-filter-challenge, eval=FALSE}
 diabetes <- read_csv("diabetes.csv")
-diabetes %>% 
-  mutate(bmi = (weight / height^2) * 703) %>% 
-  select(id, glyhb, bmi) %>% 
+diabetes |> 
+  mutate(bmi = (weight / height^2) * 703) |> 
+  select(id, glyhb, bmi) |> 
   filter(bmi > 35)
 ```
 ---
 
 ```{r mutate-select-filter-challenge-highlight, highlight.output=1}
 diabetes <- read_csv("diabetes.csv")
-diabetes %>% 
-  mutate(bmi = (weight / height^2) * 703) %>% 
-  select(id, glyhb, bmi) %>% 
+diabetes |> 
+  mutate(bmi = (weight / height^2) * 703) |> 
+  select(id, glyhb, bmi) |> 
   filter(bmi > 35)
 ```
 
@@ -600,7 +600,7 @@ summarize(diamonds, n = n(), mean_price = mean(price))
 ## Your turn 7
 
 ```{r summarize-your-turn-07}
-gapminder %>% 
+gapminder |> 
   summarize(
     first = min(year), 
     last = max(year), 
@@ -622,7 +622,7 @@ group_by(<DATA>, <VARIABLE>)
 ## `group_by()`
 
 ```{r group-by-example-01, eval = FALSE}
-diamonds %>% 
+diamonds |> 
   group_by(cut)
 ```
 
@@ -631,7 +631,7 @@ diamonds %>%
 ## `group_by()`
 
 ```{r group-by-example-01-output-highlight, highlight.output = 2}
-diamonds %>% 
+diamonds |> 
   group_by(cut)
 ```
 
@@ -640,8 +640,8 @@ diamonds %>%
 ## `group_by()`
 
 ```{r group-by-summarize-example-01, eval = FALSE}
-diamonds %>% 
-  group_by(cut) %>% #<<
+diamonds |> 
+  group_by(cut) |> #<<
   summarize(n = n(), mean_price = mean(price)) #<<
 ```
 
@@ -650,8 +650,8 @@ diamonds %>%
 ## `group_by()`
 
 ```{r group-by-summarize-example-01-output}
-diamonds %>% 
-  group_by(cut) %>% 
+diamonds |> 
+  group_by(cut) |> 
   summarize(n = n(), mean_price = mean(price))
 ```
 
@@ -660,8 +660,8 @@ diamonds %>%
 ## `group_by()`
 
 ```{r group-by-mutate-example-01, eval = FALSE}
-diamonds %>% 
-  group_by(cut) %>% 
+diamonds |> 
+  group_by(cut) |> 
   mutate(n = n(), mean_price = mean(price))
 ```
 
@@ -670,8 +670,8 @@ diamonds %>%
 ## `group_by()`
 
 ```{r group-by-mutate-example-01-output, highlight.output = 1:2}
-diamonds %>% 
-  group_by(cut) %>% 
+diamonds |> 
+  group_by(cut) |> 
   mutate(n = n(), mean_price = mean(price))
 ```
 
@@ -689,9 +689,9 @@ diamonds %>%
 ## Your turn 8
 
 ```{r filter-group-by-summarize-your-turn-08}
-gapminder %>% 
-  filter(continent == "Europe") %>% 
-  group_by(country) %>% 
+gapminder |> 
+  filter(continent == "Europe") |> 
+  group_by(country) |> 
   summarize(n = n(), min_le = min(lifeExp))
 ```
 
@@ -702,9 +702,9 @@ gapminder %>%
 ### Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
 ```{r filter-group-by-summarize-your-turn-09, eval = FALSE}
-gapminder %>% 
-  __________ %>% 
-  __________ %>% 
+gapminder |> 
+  __________ |> 
+  __________ |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
     geom_line() + 
     scale_color_manual(values = continent_colors)
@@ -717,9 +717,9 @@ gapminder %>%
 ### Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
 ```{r filter-group-by-summarize-your-turn-09-answer, eval = FALSE}
-gapminder %>% 
-  group_by(continent, year) %>% 
-  summarize(mean_le = mean(lifeExp)) %>% 
+gapminder |> 
+  group_by(continent, year) |> 
+  summarize(mean_le = mean(lifeExp)) |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
     geom_line() + 
     scale_color_manual(values = continent_colors)
@@ -730,9 +730,9 @@ gapminder %>%
 class: center, middle
 
 ```{r filter-group-by-summarize-your-turn-09-output, echo = FALSE, fig.height=4.5}
-gapminder %>% 
-  group_by(continent, year) %>% 
-  summarize(mean_le = mean(lifeExp)) %>% 
+gapminder |> 
+  group_by(continent, year) |> 
+  summarize(mean_le = mean(lifeExp)) |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
     geom_line() + 
     scale_color_manual(values = continent_colors)

@@ -41,8 +41,8 @@ measurements$blood_glucose
 ### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Name the new columns `bp_` + `mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
 
 ```{r}
-diabetes %>% 
-  group_by(______) %>% 
+diabetes |> 
+  group_by(______) |> 
   summarise(across(
     starts_with("__"), 
     list(____ = mean), 
@@ -132,8 +132,8 @@ model_lm <- function(.data, ...) {
   broom::glance(mdl)
 }
 
-diabetes %>% 
-  ________ %>% 
+diabetes |> 
+  ________ |> 
   ________
 ```
 
@@ -157,9 +157,9 @@ head(preds)
 By the way, we can also solve this problem with `group_map()` since `lm()` stores the data used in a given regression model:
 
 ```{r}
-gapminder %>% 
-  group_by(country) %>% 
-  group_map(~ lm(lifeExp ~ year, data = .x)) %>% 
+gapminder |> 
+  group_by(country) |> 
+  group_map(~ lm(lifeExp ~ year, data = .x)) |> 
   map(predict)
 ```
 
@@ -208,11 +208,11 @@ Do the same as #9, but use a nested data frame.
 When might nesting be useful?
 
 ```{r}
-diabetes_nested <- diabetes %>% 
-  group_by(location) %>% 
+diabetes_nested <- diabetes |> 
+  group_by(location) |> 
   nest()
 
-nested_glance <- diabetes_nested %>% 
+nested_glance <- diabetes_nested |> 
   mutate(glance = ___________)
   
 unnest(_______, glance)

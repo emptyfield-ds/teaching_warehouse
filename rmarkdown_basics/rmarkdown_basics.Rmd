@@ -232,8 +232,8 @@ knitr::include_graphics("img/chunk_setup_gui.png")
 ### Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above. Put the following code in it:
 
 ```r
-gapminder %>% 
-  slice(1:5) %>% 
+gapminder |> 
+  slice(1:5) |> 
   knitr::kable()
 ```
 ### Knit the document
@@ -393,8 +393,8 @@ params$data
 ###  Change the `params` option in the YAML header to use a different continent. Re-knit
 
 ```{r, eval = FALSE}
-gapminder %>% 
-  filter(continent == params$continent) %>% 
+gapminder |> 
+  filter(continent == params$continent) |> 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
   geom_line(lwd = 1, show.legend = FALSE) + 
   scale_color_manual(values = country_colors) +

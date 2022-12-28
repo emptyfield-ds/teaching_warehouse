@@ -336,7 +336,7 @@ map_df(dir_ls("data/", regexp = "health-study"), read_csv)
 
 # or
 
-dir_ls("data/", regexp = "health-study") %>%
+dir_ls("data/", regexp = "health-study") |>
   map_df(read_csv)
 ```
 

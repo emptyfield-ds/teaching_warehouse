@@ -105,7 +105,7 @@ Let's start by building a single plot like the ones in the FT graphic. Take a cl
 In order to build this graph, we will need to filter `ft_excess_deaths` to only the data for `"UK"` and store it in `uk_excess_deaths`. 
 
 ```{r create-uk_excess_deaths}
-uk_excess_deaths <- ft_excess_deaths %>%
+uk_excess_deaths <- ft_excess_deaths |>
   ____________
 
 uk_excess_deaths
@@ -126,7 +126,7 @@ Each section below covers how to build the FT plot, one layer at a time.
 The first layer we will build is the lines for recent years, which we will call `uk_excess_deaths_prior` and it includes all years prior to 2020. These show up in the original plot as light grey lines in the background of the excess mortality geom.
 
 ```{r create-uk_excess_deaths_prior}
-uk_excess_deaths_prior <- uk_excess_deaths %>%
+uk_excess_deaths_prior <- uk_excess_deaths |>
   filter(_____ != 2020)
 
 # how many years do we have data for? What do we expect to see?

@@ -51,8 +51,8 @@ Stretch goal: ggdags are just ggplots! You can add themes, geoms, and other {ggp
 Stretch goal: The variable names are a little hard to read. We specified some labels earlier, so let's use them. In the tidy DAG, these are called `label`. In `ggdag_paths()`, add the argument `use_labels = "label"` and remove the node text with `text = FALSE`.
 
 ```{r}
-coffee_cancer_dag %>% 
-  ______() %>% 
+coffee_cancer_dag |> 
+  ______() |> 
   ______()
 
 ______

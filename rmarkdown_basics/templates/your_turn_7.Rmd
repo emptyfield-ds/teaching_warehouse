@@ -67,7 +67,7 @@ You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt +
 Put the following code in it:
 
 ```{r, echo = FALSE}
-gapminder %>% slice(1:5) %>% knitr::kable()
+gapminder |> slice(1:5) |> knitr::kable()
 ```
 
 Knit the document
@@ -106,8 +106,8 @@ In the code chunk below:
 3.  Use inline code to describe the data set in the text below the code chunk and re-knit.
 
 ```{r}
-n_years <- gapminder %>% 
-  summarize(n_years = n_distinct(year)) %>% 
+n_years <- gapminder |> 
+  summarize(n_years = n_distinct(year)) |> 
   # pull() extracts a column as a vector
   # if no column is called, it uses the most recently created
   pull()
@@ -143,8 +143,8 @@ In the code chunk below:
     ```
 
 ```{r, dpi = 320, fig.width=6}
-gapminder %>% 
-  filter(continent != "Oceania") %>% 
+gapminder |> 
+  filter(continent != "Oceania") |> 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
   geom_line(lwd = 1, show.legend = FALSE) + 
   facet_wrap(~ continent) +
@@ -170,8 +170,8 @@ In the code chunk below:
 3.  Re-knit. What's changed?
 
 ```{r}
-gapminder %>% 
-  filter(continent == params$continent) %>% 
+gapminder |> 
+  filter(continent == params$continent) |> 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
   geom_line(lwd = 1, show.legend = FALSE) + 
   scale_color_manual(values = country_colors) +

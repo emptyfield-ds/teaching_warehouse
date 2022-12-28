@@ -27,8 +27,8 @@ ft_countries <- c(
   "Switzerland", "US"
 )
 
-ft_excess_deaths <- raw_ft_excess_deaths %>%
-  filter(country %in% ft_countries) %>%
+ft_excess_deaths <- raw_ft_excess_deaths |>
+  filter(country %in% ft_countries) |>
   filter(region == country)
 
 # remove last week of 2020

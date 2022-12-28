@@ -78,7 +78,7 @@ Use `desc()` to find the country with the highest `gdpPercap`.
 
 ## Your Turn 6
 
-Use `%>%` to write a sequence of functions that: 
+Use `|>` to write a sequence of functions that: 
 
 1. Filter only countries that are in the continent of Oceania.
 2. Select the `country`, `year` and `lifeExp` columns  
@@ -129,9 +129,9 @@ Extract the rows where `continent == "Europe"`. Then use `group_by()` to group b
 Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
 ```{r}
-gapminder %>% 
-  __________ %>% 
-  __________ %>% 
+gapminder |> 
+  __________ |> 
+  __________ |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
     geom_line() + 
     scale_color_manual(values = continent_colors)
@@ -149,7 +149,7 @@ gapminder %>%
 * Make new variables, with `mutate()`  
 * Do groupwise operations with `group_by()`
 
-* Connect operations with `%>%`  
+* Connect operations with `|>`  
 
 * Use `left_join()`, `right_join()`, `full_join()`, or `inner_join()` to join datasets
 * Use `semi_join()` or `anti_join()` to filter datasets against each other

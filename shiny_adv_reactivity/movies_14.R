@@ -163,7 +163,7 @@ server <- function(input, output, session) {
 
   # Print number of movies plotted ----------------------------------
   output$n <- renderUI({
-    types <- movies_sample()$title_type %>%
+    types <- movies_sample()$title_type |>
       factor(levels = input$selected_type)
     counts <- table(types)
 
@@ -206,10 +206,10 @@ server <- function(input, output, session) {
   list_files <- function(){
     files <- dir(pattern = "*.csv")
     if(length(files) == 0){ return( data.frame() ) }
-    sapply(files, function(file) dim(read.csv(file))) %>%
-      unlist() %>%
-      t() %>%
-      as.data.frame() %>%
+    sapply(files, function(file) dim(read.csv(file))) |>
+      unlist() |>
+      t() |>
+      as.data.frame() |>
       setNames(c("rows", "cols"))
   }
 

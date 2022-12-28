@@ -33,7 +33,7 @@ marker_model <- lm(marker ~ trt + stage + age, data = trial)
 bind_rows(
   _____(response_model),
   _____(marker_model),
-) %>% 
+) |> 
   _____()
 ```
 
@@ -58,7 +58,7 @@ bind_rows(
 7. Set the `eval` chunk option to `TRUE`
 
 ```{r table-one, eval = FALSE}
-trial %>% 
+trial |> 
   tbl_summary(
     
   )
@@ -74,13 +74,13 @@ trial %>%
 6. Set the `eval` chunk option to `TRUE`
 
 ```{r table-two, eval = FALSE}
-response_table <- response_model %>% 
+response_table <- response_model |> 
   tbl_regression(
     
   )
 
-marker_table <- marker_model %>% 
-  tbl_regression() %>% 
+marker_table <- marker_model |> 
+  tbl_regression() |> 
   add_global_p()
 
 both_tables <- list(________, marker_table)

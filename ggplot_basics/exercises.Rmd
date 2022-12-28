@@ -68,8 +68,8 @@ Redo the `glyhb` plot as a density plot.
 Make a bar chart of `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
 
 ```{r}
-diabetes %>% 
-  drop_na() %>% 
+diabetes |> 
+  drop_na() |> 
   ______() + 
   ______()
 ```

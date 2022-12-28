@@ -13,7 +13,7 @@ highlight_colors <- c(
   value2 = "#CC79A7"
 )
 
-data %>%
+data |>
   ggplot() +
   # first geom: all data, no facet variable
   geom_point(data = drop_facet, aes(color = "all data label")) +
@@ -27,11 +27,11 @@ data %>%
 # insert y-axis direct labels ---------------------------------------------
 
 # find the maximum of the line
-direct_labels <- data %>%
-  group_by(line_variable) %>%
+direct_labels <- data |>
+  group_by(line_variable) |>
   summarize(x = max(x), y = max(y))
 
-line_plot <- data %>%
+line_plot <- data |>
   ggplot() +
   geom_line(aes(color = line_variable)) +
   # turn off legend

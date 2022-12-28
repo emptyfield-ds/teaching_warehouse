@@ -5,12 +5,12 @@ library(gghighlight)
 library(cowplot)
 library(ggrepel)
 nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
-nyc_squirrels %>%
+nyc_squirrels |>
   ggplot(aes(x = long, y = lat)) +
   geom_point()
 
-dog_sighting <- nyc_squirrels %>%
-  mutate(dog = str_detect(other_activities, "dog")) %>%
+dog_sighting <- nyc_squirrels |>
+  mutate(dog = str_detect(other_activities, "dog")) |>
   filter(dog)
 
 
@@ -19,8 +19,8 @@ central_park <- read_sf("/Users/malcolmbarrett/Downloads/CentralAndProspectParks
 
 # start
 
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
   ggplot() +
   geom_sf(data = central_park, color = "grey85") +
   geom_point(aes(x = long, y = lat, color = primary_fur_color)) +
@@ -28,8 +28,8 @@ nyc_squirrels %>%
   colorblindr::scale_color_OkabeIto()
 
 # complete
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
   ggplot() +
   geom_sf(data = central_park, color = "grey85") +
   geom_point(data = function(x) select(x, long, lat), aes(x = long, y = lat, color = "all squirrels")) +
@@ -40,24 +40,24 @@ nyc_squirrels %>%
   scale_color_manual(name = NULL, values = c("all squirrels" = "grey75", "highlighted group" = "#0072B2")) +
   guides(color = guide_legend(override.aes = list(size = 3)))
 
-nyc_squirrels %>%
+nyc_squirrels |>
   mutate(activity = case_when(
     foraging = "foraging",
     running = "running",
     chasing = "chasing", "climbing", "eating"
   ))
 
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
   ggplot(aes(long, fill = primary_fur_color)) +
   geom_histogram() +
   gghighlight() +
   facet_wrap(~ primary_fur_color, nrow = 1)
 
 
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
-  group_by(hectare) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
+  group_by(hectare) |>
   summarise()
 
 la_heat_income <- sf::read_sf("https://raw.githubusercontent.com/nprapps/heat-income/master/data/output/analysis_out/final/los-angeles.geojson")
@@ -65,8 +65,8 @@ sf::read_sf("https://raw.githubusercontent.com/nprapps/heat-income/master/data/o
 
 kelvin2farenheit <- function(k) (9/5) * (k - 273) + 32
 
-la_heat_income %>%
-  mutate(temp = kelvin2farenheit(X_median)) %>%
+la_heat_income |>
+  mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   cowplot::theme_map() +
@@ -86,8 +86,8 @@ curves <- tibble::tribble(
 )
 
 
-la_heat_income %>%
-  mutate(temp = kelvin2farenheit(X_median)) %>%
+la_heat_income |>
+  mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   geom_text(
@@ -112,8 +112,8 @@ la_heat_income %>%
 
 library(gapminder)
 
-gapminder %>%
-  filter(year == 2007) %>%
+gapminder |>
+  filter(year == 2007) |>
   ggplot(aes(lifeExp, fill = continent)) +
   geom_histogram(bins = 40) +
   gghighlight() +
@@ -121,7 +121,7 @@ gapminder %>%
 
 diabetes <- read_csv("dplyr_5verbs/diabetes.csv")
 
-diabetes %>%
+diabetes |>
   ggplot(aes(glyhb, fill = gender)) +
   geom_density(col = "white", alpha = .8) +
   # gghighlight() +
@@ -132,13 +132,13 @@ diabetes %>%
 emperors <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv")
 
 
-emperors %>%
-  count(cause) %>%
-  arrange(n) %>%
+emperors |>
+  count(cause) |>
+  arrange(n) |>
   mutate(
     assassinated = ifelse(cause == "Assassination", TRUE, FALSE),
     cause = fct_inorder(cause)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = cause, fill = assassinated)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -152,14 +152,14 @@ emperors %>%
 
 
 
-lightning_plot <- emperors %>%
-  mutate(killer = fct_lump(killer, 10)) %>%
-  count(killer) %>%
-  arrange(n) %>%
+lightning_plot <- emperors |>
+  mutate(killer = fct_lump(killer, 10)) |>
+  count(killer) |>
+  arrange(n) |>
   mutate(
     lightning = ifelse(killer == "Lightning", TRUE, FALSE),
     killer = fct_inorder(killer)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = killer, fill = lightning)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -187,22 +187,22 @@ lightning_plot +
 
 
 sample_countries <- function(x) {
-  x %>%
+  x |>
     sample_n(11)
 }
 
 set.seed(1010)
 
-countries <- gapminder %>%
-  sample_countries() %>%
+countries <- gapminder |>
+  sample_countries() |>
   pull(country)
 
 
-gapminder %>%
-  filter(year == 2007) %>%
+gapminder |>
+  filter(year == 2007) |>
   mutate(
     label = ifelse(country %in% countries, as.character(country), "")
-  ) %>%
+  ) |>
   ggplot(aes(log(gdpPercap), lifeExp)) +
   geom_point(size = 3.5, alpha = .9, shape = 21, col = "white", fill = "#0162B2") +
   geom_text_repel(aes(label = label), size = 4.5,
@@ -218,15 +218,15 @@ gapminder %>%
 
 
 
-gapminder %>%
-  filter(continent == "Africa") %>%
-  select(country, year, lifeExp) %>%
-  spread(year, lifeExp) %>%
-  mutate(le_dropped = `1992` > `2007`) %>%
-  select(country, le_dropped) %>%
-  left_join(gapminder, by = "country") %>%
-  filter(continent == "Africa") %>%
-  mutate(labels = "") %>%
+gapminder |>
+  filter(continent == "Africa") |>
+  select(country, year, lifeExp) |>
+  spread(year, lifeExp) |>
+  mutate(le_dropped = `1992` > `2007`) |>
+  select(country, le_dropped) |>
+  left_join(gapminder, by = "country") |>
+  filter(continent == "Africa") |>
+  mutate(labels = "") |>
   ggplot(aes(year, lifeExp, col = country)) +
   geom_line(size = 1.2, alpha = .9, col = "#E58C23") +
   gghighlight(le_dropped, use_group_by = FALSE, label_key = labels, unhighlighted_colour = "grey90") +
@@ -248,7 +248,7 @@ density_colors <- c(
   "all participants" = "grey85"
 )
 
-diabetes %>%
+diabetes |>
   ggplot(aes(glyhb, y = ..count..)) +
   geom_density(data = function(x) select(x, glyhb), aes(fill = "all participants", color = "all participants")) +
   geom_density(aes(fill = gender, color = gender)) +

@@ -14,7 +14,7 @@ library(tidyverse)
 library(ggdag, warn.conflicts = FALSE)
 library(gapminder)
 library(patchwork)
-diabetes <- read_csv("diabetes.csv") %>% 
+diabetes <- read_csv("diabetes.csv") |> 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 
 knitr::opts_chunk$set(
@@ -40,8 +40,8 @@ ggdag(butterfly_bias()) +
 ```
 
 ```{r diabetes, fig.cap = "Understanding the relationship between diabetes and hip/waist ratio"}
-fig1a <- diabetes %>% 
-  drop_na() %>% 
+fig1a <- diabetes |> 
+  drop_na() |> 
   ggplot(aes(ratio, glyhb)) + 
   geom_point(shape = 21, fill = "grey80", color = "white", size = 2) + 
   geom_smooth(
@@ -59,9 +59,9 @@ fig1a <- diabetes %>%
     tag = "A"
   )
 
-fig1b <- diabetes %>% 
-  drop_na() %>% 
-  mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) %>% 
+fig1b <- diabetes |> 
+  drop_na() |> 
+  mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) |> 
 ggplot(aes(ratio, fill = diabetic)) + 
   geom_density(color = "white", alpha = .8) +
   theme_minimal(14) +

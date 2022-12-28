@@ -92,7 +92,7 @@ lm(price ~ carat, data = diamonds)
 ## Modeling in R
 
 ```{r, eval=FALSE}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   summary() #<<
 ```
 
@@ -101,7 +101,7 @@ lm(price ~ carat, data = diamonds) %>%
 ## Modeling in R
 
 ```{r, echo=FALSE}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   summary()
 ```
 
@@ -110,7 +110,7 @@ lm(price ~ carat, data = diamonds) %>%
 ## Modeling in R
 
 ```{r, echo=FALSE, highlight.output=c(5, 9:12, 17)}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   summary()
 ```
 
@@ -187,7 +187,7 @@ background-position: 90% 10%
 
 ```{r, eval=FALSE}
 library(broom)
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   tidy() #<<
 ```
 
@@ -197,7 +197,7 @@ lm(price ~ carat, data = diamonds) %>%
 
 ```{r, highlight.output=1:2}
 library(broom)
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   tidy()
 ```
 
@@ -206,7 +206,7 @@ lm(price ~ carat, data = diamonds) %>%
 ## Modeling in R
 
 ```{r, eval=FALSE}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   glance() #<<
 ```
 
@@ -215,7 +215,7 @@ lm(price ~ carat, data = diamonds) %>%
 ## Modeling in R
 
 ```{r, highlight.output=1:2}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   glance()
 ```
 
@@ -224,7 +224,7 @@ lm(price ~ carat, data = diamonds) %>%
 ## Modeling in R
 
 ```{r, eval=FALSE}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   augment() #<<
 ```
 
@@ -233,7 +233,7 @@ lm(price ~ carat, data = diamonds) %>%
 ## Modeling in R
 
 ```{r, highlight.output=1:2}
-lm(price ~ carat, data = diamonds) %>% 
+lm(price ~ carat, data = diamonds) |> 
   augment()
 ```
 

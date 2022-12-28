@@ -27,9 +27,9 @@ shinyServer(function(input, output) {
     })
 
     output$reactor_data <- render_gt({
-        reactor_data() %>%
-            top_n(10, output) %>%
-            gt() %>%
+        reactor_data() |>
+            top_n(10, output) |>
+            gt() |>
             tab_header(title = "Top 10 Output days")
     })
 

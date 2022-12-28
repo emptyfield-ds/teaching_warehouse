@@ -122,7 +122,7 @@ ggplot(usa_data, aes(long, lat)) +
 ## Palettes
 
 ```{r, echo=FALSE, fig.height=3}
-prismatic::color(colorblindr::palette_OkabeIto) %>% plot()
+prismatic::color(colorblindr::palette_OkabeIto) |> plot()
 ```
 
 ## Okabe-Ito (`colorblindr::palette_OkabeIto()`)
@@ -132,7 +132,7 @@ prismatic::color(colorblindr::palette_OkabeIto) %>% plot()
 ## Palettes
 
 ```{r, echo=FALSE, fig.height=3}
-prismatic::color(viridis::inferno(8)) %>% plot()
+prismatic::color(viridis::inferno(8)) |> plot()
 ```
 
 ## viridis inferno (`viridis::inferno()`)
@@ -142,7 +142,7 @@ prismatic::color(viridis::inferno(8)) %>% plot()
 ## Palettes
 
 ```{r, echo=FALSE, fig.height=3}
-prismatic::color(paste0("grey", c(10, 25, 35, 50, 60, 70, 80, 90))) %>% plot()
+prismatic::color(paste0("grey", c(10, 25, 35, 50, 60, 70, 80, 90))) |> plot()
 ```
 
 ## greys (`"grey**"`, `grey(.**)`)
@@ -181,8 +181,8 @@ emperors
 ---
 
 ```{r, emperors_unordered, eval = FALSE}
-emperors %>%
-  count(cause) %>% #<<
+emperors |>
+  count(cause) |> #<<
   ggplot(aes(x = n, y = cause)) +
   geom_col() + #<<
   geom_text( #<<
@@ -207,10 +207,10 @@ emperors %>%
 ---
 
 ```{r emperors_ordered, eval = FALSE}
-emperors %>%
-  count(cause) %>%
-  arrange(n) %>% #<<
-  mutate(cause = fct_inorder(cause)) %>% #<<
+emperors |>
+  count(cause) |>
+  arrange(n) |> #<<
+  mutate(cause = fct_inorder(cause)) |> #<<
   ggplot(aes(x = n, y = cause)) +
   geom_col() +
   geom_text(
@@ -235,9 +235,9 @@ emperors %>%
 ---
 
 ```{r emperors_highlighted_prep}
-emperors_assassinated <- emperors %>%
-  count(cause) %>%
-  arrange(n) %>%
+emperors_assassinated <- emperors |>
+  count(cause) |>
+  arrange(n) |>
   mutate(
     assassinated = ifelse(cause == "Assassination", TRUE, FALSE), #<<
     cause = fct_inorder(cause)
@@ -247,7 +247,7 @@ emperors_assassinated <- emperors %>%
 ---
 
 ```{r emperors_highlighted, eval = FALSE}
-emperors_assassinated %>%
+emperors_assassinated |>
   ggplot(aes(x = n, y = cause, fill = assassinated)) + #<<
   geom_col() +
   geom_text(
@@ -279,12 +279,12 @@ emperors_assassinated %>%
 ## Your Turn 1 
 
 ```{r, echo=FALSE}
-emperor_killers_unsorted <- emperors %>%
+emperor_killers_unsorted <- emperors |>
   # group the least common killers to "other"
-  mutate(killer = fct_lump(killer, 10)) %>%
+  mutate(killer = fct_lump(killer, 10)) |>
   count(killer)
 
-emperor_killers_unsorted %>% 
+emperor_killers_unsorted |> 
   ggplot(aes(x = n, y = killer)) +
   geom_col() +
   geom_text(
@@ -314,10 +314,10 @@ emperor_killers_unsorted %>%
 ---
 
 ```{r}
-emperor_killers <- emperors %>%
+emperor_killers <- emperors |>
   # group the least common killers to "other"
-  mutate(killer = fct_lump(killer, 10)) %>%
-  count(killer) %>%
+  mutate(killer = fct_lump(killer, 10)) |>
+  count(killer) |>
   arrange(n) #<<
 ```
 
@@ -330,12 +330,12 @@ emperor_killers
 ---
 
 ```{r, emperor_killers, eval=FALSE}
-lightning_plot <- emperor_killers %>% 
+lightning_plot <- emperor_killers |> 
   mutate(
     lightning = ifelse(killer == "Lightning", TRUE, FALSE), #<< 
     # use `fct_inorder()` to maintain the way we sorted the data
     killer = fct_inorder(killer)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = killer, fill = lightning)) + #<< 
   geom_col() +
   geom_text(
@@ -402,8 +402,8 @@ gapminder
 ---
 
 ```{r scatterplot_legend, eval=FALSE}
-gapminder %>%
-  filter(year == 2007) %>%
+gapminder |>
+  filter(year == 2007) |>
   ggplot(aes(log(gdpPercap), lifeExp)) + #<<
   geom_point( #<<
     aes(color = country), #<<
@@ -475,8 +475,8 @@ library(ggrepel)
 ---
 
 ```{r scatterplot_all_lbl, eval=FALSE}
-gapminder %>%
-  filter(year == 2007) %>%
+gapminder |>
+  filter(year == 2007) |>
   ggplot(aes(log(gdpPercap), lifeExp)) +
   geom_point(
     size = 3.5, 
@@ -517,8 +517,8 @@ library(ggrepel)
 
 set.seed(42)
 
-ten_countries <- gapminder$country %>% 
-  levels() %>% 
+ten_countries <- gapminder$country |> 
+  levels() |> 
   sample(10) #<<
 
 ten_countries
@@ -527,15 +527,15 @@ ten_countries
 ---
 
 ```{r}
-p1 <- gapminder %>%
-  filter(year == 2007) %>%
+p1 <- gapminder |>
+  filter(year == 2007) |>
   mutate(
     label = ifelse( #<<
       country  %in% ten_countries, #<<
       as.character(country), #<<
       "" #<<
     ) #<<
-  ) %>%
+  ) |>
   ggplot(aes(log(gdpPercap), lifeExp)) +
   geom_point(
     size = 3.5, 
@@ -627,15 +627,15 @@ library(cowplot)
 library(cowplot)
 marginal_histogram <- axis_canvas(scatter_plot, "y") + #<<
   geom_histogram( #<<
-    data = gapminder %>% filter(year == 2007), 
+    data = gapminder |> filter(year == 2007), 
     bins = 40,
     aes(y = lifeExp), 
     fill = "#0162B2E6", 
     color = "white"
   )
 
-scatter_plot %>% 
-  insert_yaxis_grob(marginal_histogram) %>%  #<<
+scatter_plot |> 
+  insert_yaxis_grob(marginal_histogram) |>  #<<
   ggdraw() #<<
 ```
 
@@ -675,9 +675,9 @@ knitr::include_graphics("img/axis_grob_ggdraw.png")
 ## Your Turn 3
 
 ```{r, echo = FALSE}
-gapminder %>%
-  group_by(continent, year) %>%
-  summarise(lifeExp = mean(lifeExp)) %>%
+gapminder |>
+  group_by(continent, year) |>
+  summarise(lifeExp = mean(lifeExp)) |>
   ggplot(aes(year, lifeExp, col = continent)) +
   geom_line(size = 1) +
   theme_minimal_hgrid() +
@@ -707,19 +707,19 @@ gapminder %>%
 library(cowplot)
 
 # get the mean life expectancy by continent and year
-continent_data <- gapminder %>%
-  group_by(continent, year) %>%
+continent_data <- gapminder |>
+  group_by(continent, year) |>
   summarise(lifeExp = mean(lifeExp))
 
-direct_labels <- continent_data %>%
-  group_by(continent) %>%
+direct_labels <- continent_data |>
+  group_by(continent) |>
   summarize(y = max(lifeExp)) #<<
 ```
 
 ---
 
 ```{r}
-line_plot <- continent_data %>%
+line_plot <- continent_data |>
   ggplot(aes(year, lifeExp, col = continent)) +
   geom_line(size = 1) +
   theme_minimal_hgrid() +
@@ -781,8 +781,8 @@ central_park <- sf::read_sf(file.path("data", "central_park")) #<<
 --
 
 ```{r squirrels_no_facet, eval = FALSE}
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
   ggplot() +
   geom_sf(data = central_park, color = "grey85") + #<<
   geom_point( #<<
@@ -802,8 +802,8 @@ nyc_squirrels %>%
 ---
 
 ```{r squirrels_facet, eval = FALSE}
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
   ggplot() +
   geom_sf(data = central_park, color = "grey85") +
   geom_point(
@@ -827,8 +827,8 @@ nyc_squirrels %>%
 label_colors <- 
   c("all squirrels" = "grey75", "highlighted group" = "#0072B2")
 
-nyc_squirrels %>%
-  drop_na(primary_fur_color) %>%
+nyc_squirrels |>
+  drop_na(primary_fur_color) |>
   ggplot() +
   geom_sf(data = central_park, color = "grey85") +
   geom_point( #<<
@@ -894,8 +894,8 @@ density_colors <- c(
   "all participants" = "grey85"
 )
 
-diabetes %>%
-  drop_na(glyhb, gender) %>% 
+diabetes |>
+  drop_na(glyhb, gender) |> 
   ggplot(aes(glyhb)) +
   geom_density(aes(fill = gender, color = gender)) +
   scale_x_log10(name = "glycosylated hemoglobin a1c") +
@@ -918,8 +918,8 @@ diabetes %>%
 ---
 
 ```{r your_turn_4, eval = FALSE}
-diabetes %>%
-  drop_na(glyhb, gender) %>% 
+diabetes |>
+  drop_na(glyhb, gender) |> 
   ggplot(aes(glyhb, y = ..count..)) + #<<
   geom_density( #<<
     data = function(x) select(x, -gender), #<<
@@ -957,13 +957,13 @@ library(gghighlight)
 ## Your Turn 5
 
 ```{r, echo = FALSE}
-africa <- gapminder %>%
-  filter(continent == "Africa") %>% 
+africa <- gapminder |>
+  filter(continent == "Africa") |> 
   # sort by life expectancy in 1952
-  arrange(year, desc(lifeExp)) %>% 
+  arrange(year, desc(lifeExp)) |> 
   mutate(country = fct_inorder(factor(country)))
 
-africa %>%
+africa |>
   ggplot(aes(year, lifeExp, color = country, group = country)) +
   geom_line(size = 1.2, alpha = .9, color = "#E58C23") +
   theme_minimal(base_size = 14) +
@@ -995,15 +995,15 @@ africa %>%
 ```{r, echo=FALSE}
 library(gghighlight)
 
-africa <- gapminder %>%
-  filter(continent == "Africa") %>% 
+africa <- gapminder |>
+  filter(continent == "Africa") |> 
   # sort by life expectancy in 1952
-  arrange(year, desc(lifeExp)) %>% 
+  arrange(year, desc(lifeExp)) |> 
   mutate(country = fct_inorder(factor(country)))
 
 # find the African countries that had better life expectancy in 1992 compared to 2007
-life_expectancy_dropped <- africa %>%
-  pivot_wider(country, names_from = year, values_from = lifeExp) %>%
+life_expectancy_dropped <- africa |>
+  pivot_wider(country, names_from = year, values_from = lifeExp) |>
   transmute(country, le_dropped = `1992` > `2007`)
 
 # join `le_dropped` to each observation for each country
@@ -1012,7 +1012,7 @@ africa <- left_join(africa, life_expectancy_dropped, by = "country")
 
 
 ```{r, echo=FALSE}
-le_line_plot <- africa %>%
+le_line_plot <- africa |>
   ggplot(aes(year, lifeExp, color = country, group = country)) +
   geom_line(size = 1.2, alpha = .9, color = "#E58C23") +
   theme_minimal(base_size = 13) +
@@ -1087,8 +1087,8 @@ class: middle, inverse, center
 ## Squirrels and dogs
 
 ```{r dog_sighting_df}
-dog_sighting <- nyc_squirrels %>%
-  mutate(dog = str_detect(other_activities, "dog")) %>%
+dog_sighting <- nyc_squirrels |>
+  mutate(dog = str_detect(other_activities, "dog")) |>
   filter(dog)
 ```
 
@@ -1101,7 +1101,7 @@ being chased. This squirrel,
 however, was actively teasing 
 a dog."
 
-dog_plot <- nyc_squirrels %>%
+dog_plot <- nyc_squirrels |>
   ggplot() +
   geom_sf(data = central_park, color = "grey80") +
   geom_point(aes(x = long, y = lat), size = .8) +
@@ -1199,8 +1199,8 @@ knitr::include_graphics("img/annotating_ggplots_df.png")
 la_heat_income <- sf::read_sf(file.path("data", "los-angeles.geojson"))
 kelvin2farenheit <- function(k) (9/5) * (k - 273) + 32
 
-base_map <- la_heat_income %>%
-  mutate(temp = kelvin2farenheit(X_median)) %>%
+base_map <- la_heat_income |>
+  mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   cowplot::theme_map() +
@@ -1363,13 +1363,13 @@ theme_multiplot <- function(base_size = 14, ...) {
     )
 }
 
-diabetes_complete <- diabetes %>% 
+diabetes_complete <- diabetes |> 
   drop_na(waist, hip, gender, frame, glyhb)
 ```
 
 
 ```{r, echo=FALSE}
-plot_a <- diabetes_complete %>% 
+plot_a <- diabetes_complete |> 
   ggplot(aes(waist/hip, fill = gender)) + 
     geom_density(
       col = "white", 
@@ -1391,7 +1391,7 @@ plot_a <- diabetes_complete %>%
 
 
 ```{r, echo=FALSE}
-plot_b <- diabetes_complete %>% 
+plot_b <- diabetes_complete |> 
   ggplot(aes(fct_rev(frame), waist/hip, fill = gender, col = gender)) + 
     geom_boxplot(
       outlier.color = NA, 
@@ -1406,7 +1406,7 @@ plot_b <- diabetes_complete %>%
 
 
 ```{r, echo=FALSE}
-plot_c <- diabetes_complete %>% 
+plot_c <- diabetes_complete |> 
   ggplot(aes(waist/hip, glyhb,  col = gender)) +
     geom_point(
       shape = 21, 
@@ -1453,7 +1453,7 @@ library(patchwork)
 ---
 
 ```{r plot_b, eval=FALSE}
-plot_b <- diabetes_complete %>% 
+plot_b <- diabetes_complete |> 
   ggplot(
     aes(fct_rev(frame),
         waist/hip, fill = gender, 
@@ -1482,7 +1482,7 @@ plot_b
 ---
 <div style = 'font-size: 73%'>
 ```{r plot_c, eval=FALSE}
-plot_c <- diabetes_complete %>% 
+plot_c <- diabetes_complete |> 
   ggplot(aes(waist/hip, glyhb,  col = gender)) +
     geom_point(
       shape = 21, 

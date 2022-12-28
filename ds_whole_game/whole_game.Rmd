@@ -41,15 +41,15 @@ The Titanic data is in the folder in a Stata file (.dta). Load the data, saving 
 Let's look at how many people survived. `survived` and `pclass` are stored as integers, so let's first transform them to factors (see the chapter on factors in [R for Data Science](https://r4ds.had.co.nz/factors.html)). Then, summarize how many people survived and how many died. You can use dplyr to group by survival and then summarize with `n()` or use the `table()` function on `titanic$survived`. 
 
 ```{r}
-titanic <- titanic %>% 
+titanic <- titanic |> 
   ______(
     survived = factor(survived, labels = c("Died", "Survived")),
     pclass = factor(pclass)
   )
 
 # fill in the code below or use table()
-titanic %>% 
-  ______(______) %>% 
+titanic |> 
+  ______(______) |> 
   ______(n = n())
 ```
 
@@ -125,11 +125,11 @@ We'll save the imputed variables to the data as `mice_age` and `mice_embarked`, 
 This chunk can take a while to run. Set the code chunk option `cache = TRUE` for this one. `cache` saves the results so you don't need to keep re-knitting the document.
 
 ```{r}
-_______ <- titanic %>% 
+_______ <- titanic |> 
   ______ ___
   # remove labels because mice doesn't like them
-  purrr::map_df(haven::zap_labels) %>% 
-  mice(method = "norm") %>%
+  purrr::map_df(haven::zap_labels) |> 
+  mice(method = "norm") |>
   complete()
 
 titanic$mice_age <- imputed_titanic$age
@@ -145,7 +145,7 @@ Are they different?
 
 ```{r}
 
-______(survived ~ age, data = titanic, family = binomial()) %>% 
+______(survived ~ age, data = titanic, family = binomial()) |> 
   ______()
 
 # Do the same for `mice_age`
@@ -162,9 +162,9 @@ It might also be useful to visualize their distributions.
 
 ```{r}
 # 
-titanic %>% 
+titanic |> 
   ______ ___ 
-  ______() %>% 
+  ______() |> 
   ggplot(aes(x = value, color = ______, fill = ______)) +
   geom_density(alpha = .7)
 ```
@@ -183,7 +183,7 @@ ______ ___
   ______ ___
   # ggpairs doesn't like that the variables are labelled.
   # remove them with haven::zap_labels()
-  zap_labels() %>% 
+  zap_labels() |> 
   #  color by survival status.
   #  only show age, class, sex, and title.
   ggpairs(mapping = aes(color = _______), columns = 2:5, legend = 1) + 
@@ -211,8 +211,8 @@ We'll use a a logistic regression to predict survival. Remember that `survival=1
 ```{r}
 _______ ___ glm(_______, data = titanic, family = binomial)
 
-survived_model %>% 
-  _______() %>% 
+survived_model |> 
+  _______() |> 
   #  round all numeric variables to 2 digits
   mutate(across(where(_______), round, digits = 2))
 ```
@@ -246,12 +246,12 @@ Let's save a cleaned up table of the model results. We'll get the estimates and 
 4. Round any variable that's numeric.
 
 ```{r}
-model_table <- survived_model2 %>% 
+model_table <- survived_model2 |> 
   ______ ___
   #  filter out the intercept. no need to change this line.
-  filter(term != "(Intercept)") %>% 
-  ______(term, estimate, _______) %>% 
-  mutate(______(where(is.numeric), ___)) %>%
+  filter(term != "(Intercept)") |> 
+  ______(term, estimate, _______) |> 
+  mutate(______(where(is.numeric), ___)) |>
   mutate(across(_______(is.numeric), round, digits = 2))
 
 model_table
@@ -266,9 +266,9 @@ How do the results look? Let's plot the odds ratios and CIs in a forest plot.
 
 ```{r}
 ## Forest Plot
-model_table %>% 
-  ______ %>% 
-  mutate(term = ________(term)) %>% 
+model_table |> 
+  ______ |> 
+  mutate(term = ________(term)) |> 
   ggplot(aes(x = ______, y = ______)) + 
   geom_point(size = 2) +
   geom_errorbarh(aes(xmin = ______, xmax = ______), height = 0) +
@@ -288,15 +288,15 @@ First, we need to re-tidy `survived_model2` because we got rid of `statistic`. T
 
 ```{r}
 ## Variable importance (abs(statistic))
-_______ %>% 
-  tidy() %>% 
-  _______(abs(_______)) %>% 
+_______ |> 
+  tidy() |> 
+  _______(abs(_______)) |> 
   # don't plot the intercept value, since it's not a variable
-  filter(term != "(Intercept)") %>% 
+  filter(term != "(Intercept)") |> 
   mutate(
     importance = abs(_______),
     term = fct_inorder(term)
-  ) %>% 
+  ) |> 
   ggplot(aes(x = _______, y = _______)) + 
   geom_col() +
   coord_flip()

@@ -100,8 +100,8 @@ In the code chunk below:
 3.  Use inline code to describe the data set in the text below the code chunk and re-knit.
 
 ```{r, eval = FALSE}
-___ ___ gapminder %>% 
-  _________ %>% 
+___ ___ gapminder |> 
+  _________ |> 
   # pull() extracts a column as a vector
   # if no column is called, it uses the most recently created
   pull()
@@ -137,8 +137,8 @@ In the code chunk below:
     ```
 
 ```{r}
-gapminder %>% 
-  filter(continent != "Oceania") %>% 
+gapminder |> 
+  filter(continent != "Oceania") |> 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
   geom_line(lwd = 1, show.legend = FALSE) + 
   facet_wrap(~ continent) +
@@ -164,8 +164,8 @@ In the code chunk below:
 3.  Re-knit. What's changed?
 
 ```{r}
-gapminder %>% 
-  filter(continent == params$continent) %>% 
+gapminder |> 
+  filter(continent == params$continent) |> 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
   geom_line(lwd = 1, show.legend = FALSE) + 
   scale_color_manual(values = country_colors) +

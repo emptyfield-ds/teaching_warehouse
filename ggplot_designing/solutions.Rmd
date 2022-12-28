@@ -12,14 +12,14 @@ library(tidyverse)
 ```{r}
 emperors <- read_csv("data/emperors.csv")
 
-emperors %>%
-  mutate(killer = fct_lump(killer, 10)) %>%
-  count(killer) %>%
-  arrange(n) %>%
+emperors |>
+  mutate(killer = fct_lump(killer, 10)) |>
+  count(killer) |>
+  arrange(n) |>
   mutate(
     lightning = ifelse(killer == "Lightning", TRUE, FALSE),
     killer = fct_inorder(killer)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = killer, fill = lightning)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -40,22 +40,22 @@ library(gapminder)
 library(ggrepel)
 
 sample_countries <- function(x) {
-  x %>%
+  x |>
     sample_n(10)
 }
 
 set.seed(541)
 
-countries <- gapminder %>%
-  sample_countries() %>%
+countries <- gapminder |>
+  sample_countries() |>
   pull(country)
 
 
-gapminder %>%
-  filter(year == 2007) %>%
+gapminder |>
+  filter(year == 2007) |>
   mutate(
     label = ifelse(country %in% countries, as.character(country), "")
-  ) %>%
+  ) |>
   ggplot(aes(log(gdpPercap), lifeExp)) +
   geom_point(size = 3.5, alpha = .9, shape = 21, col = "white", fill = "#0162B2") +
   geom_text_repel(
@@ -84,15 +84,15 @@ gapminder %>%
 ```{r}
 library(cowplot)
 
-continent_data <- gapminder %>%
-  group_by(continent, year) %>%
+continent_data <- gapminder |>
+  group_by(continent, year) |>
   summarise(lifeExp = mean(lifeExp))
 
-direct_labels <- continent_data %>%
-  group_by(continent) %>%
+direct_labels <- continent_data |>
+  group_by(continent) |>
   summarize(x = max(year), y = max(lifeExp))
 
-p <- continent_data %>%
+p <- continent_data |>
   ggplot(aes(year, lifeExp, col = continent)) +
   geom_line(size = 1) +
   theme_minimal_hgrid() +
@@ -121,17 +121,17 @@ ggdraw(p_direct_labels)
 
 ```{r}
 library(gghighlight)
-africa <- gapminder %>%
+africa <- gapminder |>
   filter(continent == "Africa")
 
 # find the African countries that had better life expectancy in 1992 compared to 2007
-life_expectancy_dropped <- africa %>%
-  pivot_wider(country, names_from = year, values_from = lifeExp) %>%
+life_expectancy_dropped <- africa |>
+  pivot_wider(country, names_from = year, values_from = lifeExp) |>
   transmute(country, le_dropped = `1992` > `2007`)
 
-africa %>% 
+africa |> 
   # join `le_dropped` to each observation for each country
-  left_join(life_expectancy_dropped, by = "country") %>%
+  left_join(life_expectancy_dropped, by = "country") |>
   ggplot(aes(year, lifeExp, col = country)) +
   geom_line(size = 1.2, alpha = .9, col = "#E58C23") +
   gghighlight(le_dropped, use_group_by = FALSE, use_direct_label = FALSE, unhighlighted_colour = "grey90") +
@@ -159,8 +159,8 @@ density_colors <- c(
   "all participants" = "grey85"
 )
 
-diabetes %>%
-  drop_na(glyhb, gender) %>% 
+diabetes |>
+  drop_na(glyhb, gender) |> 
   ggplot(aes(glyhb)) +
   geom_density(aes(fill = gender, color = gender)) +
   scale_x_log10(name = "glycosylated hemoglobin a1c") +
@@ -172,8 +172,8 @@ diabetes %>%
 
 
 ```{r}
-diabetes %>%
-  drop_na(glyhb, gender) %>% 
+diabetes |>
+  drop_na(glyhb, gender) |> 
   ggplot(aes(glyhb, y = ..count..)) +
   geom_density(data = function(x) select(x, glyhb), aes(fill = "all participants", color = "all participants")) +
   geom_density(aes(fill = gender, color = gender)) +
@@ -192,8 +192,8 @@ diabetes %>%
 la_heat_income <- sf::read_sf("data/los-angeles.geojson")
 kelvin2farenheit <- function(k) (9/5) * (k - 273) + 32
 
-la_heat_income %>%
-  mutate(temp = kelvin2farenheit(X_median)) %>%
+la_heat_income |>
+  mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   cowplot::theme_map() +
@@ -230,8 +230,8 @@ curves <- tibble::tribble(
 )
 
 
-la_heat_income %>%
-  mutate(temp = kelvin2farenheit(X_median)) %>%
+la_heat_income |>
+  mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   geom_text(
@@ -271,13 +271,13 @@ theme_multiplot <- function(base_size = 14, ...) {
     )
 }
 
-diabetes_complete <- diabetes %>% 
+diabetes_complete <- diabetes |> 
   drop_na(waist, hip, gender, frame, glyhb)
 ```
 
 
 ```{r}
-plot_a <- diabetes_complete %>% 
+plot_a <- diabetes_complete |> 
   ggplot(aes(waist/hip, fill = gender)) + 
     geom_density(
       col = "white", 
@@ -301,7 +301,7 @@ plot_a
 
 
 ```{r}
-plot_b <- diabetes_complete %>% 
+plot_b <- diabetes_complete |> 
   ggplot(aes(fct_rev(frame), waist/hip, fill = gender, col = gender)) + 
     geom_boxplot(
       outlier.color = NA, 
@@ -320,7 +320,7 @@ plot_b
 
 
 ```{r}
-plot_c <- diabetes_complete %>% 
+plot_c <- diabetes_complete |> 
   ggplot(aes(waist/hip, glyhb,  col = gender)) +
     geom_point(
       shape = 21, 

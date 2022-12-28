@@ -21,10 +21,10 @@ Let's take a look at the mean weight loss between 1971 and 1982 stratified by sm
 3. Summarize the mean and standard deviation for weight change (`wt82_71`)
 
 ```{r}
-nhefs_complete %>%
+nhefs_complete |>
   #  only show for pts not lost to follow-up
-  ________ %>% 
-  ________ %>% 
+  ________ |> 
+  ________ |> 
   summarize(
     mean_weight_change = ________, 
     sd_weight_change = ________
@@ -50,9 +50,9 @@ _______ <- _______(
   data = nhefs_complete
 )
 
-_______ %>% 
+_______ |> 
   #  get confidence intervals and exponentiate estimates
-  _______(conf.int = _______, exponentiate = _______) %>% 
+  _______(conf.int = _______, exponentiate = _______) |> 
   _______
 ```
 
@@ -66,8 +66,8 @@ Next, we need to get the predicted probabilities and turn them into weights.
 Save the results back to `nhefs_complete_wts`
 
 ```{r}
-nhefs_complete_wts <- propensity_model %>% 
-  _______(type.predict = _______, data = _______) %>% 
+nhefs_complete_wts <- propensity_model |> 
+  _______(type.predict = _______, data = _______) |> 
   _______(wts = 1 / _______(qsmk == 0, _______, _______))
 ```
 
@@ -121,18 +121,18 @@ Now that we've fit a model, we need to clone our data set. To do this, we'll sim
 3. Save the predicted data sets as`predicted_kept_smoking` and `predicted_quit_smoking`.
 
 ```{r}
-_______ <- nhefs_complete %>% 
+_______ <- nhefs_complete |> 
   _______
 
-_______ <- nhefs_complete %>% 
+_______ <- nhefs_complete |> 
   _______
 
-predicted_kept_smoking <- standardized_model %>% 
-  _______(newdata = _______) %>%
+predicted_kept_smoking <- standardized_model |> 
+  _______(newdata = _______) |>
   _______
 
-predicted_quit_smoking <- standardized_model %>% 
-  _______(newdata = _______) %>%
+predicted_quit_smoking <- standardized_model |> 
+  _______(newdata = _______) |>
   _______
 ```
 
@@ -144,7 +144,7 @@ Finally, we'll get the mean differences between the values.
 2. Summarize the predicted values to create three new variables: `mean_quit_smoking`, `mean_kept_smoking`, and `difference`. The first two should be the means of `quit_smoking` and `kept_smoking`. `difference` should be `mean_quit_smoking` minus `mean_kept_smoking`.
 
 ```{r}
-_______ %>% 
+_______ |> 
   _______(
     mean_quit_smoking = _______,
     mean_kept_smoking = _______,

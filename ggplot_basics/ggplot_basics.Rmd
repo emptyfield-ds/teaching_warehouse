@@ -361,7 +361,7 @@ ggplot(diabetes, aes(x = glyhb)) +
 
 
 ```{r slide-36}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(x = frame)) + 
   geom_bar()
 ```
@@ -369,8 +369,8 @@ diabetes %>%
 ---
 
 ```{r slide-37}
-diabetes %>% 
-  drop_na() %>% #<<
+diabetes |> 
+  drop_na() |> #<<
   ggplot(aes(x = frame)) + 
   geom_bar()
 ```
@@ -382,8 +382,8 @@ diabetes %>%
 ## Make a bar chart of `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
 
 ```{r slide-38, eval=FALSE}
-diabetes %>% 
-  drop_na() %>% 
+diabetes |> 
+  drop_na() |> 
   ______() + 
   ______()
 ```
@@ -391,8 +391,8 @@ diabetes %>%
 ---
 
 ```{r slide-39}
-diabetes %>% 
-  drop_na() %>% 
+diabetes |> 
+  drop_na() |> 
   ggplot(aes(x = frame, fill = gender)) + 
   geom_bar()
 ```
@@ -445,8 +445,8 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 ---
 
 ```{r slide-45}
-diabetes %>% 
-  drop_na() %>% 
+diabetes |> 
+  drop_na() |> 
   ggplot(aes(x = frame, fill = gender)) + 
   geom_bar(position = "stack")
 ```
@@ -454,8 +454,8 @@ diabetes %>%
 ---
 
 ```{r slide-46}
-diabetes %>% 
-  drop_na() %>% 
+diabetes |> 
+  drop_na() |> 
   ggplot(aes(x = frame, fill = gender)) + 
   geom_bar(position = "dodge")
 ```
@@ -463,8 +463,8 @@ diabetes %>%
 ---
 
 ```{r slide-47}
-diabetes %>% 
-  drop_na() %>% 
+diabetes |> 
+  drop_na() |> 
   ggplot(aes(x = frame, fill = gender)) + 
   geom_bar(position = "fill")
 ```
@@ -637,7 +637,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ---
 
 ```{r, eval = FALSE}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_grid(rows = vars(cut), cols = vars(clarity)) #<<
@@ -646,7 +646,7 @@ diamonds %>%
 ---
 
 ```{r}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_grid(rows = vars(cut), cols = vars(clarity))
@@ -677,7 +677,7 @@ ggplot(diabetes, aes(weight, hip)) +
 # `facet_wrap()`
 
 ```{r, eval=FALSE}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_wrap(vars(clarity)) #<<
@@ -688,7 +688,7 @@ diamonds %>%
 # `facet_wrap()`
 
 ```{r, echo = FALSE}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_wrap(vars(clarity))
@@ -726,9 +726,9 @@ knitr::include_graphics("img/new_data_alert_datasaurus.png")
 ---
 
 ```{r}
-corrs <- datasaurus_dozen %>% 
-  group_by(dataset) %>% 
-  summarize(corr = cor(x, y)) %>% 
+corrs <- datasaurus_dozen |> 
+  group_by(dataset) |> 
+  summarize(corr = cor(x, y)) |> 
   mutate(
     corr = round(corr, 2),
     corr = paste("corr:", corr)
@@ -738,9 +738,9 @@ corrs <- datasaurus_dozen %>%
 ---
 
 ```{r, eval = FALSE}
-corrs <- datasaurus_dozen %>% 
-  group_by(dataset) %>% #<<
-  summarize(corr = cor(x, y)) %>% 
+corrs <- datasaurus_dozen |> 
+  group_by(dataset) |> #<<
+  summarize(corr = cor(x, y)) |> 
   mutate(
     corr = round(corr, 2),
     corr = paste("corr:", corr)
@@ -750,9 +750,9 @@ corrs <- datasaurus_dozen %>%
 ---
 
 ```{r, eval = FALSE}
-corrs <- datasaurus_dozen %>% 
-  group_by(dataset) %>% 
-  summarize(corr = cor(x, y)) %>%  #<<
+corrs <- datasaurus_dozen |> 
+  group_by(dataset) |> 
+  summarize(corr = cor(x, y)) |>  #<<
   mutate(
     corr = round(corr, 2),
     corr = paste("corr:", corr)
@@ -762,9 +762,9 @@ corrs <- datasaurus_dozen %>%
 ---
 
 ```{r, eval = FALSE}
-corrs <- datasaurus_dozen %>% 
-  group_by(dataset) %>% 
-  summarize(corr = cor(x, y)) %>% 
+corrs <- datasaurus_dozen |> 
+  group_by(dataset) |> 
+  summarize(corr = cor(x, y)) |> 
   mutate(
     corr = round(corr, 2), #<<
     corr = paste("corr:", corr) #<<
@@ -780,7 +780,7 @@ corrs
 ---
 
 ```{r, eval=FALSE}
-datasaurus_dozen %>% 
+datasaurus_dozen |> 
   ggplot(aes(x, y)) + 
   geom_point() + 
   geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
@@ -790,7 +790,7 @@ datasaurus_dozen %>%
 ---
 
 ```{r, eval=FALSE}
-datasaurus_dozen %>% 
+datasaurus_dozen |> 
   ggplot(aes(x, y)) + 
   geom_point() + 
   geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) + #<<
@@ -800,7 +800,7 @@ datasaurus_dozen %>%
 ---
 
 ```{r, eval=FALSE}
-datasaurus_dozen %>% 
+datasaurus_dozen |> 
   ggplot(aes(x, y)) + 
   geom_point() + 
   geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
@@ -810,7 +810,7 @@ datasaurus_dozen %>%
 ---
 
 ```{r, echo=FALSE, fig.height=5.8}
-datasaurus_dozen %>% 
+datasaurus_dozen |> 
   ggplot(aes(x, y)) + 
   geom_point() + 
   geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +

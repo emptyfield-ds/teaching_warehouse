@@ -49,7 +49,7 @@ diabetes <- read_csv("diabetes.csv")
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() + 
@@ -59,7 +59,7 @@ mtcars %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() + #<<
@@ -69,7 +69,7 @@ mtcars %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() +
@@ -79,7 +79,7 @@ mtcars %>%
 ---
 
 ```{r}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point() + 
   scale_x_log10() + 
@@ -96,7 +96,7 @@ mtcars %>%
 #### 4. Change the legend title for the color legend. Use the `name` argument in whatever scale function you're using.
 
 ```{r, eval = FALSE}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() 
 ```
@@ -104,7 +104,7 @@ diabetes %>%
 ---
 
 ```{r}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() + 
   scale_color_viridis_c()
@@ -113,7 +113,7 @@ diabetes %>%
 ---
 
 ```{r}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = gender)) + 
   geom_point() + 
   scale_color_brewer()
@@ -122,7 +122,7 @@ diabetes %>%
 ---
 
 ```{r}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = gender)) + 
   geom_point() + 
   scale_color_manual(values = c("#E69F00", "#56B4E9"))
@@ -131,7 +131,7 @@ diabetes %>%
 ---
 
 ```{r}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = gender)) + 
   geom_point() + 
   scale_color_manual(name = "Sex", values = c("#E69F00", "#56B4E9"))
@@ -169,7 +169,7 @@ diabetes %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% #<<
+mtcars |> #<<
   ggplot(aes(hp, mpg, color = factor(cyl))) + #<<
   geom_point(size = 3) + #<<
   scale_x_log10() + 
@@ -185,7 +185,7 @@ mtcars %>% #<<
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() +  #<<
@@ -201,7 +201,7 @@ mtcars %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
@@ -217,7 +217,7 @@ mtcars %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
@@ -233,7 +233,7 @@ mtcars %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
@@ -249,7 +249,7 @@ mtcars %>%
 ---
 
 ```{r, eval=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
@@ -264,7 +264,7 @@ mtcars %>%
 ---
 
 ```{r, echo=FALSE}
-mtcars %>% 
+mtcars |> 
   ggplot(aes(hp, mpg, color = factor(cyl))) + 
   geom_point(size = 3) + 
   scale_x_log10() + 
@@ -299,7 +299,7 @@ mtcars %>%
 #### 4. Change the font size for the axis titles. Use `element_text()`. Check the help page if you don't know what option to change.
 
 ```{r, eval=FALSE}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c()
@@ -308,7 +308,7 @@ diabetes %>%
 ---
 
 ```{r, eval=FALSE}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c() +
@@ -323,7 +323,7 @@ diabetes %>%
 ---
 
 ```{r, echo=FALSE}
-diabetes %>% 
+diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
   geom_point() +
   scale_color_viridis_c() +
@@ -350,7 +350,7 @@ big_data <- tibble(x = rnorm(10000), y = rnorm(10000))
 ### High-density plots
 
 ```{r, eval=FALSE}
-big_data %>% 
+big_data |> 
   ggplot(aes(x, y)) + 
   geom_point()
 ```
@@ -360,7 +360,7 @@ big_data %>%
 ### High-density plots
 
 ```{r, echo=FALSE}
-big_data %>% 
+big_data |> 
   ggplot(aes(x, y)) + 
   geom_point()
 ```
@@ -378,7 +378,7 @@ class: inverse
 ---
 
 ```{r}
-big_data %>% 
+big_data |> 
   ggplot(aes(x, y)) + 
   geom_point(alpha = .05) #<<
 ```
@@ -386,7 +386,7 @@ big_data %>%
 ---
 
 ```{r}
-big_data %>% 
+big_data |> 
   ggplot(aes(x, y)) + 
   geom_bin2d() #<<
 ```
@@ -394,7 +394,7 @@ big_data %>%
 ---
 
 ```{r}
-big_data %>% 
+big_data |> 
   ggplot(aes(x, y)) + 
   geom_hex() #<<
 ```
@@ -416,7 +416,7 @@ diamonds
 ---
 
 ```{r}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, price)) + 
   geom_point()
 ```
@@ -424,7 +424,7 @@ diamonds %>%
 ---
 
 ```{r}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, price)) + 
   geom_point(alpha = .05) #<<
 ```
@@ -432,7 +432,7 @@ diamonds %>%
 ---
 
 ```{r}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, price)) + 
   geom_bin2d() #<<
 ```
@@ -440,7 +440,7 @@ diamonds %>%
 ---
 
 ```{r}
-diamonds %>% 
+diamonds |> 
   ggplot(aes(x = carat, price)) + 
   geom_hex() #<<
 ```

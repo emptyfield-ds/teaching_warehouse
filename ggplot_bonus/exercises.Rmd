@@ -84,10 +84,10 @@ nc
 Notice that it looks like a tibble with a lot of spatial information; that's because it is. It's designed to work well with dplyr and the other tidyverse tools.
 
 ```{r}
-nc_plot <- nc %>% 
-  gather("year", "rate", SID74, SID79) %>% 
+nc_plot <- nc |> 
+  gather("year", "rate", SID74, SID79) |> 
   mutate(year = case_when(year == "SID74" ~ "1974",
-                          year == "SID79" ~ "1979")) %>% 
+                          year == "SID79" ~ "1979")) |> 
   ggplot(aes(fill = rate)) +
     geom_sf(col = "white", size = .75) +
     scale_fill_viridis_c("Number of\nSIDS Deaths") +

@@ -25,7 +25,7 @@ library(broom)
 library(gtsummary)
 diabetes <- read_csv("diabetes.csv")
 # create table_data
-table_data <- diabetes %>%
+table_data <- diabetes |>
   mutate(
     # create diabetic category based on A1c
     diabetic = case_when(
@@ -35,7 +35,7 @@ table_data <- diabetes %>%
     # calculate bmi
     bmi = (weight / height^2) * 703
   )
-model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
+model_data <- diabetes |> mutate(bmi = (weight / height^2) * 703)
 ```
 
 ## *Working with descriptive tables*
@@ -43,8 +43,8 @@ model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
 --
 
 ```{r descriptives}
-descriptives <- diabetes %>% #<<
-  filter(!is.na(glyhb)) %>%
+descriptives <- diabetes |> #<<
+  filter(!is.na(glyhb)) |>
   mutate(
     diabetic = case_when(
       glyhb >= 6.5 ~ "Diabetic", 
@@ -52,8 +52,8 @@ descriptives <- diabetes %>% #<<
       NA ~ NA_character_
     ),
     bmi = (weight / height^2) * 703
-  ) %>%
-  group_by(diabetic) %>% #<<
+  ) |>
+  group_by(diabetic) |> #<<
   summarise(n = n(), across(c(glyhb, bmi, age), mean, na.rm = TRUE)) #<<
 ```
 
@@ -285,7 +285,7 @@ tbl_cross(
 # `tbl_cross()`
 
 ```{r}
-table_data <- diabetes %>% #<<
+table_data <- diabetes |> #<<
   mutate(
     # create diabetic category based on A1c and calculate bmi
     diabetic = case_when( #<<
@@ -293,7 +293,7 @@ table_data <- diabetes %>% #<<
       glyhb < 6.5 ~ "Healthy",
       NA ~ NA_character_
     ), bmi = (weight / height^2) * 703
-  ) %>%
+  ) |>
   select(diabetic, age, gender, bmi) #<<
 ```
 
@@ -384,8 +384,8 @@ tbl_cross(table_data, diabetic, gender)
 # Your turn 3
 
 ```{r}
-trial %>%
-  tbl_cross(row = trt, col = response) %>%
+trial |>
+  tbl_cross(row = trt, col = response) |>
   add_p()
 ```
 
@@ -540,8 +540,8 @@ knitr::include_graphics("img/tbl_summary-levels.png")
 ### Split the summary table by a grouping variable
 
 ```{r tbl_summary-by, eval=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
+table_data |>
+  select(diabetic, age, gender, bmi) |>
   tbl_summary(by = diabetic) #<<
 ```
 
@@ -559,8 +559,8 @@ knitr::include_graphics("img/tbl_summary-by.png")
 #### Change number formats with `digits`
 
 ```{r digits, eval=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
+table_data |>
+  select(diabetic, age, gender, bmi) |>
   tbl_summary(
     by = diabetic,
     digits = all_continuous() ~ 1 #<<
@@ -580,8 +580,8 @@ knitr::include_graphics("img/tbl_summary-digits.png")
 #### Rename missing value label with `missing_text`
 
 ```{r missing_text, eval=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
+table_data |>
+  select(diabetic, age, gender, bmi) |>
   tbl_summary(
     by = diabetic,
     missing_text = "(Missing)" #<<
@@ -601,9 +601,9 @@ knitr::include_graphics("img/tbl_summary-missing_text.png")
 #### Add tests and p-values (with one function!)
 
 ```{r add_p, eval=FALSE}
-table_data %>%
-  select(diabetic, age, gender, bmi) %>%
-  tbl_summary(by = diabetic) %>%
+table_data |>
+  select(diabetic, age, gender, bmi) |>
+  tbl_summary(by = diabetic) |>
   add_p() #<<
 ```
 
@@ -677,8 +677,8 @@ tibble::tribble(
   "`add_stat_label()`",  "add label for the summary statistics shown in each row",
   "`add_stat()`",        "generic function to add a column with user-defined values",
   "`add_q()`",           "add a column of q values to control for multiple comparisons"
-) %>%
-  gt::gt() %>%
+) |>
+  gt::gt() |>
   gt::fmt_markdown(columns = Function)
 ```
 
@@ -698,8 +698,8 @@ tibble::tribble(
   "`italicize_labels()`",        "italicize variable labels",  
   "`italicize_levels()`",        "italicize variable levels",  
   "`bold_p()`",                  "bold significant p-values"
-) %>%
-  gt::gt() %>%
+) |>
+  gt::gt() |>
   gt::fmt_markdown(columns = Function)
 ```
 
@@ -725,7 +725,7 @@ tibble::tribble(
 ## Your Turn 4
 
 ```{r table-one, eval=FALSE}
-trial %>%
+trial |>
   tbl_summary(
     by = trt,
     label = grade ~ "Tumor Grade",
@@ -733,12 +733,12 @@ trial %>%
       all_continuous() ~ "{mean} ({sd})",
       all_categorical() ~ "{n} ({p}%)"
     )
-  ) %>%
-  bold_labels() %>%
+  ) |>
+  bold_labels() |>
   modify_spanning_header(
     c("stat_1", "stat_2") ~ "**Treatment Received**"
-  ) %>%
-  add_overall() %>%
+  ) |>
+  add_overall() |>
   add_p()
 ```
 
@@ -770,8 +770,8 @@ tibble::tribble(
   "`sort`", "change the sorting of categorical levels by frequency",
   "`percent`", "print column, row, or cell percentages",
   "`include`", "list of variables to include in summary table"
-) %>%
-  gt::gt() %>%
+) |>
+  gt::gt() |>
   gt::fmt_markdown(columns = Argument)
 ```
 
@@ -782,7 +782,7 @@ tibble::tribble(
 --
 
 ```{r mod-tbl_regression, eval = FALSE}
-model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
+model_data <- diabetes |> mutate(bmi = (weight / height^2) * 703)
 glyhb_model <- lm(glyhb ~ bmi + age, data = model_data) #<<
 tbl_regression(glyhb_model) #<<
 ```
@@ -792,7 +792,7 @@ tbl_regression(glyhb_model) #<<
 # `tbl_regression()`
 
 ```{r mod-tbl_regression2}
-model_data <- diabetes %>% mutate(bmi = (weight / height^2) * 703)
+model_data <- diabetes |> mutate(bmi = (weight / height^2) * 703)
 glyhb_model <- lm(glyhb ~ bmi + age, data = model_data)
 tbl_regression(glyhb_model)
 ```
@@ -846,8 +846,8 @@ tibble::tribble(
   "`estimate_fun`", "function to round and format coefficient estimates",
   "`pvalue_fun`", "function to round and format p-values",
   "`tidy_fun`", "function to specify/customize tidier function"
-) %>%
-  gt::gt() %>%
+) |>
+  gt::gt() |>
   gt::fmt_markdown(columns = c(Argument))
 ```
 
@@ -859,7 +859,7 @@ tibble::tribble(
 ### Add model statistics from `broom::glance()`
 
 ```{r add_glance_source_note, eval = FALSE}
-tbl_regression(glyhb_model) %>% 
+tbl_regression(glyhb_model) |> 
   add_glance_source_note() #<<
 ```
 
@@ -870,7 +870,7 @@ tbl_regression(glyhb_model) %>%
 ### Add model statistics from `broom::glance()`
 
 ```{r add_glance_source_note2}
-tbl_regression(glyhb_model) %>% 
+tbl_regression(glyhb_model) |> 
   add_glance_source_note() 
 ```
 
@@ -885,8 +885,8 @@ tibble::tribble(
   "`add_glance_source_note()`", "adds statistics from `glance()` as source note",
   "`add_vif()`", "adds column of the variance inflation factors (VIF)",
   "`add_q()`", "add a column of q values to control for multiple comparisons"
-) %>%
-  gt::gt() %>%
+) |>
+  gt::gt() |>
   gt::fmt_markdown(columns = everything())
 ```
 
@@ -895,9 +895,9 @@ tibble::tribble(
 ## `tbl_regression()`: format options
 
 ```{r tbl_regression-bold, eval = FALSE}
-tbl_regression(glyhb_model) %>%
-  add_glance_source_note() %>%
-  bold_p() %>% #<<
+tbl_regression(glyhb_model) |>
+  add_glance_source_note() |>
+  bold_p() |> #<<
   bold_labels() #<<
 ```
 
@@ -906,9 +906,9 @@ tbl_regression(glyhb_model) %>%
 ## `tbl_regression()`: format options
 
 ```{r tbl_regression-bold2}
-tbl_regression(glyhb_model) %>%
-  add_glance_source_note() %>%
-  bold_p() %>%
+tbl_regression(glyhb_model) |>
+  add_glance_source_note() |>
+  bold_p() |>
   bold_labels()
 ```
 
@@ -917,10 +917,10 @@ tbl_regression(glyhb_model) %>%
 ## `tbl_regression()`: modify caption
 
 ```{r modify_caption, eval = FALSE}
-tbl_regression(glyhb_model) %>%
-  add_glance_source_note() %>%
-  bold_p() %>%
-  bold_labels() %>%
+tbl_regression(glyhb_model) |>
+  add_glance_source_note() |>
+  bold_p() |>
+  bold_labels() |>
   modify_caption("**Association of BMI and A1c adjusted for age**") #<<
 ```
 
@@ -929,10 +929,10 @@ tbl_regression(glyhb_model) %>%
 ## `tbl_regression()`: modify caption
 
 ```{r modify_caption2}
-tbl_regression(glyhb_model) %>%
-  add_glance_source_note() %>%
-  bold_p() %>%
-  bold_labels() %>%
+tbl_regression(glyhb_model) |>
+  add_glance_source_note() |>
+  bold_p() |>
+  bold_labels() |>
   modify_caption("**Association of BMI and A1c adjusted for age**")
 ```
 
@@ -956,16 +956,16 @@ marker_model <- lm(marker ~ trt + stage + age, data = trial)
 ```
 
 ```{r your-turn-5-no-run, eval=FALSE}
-response_table <- response_model %>%
+response_table <- response_model |>
   tbl_regression(
     exponentiate = TRUE
-  ) %>%
-  add_global_p() %>%
-  add_glance_source_note() %>%
+  ) |>
+  add_global_p() |>
+  add_glance_source_note() |>
   italicize_levels()
 
-marker_table <- marker_model %>%
-  tbl_regression() %>%
+marker_table <- marker_model |>
+  tbl_regression() |>
   add_global_p()
 
 both_tables <- list(response_table, marker_table)
@@ -977,16 +977,16 @@ tbl_merge(both_tables)
 # Your turn 5
 
 ```{r your-turn-5, echo=FALSE}
-response_table <- response_model %>%
+response_table <- response_model |>
   tbl_regression(
     exponentiate = TRUE
-  ) %>%
-  add_global_p() %>%
-  add_glance_source_note() %>%
+  ) |>
+  add_global_p() |>
+  add_glance_source_note() |>
   italicize_levels()
 
-marker_table <- marker_model %>%
-  tbl_regression() %>%
+marker_table <- marker_model |>
+  tbl_regression() |>
   add_global_p()
 
 both_tables <- list(response_table, marker_table)
@@ -1043,7 +1043,7 @@ tbl_merge(both_tables)
 # Your turn 6
 
 ```{r your-turn-code, eval=FALSE}
-tbl_merge(both_tables) %>%
+tbl_merge(both_tables) |>
   modify_caption(
     "Regression models of participant markets and response"
   )
