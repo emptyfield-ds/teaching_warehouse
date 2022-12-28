@@ -45,7 +45,7 @@ description <- diabetes |>
   split(.$diabetic)
 ```
 
-There were `r description$Diabetic$n` participants with diabetes, who had an average A1c of `r description$Diabetic$glyhb`, and `r description$Healthy$n` participants with diabetes, who had an average A1c of `r description$Healthy$glyhb`.
+There were `r description$Diabetic$n` participants with diabetes, who had an average A1c of `r description$Diabetic$glyhb`, and `r description$Healthy$n` participants without diabetes, who had an average A1c of `r description$Healthy$glyhb`.
 Non-diabetic participants were, on average, younger than those with diabetes (`r description$Healthy$age` vs `r description$Diabetic$age`), There were `r description$Missing$n` participants who were missing data.
 These participants were also younger, on average, than those with diabetes (`r description$Diabetic$age` vs `r description$Missing$age`) See Table 1.
 
