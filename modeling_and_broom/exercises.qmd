@@ -80,7 +80,7 @@ mod_wh |>
   geom_point()
 ```
 
-## Your Turn 6
+## Your Turn 5
 
 The `ggfortify` makes it easy to plot model diagnostics. `ggfortify` is not a part of the tidyverse but meant to work well within it. 
 
@@ -93,7 +93,7 @@ Load the `ggfortify` package and use `autoplot()` on `mod_wh` to plot model diag
 
 ```
 
-## Your Turn 7
+## Your Turn 6
 
 Diabetes is frequently defined as an A1c value of 6.5 or greater. Create a binary variable (0, 1) called `diabetic` indicating diabetes. Use the `ifelse` function. Use ?ifelse if you're  not sure how to use this function.
 
