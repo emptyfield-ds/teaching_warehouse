@@ -31,8 +31,9 @@ diabetes <- diabetes |>
   )
 
 model1 <- diabetes |> 
-  # tip: you can point the pipe to a specific spot in the next call using `.`
-  # try adding `data = .` to `lm()`
+  # tip: you can point the pipe to a specific spot in the next call using `_`
+  # try adding `data = _` to `lm()`
+  # this is equivalent to saying `data = diabetes`
   lm(_______)
 
 model1 |> 

@@ -217,7 +217,7 @@ survived_model |>
   mutate(across(where(_______), round, digits = 2))
 ```
 
-What's going on with this model? Something looks wrong. Try to fix it. Hint: when variables on the right hand side of the formula are highly correlated with each other (collinear), it can sometimes mess up the model fit. This often shows itself through extremely high standard errors. 
+What's going on with this model? Something looks wrong. Try to fix it. Hint: when variables on the right hand side of the formula are highly correlated with each other (collinear), it can sometimes mess up the model fit. This often shows itself through extremely high standard errors. The solution is usually to remove one of the two.
 
 1. Save the new model as `survived_model2`
 2. Tidy the results and round the numeric variables.
