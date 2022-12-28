@@ -51,7 +51,7 @@ copy_targets_template("your_turn_2.R")
 ```{r}
 #| label: diabetes-target
 #| eval: false
-diabetes = read_csv(__________, col_types = cols()) %>% 
+diabetes = read_csv(__________, col_types = cols()) |> 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 ```
 

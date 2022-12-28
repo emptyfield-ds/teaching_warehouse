@@ -17,8 +17,8 @@ library(gapminder)
 ```{r}
 cols <- ________
 
-gapminder %>% 
-  mutate(rwanda = ifelse(country == "Rwanda", TRUE, FALSE)) %>% 
+gapminder |> 
+  mutate(rwanda = ifelse(country == "Rwanda", TRUE, FALSE)) |> 
   ggplot(aes(year, lifeExp, color = rwanda, group = country)) + 
   geom_line() +
   ____________ + 
@@ -166,8 +166,8 @@ evalue(3.9, type = "rd")
 
 ```{r}
 filter_summarize <- function(___) {
-  gapminder %>% 
-    filter(___) %>% 
+  gapminder |> 
+    filter(___) |> 
     summarize(n = ___, mean_lifeExp = ________)
 }
 
@@ -184,11 +184,11 @@ filter_summarize(_______, _______(country, " and "))
 
 ```{r}
 top_scatter_plot <- function(variable, .year) {
-  gapminder %>%
-    ___________ %>% 
-    arrange(desc(______)) %>% 
+  gapminder |>
+    ___________ |> 
+    arrange(desc(______)) |> 
     #  take the 10 lowest values
-    tail(10) %>% 
+    tail(10) |> 
     ggplot(aes(x = ______, y = ______(factor(country)))) +
     ______() +
     theme_minimal()
@@ -218,7 +218,7 @@ Finish early? Try this exercise.
 
 ```{r}
 plot_n_countries <- function(.year) {
-  gapminder %>% 
+  gapminder |> 
     
 }
 
