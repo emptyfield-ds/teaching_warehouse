@@ -1,20 +1,17 @@
 ---
 title: "Modeling survival on the Titanic"
-output: html_document
+format: html
 ---
 
-```{r setup, message=FALSE}
+```{r}
+#| label: setup
+#| message: false
 library(tidyverse)
 library(haven)
 library(visdat)
 library(GGally)
 library(mice)
 library(broom)
-
-# global chunk options
-# add options here to apply to all chunks
-# e.g. knitr::opts_chunk$set(echo = TRUE, dpi = 300)
-knitr::opts_chunk$set(echo = TRUE)
 options(styler.save_after_styling = TRUE)
 ```
 
