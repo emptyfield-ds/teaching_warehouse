@@ -77,7 +77,7 @@ knitr::include_graphics("https://i.imgur.com/1RRqJU0.jpg")
 
 There's a lot of information in this plot we could explore. Let's start with wind production. Which countries are producing the most wind energy in 2018?
 
-1. Create a new dataset, `wind_2018`, that only contains data for 2018 about Wind production. Arrange the dataset by `gigawatts`, then mutate `country_name` with `fct_inorder(country_name)`. This function will lock the order of `country_name` to the way they first appear in the data set. In other words, `country_name` is now a factor sorted by `gigawatts`.
+1. Create a new dataset, `wind_2018`, that only contains data for 2018 about Wind production. Arrange the dataset by `gigawatts`, then mutate `country_name = fct_inorder(country_name)`. This function will lock the order of `country_name` to the way they first appear in the data set. In other words, `country_name` is now a factor sorted by `gigawatts`.
 2. With `wind_2018`, create a bar plot using `geom_col()` with `gigawatts` on the x-axis and `country_name` on the y axis.
 3. In `geom_col()`, set the fill to "steelblue" and the alpha to 0.9. That will help us see the gridlines behind the bars.
 4. Set the x-axis to use commas in their labels, as we did above for the y axis.
@@ -94,12 +94,11 @@ Your plot should look something like this:
 knitr::include_graphics("https://i.imgur.com/eShlIRa.jpg")
 ```
 
-
 Germany was far and away the most significant producer of wind energy in 2018. Let's highlight that bar using aesthetics and the ggtext package. ggtext is a ggplot2 extension that allows us to modify the text on our plot in several ways.
 
 1. Create a new variable, `germany`, that is `TRUE` if the country name is Germany and `FALSE` otherwise.
 2. Set the column geom's aesthetic to map `germany` to fill.
-3. In the theme, set `axis.text.y` to `element_markdown()`. This function comes from ggtext and activates the ability to use markdown and HTML in our plot.
+3. In `theme()`, set `axis.text.y = element_markdown()`. This function comes from ggtext and activates the ability to use markdown and HTML in our plot.
 
 ```{r}
 library(ggtext)
