@@ -1,0 +1,87 @@
+---
+title: "Mini-Project: Meteorite Landings"
+format:
+  html:
+    df-print: paged
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(styler.save_after_styling = TRUE)
+```
+
+# Exercise
+
+In this mini-project, we'll look at data from NASA on meteorite landings contained in the file `meteorite_landings.csv` in the `data` folder. These data contain the following variables:
+
+* `id`: a unique ID for the meteorite
+* `name`: the name of the meteorite
+* `valid_meteorite`: either "Valid", a typical meteorite, or "Relict", a meteorite that has been highly degraded by weather on Earth.
+* `class_of_metorite`: the class of the meteorite (if you want to know more, see the Wikipedia article on meteorite classification: https://en.wikipedia.org/wiki/Meteorite_classification)
+* `mass`: the mass of the meteorite in grams
+* `fall`: either "Found", meaning the meteorite was not observed but found after falling, or "Fell", the meteorite was observed falling.
+* `year`: the year the meteorite fell, or the year it was found (depending on the value of `fell`)
+* `lat` and `long`: the latitude and longitude where the meteorite fell.
+
+# Load the tidyverse
+
+First, load the tidyverse so that we can use readr and dplyr.
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Import the data
+
+Import `data/meteorite_landings.csv` into R using `read_csv()`.
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Filter the data
+
+The years in the data range from 860 to 2101. That last value doesn't make sense. The most recent valid year in the dataset is 2013. Filter the data to remove values after 2013. Make sure to save your dataset using `<-`!
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Answer a few questions about the data
+
+How many meteorites were found after falling, and how many were seen while falling?
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+What is the most common class of meteorite? 
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+What is the name of the meteorite that had the highest mass?
+
+```{r}
+# put your R code in this code chunk
+
+```
+
+## Extension
+
+Each mini-project has an extension where you get to decide what to do next. This is your chance to practice what we've learned without prompts.
+
+For this extension, pick one or two additional things to explore in these data. Extensions don't need to be long or complex, but try to find something in the data that's interesting to you.
+
+```{r}
+# put your R code in this code chunk
+
+```
+

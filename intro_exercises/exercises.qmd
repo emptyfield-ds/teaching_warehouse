@@ -1,0 +1,18 @@
+---
+title: "Getting familiar with exercises"
+format: html
+---
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(gapminder)
+```
+
+## Your turn 1
+
+Look at the names of the variables in the gapminder data set
+
+```{r}
+_____(gapminder)
+```

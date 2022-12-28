@@ -1,0 +1,20 @@
+---
+title: "<span style='color:#E69F00'>Course Exercises</span>"
+output:
+  xaringan::moon_reader:
+    seal: FALSE
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false 
+---
+
+```{r}
+#| echo: false
+#| child: exercises.md
+```
+
