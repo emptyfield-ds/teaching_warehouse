@@ -3,7 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
 @import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
 
-// colors  
+// colors
 $light-blue: #56B4E9;
 $pale-blue: #CEE9FF;
 $dark-blue: #0072B2;
@@ -40,8 +40,7 @@ $selection-color: $body-color;
 
 /*-- scss:rules --*/
 .reveal pre code {
-  background-color: $light-grey;
-  font-size: 1em;
+  font-size: 1.3em;
   padding: 0.5em;
   line-height: 1.2em;
 }
@@ -62,13 +61,13 @@ $selection-color: $body-color;
 .subtitle {
   color: $light-blue;
   text-shadow: none;
-  font-size: 48px;
+  font-size: 72px;
   font-weight: bold;
 }
 
 .quarto-title-authors {
   color: $light-grey;
-  font-size: 72px;
+  font-size: 64px;
   font-family: $presentation-heading-font;
 }
 
@@ -104,6 +103,7 @@ section.has-dark-background h2  {
   color: $light-blue;
   font-weight: 500;
 }
+
 a, a > code {
   color: $pink;
   text-decoration: none;
@@ -114,7 +114,7 @@ strong {
 }
 
 em {
-  color: $light-blue;  
+  color: $light-blue;
   font-style: normal;
   font-weight: bold;
 }
@@ -162,6 +162,18 @@ ol {
 
 .fragment:not(.current-fragment)::before {
   background-color: lighten($light-grey, 3%);
+}
+
+.fragment:not(.current-fragment) strong {
+  color: $light-grey;
+}
+
+.fragment:not(.current-fragment) em {
+  color: $light-grey;
+}
+
+.fragment:not(.current-fragment) del {
+  color: $light-grey;
 }
 
 .current-fragment {
