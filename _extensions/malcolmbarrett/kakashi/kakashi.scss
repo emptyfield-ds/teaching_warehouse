@@ -105,9 +105,18 @@ section.has-dark-background h2  {
   font-weight: 500;
 }
 
-a, a > code {
+a, a > code  {
   color: $pink;
   text-decoration: none;
+}
+
+section.has-dark-background a, a > code  {
+  color: $pink;
+  text-decoration: none;
+}
+
+section.has-dark-background code  {
+  color: $green;
 }
 
 strong {

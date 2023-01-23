@@ -1,29 +1,19 @@
 ---
 title: "Wrangling data with dplyr"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
-class: middle, center
 
 ```{r}
 #| label: setup
 #| include: false
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, 
-        tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", 
-                      dpi = 320)
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
 library(tidyverse)
+library(gapminder)
 ```
-
 
 ```{r}
 #| label: dplyr_wrangling
@@ -32,52 +22,38 @@ library(tidyverse)
 #| echo: false
 knitr::include_graphics("img/dplyr_wrangling.png")
 ```
-.pull-right[Art by Allison Horst]
 
----
-
-background-image: url(http://hexb.in/hexagons/dplyr.png)
-background-position: 90% 10%
-
-```{r}
-#| label: transform
-#| include: false
-library(tidyverse)
-library(gapminder)
-```
+Art by Allison Horst
 
 ## The main verbs of `dplyr`
 
-## `select()`
+![](img/dplyr.png){.absolute top=0 right=0 width=140}
 
-## `filter()`
+### `select()`
 
-## `mutate()`
+### `filter()`
 
-## `arrange()`
+### `mutate()`
 
-## `summarize()`
+### `arrange()`
 
-## `group_by()`
+### `summarize()`
 
----
+### `group_by()`
 
 ## The main verbs of `dplyr`
 
-## **`select()`** = *Subset columns (variables)*
+### **`select()`** = *Subset columns (variables)*
 
-## `filter()`
+### `filter()`
 
-## `mutate()`
+### `mutate()`
 
-## `arrange()`
+### `arrange()`
 
-## `summarize()`
+### `summarize()`
 
-## `group_by()`
-
-
----
+### `group_by()`
 
 ## `select()`
 
@@ -87,15 +63,7 @@ library(gapminder)
 select(<DATA>, <VARIABLES>)
 ```
 
----
-
 ## `select()`
-
-```{r}
-#| label: select-concept-map-02
-#| eval: false
-select(<DATA>, <VARIABLES>)
-```
 
 ```{r} 
 #| label: select-concept-map-highlight-01
@@ -104,7 +72,6 @@ diamonds
 ```
 
 ---
-class: middle
 
 ```{r}
 #| label: new_data_alert_diamonds
@@ -114,17 +81,13 @@ class: middle
 knitr::include_graphics("img/new_data_alert_diamonds.png")
 ```
 
----
-
 ## `select()`
 
 ```{r} 
 #| label: select-example-01
 #| eval: false
-select(diamonds, carat, cut, color, clarity) #<<
+select(diamonds, carat, cut, color, clarity)
 ```
-
----
 
 ## `select()`
 
@@ -134,36 +97,28 @@ select(diamonds, carat, cut, color, clarity) #<<
 select(diamonds, carat, cut, color, clarity)
 ```
 
----
-
 ## `select()`
 
 ```{r} 
 #| label: select-helpers-example
 #| eval: false
 select(diamonds, carat, cut, color, clarity)
-
 select(diamonds, carat:clarity)
-
 select(diamonds, 1:4)
-
 select(diamonds, starts_with("c"))
-
 ?select_helpers
 ```
-
----
 
 ## gapminder
 
 ```{r}
 #| label: gapminder-package
+#| output-location: fragment
 library(gapminder)
 gapminder
 ```
 
 ---
-class: middle
 
 ```{r}
 #| label: new_data_alert_gapminder
@@ -175,9 +130,9 @@ knitr::include_graphics("img/new_data_alert_gapminder.png")
 
 ---
 
-## Your turn 1
+## *Your Turn 1*
 
-## Alter the code to select just the `pop` column:
+### Alter the code to select just the `pop` column:
 
 ```{r}
 #| label: select-your-turn-01
@@ -185,20 +140,16 @@ knitr::include_graphics("img/new_data_alert_gapminder.png")
 select(gapminder, year, lifeExp)
 ```
 
----
-
-## Your Turn 1
+## *Your Turn 1*
 
 ```{r}
 #| label: select-your-turn-output
 select(gapminder, pop)
 ```
 
----
+## *Make a prediction*
 
-## Show of Hands
-
-#### Which of these is NOT a way to select the `country` and `continent` columns together?
+### Which of these is NOT a way to select the `country` and `continent` columns together?
 
 ```{r}
 #| label: select-show-of-hands-01
@@ -212,11 +163,9 @@ select(gapminder, starts_with("c"))
 select(gapminder, ends_with("t"))
 ```
 
----
+## *Make a prediction*
 
-## Show of Hands
-
-#### Which of these is NOT a way to select the `country` and `continent` columns together?
+### Which of these is NOT a way to select the `country` and `continent` columns together?
 
 ```{r}
 #| label: select-show-of-hands-highlight
@@ -224,23 +173,19 @@ select(gapminder, ends_with("t"))
 select(gapminder, ends_with("t"))
 ```
 
----
-
 ## The main verbs of `dplyr`
 
-## `select()`
+### `select()`
 
-## **`filter()`** = *Subset rows by value*
+### **`filter()`** = *Subset rows by value*
 
-## `mutate()`
+### `mutate()`
 
-## `arrange()`
+### `arrange()`
 
-## `summarize()`
+### `summarize()`
 
-## `group_by()`
-
----
+### `group_by()`
 
 ## `filter()`
 
@@ -250,88 +195,40 @@ select(gapminder, ends_with("t"))
 filter(<DATA>, <PREDICATES>)
 ```
 
---
+. . .
 
-### *Predicates*: **`TRUE`** or **`FALSE`** statements
+**Predicates**: `TRUE` or `FALSE` statements
 
----
+. . .
 
-## `filter()`
+**Comparisons**: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal).
 
-```{r}
-#| label: filter-concept-map-example-comparisons
-#| eval: false
-filter(<DATA>, <PREDICATES>)
-```
+. . .
 
-### ~~Predicates: `TRUE` or `FALSE` statements~~
+**Operators**: `&` is "and", `|` is "or", and `!` is "not"
 
-### *Comparisons*: **`>`**, **`>=`**, **`<`**, **`<=`**, **`!=`** (not equal), and **`==`** (equal).
+. . .
 
----
+**`%in%`**
 
-## `filter()`
-
-```{r}
-#| label: filter-concept-map-example-operators
-#| eval: false
-filter(<DATA>, <PREDICATES>)
-```
-
-### ~~Predicates: `TRUE` or `FALSE` statements~~
-
-### ~~Comparisons: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal).~~
-
-### *Operators*: **`&`** is "and", **`|`** is "or", and **`!`** is "not"
-
----
-
-## `filter()`
-
-```{r}
-#| label: filter-concept-map-example-in
-#| eval: false
-filter(<DATA>, <PREDICATES>)
-```
-
-### ~~Predicates: `TRUE` or `FALSE` statements~~
-
-### ~~Comparisons: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal).~~
-
-### ~~Operators: `&` is "and", `|` is "or", and `!` is "not"~~
-
-### **`%in%`**
-
---
+. . .
 
 ```{r} 
 #| label: filter-in-example
 "a" %in% c("a", "b", "c")
 ```
 
----
-
 ## `filter()`
 
 ```{r} 
 #| label: filter-equal-example-01
-#| eval: false
+#| output-location: fragment
 filter(diamonds, cut == "Ideal", carat > 3)
 ```
 
 ---
 
-## `filter()`
-
-```{r} 
-#| label: filter-equal-example-01-highlight
-#| highlight.output: !expr c(1, 4:7)
-filter(diamonds, cut == "Ideal", carat > 3)
-```
-
----
-
-## Your turn 2
+## *Your turn 2*
 
 ### Show:
 
@@ -339,15 +236,7 @@ filter(diamonds, cut == "Ideal", carat > 3)
 ### All of the rows for El Salvador  
 ### All of the rows that have a missing value for `year`  (no need to edit this code)
 
----
-
-## Your turn 2
-
-### Show:
-
-### All of the rows where `pop` is greater than or equal to 100000  
-### All of the rows for El Salvador  
-### All of the rows that have a missing value for `year`  (no need to edit this code)
+. . .
 
 ```{r}
 #| label: filter-your-turn-02-output
@@ -357,8 +246,6 @@ filter(gapminder, country == "El Salvador")
 filter(gapminder, is.na(year))
 ```
 
----
-
 ## `filter()`
 
 ```{r}
@@ -366,9 +253,7 @@ filter(gapminder, is.na(year))
 filter(diamonds, cut == "Ideal" | cut == "Very Good", carat > 3)
 ```
 
----
-
-## Your turn 3
+## *Your turn 3*
 
 ### Use Boolean operators to alter the code below to return only the rows that contain:
 
@@ -382,9 +267,7 @@ filter(gapminder, country == "El Salvador" | country == "Oman")
 filter(______, _______)
 ```
 
----
-
-## Your turn 3
+## *Your turn 3*
 
 ### Use Boolean operators to alter the code below to return only the rows that contain:
 
@@ -398,22 +281,19 @@ filter(gapminder, country == "El Salvador")
 filter(gapminder, pop > 100000, year <= 1960)
 ```
 
----
-
 ## The main verbs of `dplyr`
 
-## `select()`
+### `select()`
 
-## `filter()`
+### `filter()`
 
-## **`mutate()`** = *Change or add a variable*
+### **`mutate()`** = *Change or add a variable*
 
-## `arrange()`
+### `arrange()`
 
-## `summarize()`
+### `summarize()`
 
-## `group_by()`
----
+### `group_by()`
 
 ## `mutate()`
 
@@ -423,44 +303,32 @@ filter(gapminder, pop > 100000, year <= 1960)
 mutate(<DATA>, <NAME> = <FUNCTION>)
 ```
 
----
-
 ## `mutate()`
 
 ```{r}
 #| label: mutate-example
-#| eval: false
-mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
+#| output-location: fragment
+#| code-line-numbers: "|3|4"
+mutate(
+  diamonds, 
+  log_price = log(price), 
+  log_pricesq = log_price^2
+)
 ```
-
----
-
-## `mutate()`
-
-```{r}
-#| label: mutate-example-highlight
-#| highlight.output: 15.0
-mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
-```
-
-
----
-
 
 ## The main verbs of `dplyr`
 
-## `select()`
+### `select()`
 
-## `filter()`
+### `filter()`
 
-## `mutate()`
+### `mutate()`
 
-## **`arrange()`** = *Sort the data set*
+### **`arrange()`** = *Sort the data set*
 
-## `summarize()`
+### `summarize()`
 
-## `group_by()`
----
+### `group_by()`
 
 ## `arrange()`
 
@@ -470,16 +338,12 @@ mutate(diamonds, log_price = log(price), log_pricesq = log_price^2)
 arrange(<DATA>, <SORTING VARIABLE>)
 ```
 
----
-
 ## `arrange()`
 
 ```{r}
 #| label: arrange-example-01
 arrange(diamonds, price)
 ```
-
----
 
 ## `arrange()`
 
@@ -488,8 +352,6 @@ arrange(diamonds, price)
 arrange(diamonds, cut, price)
 ```
 
----
-
 ## `desc()`
 
 ```{r}
@@ -497,47 +359,31 @@ arrange(diamonds, cut, price)
 arrange(diamonds, cut, desc(price))
 ```
 
----
+## *Your turn 4*
 
-## Your turn 4
+### Arrange gapminder by `year`. Add `lifeExp` as a second (tie breaking) variable to arrange on. 
 
-## Arrange gapminder by `year`. Add `lifeExp` as a second (tie breaking) variable to arrange on. 
+### Which country had the lowest life expectancy in 1952?
 
-## Which country had the lowest life expectancy in 1952?
-
----
-
-## Your turn 4
+## *Your turn 4*
 
 ```{r}
 #| label: arrange-your-turn-04
 arrange(gapminder, year, lifeExp)
 ```
 
----
+## *Your turn 5*
 
-## Your turn 5
+### Use `desc()` to find the country with the highest `gdpPercap`.
 
-## Use `desc()` to find the country with the highest `gdpPercap`.
-
----
-
-## Your turn 5
+## *Your turn 5*
 
 ```{r}
 #| label: arrange-your-turn-05
 arrange(gapminder, desc(gdpPercap))
 ```
 
----
-class: inverse, center
-
-# Detour: The Pipe
-
-# **`|>`**
-## Passes the result on one function to another function
-
----
+# Detour: The Pipe `|>` {background-color="#23373B"}
 
 ## Detour: The Pipe
 
@@ -550,8 +396,6 @@ diamonds <- mutate(diamonds, log_price = log(price))
 
 diamonds
 ```
-
----
 
 ## Detour: The Pipe
 
@@ -566,43 +410,45 @@ diamonds <- diamonds |>
 diamonds
 ```
 
----
+. . .
 
-## Keyboard shortcuts
+::: {.huge}
+*Passes the result of one function to another function*
+:::
 
+## Keyboard shortcuts {.huge}
 
-## Insert *`<-`* with **`alt/opt + -`**
+. . .
 
---
+Insert `<-` with `alt/opt + -`
 
-## Insert *`|>`* with **`ctrl/cmd + shift + m`**
-## Tools > Global Options > Code
+. . .
+
+Insert `|>` with `ctrl/cmd + shift + m`
+
+## Keyboard shortcuts {.large}
+
+Tools > Global Options > Code
 
 ```{r}
 #| echo: false
 knitr::include_graphics("img/native-pipe.png")
 ```
 
----
+## The magrittr pipe {background-color="#23373B"}
 
-## The magrittr pipe
+### In the wild, you'll see `%>%` a lot. This is the old pipe prior to when R had a built-in one. Either pipe is fine, but we'll use the so-called native pipe `|>`
+### See [R for Data Science](https://r4ds.hadley.nz/workflow-pipes.html#magrittr-and-the-pipe) for more info
 
-## In the wild, you'll see `%>%` a lot. This is the old pipe prior to when R had a built in one. Either pipe is fine, but we'll use the so-called native pipe `|>`
-## See [R for Data Science](https://r4ds.hadley.nz/workflow-pipes.html#magrittr-and-the-pipe) for more info
-
----
-
-## Your turn 6
+## *Your turn 6*
 
 ### Use `|>` to write a sequence of functions that: 
 
-### 1. Filter only countries that are in the continent of Oceania.
-### 2. Select the `country`, `year` and `lifeExp` columns  
-### 3. Arrange the results so that the highest life expetency is at the top.
+### Filter only countries that are in the continent of Oceania.
+### Select the `country`, `year` and `lifeExp` columns  
+### Arrange the results so that the highest life expetency is at the top.
 
----
-
-## Your turn 6
+## *Your turn 6*
 
 ```{r}
 #| label: filter-select-arrange-your-turn-06
@@ -612,9 +458,7 @@ gapminder |>
   arrange(desc(lifeExp))
 ```
 
----
-
-## Challenge!
+## *Challenge!*
 
 ### 1. Import the diabetes data from the importing data. A copy of the CSV file is available in this folder.
 ### 2. Add the variable `bmi` to the data set using height and weight using the formula: `(weight / height^2) * 703`
@@ -625,18 +469,7 @@ gapminder |>
 
 ```{r}
 #| label: mutate-select-filter-challenge
-#| eval: false
-diabetes <- read_csv("diabetes.csv")
-diabetes |> 
-  mutate(bmi = (weight / height^2) * 703) |> 
-  select(id, glyhb, bmi) |> 
-  filter(bmi > 35)
-```
----
-
-```{r}
-#| label: mutate-select-filter-challenge-highlight
-#| highlight.output: 1.0
+#| output-location: fragment
 diabetes <- read_csv("diabetes.csv")
 diabetes |> 
   mutate(bmi = (weight / height^2) * 703) |> 
@@ -648,18 +481,17 @@ diabetes |>
 
 ## The main verbs of `dplyr`
 
-## `select()`
+### `select()`
 
-## `filter()`
+### `filter()`
 
-## `mutate()`
+### `mutate()`
 
-## `arrange()`
+### `arrange()`
 
-## **`summarize()`** = *Summarize the data*
+### **`summarize()`** = *Summarize the data*
 
-## **`group_by()`** = *Group the data*
----
+### **`group_by()`** = *Group the data*
 
 ## `summarize()`
 
@@ -669,8 +501,6 @@ diabetes |>
 summarize(<DATA>, <NAME> = <FUNCTION>)
 ```
 
----
-
 ## `summarize()`
 
 ```{r}
@@ -678,19 +508,15 @@ summarize(<DATA>, <NAME> = <FUNCTION>)
 summarize(diamonds, n = n(), mean_price = mean(price))
 ```
 
----
+## *Your turn 7*
 
-## Your turn 7
+### Use `summarise()` to compute these statistics about the gapminder data set:
 
-## Use `summarise()` to compute these statistics about the gapminder data set:
+#### 1. The first (`min()`) year in the data
+#### 2. The last (`max()`) year in the data  
+#### 3. The total number of observations (`n()`) and the total number of unique countries in the data (`n_distinct()`)
 
-### 1. The first (`min()`) year in the data
-### 2. The last (`max()`) year in the data  
-### 3. The total number of observations (`n()`) and the total number of unique countries in the data (`n_distinct()`)
-
----
-
-## Your turn 7
+## *Your turn 7*
 
 ```{r}
 #| label: summarize-your-turn-07
@@ -703,8 +529,6 @@ gapminder |>
   )
 ```
 
----
-
 ## `group_by()`
 
 ```{r}
@@ -713,87 +537,34 @@ gapminder |>
 group_by(<DATA>, <VARIABLE>)
 ```
 
----
-
 ## `group_by()`
 
 ```{r}
 #| label: group-by-example-01
-#| eval: false
+#| output-location: fragment
 diamonds |> 
   group_by(cut)
 ```
-
----
-
-## `group_by()`
-
-```{r}
-#| label: group-by-example-01-output-highlight
-#| highlight.output: 2.0
-diamonds |> 
-  group_by(cut)
-```
-
----
 
 ## `group_by()`
 
 ```{r}
 #| label: group-by-summarize-example-01
-#| eval: false
-diamonds |> 
-  group_by(cut) |> #<<
-  summarize(n = n(), mean_price = mean(price)) #<<
-```
-
----
-
-## `group_by()`
-
-```{r}
-#| label: group-by-summarize-example-01-output
+#| code-line-numbers: "|2,3"
+#| output-location: fragment
 diamonds |> 
   group_by(cut) |> 
-  summarize(n = n(), mean_price = mean(price))
+  summarize(n = n(), mean_price = mean(price)) 
 ```
 
----
+## *Your turn 8*
 
-## `group_by()`
-
-```{r}
-#| label: group-by-mutate-example-01
-#| eval: false
-diamonds |> 
-  group_by(cut) |> 
-  mutate(n = n(), mean_price = mean(price))
-```
-
----
-
-## `group_by()`
-
-```{r}
-#| label: group-by-mutate-example-01-output
-#| highlight.output: !expr '1:2'
-diamonds |> 
-  group_by(cut) |> 
-  mutate(n = n(), mean_price = mean(price))
-```
-
----
-
-## Your turn 8
-
-## Extract the rows where `continent == "Europe"`. Then use `group_by()` to group by country. Finally, use `summarize()` to compute:
+### Extract the rows where `continent == "Europe"`. Then use `group_by()` to group by country. Finally, use `summarize()` to compute:
 
 ### 1. The total number of observations for each country in Europe
-### 2. The lowest observed life expectancy for each country 
+### 2. The lowest observed life expectancy for each country
 
----
-
-## Your turn 8
+## *Your turn 8*
 
 ```{r}
 #| label: filter-group-by-summarize-your-turn-08
@@ -803,9 +574,7 @@ gapminder |>
   summarize(n = n(), min_le = min(lifeExp))
 ```
 
----
-
-## Your turn 9
+## *Your turn 9*
 
 ### Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
@@ -816,13 +585,11 @@ gapminder |>
   __________ |> 
   __________ |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
-    geom_line() + 
-    scale_color_manual(values = continent_colors)
+  geom_line() + 
+  scale_color_manual(values = continent_colors)
 ```
 
----
-
-## Your turn 9
+## *Your turn 9*
 
 ### Use grouping to calculate the mean life expectancy for each continent and year. Call the mean life expectancy variable `mean_le`. Plot the life expectancy over time (no need to change the plot code).
 
@@ -833,13 +600,11 @@ gapminder |>
   group_by(continent, year) |> 
   summarize(mean_le = mean(lifeExp)) |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
-    geom_line() + 
-    scale_color_manual(values = continent_colors)
+  geom_line() + 
+  scale_color_manual(values = continent_colors)
 ```
 
 ---
-
-class: center, middle
 
 ```{r}
 #| label: filter-group-by-summarize-your-turn-09-output
@@ -849,85 +614,54 @@ gapminder |>
   group_by(continent, year) |> 
   summarize(mean_le = mean(lifeExp)) |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
-    geom_line() + 
-    scale_color_manual(values = continent_colors)
+  geom_line() + 
+  scale_color_manual(values = continent_colors)
 ```
----
 
 ## `mutate(across())`
 
---
+. . . 
 
 ```{r}
 #| label: mutate-across-concept-map
 #| eval: false
+#| code-line-numbers: "|3"
 mutate(
   <DATA>, 
-  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) #<<
+  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) 
 )
 ```
 
----
+## `mutate(across())`
 
 ```{r}
 #| label: mutate-across-example-01
-#| eval: false
+#| code-line-numbers: "|3"
+#| output-location: slide
 mutate(
   diamonds, 
-  across(c("carat", "depth"), list(sd = sd, mean = mean)) #<<
+  across(c("carat", "depth"), list(sd = sd, mean = mean)) 
 )
 ```
-
----
-
-```{r}
-#| label: mutate-across-example-output
-#| highlight.output: !expr c(15, 16)
-mutate(
-  diamonds, 
-  across(c("carat", "depth"), list(sd = sd, mean = mean))
-)
-```
-
----
 
 ## `mutate(across(where()))`
 
---
-
 ```{r}
 #| label: mutate-across-where-example-01
-#| eval: false
+#| code-line-numbers: "|3"
+#| output-location: slide
 mutate(
   gapminder, 
-  across(where(is.numeric), list(mean = mean, median = median)) #<<
+  across(where(is.numeric), list(mean = mean, median = median)) 
 )
 ```
-
-
----
-
-```{r}
-#| label: mutate-across-where-example-output
-#| highlight.output: !expr c(15, 16)
-mutate(
-  gapminder, 
-  across(where(is.numeric), list(mean = mean, median = median)) #<<
-)
-```
-
----
 
 ## Joining data
 
 ### Use `left_join()`, `right_join()`, `full_join()`, or `inner_join()` to join datasets
 ### Use `semi_join()` or `anti_join()` to filter datasets against each other
 
----
-
-class: inverse, center
-
-# Resources
-## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
-## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
-## [10 dplyr tips](https://twitter.com/i/moments/1044926554239881217): a Twitter thread on other useful aspects of dplyr
+## Resources {background-color="#23373B"}
+### [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+### [Posit Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
+### [10 dplyr tips](https://twitter.com/i/moments/1044926554239881217): a Twitter thread on other useful aspects of dplyr
