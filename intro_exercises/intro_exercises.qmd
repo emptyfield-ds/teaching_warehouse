@@ -1,5 +1,5 @@
 ---
-title: "<span style='color:#E69F00'>Course Exercises</span>"
+title: "Course Exercises"
 format: "kakashi-revealjs"
 ---
 

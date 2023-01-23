@@ -1,8 +1,7 @@
 ---
 title: "Reading and Writing Data"
-subtitle: "<span style='color:#56B4E9'>readr and haven</span> <br>"
+subtitle: "readr and haven"
 date: "`r Sys.Date()`"
-author: "Malcolm Barrett"
 format: "kakashi-revealjs"
 ---
 

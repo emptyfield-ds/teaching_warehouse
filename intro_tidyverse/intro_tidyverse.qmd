@@ -1,24 +1,13 @@
 ---
-title: "<span style='color:#E69F00'>Introduction to the Tidyverse</span>"
-subtitle: "<span style='color:#56B4E9'>Import, wrangle, model, and communicate data</span> <br>"
+title: "Introduction to the Tidyverse"
+subtitle: "Import, wrangle, model, and communicate data"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
 
 ```{r}
 #| label: setup
 #| include: false
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
 library(tidyverse)
 ```
 

@@ -156,6 +156,18 @@ ol {
   color: $light-grey;
 }
 
+section.has-dark-background .fragment:not(.current-fragment) {
+  color: $dark-grey;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) strong {
+  color: $dark-grey;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) em {
+  color: $dark-grey;
+}
+
 .fragment:not(.current-fragment) code {
   color: $light-grey;
 }
