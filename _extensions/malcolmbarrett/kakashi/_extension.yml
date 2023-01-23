@@ -28,4 +28,3 @@ contributes:
       code-overflow: wrap
       menu: false
       incremental: true
-      scrollable: false
