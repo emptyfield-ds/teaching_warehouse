@@ -31,7 +31,7 @@ readr is a core member of the tidyverse. It is loaded every time you call `libra
 
 ## Sample data
 
-There are two datasets stored alongside this notebook: `diabetes` and `nhgh`. Both are datasets related to diabetes. 
+We have several files containing the  `diabetes` dataset (it's the same data but in CSV, SAS, Stata, etc, formats).
 
 ## Importing Data
 
