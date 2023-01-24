@@ -1,24 +1,17 @@
 ---
-title: "<span style='color:#E69F00'>Data Visualization in R</span>"
-subtitle: "<span style='color:#56B4E9'>ggplot2 and the grammar of graphics</span> <br>"
+title: "Data Visualization in R"
+subtitle: "ggplot2 and the grammar of graphics"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
 
 ```{r}
 #| label: setup
 #| include: false
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
 library(tidyverse)
 library(datasauRus)
 diabetes <- read_csv("diabetes.csv")
@@ -26,67 +19,47 @@ diabetes <- read_csv("diabetes.csv")
 
 
 ```{r}
-#| out.height: 90%
-#| out.width: 90%
 #| echo: false
 knitr::include_graphics("img/ggplot2_masterpiece.png")
 ```
-.pull-right[Art by Allison Horst]
+
+Art by Allison Horst
 
 ---
 
-class: inverse, center
+## Data Visualization with R {background-color="#23373B" .large}
 
-# Data Visualization with R
-## **ggplot2** works well with the **tidyverse** and is friendly and powerful
+. . .
 
----
+**ggplot2** works well with the **tidyverse** and is friendly and powerful
 
-class: inverse, center
+. . .
 
-# Data Visualization with R
-## ~~ggplot2 works well with the tidyverse and is friendly and powerful~~
-## **Better plots** are **better communication**
+**Better plots** are **better communication**
 
 ---
 
-class: inverse, center
+## {background-image="img/tidyhex.png" background-size="contain"}
 
-background-image: url(img/tidyhex.png)
+## ggplot2: Elegant Data Visualizations in R {.large}
 
----
-background-image: url(http://hexb.in/hexagons/ggplot2.png)
-background-position: 90% 10%
+![](img/ggplot2.png){.absolute top=0 right=0 width=140}
 
-# ggplot2: Elegant Data Visualizations in R
+. . .
 
-## a Layered Grammar of Graphics
+*A Layered Grammar of Graphics*
 
----
-background-image: url(http://hexb.in/hexagons/ggplot2.png)
-background-position: 90% 10%
+. . .
 
-# ggplot2: Elegant Data Visualizations in R
+*Data* is mapped to *aesthetics*; **Statistics** and **plot** are linked
 
-## ~~a Layered Grammar of Graphics~~
-## Data is mapped to aesthetics; Statistics and plot are linked
+. . .
 
----
-background-image: url(http://hexb.in/hexagons/ggplot2.png)
-background-position: 90% 10%
-
-# ggplot2: Elegant Data Visualizations in R
-
-## ~~a Layered Grammar of Graphics~~
-## ~~Data is mapped to aesthetics; Statistics and plot are linked~~
-## Sensible defaults; Infinitely extensible
-
----
-
-background-image: url(http://hexb.in/hexagons/ggplot2.png)
-background-position: 90% 10%
+*Sensible defaults*; **Infinitely extensible**
 
 ## Publication quality and beyond
+
+![](img/ggplot2.png){.absolute top=0 right=0 width=140}
 
 ### [https://nyti.ms/2jUp36n](https://nyti.ms/2jUp36n)
 
@@ -102,8 +75,6 @@ as_tibble(mtcars)
 
 ---
 
-class: middle
-
 ```{r}
 #| label: slide-11
 #| out.height: 100%
@@ -116,16 +87,10 @@ knitr::include_graphics("img/new_data_alert_mtcars.png")
 
 ```{r}
 #| label: slide-12
-#| eval: false
+#| output-location: fragment
 ggplot()
 ```
 
----
-
-```{r}
-#| label: slide-13
-ggplot()
-```
 ---
 
 ```{r}
@@ -141,45 +106,27 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
   geom_point()
 ```
 
----
-
-# `ggplot()`
+## `ggplot()`
 ### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
 ###  &nbsp;&nbsp; `<geom_function>()`
 
----
+. . .
 
-# `ggplot()`
-### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
-###  &nbsp;&nbsp; `<geom_function>()`
+Add layers with `+`
 
-## Add layers with *`+`*
+. . .
 
----
-# `ggplot()`
-### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
-###  &nbsp;&nbsp; `<geom_function>()`
+Put `+` at the **end** of a line
 
-## ~~Add layers with `+`~~
-## Put *`+`* at the **end** of a line
+. . .
 
----
+Connect *variables in your dataset* to *aesthetics in the plot* with `aes()`
 
-# `ggplot()`
-### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
-###  &nbsp;&nbsp; `<geom_function>()`
+## *Your Turn 1*
 
-## ~~Add layers with `+`~~
-## ~~Put `+` at the end of a line~~
-## map aesthetics with *`aes()`*
+### Read in the `diabetes` data.
 
----
-
-## Your Turn 1
-
-## Read in the `diabetes` data.
-
-## Write and run the code from this slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
+### Write and run the code from this slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
 ```{r}
 #| label: slide-20
@@ -197,20 +144,16 @@ ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
   geom_point()
 ```
 
----
-
-# Aesthetics: `aes()`
+## Aesthetics: `aes()`
 
 ### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
 ###  &nbsp;&nbsp; `<geom_function>()`
  
---
+. . .
 
-## Aesthetics *map* the data to the plot
+Aesthetics *map* the data to the plot
  
----
-
-# Aesthetics: `aes()`
+## Aesthetics: `aes()`
 
 ```{r}
 #| label: slide-23
@@ -224,9 +167,7 @@ ggplot(mtcars, aes(x = mpg, y = hp, alpha = cyl)) + geom_point()
 ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
 ```
 
----
-
-## Your Turn 2
+## *Your Turn 2*
 
 ### Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph using the `gender` variable. Experiment.  
 
@@ -246,6 +187,7 @@ ggplot(
 
 ```{r}
 #| label: slide-25
+#| code-line-numbers: "3"
 ggplot(
   data = diabetes, 
   mapping = aes(x = weight, y = hip, color = gender)
@@ -257,6 +199,7 @@ ggplot(
 
 ```{r}
 #| label: slide-26
+#| code-line-numbers: "3"
 ggplot(
   data = diabetes, 
   mapping = aes(x = weight, y = hip, size = gender)
@@ -268,6 +211,7 @@ ggplot(
 
 ```{r}
 #| label: slide-27
+#| code-line-numbers: "3"
 ggplot(
   data = diabetes, 
   mapping = aes(x = weight, y = hip, alpha = gender)
@@ -279,6 +223,7 @@ ggplot(
 
 ```{r}
 #| label: slide-28
+#| code-line-numbers: "3"
 ggplot(
   data = diabetes, 
   mapping = aes(x = weight, y = hip, shape = gender)
@@ -292,7 +237,8 @@ ggplot(
 #| label: slide-29-a
 #| out.height: 90%
 #| out.width: 90%
-#| eval: false
+#| output-location: slide
+#| code-line-numbers: "|6,7"
 ggplot(data = diabetes) +
   geom_point(
     mapping = aes(
@@ -303,53 +249,70 @@ ggplot(data = diabetes) +
     )
   )
 ```
-
 ---
 
-class: middle
+## geoms: the shape of the data
 
 ```{r}
-#| label: slide-29-b
-#| out.height: 90%
-#| out.width: 90%
-#| echo: false
-ggplot(data = diabetes) +
-  geom_point(
-    mapping = aes(
-      x = weight, 
-      y = hip, 
-      color = gender, 
-      shape = gender
-    )
+#| code-line-numbers: "9"
+#| output-location: column
+#| out.width: "100%"
+ggplot(
+  mtcars, 
+  aes(
+    x = factor(am), 
+    y = mpg, 
+    color = factor(am)
   )
+) +
+  geom_point()
 ```
----
 
-# geoms
+## geoms: the shape of the data
 
-## What shape does the data take?
+```{r}
+#| code-line-numbers: "9"
+#| output-location: column
+#| out.width: "100%"
+ggplot(
+  mtcars, 
+  aes(
+    x = factor(am), 
+    y = mpg, 
+    fill = factor(am)
+  )
+) +
+  geom_violin()
+```
 
---
+## geoms: the shape of the data
 
-## `geom_point()`
+```{r}
+#| code-line-numbers: "9"
+#| output-location: column
+#| out.width: "100%"
+ggplot(
+  mtcars, 
+  aes(
+    x = hp, 
+    y = mpg, 
+    color = factor(am)
+  )
+) +
+  geom_smooth()
+```
 
---
+## geoms: the shape of the data
 
-## `geom_line()`
+```{r}
+#| echo: false
+#| out.width: 100%
+knitr::include_graphics("img/cheatsheet-geoms.png")
+```
 
---
+## *Your Turn 3*
 
-## `geom_violin()`
-
---
-
-# **Check the cheatsheet!**
-
----
-
-## Your Turn 3
-
-## Replace this scatterplot with one that draws boxplots. 
+### Replace this scatterplot with one that draws boxplots. 
 
 ```{r}
 #| label: slide-31
@@ -364,23 +327,10 @@ ggplot(diabetes, aes(gender, chol)) + geom_point()
 ggplot(diabetes, aes(gender, chol)) + geom_boxplot()
 ```
 
----
+## *Your Turn 4*
 
-## Your Turn 4
-
-## 1. Make a histogram of the `glyhb` variable in `diabetes`.
-
-```{r}
-#| label: slide-33-1
-
-```
-
-## 2. Redo the `glyhb` plot as a density plot.
-
-```{r}
-#| label: slide-33-2
-
-```
+### 1. Make a histogram of the `glyhb` variable in `diabetes`.
+### 2. Redo the `glyhb` plot as a density plot.
 
 ---
 
@@ -400,7 +350,6 @@ ggplot(diabetes, aes(x = glyhb)) +
 
 ---
 
-
 ```{r}
 #| label: slide-36
 diabetes |> 
@@ -412,17 +361,18 @@ diabetes |>
 
 ```{r}
 #| label: slide-37
+#| code-line-numbers: "|2"
 diabetes |> 
-  drop_na() |> #<<
+  drop_na() |> 
   ggplot(aes(x = frame)) + 
   geom_bar()
 ```
 
 ---
 
-## Your Turn 5
+## *Your Turn 5*
 
-## Make a bar chart of `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
+### Make a bar chart of `frame` colored by `gender`. Then, try it with the `fill` aesthetic instead of `color`.
 
 ```{r}
 #| label: slide-38
@@ -445,21 +395,21 @@ diabetes |>
 
 ---
 
-## Positions
+## Positions {.extra-large}
 
 ### `geom_bar(position = "<POSITION>")`
 
---
+. . .
 
-## When we have aesthetics mapped, how are they positioned?
+When we have aesthetics mapped, how are they positioned?
 
---
+. . .
 
-## *geom_bar*: **dodge**, **fill**, **stacked** (default)
+*geom_bar*: **dodge**, **fill**, **stacked** (default)
 
---
+. . .
 
-## *geom_point*: **jitter**
+*geom_point*: **jitter**
 
 ---
 
@@ -473,23 +423,23 @@ ggplot(mtcars, aes(x = factor(am), y = hp)) +
 
 ```{r}
 #| label: slide-42
+#| code-line-numbers: "2"
 ggplot(mtcars, aes(x = factor(am), y = hp)) + 
-  geom_point(position = "jitter") #<<
+  geom_point(position = "jitter") 
 ```
 
 ---
 
 ```{r}
 #| label: slide-43
+#| code-line-numbers: "2"
 ggplot(mtcars, aes(x = factor(am), y = hp)) + 
-  geom_jitter(width = .1, height = 0) #<<
+  geom_jitter(width = .1, height = 0) 
 ```
 
----
+## *Your Turn 6*
 
-## Your Turn 6
-
-## Take your code for the bar chart before (using the `fill` aesthetic). Experiment with different `position` values: "dodge", "fill", "stack"
+### Take your code for the bar chart before (using the `fill` aesthetic). Experiment with different `position` values: `"dodge"`, `"fill"`, `"stack"`
 
 ---
 
@@ -521,25 +471,24 @@ diabetes |>
   geom_bar(position = "fill")
 ```
 
----
+## Mapping vs setting {.large}
 
-## Mapping vs setting
+Cool, but how do I just make everything *blue*?
 
-## Cool, but how do I just make everything *blue*?
+. . .
 
---
+`geom_point(aes(x, y), color = "blue")`
+`geom_bar(aes(x, y), fill = "blue")`
 
-## `geom_point(aes(x, y), color = "blue")`
-## `geom_bar(aes(x, y), fill = "blue")`
+. . .
 
---
-
-## To set a color, put it **outside** `aes()`
+To set a color, put it **outside** `aes()`
 
 ---
 
 ```{r}
 #| label: slide-49
+#| code-line-numbers: "|2"
 ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + 
   geom_point(color = "blue")
 ```
@@ -548,6 +497,7 @@ ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) +
 
 ```{r}
 #| label: slide-50
+#| code-line-numbers: "2"
 ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + 
   geom_point(aes(color = "blue"))
 ```
@@ -556,26 +506,28 @@ ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) +
 
 ```{r}
 #| label: slide-51
+#| code-line-numbers: "|2"
 ggplot(mtcars, aes(x = cyl)) + 
-  geom_bar(color = "blue")
+  geom_bar(color = "steelblue")
 ```
 
 ---
 
 ```{r}
 #| label: slide-52
+#| code-line-numbers: "2"
 ggplot(mtcars, aes(x = cyl)) + 
-  geom_bar(fill = "blue")
+  geom_bar(fill = "steelblue")
 ```
+
 ---
 
 ```{r}
 #| label: slide-53
+#| code-line-numbers: "2"
 ggplot(mtcars, aes(x = cyl)) + 
-  geom_bar(color = "red", fill = "blue")
+  geom_bar(color = "firebrick", fill = "steelblue")
 ```
-
----
 
 ## Adding layers
 
@@ -589,11 +541,9 @@ ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
   <THEME_FUNCTION>()
 ```
 
----
+## *Your Turn 7* {.small}
 
-## Your Turn 7
-
-#### Run the code after every change you make.
+### Run the code after every change you make.
 
 #### 1. Predict what this code will do. Then run it.  
 #### 2. Add a `linetype` aesthetic for `gender`. Run it again.  
@@ -611,7 +561,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth()
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-56
@@ -620,7 +570,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth()
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-57
@@ -629,7 +579,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender))
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-58
@@ -638,7 +588,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), color = "black")
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-59
@@ -647,7 +597,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-60
@@ -656,7 +606,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-61
@@ -665,7 +615,7 @@ ggplot(diabetes, aes(weight, hip)) +
   geom_smooth(aes(linetype = gender), color = "black", se = FALSE)
 ```
 
----
+## {.small}
 
 ```{r}
 #| label: slide-62
@@ -675,54 +625,34 @@ ggplot(diabetes, aes(weight, hip)) +
   theme_bw()
 ```
 
----
+## Facets {.large}
 
-## Facets
+Easily split your plot into panels
 
-## Easy peazy panels
+. . .
 
----
+`facet_grid()`
 
-## Facets
+`facet_wrap()`
 
-## ~~Easy peazy panels~~
+. . .
 
-## **`facet_grid()`**
-## **`facet_wrap()`**
+`facet_grid(`**`rows = vars(x)`**`,` **`cols = vars(y)`**`)`
 
----
-
-## Facets
-
-## ~~Easy peazy panels~~
-
-## ~~`facet_grid()`~~
-## ~~`facet_wrap()`~~
-
-## `facet_grid(`**`rows = vars(x)`**`,` **`cols = vars(y)`**`)`
-## `facet_wrap(`**`vars(x)`**`)`
+`facet_wrap(`**`vars(x)`**`)`
 
 ---
 
 ```{r}
-#| eval: false
+#| code-line-numbers: "|4"
+#| output-location: fragment
 diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
-  facet_grid(rows = vars(cut), cols = vars(clarity)) #<<
+  facet_grid(rows = vars(cut), cols = vars(clarity)) 
 ```
 
----
-
-```{r}
-diamonds |> 
-  ggplot(aes(x = carat, y = price)) + 
-  geom_point() + 
-  facet_grid(rows = vars(cut), cols = vars(clarity))
-```
-
----
-## Your Turn 8
+## *Your Turn 8*
 
 ### Use a facet grid by `gender` and `location`
 
@@ -736,37 +666,23 @@ ggplot(diabetes, aes(weight, hip)) +
 ---
 
 ```{r}
+#| code-line-numbers: "4"
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth() + 
-  facet_grid(rows = vars(gender), cols = vars(location)) #<<
+  facet_grid(rows = vars(gender), cols = vars(location))
 ```
 
----
-
-# `facet_wrap()`
+## `facet_wrap()`
 
 ```{r}
-#| eval: false
-diamonds |> 
-  ggplot(aes(x = carat, y = price)) + 
-  geom_point() + 
-  facet_wrap(vars(clarity)) #<<
-```
-
----
-
-# `facet_wrap()`
-
-```{r}
-#| echo: false
+#| code-line-numbers: "|4"
+#| output-location: slide
 diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
   facet_wrap(vars(clarity))
 ```
-
----
 
 ## datasauRus
 
@@ -777,75 +693,32 @@ datasaurus_dozen
 
 ---
 
-class: middle
-
 ```{r}
-#| out.height: 100%
 #| out.width: 100%
 #| echo: false
 knitr::include_graphics("img/new_data_alert_datasaurus.png")
 ```
 
----
+## *Your Turn 9: Challenge!* {.small}
 
-## Your Turn 9: Challenge!
-
-#### 1. Load the `datasauRus` package. This package includes a data set called `datasaurus_dozen`.
-#### 2. Use dplyr to summarize the correlation between `x` and `y`. First, group it by `dataset`, and then summarize with the `cor()`  function. Call the new variable `corr`. What's it look like?
-#### 3. Mutate `corr`. Round it to 2 digits. Then, mutate it again (or wrap it around your first change) using: `paste("corr:", corr)`
-#### 4. Save the summary data frame as `corrs`.
-#### 5. Pass `datasaurus_dozen` to `ggplot()` and add a point geom
-#### 6. Use a facet (wrap) for `dataset`.
-#### 7. Add a text geom. For this geom, set `data = corrs`. You also need to use `aes()` in this call to set `label = corr`, `x = 50`, and `y = 110`.
+### 1. Load the `datasauRus` package. This package includes a data set called `datasaurus_dozen`.
+### 2. Use dplyr to summarize the correlation between `x` and `y`. First, group it by `dataset`, and then summarize with the `cor()`  function. Call the new variable `corr`. What's it look like?
+### 3. Mutate `corr`. Round it to 2 digits. Then, mutate it again (or wrap it around your first change) using: `paste("corr:", corr)`
+### 4. Save the summary data frame as `corrs`.
+### 5. Pass `datasaurus_dozen` to `ggplot()` and add a point geom
+### 6. Use a facet (wrap) for `dataset`.
+### 7. Add a text geom. For this geom, set `data = corrs`. You also need to use `aes()` in this call to set `label = corr`, `x = 50`, and `y = 110`.
 
 ---
 
 ```{r}
+#| code-line-numbers: "|2|3|5,6"
 corrs <- datasaurus_dozen |> 
   group_by(dataset) |> 
   summarize(corr = cor(x, y)) |> 
   mutate(
     corr = round(corr, 2),
     corr = paste("corr:", corr)
-  )
-```
-
----
-
-```{r}
-#| eval: false
-corrs <- datasaurus_dozen |> 
-  group_by(dataset) |> #<<
-  summarize(corr = cor(x, y)) |> 
-  mutate(
-    corr = round(corr, 2),
-    corr = paste("corr:", corr)
-  )
-```
-
----
-
-```{r}
-#| eval: false
-corrs <- datasaurus_dozen |> 
-  group_by(dataset) |> 
-  summarize(corr = cor(x, y)) |>  #<<
-  mutate(
-    corr = round(corr, 2),
-    corr = paste("corr:", corr)
-  )
-```
-
----
-
-```{r}
-#| eval: false
-corrs <- datasaurus_dozen |> 
-  group_by(dataset) |> 
-  summarize(corr = cor(x, y)) |> 
-  mutate(
-    corr = round(corr, 2), #<<
-    corr = paste("corr:", corr) #<<
   )
 ```
 
@@ -858,7 +731,10 @@ corrs
 ---
 
 ```{r}
-#| eval: false
+#| code-line-numbers: "|4|5"
+#| output-location: slide
+#| fig.width: 12
+#| out.width: "100%"
 datasaurus_dozen |> 
   ggplot(aes(x, y)) + 
   geom_point() + 
@@ -866,37 +742,3 @@ datasaurus_dozen |>
   facet_wrap(vars(dataset))
 ```
 
----
-
-```{r}
-#| eval: false
-datasaurus_dozen |> 
-  ggplot(aes(x, y)) + 
-  geom_point() + 
-  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) + #<<
-  facet_wrap(vars(dataset))
-```
-
----
-
-```{r}
-#| eval: false
-datasaurus_dozen |> 
-  ggplot(aes(x, y)) + 
-  geom_point() + 
-  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-  facet_wrap(vars(dataset)) #<<
-```
-
----
-
-```{r}
-#| echo: false
-#| fig.height: 5.8
-datasaurus_dozen |> 
-  ggplot(aes(x, y)) + 
-  geom_point() + 
-  geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-  facet_wrap(vars(dataset)) + 
-  theme(strip.text = element_text(margin = margin(t = 0.1)))
-```

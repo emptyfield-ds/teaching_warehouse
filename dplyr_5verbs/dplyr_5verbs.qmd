@@ -307,7 +307,7 @@ mutate(<DATA>, <NAME> = <FUNCTION>)
 
 ```{r}
 #| label: mutate-example
-#| output-location: fragment
+#| output-location: slide
 #| code-line-numbers: "|3|4"
 mutate(
   diamonds, 

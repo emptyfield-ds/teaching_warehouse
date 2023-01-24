@@ -170,11 +170,23 @@ section.has-dark-background .fragment:not(.current-fragment) {
   color: $dark-grey;
 }
 
+section.has-dark-background .fragment:not(.current-fragment) {
+  color: $dark-grey;
+}
+
+section.has-dark-background .current-fragment {
+  color: $light-grey;
+}
+
 section.has-dark-background .fragment:not(.current-fragment) strong {
   color: $dark-grey;
 }
 
 section.has-dark-background .fragment:not(.current-fragment) em {
+  color: $dark-grey;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) del {
   color: $dark-grey;
 }
 
@@ -253,6 +265,7 @@ ol li::before {
 }
 
 .huge { font-size: 200% }
+.extra-large { font-size: 150% }
 .large { font-size: 130% }
 .medium { font-size: 115% }
 .small { font-size: 70% }
