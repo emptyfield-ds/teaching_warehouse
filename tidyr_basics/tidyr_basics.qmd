@@ -1,29 +1,21 @@
 ---
 title: "Tidying Data"
-subtitle: "<span style='color:#56B4E9'>tidyr</span> <br>"
+subtitle: "tidyr"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
-
-background-image: url(http://hexb.in/hexagons/tidyr.png)
-background-position: 90% 10%
 
 ```{r}
 #| label: setup
 #| include: false
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60, tibble.print_max = 15)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
 library(tidyverse)
 ```
+
+## **tidyr**
 
 <!-- 
 TODO: Update the art slide when Allison makes a pivot version
@@ -37,41 +29,32 @@ knitr::include_graphics("img/tidyr_spread_gather.png")
 -->
 
 
-## **tidyr**
+![](img/tidyr.png){.absolute top=0 right=0 width=140}
 
-## Functions for tidying data. 
-## What is tidy data?
-.large[
-> “Tidy datasets are all alike, but every messy dataset is messy in its own way.” –– Hadley Wickham
-]
----
+### Functions for tidying data. 
+### What is tidy data?
 
-# Tidy Data
-![](http://garrettgman.github.io/images/tidy-1.png)</div>
+. . . 
 
----
+:::{.extra-large}
+> “Tidy datasets are all alike, but every messy dataset is messy in its own way.” — Hadley Wickham
+:::
 
-# Tidy Data 
-![](http://garrettgman.github.io/images/tidy-1.png)</div>
-### .medium[Each **column** is a single *variable*]
+## Tidy Data {.large}
 
----
+![](http://garrettgman.github.io/images/tidy-1.png)
 
-# Tidy Data
-![](http://garrettgman.github.io/images/tidy-1.png)</div>
-### ~~.medium[Each column is a single variable]~~
-### .medium[Each **row** is a single *observation*]
+. . .
 
----
+Each **column** is a single *variable*
 
-# Tidy Data 
-![](http://garrettgman.github.io/images/tidy-1.png)</div>
-### ~~.medium[Each column is a single variable]~~
-### ~~.medium[Each row is a single observation]~~
-### .medium[Each **cell** is a *value*]
+. . .
 
----
+Each **row** is a single *observation*
 
+. . .
+
+Each **cell** is a *value*
 
 ## `pivot_longer()`
 
@@ -79,8 +62,6 @@ knitr::include_graphics("img/tidyr_spread_gather.png")
 #| eval: false
 pivot_longer(<DATA>, <NAMES TO>, <VALUES TO>, <VARIABLES>)
 ```
-
----
 
 ## Lord of the Rings
 
@@ -100,8 +81,6 @@ lotr <- tribble(
 )
 ```
 
----
-
 ## Lord of the Rings
 
 ```{r}
@@ -117,30 +96,17 @@ lotr
 knitr::include_graphics("img/new_data_alert_lotr.png")
 ```
 
----
-
 ## `pivot_longer()`
 
 ```{r}
-#| eval: false
-lotr %>%
-  pivot_longer(#<<
-    names_to = "sex", #<<
-    values_to = "words", #<<
-    cols = female:male #<<
-  ) #<<
-```
-
----
-
-```{r}
-#| highlight.output: !expr '1:2'
-lotr %>%
+#| code-line-numbers: "|2-6"
+#| output-location: slide
+lotr |>
   pivot_longer(
-    names_to = "sex",
-    values_to = "words",
-    cols = female:male
-  )
+    names_to = "sex", 
+    values_to = "words", 
+    cols = female:male 
+  ) 
 ```
 
 ---
@@ -152,27 +118,21 @@ lotr %>%
 knitr::include_graphics("img/new_data_alert_tidyr.png")
 ```
 
----
-
-## Your Turn 1
+## *Your Turn 1*
 
 
-### Use `pivot_longer()` to reorganize `table4a` into three columns: **country**, **year**, and **cases**.
+### Use `pivot_longer()` to reorganize `table4a` into three columns: `country`, `year`, and `cases`.
 
----
-
-## Your Turn 1
+## *Your Turn 1*
 
 ```{r}
-table4a %>%
+table4a |>
   pivot_longer(
     names_to = "year",
     values_to = "cases",
     cols = -country
   )
 ```
-
----
 
 ## `pivot_wider()`
 
@@ -181,79 +141,35 @@ table4a %>%
 pivot_wider(<DATA>, <NAMES FROM>, <VALUES FROM>)
 ```
 
----
-
-class: center, middle
-
-
 ```{r}
 #| label: tidyr-longer-wider
-#| out.height: 65%
 #| out.width: 65%
 #| echo: false
 knitr::include_graphics("img/tidyr-longer-wider.gif")
 ```
-.pull-right[Animation by Mara Averick]
 
----
+Animation by Mara Averick
 
 ## `pivot_wider()`
 
 ```{r}
-#| eval: false
-lotr %>%
-  pivot_longer(#<<
-    names_to = "sex", #<<
-    values_to = "words", #<<
-    cols = female:male #<<
-  ) %>%#<<
+#| code-line-numbers: "|2-6|7-10"
+#| output-location: fragment
+lotr |>
+  pivot_longer(
+    names_to = "sex", 
+    values_to = "words", 
+    cols = female:male 
+  ) |>
   pivot_wider(
     names_from = race,
     values_from = words
   )
 ```
 
----
+## *Your Turn 2* {.small}
 
-## `pivot_wider()`
-
-```{r}
-#| eval: false
-lotr %>%
-  pivot_longer(
-    names_to = "sex",
-    values_to = "words",
-    cols = female:male
-  ) %>%
-  pivot_wider(#<<
-    names_from = race, #<<
-    values_from = words #<<
-  )#<<
-```
-
----
-
-## `pivot_wider()`
-
-```{r}
-#| highlight.output: !expr '1:2'
-lotr %>%
-  pivot_longer(
-    names_to = "sex",
-    values_to = "words",
-    cols = female:male
-  ) %>%
-  pivot_wider(
-    names_from = race,
-    values_from = words
-  )
-```
-
----
-
-## Your Turn 2
-
-### Use `pivot_wider()` to reorganize `table2` into four columns: **country**, **year**, **cases**, and **population**. 
+### Use `pivot_wider()` to reorganize `table2` into four columns: `country`, `year`, `cases`, and `population.` 
 ### Create a new variable called `prevalence` that divides `cases` by `population` multiplied by 100000.
 ###  Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom. 
 
@@ -262,61 +178,36 @@ lotr %>%
 table2
 ```
 
----
-
-## Your Turn 2
+## *Your Turn 2*
 
 ```{r}
-table2 %>%
+#| code-line-numbers: "3-4,6"
+table2 |>
   pivot_wider(
-    names_from = type, #<<
-    values_from = count #<<
-  ) %>% 
-  mutate(prevalence = (cases / population) * 100000) #<<
+    names_from = type, 
+    values_from = count 
+  ) |> 
+  mutate(prevalence = (cases / population) * 100000) 
 ```
 
----
-
-## Your Turn 2
+## *Your Turn 2*
 
 ```{r}
-#| eval: false
-table2 %>%
+#| code-line-numbers: "7-10"
+#| output-location: slide
+table2 |>
   pivot_wider(
     names_from = type,
     values_from = count
-  ) %>%
-  mutate(prevalence = (cases / population) * 100000) %>%
-  ggplot(aes(x = year, y = prevalence, color = country)) + #<<
-  geom_point(size = 2) + #<<
-  geom_line() + #<<
-  scale_x_continuous(breaks = c(1999L, 2000L)) #<<
+  ) |>
+  mutate(prevalence = (cases / population) * 100000) |>
+  ggplot(aes(x = year, y = prevalence, color = country)) + 
+  geom_point(size = 2) + 
+  geom_line() + 
+  scale_x_continuous(breaks = c(1999L, 2000L)) 
 ```
 
----
-
-## Your Turn 2
-
-```{r}
-#| echo: false
-#| fig.width: 5.5
-#| out.height: 50%
-#| out.width: 50%
-table2 %>%
-  pivot_wider(
-    names_from = type,
-    values_from = count
-  ) %>%
-  mutate(prevalence = (cases / population) * 100000) %>%
-  ggplot(aes(x = year, y = prevalence, color = country)) +
-  geom_point(size = 2) +
-  geom_line() +
-  scale_x_continuous(breaks = c(1999L, 2000L))
-```
-
----
-
-## Your Turn 3
+## *Your Turn 3*
 
 ### Pivot the 5th through 60th columns of `who` so that the names of the columns go into a new variable called `codes` and the values go into a new variable called `n`. Then select just the `country`, `year`, `codes` and `n` variables.
 
@@ -325,37 +216,19 @@ table2 %>%
 who
 ```
 
----
-
-## Your Turn 3
+## *Your Turn 3*
 
 ```{r}
-#| eval: false
-who %>%
+#| code-line-numbers: "3-5"
+#| output-location: slide
+who |>
   pivot_longer(
-    names_to = "codes", #<<
-    values_to = "n", #<<
-    cols = 5:60 #<<
-  ) %>% 
+    names_to = "codes", 
+    values_to = "n", 
+    cols = 5:60 
+  ) |> 
   select(country, year, codes, n)
 ```
-
----
-
-## Your Turn 3
-
-```{r}
-#| echo: false
-who %>%
-  pivot_longer(
-    names_to = "codes",
-    values_to = "n",
-    cols = 5:60
-  ) %>% 
-  select(country, year, codes, n)
-```
-
----
 
 ## `separate()`/`unite()`
 
@@ -366,11 +239,9 @@ separate(<DATA>, <VARIABLE>, into = c("<VARIABLE1>", "<VARIABLE2>"))
 unite(<DATA>, <VARIABLES>)
 ```
 
----
+## *Your Turn 4*
 
-## Your Turn 4
-
-### Use the `cases` data below. Separate the `sex_age` column into **sex** and **age** columns.
+### Use the `cases` data below. Separate the `sex_age` column into `sex` and `age` columns.
 
 ```{r}
 #| eval: false
@@ -383,80 +254,50 @@ cases <- tribble(
 separate(_______, _______, into = c("_______", "_______"))
 ```
 
----
-
-## Your Turn 4
+## *Your Turn 4*
 
 ```{r}
-#| eval: false
+#| code-line-numbers: "7"
+#| output-location: fragment
 cases <- tribble(
    ~id,     ~sex_age,
    "1",    "male_56",
    "2",  "female_77",    
    "3",  "female_49"
 )
-separate(cases, sex_age, into = c("sex", "age")) #<<
+separate(cases, sex_age, into = c("sex", "age")) 
 ```
 
----
-
-## Your Turn 4
+## *Your Turn 4*
 
 ```{r}
+#| code-line-numbers: "7-12|11"
+#| output-location: fragment
 cases <- tribble(
    ~id,     ~sex_age,
    "1",    "male_56",
    "2",  "female_77",    
    "3",  "female_49"
 )
-separate(cases, sex_age, into = c("sex", "age"))
+separate(
+  cases, 
+  sex_age, 
+  into = c("sex", "age"), 
+  convert = TRUE
+) 
 ```
 
----
+## *Your Turn 5: Challenge!* {.small}
 
-## Your Turn 4
+### There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
 
-```{r}
-#| highlight.output: 3.0
-cases <- tribble(
-   ~id,     ~sex_age,
-   "1",    "male_56",
-   "2",  "female_77",    
-   "3",  "female_49"
-)
-separate(cases, sex_age, into = c("sex", "age"))
-```
+### Import the data
+### Pivot the columns into 2 new columns called `year` and `incidence`
+### Add a new variable called `race`. Remember that each data set corresponds to a single race.
+### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
+### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
 
----
-
-## Your Turn 4
-
-```{r}
-#| highlight.output: 3.0
-cases <- tribble(
-   ~id,     ~sex_age,
-   "1",    "male_56",
-   "2",  "female_77",    
-   "3",  "female_49"
-)
-separate(cases, sex_age, into = c("sex", "age"), convert = TRUE) #<<
-```
-
----
-
-## Your Turn 5: Challenge!
-
-#### There are two CSV files in this folder containing SEER data in breast cancer incidence in white and black women. For both sets of data:
-
-#### Import the data
-#### Pivot the columns into 2 new columns called `year` and `incidence`
-#### Add a new variable called `race`. Remember that each data set corresponds to a single race.
-#### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
-#### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
-
----
-
-## Your Turn 5: No solution 😈
+## *Your Turn 5: No solution* 😈
 
 ```{r}
 #| echo: false
@@ -465,84 +306,56 @@ separate(cases, sex_age, into = c("sex", "age"), convert = TRUE) #<<
 #| dpi: 320.0
 breast_ca_black <- read_csv("breast_ca_black.csv")
 breast_ca_white <- read_csv("breast_ca_white.csv")
-breast_ca_black <- breast_ca_black %>% 
+breast_ca_black <- breast_ca_black |> 
   pivot_longer(
     names_to = "year", 
     values_to = "incidence", 
     cols = everything()
-  ) %>% 
+  ) |> 
   mutate(race = "black")
 
-breast_ca_white <- breast_ca_white %>% 
+breast_ca_white <- breast_ca_white |> 
   pivot_longer(
     names_to = "year", 
     values_to = "incidence", 
     cols = everything()
-  ) %>% 
+  ) |> 
   mutate(race = "white")
 
 breast_ca <- bind_rows(breast_ca_black, breast_ca_white)
 
-breast_ca %>% 
+breast_ca |> 
   ggplot(aes(x = year, y = incidence, color = race, group = race)) + 
   geom_point() +
   geom_line() + 
   scale_x_discrete(breaks = seq(1975, 2011, by = 5)) # show years by fives
 ```
 
-
----
-
-# Other neat tidyr tools
-## Uncounting frequency tables
+## Other neat tidyr tools
+### Uncounting frequency tables
 
 ```{r}
-#| eval: false
-lotr %>%
+#| code-line-numbers: "|7"
+#| output-location: slide
+lotr |>
   pivot_longer(
     names_to = "sex",
     values_to = "count",
     cols = c(female, male)
-  ) %>% 
-  uncount(count) #<<
-```
-
----
-
-# Other neat tidyr tools
-## Uncounting frequency tables
-
-```{r}
-#| echo: false
-#| highlight.output: !expr '1:2'
-lotr %>% 
-  pivot_longer(
-    names_to = "sex", 
-    values_to = "count", 
-    cols = c(female, male)
-  ) %>% 
+  ) |> 
   uncount(count)
 ```
 
+## Other neat tidyr tools
+### *Work with data frames*
+#### `crossing()` and `expand()`
+#### `nest()` and `unnest()`
 
----
+## Other neat tidyr tools
+### *Work with missing data*
+#### `complete()`
+#### `drop_na()` and `replace_na()`
 
-# Other neat tidyr tools
-## Work with data frames
-## **`crossing()`** and **`expand()`**
-## **`nest()`** and **`unnest()`**
-
----
-
-# Other neat tidyr tools
-## Work with missing data
-## **`complete()`**
-## **`drop_na()`** and **`replace_na()`**
-
----
-
-class: inverse
-
-# Resources
-## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
-## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
+## Resources {background-color="#23373B"}
+### [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+### [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
