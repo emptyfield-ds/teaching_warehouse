@@ -277,9 +277,9 @@ For the arrow, we'll add a second annotation with `annotate()` with the segment 
 
 1. Add `annotate()` to `gg_text_annotations`. Don't forget to connect them with `+`!
 2. Set `geom` to "segment". Like the text annotation, this links the annotation to the underlying function `geom_segment()`
-3. Set `x` to 22 and `xend` to 17, 
+3. Set `x` to 20 and `xend` to 16.5, 
 4. Set `y` to 20000 and `yend` to 20001
-5. Set the `arrow` argument to `arrow(length = unit(0.3, "cm"))`. This is a function that creates an arrowhead shape.
+5. Set the `arrow` argument to `arrow(length = unit(0.14, "cm"), type = "closed")`. This is a function that creates an arrowhead shape.
 6. Set `color` to "black"
 
 ```{r}

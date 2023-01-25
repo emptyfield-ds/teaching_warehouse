@@ -1,109 +1,119 @@
 ---
 title: "ggplot2: Plot replication challenge!"
-date: "`r paste(Sys.Date(), '<br><br>developed with Martin Frigaard')`"
-format: "kakashi-revealjs"
+date: "`r Sys.Date()`"
+author: "developed with Martin Frigaard"
+format: 
+  "kakashi-revealjs":
+    auto-stretch: false
 ---
 
-## *Exercise*
+## Exercise {background-color="#23373B" .large}
 
-### The purpose of this exercise is to re-create a publication-ready plot using your dplyr and ggplot2 skills.
+. . .
 
-### Open the Financial Times article, [Coronavirus tracked: the latest figures as countries start to reopen](https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441)
+The purpose of this exercise is to re-create a publication-ready plot using your dplyr and ggplot2 skills.
 
-### There is also a PDF of the article titled, `2020-07-24-excess_mortality.pdf`
+. . .
 
-### The data you need is `"data/ft_excess_deaths.csv"`
+Open the Financial Times article, [Coronavirus tracked: the latest figures as countries start to reopen](https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441)
+
+There is also a PDF of the article titled, `2020-07-24-excess_mortality.pdf`
+
+. . .
+
+The data you need is `data/ft_excess_deaths.csv`
 
 ## Financial Times Figure
 
+::: {.center}
+
 ```{r}
 #| label: ft-covid-19-jul-recreate
-#| out.width: 80%
-#| fig.align: center
 #| echo: false
 knitr::include_graphics("img/ft-covid-19-jul-recreate.png")
 ```
 
-## You got this.
+:::
 
-### Don't worry about making it exactly, try and see how far you can get. 
+## What's this plot telling us?
 
-### You're encouraged to work together if you want to and exchange tips/tricks you figured out. 
-
-## Questions to guide you:
-
-. . .
-
-What is the author trying to show us?
-
-. . .
-
-What is the intended message? 
-
-. . .
-
-What can we learn from the subtitles?
-
-. . .
+::: {.center}
 
 ```{r}
 #| label: ft-covid-19-jul-recreate-alt-text-01
-#| out.width: 80%
-#| fig.align: center
 #| echo: false
 knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-01.png")
 ```
+:::
 
-. . .
+## What's this plot telling us?
+
+::: {.center}
 
 ```{r}
 #| label: ft-covid-19-jul-recreate-alt-text-02
-#| out.width: 80%
-#| fig.align: center
 #| echo: false
 knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-02.png")
 ```
-## Questions to guide you:
+:::
 
-### What can we learn from the labels?
+## What's this plot telling us?
+
+::: {.center}
 
 ```{r}
 #| label: latest-data
-#| out.height: 50%
 #| out.width: 50%
-#| fig.align: center
 #| echo: false
 knitr::include_graphics("img/latest-data.png")
 ```
 
----
+:::
 
-## Questions to guide you:
+## What's this plot telling us?
 
-### What can we learn from the labels?
+::: {.center}
 
 ```{r}
 #| label: historical-average
-#| out.height: 50%
 #| out.width: 50%
-#| fig.align: center
 #| echo: false
 knitr::include_graphics("img/historical-average.png")
 ```
 
----
+:::
 
-## Questions to guide you:
+## What's this plot telling us?
 
-### What can we learn from the labels?
-
+::: {.center}
 
 ```{r}
 #| label: no-excess-deaths
-#| out.height: 50%
 #| out.width: 50%
-#| fig.align: center
 #| echo: false
 knitr::include_graphics("img/no-excess-deaths.png")
 ```
 
+:::
+
+## Our Goal for the Recreation
+
+::: {.center}
+
+```{r}
+#| label: uk-plot
+#| echo: false
+knitr::include_graphics("img/uk-plot.png")
+```
+:::
+
+## Our Goal for the Recreation
+
+::: {.center}
+
+```{r}
+#| label: final-plot
+#| echo: false
+knitr::include_graphics("img/final-plot.png")
+```
+:::

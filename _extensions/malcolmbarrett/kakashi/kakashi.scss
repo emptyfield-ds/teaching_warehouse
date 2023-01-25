@@ -186,6 +186,14 @@ section.has-dark-background .fragment:not(.current-fragment) em {
   color: $dark-grey;
 }
 
+section.has-dark-background .fragment:not(.current-fragment) a, a > code  {
+  color: $dark-grey;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) code {
+  color: $dark-grey;
+}
+
 section.has-dark-background .fragment:not(.current-fragment) del {
   color: $dark-grey;
 }
@@ -268,7 +276,7 @@ ol li::before {
   vertical-align: middle;
 }
 
-.center > img {
+.center img {
   display: block;
   margin-left: auto;
   margin-right: auto;
