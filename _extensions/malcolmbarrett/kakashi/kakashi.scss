@@ -218,6 +218,10 @@ section.has-dark-background .fragment:not(.current-fragment) del {
   color: $light-grey;
 }
 
+.fragment:not(.current-fragment) a {
+  color: $light-grey;
+}
+
 .current-fragment {
   color: $body-color;
 }
