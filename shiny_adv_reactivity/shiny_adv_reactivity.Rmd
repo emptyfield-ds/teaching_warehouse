@@ -461,7 +461,7 @@ class: inverse, center
 
 # Detour: The Pipe
 
-# **`%>%`**
+# **`|>`**
 ## Passes the result on one function to another function
 
 ---
@@ -481,7 +481,7 @@ diamonds
 ## Detour: The Pipe
 
 ```{r, eval=FALSE}
-diamonds <- diamonds %>% 
+diamonds <- diamonds |> 
   arrange(price) %>% 
   filter(price > 300) %>% 
   mutate(log_price = log(price))

@@ -1,0 +1,119 @@
+---
+title: "ggplot2: Plot replication challenge!"
+date: "`r Sys.Date()`"
+author: "developed with Martin Frigaard"
+format: 
+  "kakashi-revealjs":
+    auto-stretch: false
+---
+
+## Exercise {background-color="#23373B" .large}
+
+. . .
+
+The purpose of this exercise is to re-create a publication-ready plot using your dplyr and ggplot2 skills.
+
+. . .
+
+Open the Financial Times article, [Coronavirus tracked: the latest figures as countries start to reopen](https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441)
+
+There is also a PDF of the article titled, `2020-07-24-excess_mortality.pdf`
+
+. . .
+
+The data you need is `data/ft_excess_deaths.csv`
+
+## Financial Times Figure
+
+::: {.center}
+
+```{r}
+#| label: ft-covid-19-jul-recreate
+#| echo: false
+knitr::include_graphics("img/ft-covid-19-jul-recreate.png")
+```
+
+:::
+
+## What's this plot telling us?
+
+::: {.center}
+
+```{r}
+#| label: ft-covid-19-jul-recreate-alt-text-01
+#| echo: false
+knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-01.png")
+```
+:::
+
+## What's this plot telling us?
+
+::: {.center}
+
+```{r}
+#| label: ft-covid-19-jul-recreate-alt-text-02
+#| echo: false
+knitr::include_graphics("img/ft-covid-19-jul-recreate-alt-text-02.png")
+```
+:::
+
+## What's this plot telling us?
+
+::: {.center}
+
+```{r}
+#| label: latest-data
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/latest-data.png")
+```
+
+:::
+
+## What's this plot telling us?
+
+::: {.center}
+
+```{r}
+#| label: historical-average
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/historical-average.png")
+```
+
+:::
+
+## What's this plot telling us?
+
+::: {.center}
+
+```{r}
+#| label: no-excess-deaths
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/no-excess-deaths.png")
+```
+
+:::
+
+## Our Goal for the Recreation
+
+::: {.center}
+
+```{r}
+#| label: uk-plot
+#| echo: false
+knitr::include_graphics("img/uk-plot.png")
+```
+:::
+
+## Our Goal for the Recreation
+
+::: {.center}
+
+```{r}
+#| label: final-plot
+#| echo: false
+knitr::include_graphics("img/final-plot.png")
+```
+:::

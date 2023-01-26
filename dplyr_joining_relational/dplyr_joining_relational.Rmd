@@ -89,7 +89,7 @@ publishers
 ## Joining data
 
 ```{r}
-superheroes %>% 
+superheroes |> 
   left_join(publishers, by = "publisher")
 ```
 
@@ -98,7 +98,7 @@ superheroes %>%
 ## Joining data
 
 ```{r}
-publishers %>% 
+publishers |> 
   left_join(superheroes, by = "publisher")
 ```
 
@@ -152,7 +152,7 @@ gapminder_tbl
 ## dplyr works out-of-box with numerous types of databases
 
 ```{r}
-gapminder_tbl %>%
+gapminder_tbl |>
   summarize(
     first = min(year, na.rm = TRUE), 
     last = max(year, na.rm = TRUE), 
@@ -166,13 +166,13 @@ gapminder_tbl %>%
 ## dplyr works out-of-box with numerous types of databases
 
 ```{r}
-gapminder_tbl %>%
+gapminder_tbl |>
   summarize(
     first = min(year, na.rm = TRUE), 
     last = max(year, na.rm = TRUE), 
     n = n(), 
     n_countries = n_distinct(country)
-   ) %>% 
+   ) |> 
   show_query()
 ```
 
@@ -187,13 +187,13 @@ gapminder_tbl %>%
 ## use `collect()` to pull to local data frame
 
 ```{r}
-local_df <- gapminder_tbl %>%
+local_df <- gapminder_tbl |>
   summarize(
     first = min(year, na.rm = TRUE), 
     last = max(year, na.rm = TRUE), 
     n = n(), 
     n_countries = n_distinct(country)
-   ) %>% 
+   ) |> 
   collect()
 
 local_df

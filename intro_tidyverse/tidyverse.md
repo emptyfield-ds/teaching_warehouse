@@ -1,26 +1,23 @@
-class: inverse, center
-
-background-image: url(img/tidyhex.png)
+## {background-image="img/tidyhex.png" background-size="contain"}
 ---
 
-class: inverse, center
+## Working with data in R {background-color="#23373B" .large}
 
-## Working with data in R
-## **the tidyverse is a collection of *friendly and consistent* tools for data analysis and visualization.**
+. . .
 
----
-class: inverse, center
+**the tidyverse is a collection of *friendly and consistent* tools for data analysis and visualization.**
 
-## Working with data in R
-## ~~the tidyverse is a collection of friendly and consistent tools for data analysis and visualization.~~
-## **They live as, R packages, each of which does one thing well.**
+. . . 
 
----
+**They live as, R packages, each of which does one thing well.**
 
-background-image: url(https://raw.githubusercontent.com/tidyverse/tidyverse/master/man/figures/logo.png)
-background-position: 90% 10%
 ## `library(tidyverse)` will load  
-## the core packages: 
+
+![](img/logo.png){.absolute top=0 right=0 width=140}
+
+### the core packages: 
+
+<br/>
 
 #### [ggplot2](http://ggplot2.tidyverse.org), for data visualisation.
 #### [dplyr](http://dplyr.tidyverse.org), for data manipulation.

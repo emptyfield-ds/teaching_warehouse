@@ -29,7 +29,7 @@ segment_reactor_output <- function(reactor_num, data_table = FALSE) {
 #' count_donations()
 #'
 count_donations <- function(donations = get_donation_data()) {
-  donations %>%
-    dplyr::group_by(.data$sector) %>%
+  donations |>
+    dplyr::group_by(.data$sector) |>
     dplyr::summarize(donations = sum(.data$donation))
 }

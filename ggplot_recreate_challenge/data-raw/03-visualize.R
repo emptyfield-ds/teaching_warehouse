@@ -21,7 +21,7 @@ uk_labs <- ggplot2::labs(x = "Date", y = "Deaths",
 
 # Now we can plot the mean deaths per week and year for the UK
 # gg_uk_recent_years ----
-gg_uk_recent_years <- UKExcessDeathsPriorWk %>%
+gg_uk_recent_years <- UKExcessDeathsPriorWk |>
   ggplot(aes(x = week,
              y = deaths,
              group = year)) +

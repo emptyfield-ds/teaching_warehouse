@@ -1,0 +1,173 @@
+---
+title: "Tidy Tuesday"
+format:
+  html:
+    df-print: paged
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(styler.save_after_styling = TRUE)
+library(tidyverse)
+```
+
+# Exercise
+
+The purpose of this exercise is to practice your R wrangling and visualization skills with real data sets from the Tidy Tuesday project:
+
+> The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions. While we understand that the two are related, the focus of this practice is purely on building skills with real-world data.
+
+The Tidy Tuesday project shares data every week for people to cultivate data science skills. Some people post on Twitter, on the #TidyTuesday hashtag, some share on GitHub, and some just work privately. It's an excellent resource for data when you're looking to practice! 
+
+In this project, we'll start with a guided exploration of a TT dataset. Then, you'll pick a dataset to practice exploratory data analysis on.
+
+## Part 1: European Energy
+
+We're going to explore a dataset about energy prduction in Europe from 2016 to 2018. This dataset was the subject of Tidy Tuesday the week of 2020-08-04. You can find more details, including a data dictionary, here: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-04/readme.md.
+
+First, let's read the data.
+
+```{r}
+energy_types <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-04/energy_types.csv")
+country_totals <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-04/country_totals.csv")
+```
+
+It turns out that `energy_types` has a few quirks. First, `level` can be "Level 1" or "Level 2", but the second level is always a subset of the first and only for one type. So, it's not very interesting. Also, the UK is missing `country_name` (but not `country` code, which is how I can tell). It's important to check your data for these types of things, but in this case, it's not very interesting, so let's address those now:
+
+```{r}
+energy_types <- energy_types |>
+  filter(level == "Level 1") |> 
+  mutate(country_name = ifelse(is.na(country_name), "UK", country_name))
+```
+
+First, let's look at energy production over time by country. Take a look at `energy_types`
+
+```{r}
+energy_types
+```
+
+Three columns represent the gigawatts produced for a given year. This format isn't tidy. Use `pivot_longer()` to create a tidy data frame with two new columns: `year` and `gigawatts`.
+
+```{r}
+energy_types_longer <- ____________
+```
+
+We will create a slope chart, which we can do in ggplot by combining point and line geoms. 
+
+Using `energy_types_longer`:
+1. Create a ggplot with `year` on the x-axis, `gigawatts` on the y axis, and `group` set to `country.`
+2. Add lines. Set the `color` to "steelblue" and the `linewidth` to 0.8.
+3. Add points. We'll use a hollow shape so we can change the border color of the points. Set the shape to 21, the fill to "steelblue", color to "white", and size to 2.
+4. Facet the plot by `type`. Allow the y axis to be free.
+5. Let's clean up the labels. Using `scale_y_continuous()`, set the labels to `scales::comma`. What's different?
+6. For these plots, we'll use themes from the cowplot package. Set the theme to `theme_minimal_hgrid()`
+
+```{r}
+library(cowplot)
+
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/1RRqJU0.jpg")
+```
+
+
+There's a lot of information in this plot we could explore. Let's start with wind production. Which countries are producing the most wind energy in 2018?
+
+1. Create a new dataset, `wind_2018`, that only contains data for 2018 about Wind production. Arrange the dataset by `gigawatts`, then mutate `country_name = fct_inorder(country_name)`. This function will lock the order of `country_name` to the way they first appear in the data set. In other words, `country_name` is now a factor sorted by `gigawatts`.
+2. With `wind_2018`, create a bar plot using `geom_col()` with `gigawatts` on the x-axis and `country_name` on the y axis.
+3. In `geom_col()`, set the fill to "steelblue" and the alpha to 0.9. That will help us see the gridlines behind the bars.
+4. Set the x-axis to use commas in their labels, as we did above for the y axis.
+5. Remove the y axis title.
+6. Use `theme_minimal_vgrid()`. This theme only has gridlines going up and down since we don't need a grid going horizontally. 
+
+```{r}
+
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/eShlIRa.jpg")
+```
+
+Germany was far and away the most significant producer of wind energy in 2018. Let's highlight that bar using aesthetics and the ggtext package. ggtext is a ggplot2 extension that allows us to modify the text on our plot in several ways.
+
+1. Create a new variable, `germany`, that is `TRUE` if the country name is Germany and `FALSE` otherwise.
+2. Set the column geom's aesthetic to map `germany` to fill.
+3. In `theme()`, set `axis.text.y = element_markdown()`. This function comes from ggtext and activates the ability to use markdown and HTML in our plot.
+
+```{r}
+library(ggtext)
+
+wind_2018 |> 
+  mutate(
+    __________,
+    country_name = fct_recode(country_name, "<span style='color:firebrick'>Germany</i>" = "Germany")
+  ) |> 
+  ggplot(aes(x = gigawatts, y = country_name)) +
+  geom_col(________, alpha = .9, show.legend = FALSE) +
+  scale_fill_manual(values = c("steelblue", "firebrick")) + 
+  scale_x_continuous(labels = scales::comma) +
+  ylab(NULL) +
+  theme_minimal_vgrid() +
+  theme(__________)
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/hENxTXG.jpg")
+```
+
+Let's switch gears and go back to the original dataset. I want to know how conventional thermal energy production changed from 2016 to 2018. Luckily, our non-tidy dataset is pretty useful for calculating that value!
+
+Using `energy_types`:
+1. Filter the data so we only have rows that represent "Conventional thermal" production.
+2. Create a new variable called `change` that is the difference between 2016 and 2018. Note that numbers aren't valid R variable names, so we need to surround them in backticks (e.g., `2018`).
+3. Arrange the dataset by the descending value of change, then use the `fct_inorder()` function to change the order of `country_name`, as we did above.
+4. We're going to create a plot that shows the change from 2016 using an arrow. For that, we'll use `geom_segment()`, which will require some new aesthetics. In `ggplot()`, set:
+ * `x` to 0. We do this because we want to show the direction of change clearly.
+ * `xend` to `change`
+ * `y` and `yend` to `country_name`. We set them both to the same variable because we want them to be horizontal. 
+ * Also set the color aesthetic to show which countries had a change > 0.
+5. Add `geom_segment()` set the `arrow` argument to `grid::arrow(length = unit(1, "mm"), type = "closed")`
+6. Clean up the labels. We don't need a y-axis title since it's obvious. The x-axis title could use some clarification. 
+7. Set the values that the color aesthetics use to `c("firebrick", "steelblue")`. What function do you need to change the colors this aesthetic uses?
+8. Use `theme_minimal_vgrid()`. Then, remove the legend.
+
+```{r}
+
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/DTejotD.jpg")
+```
+
+## Part 2: Analyze a Tidy Tuesday dataset 
+
+In the second part of this assignment, please pick a different Tidy Tuesday dataset. Find a dataset you are interested in here: https://github.com/rfordatascience/tidytuesday#datasets. Then, click on the link in the "data" column to go to the README file for the dataset, which will tell you how to import the data. Generally, the instructions will offer several options for importing; any of them are fine. In part 1, I just used readr and a link to the repository.
+
+How you explore your data is up to you! Remember the whole toolkit you have at your disposal: wrangling, visualizing, tidying, joins, and so on. You'll likely need to use a combination of some or all of these tools for any given question.
+
+### Questions
+
+1. Describe the data set in your own words (1 paragraph). 
+2. Produce 2-3 graphs in ggplot2 that show something interesting in the data. You'll have to do some exploratory analysis to find something, so make sure to include that code. The plots can be about anything using any geoms you like. 
+
+*Requirements*:
+
+* The graph should attempt to answer a specific question you have about the data. Clearly state the question the graph is trying to answer, perhaps as a title or a short description of the plot.
+* All labels should be clear and easy to read. That may mean that you need to replace, for example, the axes labels with descriptions rather than the name of the variable in the data set (e.g., I don't want to see "some_weird_variable_name2")
+* Likewise, all content on the graph should be reasonably legible
+* Include the code in this R Markdown file or a separate R script. You may also wish to create an image file with `ggsave()`. Make sure your image file outputs as you expect if you decide to create one.
+
+**Note**: Tidy Tuesday is a community event, so it's okay to draw inspiration from the work of others. *However, you must include a link to your inspiration, and you can't just copy and paste someone else's code.* For instance, in writing part 1, I was inspired by Dave's video, as well as this plot: https://twitter.com/dm_ferraro/status/1290852879247400961. You can find other people's work for Tidy Tuesday on the #TidyTuesday hashtag on Twitter (https://twitter.com/search?q=%23tidytuesday). Another helpful resource is David Robinson's Tidy Tuesday live stream, where he analyzes data live without previously looking at the data for the week: https://www.youtube.com/channel/UCeiiqmVK07qhY-wvg3IZiZQ
+
+
+

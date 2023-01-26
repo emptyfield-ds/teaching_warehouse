@@ -1,8 +1,8 @@
-emperors %>%
-  count(cause) %>%
+emperors |>
+  count(cause) |>
   mutate(
     cause = fct_inorder(cause)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = cause)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -13,12 +13,12 @@ emperors %>%
   ) +
   xlab("number of emperors")
 
-emperors %>%
-  count(cause) %>%
-  arrange(n) %>%
+emperors |>
+  count(cause) |>
+  arrange(n) |>
   mutate(
     cause = fct_inorder(cause)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = cause)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -29,13 +29,13 @@ emperors %>%
   ) +
   xlab("number of emperors")
 
-emperors %>%
-  count(cause) %>%
-  arrange(n) %>%
+emperors |>
+  count(cause) |>
+  arrange(n) |>
   mutate(
     assassinated = ifelse(cause == "Assassination", TRUE, FALSE),
     cause = fct_inorder(cause)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = cause, fill = assassinated)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -52,8 +52,8 @@ library(ggrepel)
 
 set.seed(1010)
 
-gapminder %>%
-  filter(year == 2007) %>%
+gapminder |>
+  filter(year == 2007) |>
   ggplot(aes(log(gdpPercap), lifeExp)) +
   geom_point(size = 3.5, alpha = .9, shape = 21, col = "white", fill = "#0162B2") +
   geom_text_repel(aes(label = country), size = 4.5,
@@ -69,13 +69,13 @@ gapminder %>%
 
 nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
-dog_sighting <- nyc_squirrels %>%
-  mutate(dog = str_detect(other_activities, "dog")) %>%
+dog_sighting <- nyc_squirrels |>
+  mutate(dog = str_detect(other_activities, "dog")) |>
   filter(dog)
 
 central_park <- sf::read_sf("data/central_park/")
 
-nyc_squirrels %>%
+nyc_squirrels |>
   ggplot() +
   geom_sf(data = central_park, color = "grey80") +
   geom_point(aes(x = long, y = lat)) +
@@ -94,14 +94,14 @@ nyc_squirrels %>%
   theme(legend.position = c(.1, .9)) +
   scale_color_manual(name = NULL, values = "#FB1919")
 
-diabetes %>%
+diabetes |>
   ggplot(aes(glyhb)) +
   geom_density(aes(fill = gender)) +
   scale_x_log10() +
   colorblindr::scale_fill_OkabeIto()
 
 
-diabetes %>%
+diabetes |>
   ggplot(aes(glyhb, y = ..count.., fill = gender)) +
   geom_histogram() +
   gghighlight() +
@@ -113,14 +113,14 @@ diabetes %>%
   theme(legend.position = "bottom", legend.justification = "center")
 
 
-lightning_plot <- emperors %>%
-  mutate(killer = fct_lump(killer, 10)) %>%
-  count(killer) %>%
-  arrange(n) %>%
+lightning_plot <- emperors |>
+  mutate(killer = fct_lump(killer, 10)) |>
+  count(killer) |>
+  arrange(n) |>
   mutate(
     lightning = ifelse(killer == "Lightning", TRUE, FALSE),
     killer = fct_inorder(killer)
-  ) %>%
+  ) |>
   ggplot(aes(x = n, y = killer, fill = lightning)) +
   geom_col() +
   geom_text(aes(label = n, x = n - .25), color = "white", size = 6, hjust = 1) +
@@ -146,8 +146,8 @@ lightning_plot +
     inherit.aes = FALSE
   )
 
-la_heat_income %>%
-  mutate(temp = kelvin2farenheit(X_median)) %>%
+la_heat_income |>
+  mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   cowplot::theme_map() +

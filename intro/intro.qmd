@@ -1,0 +1,17 @@
+---
+title: "Introduction to the Tidyverse"
+subtitle: "Import, wrangle, model, and communicate data"
+date: "`r Sys.Date()`"
+
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| echo: false
+#| child: /Users/malcolmbarrett/core/active/r_teaching_warehouse/intro_tidyverse/tidyverse.md
+```
+
+```{r}
+#| echo: false
+#| child: /Users/malcolmbarrett/core/active/r_teaching_warehouse/intro_exercises/exercises.md
+```

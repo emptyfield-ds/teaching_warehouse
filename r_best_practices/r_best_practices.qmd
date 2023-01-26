@@ -1,0 +1,739 @@
+---
+title: "Best Practices in R"
+date: "`r paste(Sys.Date(), '<br><br>developed by Emil Hvitfeldt')`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false 
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+library(tidyverse)
+```
+
+## Welcome! 
+
+```{r}
+#| label: r_first_then
+#| echo: false
+#| out.width: 58%
+#| out.height: 58%
+knitr::include_graphics("img/r_first_then.png")
+```
+
+---
+
+## Change Settings
+
+.pull-left[
+.medium[**Keyboard shortcut to open settings**]  
+`⌘ + ,` in Mac OS,  
+`ctrl + ,` in Windows  
+
+### ✓ - Uncheck "Restore .RData into work space at start up"  
+
+### ✓ - Set "Save work space to .Rdata on exit" to "Never"
+]
+
+.pull-right[![Settings window](img/settings-general.png)]
+
+---
+
+## Change Appearance
+
+.pull-left[
+## RStudio themes
+## Fonts
+## Font Sizes
+## Editor Themes
+]
+
+.pull-right[![Settings window](img/settings-appearance.png)]
+
+---
+
+## Pane layouts
+
+.pull-left[
+## Change the layout of the panes  
+
+## Source on top?  
+## Source down to the right?  
+## It's all up to you!
+]
+
+.pull-right[![Settings window](img/settings-pane-layout.png)]
+
+---
+
+## Pane layouts
+
+### Some like having both source and console open
+
+```{r}
+#| echo: false
+#| out.width: 80%
+#| out.height: 80%
+knitr::include_graphics("img/my-pane-layout.png")
+```
+
+
+---
+
+## Pane layouts
+
+### ...while still allowing to have viewer open
+
+```{r}
+#| echo: false
+#| out.width: 80%
+#| out.height: 80%
+knitr::include_graphics("img/my-pane-layout-recursive.png")
+```
+
+
+---
+
+## RStudio Projects
+
+### Keep all files from one project together. Use RStudio projects.  
+
+--
+###  Self contained
+
+--
+### Project orientated
+
+???
+
+keep all the files associated with a project together — input data, R scripts, analytic results, figures.
+
+---
+
+# usethis
+
+## `usethis::create_project("project_name")`
+
+---
+
+## RStudio Projects - Creation 1 / 4
+
+.pull-left[
+Click File > New Project  
+![Up right tick](img/rstudio-project-1.png)
+]
+
+.pull-right[
+Or click on the upper right
+![Up right tick](img/rstudio-project-2.png)
+]
+
+---
+
+## RStudio Projects - Creation 2 / 4
+
+.center[![1](img/project-creation-1.png)]
+
+---
+
+## RStudio Projects - Creation 3 / 4
+
+.center[![1](img/project-creation-2.png)]
+
+---
+
+## RStudio Projects - Creation 4 / 4
+
+.center[![1](img/project-creation-3.png)]
+
+---
+
+## Folder Structure
+
+--
+
+```{r}
+#| eval: false
+name_of_project
+|--raw_data
+    |--WhateverData.xlsx
+    |--report_2017.csv
+|--output_data
+    |--summary2017.csv
+|--rmd
+    |--01-analysis.Rmd
+|--docs
+    |--01-analysis.html
+    |--01-analysis.pdf
+|--scripts
+    |--exploratory_analysis.R
+    |--pdf_scraper.R
+|--figures
+    |--weather_2017.png
+|--name_of_project.Rproj
+|--run_all.R
+```
+
+---
+
+class: inverse
+
+1. Raw data separate from cleaned data
+1. Reports and scripts are separated
+1. Generated and imported figures has its own place
+1. Numbered using 2 digits
+1. Reusable and easily understandable
+
+---
+
+## Folder Structure
+
+```{r}
+#| eval: false
+library(fs)
+folder_names <- c("raw_data", "output_data", "rmd", "docs", 
+                  "scripts", "figures")
+
+dir_create(fldr_names)
+```
+
+???
+
+never modify raw data, only read (forever untouched)
+
+---
+
+## Paths
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+# data import
+data <- read_csv("/Users/Emil/Research/Health/amazing_data.csv")
+```
+
+---
+
+## Paths
+
+```{r}
+#| error: true
+#| message: false
+library(tidyverse)
+
+# data import
+data <- read_csv("/Users/Emil/Research/Health/amazing_data.csv")
+```
+
+--
+
+## __Only use relative paths, never absolute paths__
+
+---
+
+# Introducing the *here* package.
+
+```{r}
+#| eval: false
+library(here)
+here()
+```
+```{r}
+#| echo: false
+"/Users/Emil/Research/Health"
+```
+
+```{r}
+#| eval: false
+library(here)
+data <- read_csv(here("raw_data", "amazing_data.csv"))
+```
+
+---
+
+## Naming Things
+
+--
+
+.center[![tweet about naming](img/naming-tweet.png)]
+
+???
+
+- Organization
+- Ease of use  
+There will be multi slides about naming
+
+---
+
+## Naming Things - Files
+
+### NO
+
+```{r}
+#| eval: false
+report.pdf
+reportv2.pdf
+reportthisisthelastone.pages
+Figure 2.png 
+3465-234szx.r
+foo.R
+```
+
+### YES
+
+```{r}
+#| eval: false
+2018-10-01_01_report-for-cdc.pdf
+01_data.rmd
+01_data.pdf
+02_data-filtering.rmd
+02_data-filtering.pdf
+```
+
+???
+
+Follow narrative from folder structure slide  
+jenny Bryan naming things
+
+---
+class: inverse
+.small[
+1. Avoid spaces, punctuation, special characters and case sensitivity
+1. Deliberate use of delimiters
+1. Describe the contents of the file
+1. Put something numeric first
+1. Left pad numbers with zeroes
+1. Use a standard date (YYYY-MM-DD)
+]
+???
+
+to preserve chronological and logical ordering.
+
+---
+
+## Naming Things - Files
+
+```{r}
+#| eval: false
+library(fs)
+dir_ls("data/", regexp = "health-study")
+```
+
+```{r}
+#| echo: false
+(x <- glue::glue("2018-02-23_health-study_power-{rep(c(100, 200), each = 3)}_group-{rep(c('A', 'B', 'C'), 2)}1.csv"))
+```
+
+--
+
+```{r}
+stringr::str_split_fixed(x, "[_\\.]", 5)
+```
+
+???
+- Avoid spaces, punctuation, special characters and case sensitivity  
+- Deliberate use of delimiters  
+- File name should describe the **contents** of the file  
+- Put something numeric first  
+- Left pad numbers with zeroes  
+- Use ISO 8601 standard for dates (YYYY-MM-DD)
+
+---
+
+## Naming Things - Files
+
+```{r}
+#| eval: false
+library(tidyverse)
+map_df(dir_ls("data/", regexp = "health-study"), read_csv)
+
+# or
+
+dir_ls("data/", regexp = "health-study") |>
+  map_df(read_csv)
+```
+
+???
+- Avoid spaces, punctuation, special characters and case sensitivity  
+- Deliberate use of delimiters  
+- File name should describe the **contents** of the file  
+- Put something numeric first  
+- Left pad numbers with zeroes  
+- Use ISO 8601 standard for dates (YYYY-MM-DD)
+
+---
+
+class: inverse
+
+## Naming Things - Objects
+
+1. Only use lowercase letters, numbers, and `_`
+1. Use names that are not jargony, **weight** instead of **K**
+1. Use informative names
+
+---
+
+## Naming Things - Objects
+
+```{r}
+#| eval: false
+# Bad
+df
+e
+tuningVar
+
+# Good
+health_data
+error
+tuning_var
+```
+
+???
+lowercase letters + numbers = alpha-numeric characters (ish)
+
+---
+
+## What To Avoid - attach()
+
+## **Never use `attach()`**
+
+--
+
+```{r}
+#| message: false
+attach(mtcars)
+mean(mpg)
+```
+
+## Loads lots of names into the search path, ambiguous selections.
+
+--
+
+## Try *`with()`* or *`withr`* instead
+
+---
+
+## What To Avoid - attach()
+
+## **Never use `rm(list=ls())`**
+
+--
+
+## *Instead, restart the R session*
+
+## `CTRL+SHIFT+F10` for Windows
+## `CMD+SHIFT+ALT+F10` for Mac OS
+
+---
+
+## R Markdown documents versus R scripts
+
+## You can use R scripts for simple self contained tasks.  
+
+## *`source()`* R scripts into your R Markdown document where you will do analyses, visualizations and reporting.
+
+---
+
+## R Markdown
+
+```{r}
+#| eval: false
+- 01-import.R
+- 02-clean-names.R
+- 03-tidy.R
+- etc
+```
+
+--
+
+Include at the start of R Markdown file
+
+```{r}
+#| eval: false
+{r load_scripts, include = FALSE}
+library(here)
+source(here("scripts", "01-import.R"))
+source(here("scripts", "02-clean-names.R"))
+source(here("scripts", "03-tidy.R"))
+```
+
+???
+
+---
+
+## Naming Chunks
+
+## Names can be placed after the comma
+
+````markdown
+`r ''````{r, chunk-label, results='hide', fig.height=4}
+````
+
+## or before
+
+````markdown
+`r ''````{r chunk-label, results='hide', fig.height=4}
+````
+
+> In general it is recommended to use alphabetic characters with words separated by - and avoid other characters. - Yihui Xie
+
+---
+
+class: inverse
+
+1. Makes navigating the R Markdown document easier
+1. Makes your R Markdown easier to understand
+1. Clarifies error reports or progress of knitting
+1. Caching when moving chunks around
+
+???
+
+Lower left corner of Rstudio have menu where sections and chunks can be selected with.
+
+Caching on unnamed chunks are based on numbering.
+
+---
+
+## Setup Chunk
+
+## In a fresh R Markdown document you see this
+
+````markdown
+`r ''````{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+````
+--
+
+## *The setup chunk is run before another code - use to your advantage*
+
+---
+
+## Setting figure path
+
+--
+
+````markdown
+`r ''````{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path = "figures/")
+````
+
+???
+highlight use of fig.path option
+
+fig.path: ('figure/'; character) prefix to be used for figure filenames (fig.path and chunk labels are concatenated to make filenames)
+
+---
+
+## Styling Code
+
+## **Use consistent style when writing code  **
+
+--
+
+## [http://style.tidyverse.org/](http://style.tidyverse.org/)
+
+--
+
+## All about preferences but keep it consistent!!!
+
+???
+
+Give examples of styles to follow
+
+---
+
+class: center, middle
+
+# Use the styler package to style your code for you
+
+---
+
+## Keep .Rprofile Clean
+
+## Your computer contains a file called .Rprofile.
+
+## This file runs first in every session. Think of it as configuration file.
+
+--
+
+```{r}
+#| eval: false
+options(stringsAsFactors = FALSE)
+options(max.print = 100)
+```
+
+---
+
+## Keep .Rprofile Clean
+
+## **Only** put interactive code in
+
+## *Yes*
+
+```{r}
+#| eval: false
+# add this with usethis::use_usethis()
+library(usethis)
+```
+
+## *No*
+
+```{r}
+#| eval: false
+library(tidyverse)
+```
+
+???
+
+Use it to change options and load packages
+
+---
+
+## Comment Your Code
+
+## *Functions*: Arguments and purpose
+## *Code*: What or why, **NOT** how
+
+--
+
+```{r}
+#| eval: false
+# Takes a data.frame (data) and replaces the columns with the names
+# (names) and converts them from factor variable to character 
+# variables. Keeps characters variables unchanged.
+factor_to_text <- function(data, names) {
+  for (i in seq_along(names)) {
+    if(is.factor(data[, names[i], drop = TRUE]))
+      data[, names[i]] <- as.character.factor(data[, names[i], 
+                                                   drop = TRUE])
+  }
+  data
+}
+```
+
+---
+
+## Updating R and RStudio
+
+### The most recent version of R can be downloaded from [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+
+
+```{r}
+#| label: Rlogo
+#| out.width: 50%
+#| out.height: 50%
+#| echo: false
+knitr::include_graphics(path = "https://cran.r-project.org/Rlogo.svg")
+```
+
+---
+
+## Updating R and RStudio
+
+### Download the most recent version of RStudio at their [downloads page](https://rstudio.com/products/rstudio/download/)
+
+```{r}
+#| label: rstudio-downloads
+#| out.width: 80%
+#| out.height: 80%
+#| echo: false
+knitr::include_graphics(path =
+"img/rstudio-downloads.png")
+```
+
+---
+
+## How to ask for help (`datapasta` and `reprex`)
+
+#### The `reprex` package helps you create a reproducible example  
+
+#### `datapasta` lets you easy copy + paste small samples of data into RStudio
+
+```{r}
+#| label: datapasta-reprex-spreadsheet
+#| out.width: 65%
+#| out.height: 65%
+#| echo: false
+knitr::include_graphics(path = "img/datapasta-reprex-spreadsheet.gif")
+```
+
+
+---
+
+## How to ask for help (`reprex`)
+
+### Check out the [package website](https://reprex.tidyverse.org/) and [RStudio webinar](https://rstudio.com/resources/webinars/help-me-help-you-creating-reproducible-examples/) on creating reproducible examples
+
+```{r}
+#| label: reprex
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics(path = "img/reprex.png")
+```
+.pull-right[Art by Allison Horst]
+---
+
+## Where to get help
+
+### RStudio has a helpful community if you have questions (everyone does!)
+
+#### RStudio Community:
+
+RStudio has a dedicated forum for questions related to R and RStudio: https://community.rstudio.com/
+
+```{r}
+#| label: rstudio-community
+#| echo: false
+#| out.width: 70%
+#| out.height: 70%
+knitr::include_graphics("img/rstudio-community.png")
+```
+
+
+---
+
+## Where else to get help
+
+### Stack Overflow
+
+Check out the questions tagged `r` on Stack Overflow: https://stackoverflow.com/questions/tagged/r
+
+```{r}
+#| label: r-tag-stackoverflow
+#| echo: false
+#| out.width: 90%
+#| out.height: 90%
+knitr::include_graphics("img/r-tag-stackoverflow.png")
+```
+
+
+---
+
+### `#rstats` on Twitter
+
+If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/rstats
+
+```{r}
+#| label: welcome_to_rstats_twitter
+#| echo: false
+#| out.width: 50%
+#| out.height: 50%
+knitr::include_graphics("img/welcome_to_rstats_twitter.png")
+```
+
+.pull-right[Art by Allison Horst]
+
+

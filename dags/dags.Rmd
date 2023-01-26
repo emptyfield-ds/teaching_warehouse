@@ -146,7 +146,7 @@ dagify(
 dagify(
   cancer ~ smoking, 
   coffee ~ smoking 
-) %>% ggdag()
+) |> ggdag()
 ```
 
 ---
@@ -158,7 +158,7 @@ dagify(
 dagify(
   cancer ~ smoking, 
   coffee ~ smoking 
-) %>% ggdag()
+) |> ggdag()
 ```
 
 ---
@@ -170,7 +170,7 @@ dagify(
 dagify(
   cancer ~ smoking + coffee, 
   coffee ~ smoking 
-) %>% ggdag()
+) |> ggdag()
 ```
 
 ---
@@ -182,7 +182,7 @@ dagify(
 dagify(
   cancer ~ smoking + coffee, 
   coffee ~ smoking 
-) %>% ggdag()
+) |> ggdag()
 ```
 
 ---
@@ -256,8 +256,8 @@ ggdag_paths(smk_wt_dag)
 ---
 
 ```{r, echo = FALSE, fig.height=5.5}
-smk_wt_dag %>% 
-  dag_paths(paths_only = FALSE) %>% 
+smk_wt_dag |> 
+  dag_paths(paths_only = FALSE) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend, col = path, alpha = path)) +
   geom_dag_edges_link(
     aes(
@@ -302,15 +302,15 @@ smk_wt_dag %>%
 ## Your Turn 2
 
 ```{r}
-coffee_cancer_dag %>% 
-  tidy_dagitty() %>% 
+coffee_cancer_dag |> 
+  tidy_dagitty() |> 
   dag_paths()
 ```
 
 ---
 
 ```{r}
-coffee_cancer_dag %>% 
+coffee_cancer_dag |> 
   ggdag_paths()
 ```
 

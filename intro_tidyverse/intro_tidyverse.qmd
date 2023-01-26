@@ -1,0 +1,18 @@
+---
+title: "Introduction to the Tidyverse"
+subtitle: "Import, wrangle, model, and communicate data"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+
+```{r}
+#| echo: false
+#| child: tidyverse.md
+```

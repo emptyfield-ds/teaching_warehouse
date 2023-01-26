@@ -22,10 +22,10 @@ Let's take a look at the mean weight loss between 1971 and 1982 stratified by sm
 3. Summarize the mean and standard deviation for weight change (`wt82_71`)
 
 ```{r}
-nhefs_complete %>%
+nhefs_complete |>
   #  only show for pts not lost to follow-up
-  filter(censored == 0) %>% 
-  group_by(qsmk) %>% 
+  filter(censored == 0) |> 
+  group_by(qsmk) |> 
   summarize(
     mean_weight_change = mean(wt82_71), 
     sd = sd(wt82_71)
@@ -52,9 +52,9 @@ propensity_model <- glm(
   data = nhefs_complete
 )
 
-propensity_model %>% 
+propensity_model |> 
   #  get confidence intervals and exponentiate estimates
-  tidy(conf.int = TRUE, exponentiate = TRUE) %>% 
+  tidy(conf.int = TRUE, exponentiate = TRUE) |> 
   select(-statistic, -p.value)
 ```
 
@@ -68,8 +68,8 @@ Next, we need to get the predicted probabilities and turn them into weights.
 Save the results back to `nhefs_complete`
 
 ```{r}
-nhefs_complete <- propensity_model %>% 
-  augment(type.predict = "response", data = nhefs_complete) %>% 
+nhefs_complete <- propensity_model |> 
+  augment(type.predict = "response", data = nhefs_complete) |> 
   mutate(wts = 1 / ifelse(qsmk == 0, 1 - .fitted, .fitted))
 ```
 
@@ -122,18 +122,18 @@ Now that we've fit a model, we need to clone our data set. To do this, we'll sim
 3. Save the predicted data sets as`predicted_kept_smoking` and `predicted_quit_smoking`.
 
 ```{r}
-kept_smoking <- nhefs_complete %>% 
+kept_smoking <- nhefs_complete |> 
   mutate(qsmk = 0)
 
-quit_smoking <- nhefs_complete %>% 
+quit_smoking <- nhefs_complete |> 
   mutate(qsmk = 1)
 
-predicted_kept_smoking <- standardized_model %>% 
-  augment(newdata = kept_smoking) %>%
+predicted_kept_smoking <- standardized_model |> 
+  augment(newdata = kept_smoking) |>
   select(kept_smoking = .fitted)
 
-predicted_quit_smoking <- standardized_model %>% 
-  augment(newdata = quit_smoking) %>%
+predicted_quit_smoking <- standardized_model |> 
+  augment(newdata = quit_smoking) |>
   select(quit_smoking = .fitted)
 ```
 
@@ -145,7 +145,7 @@ Finally, we'll get the mean differences between the values.
 2. Summarize the predicted values to create three new variables: `mean_quit_smoking`, `mean_kept_smoking`, and `difference`. The first two should be the means of `quit_smoking` and `kept_smoking`. `difference` should be `mean_quit_smoking` minus `mean_kept_smoking`.
 
 ```{r}
-bind_cols(predicted_kept_smoking, predicted_quit_smoking) %>% 
+bind_cols(predicted_kept_smoking, predicted_quit_smoking) |> 
   summarise(
     mean_quit_smoking = mean(quit_smoking),
     mean_kept_smoking = mean(kept_smoking),

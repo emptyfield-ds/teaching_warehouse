@@ -130,7 +130,7 @@ server <- function(input, output) {
 
   # Print number of movies plotted ----------------------------------
   output$n <- renderUI({
-    types <- movies_sample()$title_type %>%
+    types <- movies_sample()$title_type |>
       factor(levels = input$selected_type)
     counts <- table(types)
 

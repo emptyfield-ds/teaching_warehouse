@@ -1,0 +1,10 @@
+---
+title: "Course Exercises"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| echo: false
+#| child: exercises.md
+```
+

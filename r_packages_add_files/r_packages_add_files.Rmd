@@ -23,13 +23,13 @@ library(devtools)
 #  clean up usethis output
 hook_message <- knitr::knit_hooks$get('message')
 process_usethis_messages <- function(x, options) {
-  x <- x %>% 
-    str_remove_all("\n|##") %>% 
-    str_trim() %>% 
-    str_split("✔ ") %>% 
-    pluck(1) %>% 
-    discard(~.x == "") %>% 
-    paste0("## ✔ ", .) %>% 
+  x <- x |> 
+    str_remove_all("\n|##") |> 
+    str_trim() |> 
+    str_split("✔ ") |> 
+    pluck(1) |> 
+    discard(~.x == "") |> 
+    paste0("## ✔ ", .) |> 
     str_trunc(width = 60)
   
   hook_message(x, options)
@@ -81,7 +81,7 @@ data_dictionary <-
 ```{r, echo = FALSE}
 get_data <- function(pkg) {
   x <- data(package = pkg)
-  dplyr::as_tibble(x$results) %>% 
+  dplyr::as_tibble(x$results) |> 
     dplyr::select(data = Item, description = Title)
 }
 
@@ -479,9 +479,9 @@ use_cran_comments <- function(open = interactive()) {
 --
 
 ```{r, echo = FALSE}
-system.file("templates", package = "usethis") %>% 
-  fs::dir_info() %>%
-  mutate(path = basename(path)) %>% 
+system.file("templates", package = "usethis") |> 
+  fs::dir_info() |>
+  mutate(path = basename(path)) |> 
   select(path, type)
 ```
 
@@ -543,7 +543,7 @@ whisker::whisker.render(
 
  * This is a new release.",
 data = list(rversion = glue::glue("{version$major}.{version$minor}")) #<<
-) %>% 
+) |> 
   cat()
 ```
 

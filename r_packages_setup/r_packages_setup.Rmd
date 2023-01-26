@@ -26,13 +26,13 @@ library(devtools)
 #  clean up usethis output
 hook_message <- knitr::knit_hooks$get('message')
 process_usethis_messages <- function(x, options) {
-  x <- x %>% 
-    str_remove_all("\n|##") %>% 
-    str_trim() %>% 
-    str_split("✔ ") %>% 
-    pluck(1) %>% 
-    discard(~.x == "") %>% 
-    paste0("## ✔ ", .) %>% 
+  x <- x |> 
+    str_remove_all("\n|##") |> 
+    str_trim() |> 
+    str_split("✔ ") |> 
+    pluck(1) |> 
+    discard(~.x == "") |> 
+    paste0("## ✔ ", .) |> 
     str_trunc(width = 100)
   
   hook_message(x, options)
