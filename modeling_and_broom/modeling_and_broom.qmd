@@ -1,32 +1,21 @@
 ---
 title: "Modeling in R and Tidying Results"
-subtitle: "<span style='color:#56B4E9'>linear models and broom</span> <br>"
+subtitle: "linear models and broom"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
-
-class: inverse, middle, center
 
 ```{r}
 #| label: setup
 #| include: false
-options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
 library(tidyverse)
 ```
 
-# *`r emojifont::emoji("warning")` This is not a course in a regression*
-
----
+# *⚠️ This is not a course in a regression* {background-color="#23373B"}
 
 ## Modeling in R
 
@@ -37,8 +26,6 @@ library(tidyverse)
 knitr::include_graphics("img/r_models.png")
 ```
 
----
-
 ## Modeling in R
 
 ```{r}
@@ -47,8 +34,6 @@ knitr::include_graphics("img/r_models.png")
 #| echo: false
 knitr::include_graphics("img/r_models_fnname.png")
 ```
-
----
 
 ## Modeling in R
 
@@ -59,8 +44,6 @@ knitr::include_graphics("img/r_models_fnname.png")
 knitr::include_graphics("img/r_models_data.png")
 ```
 
----
-
 ## Modeling in R
 
 ```{r}
@@ -70,208 +53,123 @@ knitr::include_graphics("img/r_models_data.png")
 knitr::include_graphics("img/r_models_formula.png")
 ```
 
----
+## Modeling in R {.large}
 
-## Modeling in R
+. . .
 
-## **`lm()`** = *Linear Regression (OLS)*
+**`lm()`** = *Linear Regression (OLS)*
 
----
+. . .
 
-## Modeling in R
-
-## ~~`lm()` = Linear Regression (OLS)~~
-
-## **`glm()`** = *Generalized Linear Model (default family = Gaussian)*
-
----
+**`glm()`** = *Generalized Linear Model (default family = Gaussian)*
 
 ## Modeling in R
 
 ```{r}
-#| eval: false
+#| output-location: fragment
 lm(price ~ carat, data = diamonds)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Modeling in R
 
 ```{r}
-lm(price ~ carat, data = diamonds)
-```
-
-
----
-
-## Modeling in R
-
-```{r}
-#| eval: false
-lm(price ~ carat, data = diamonds) |> 
-  summary() #<<
-```
-
----
-
-## Modeling in R
-
-```{r}
-#| echo: false
-lm(price ~ carat, data = diamonds) |> 
-  summary()
-```
-
----
-
-## Modeling in R
-
-```{r}
-#| echo: false
+#| output-location: fragment
+#| code-line-numbers: "|2"
 #| highlight.output: !expr c(5, 9:12, 17)
 lm(price ~ carat, data = diamonds) |> 
-  summary()
+  summary() 
 ```
 
----
+## `broom`: tidy models
 
-background-image: url(http://hexb.in/hexagons/broom.png)
-background-position: 90% 10%
+![](img/broom.png){.absolute top="0" right="0" width="140"}
+
+### `tidy()`
+
+### `glance()`
+
+### `augment()`
 
 ## `broom`: tidy models
 
-## `tidy()` 
+![](img/broom.png){.absolute top="0" right="0" width="140"}
 
-## `glance()`
+### **`tidy()`** = *model coefficients*
 
-## `augment()`
+### ~~`glance()`~~
 
----
-
-background-image: url(http://hexb.in/hexagons/broom.png)
-background-position: 90% 10%
+### ~~`augment()`~~
 
 ## `broom`: tidy models
 
-## **`tidy()`** = *model coefficients*
+![](img/broom.png){.absolute top="0" right="0" width="140"}
 
-## ~~`glance()`~~
+### ~~`tidy()`~~
 
-## ~~`augment()`~~
+### **`glance()`** = *model fit*
 
----
-
-background-image: url(http://hexb.in/hexagons/broom.png)
-background-position: 90% 10%
+### ~~`augment()`~~
 
 ## `broom`: tidy models
 
-## ~~`tidy()`~~ 
+![](img/broom.png){.absolute top="0" right="0" width="140"}
 
-## **`glance()`** = *model fit*
+### ~~`tidy()`~~
 
-## ~~`augment()`~~
+### ~~`glance()`~~
 
----
-
-background-image: url(http://hexb.in/hexagons/broom.png)
-background-position: 90% 10%
+### **`augment()`** = *model predictions*
 
 ## `broom`: tidy models
 
-## ~~`tidy()`~~ 
+![](img/broom.png){.absolute top="0" right="0" width="140"}
 
-## ~~`glance()`~~
+### ~~`tidy()`~~
 
-## **`augment()`** = *model predictions*
+### ~~`glance()`~~
 
----
-
-background-image: url(http://hexb.in/hexagons/broom.png)
-background-position: 90% 10%
-
-## `broom`: tidy models
-
-## ~~`tidy()`~~
-
-## ~~`glance()`~~
-
-## ~~`augment()`~~
+### ~~`augment()`~~
 
 ### **NOT** a core member of the tidyverse. Need to load with `library(broom)`
 
----
-
 ## Modeling in R
 
 ```{r}
-#| eval: false
+#| code-line-numbers: "|3"
+#| output-location: fragment
 library(broom)
 lm(price ~ carat, data = diamonds) |> 
-  tidy() #<<
+  tidy() 
 ```
-
----
 
 ## Modeling in R
 
 ```{r}
-#| highlight.output: !expr '1:2'
-library(broom)
+#| code-line-numbers: "|2"
+#| output-location: fragment
 lm(price ~ carat, data = diamonds) |> 
-  tidy()
+  glance() 
 ```
-
----
 
 ## Modeling in R
 
 ```{r}
-#| eval: false
+#| code-line-numbers: "|2"
+#| output-location: fragment
 lm(price ~ carat, data = diamonds) |> 
-  glance() #<<
+  augment() 
 ```
 
----
+## Try it yourself {background-color="#23373B"}
 
-## Modeling in R
+### Work your way through the exercises. If anything in particular is giving you trouble, we'll work through it together.
 
-```{r}
-#| highlight.output: !expr '1:2'
-lm(price ~ carat, data = diamonds) |> 
-  glance()
-```
+## Resources {background-color="#23373B"}
 
----
+### [Tidy Models with R](https://www.tmwr.org/): a deeper dive into tidymodels. Free online. Focused on machine learning and prediction.
 
-## Modeling in R
+### [Causal Inference in R](https://www.r-causal.org/): Causal modeling in R. Free online.
 
-```{r}
-#| eval: false
-lm(price ~ carat, data = diamonds) |> 
-  augment() #<<
-```
-
----
-
-## Modeling in R
-
-```{r}
-#| highlight.output: !expr '1:2'
-lm(price ~ carat, data = diamonds) |> 
-  augment()
-```
-
----
-
-## Try it yourself
-
-## Work your way through the exercises. If anything in particular is giving you trouble, we'll work through it together.
-
----
-
-class: inverse, center
-
-# Resources
-## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
-## [UCLA IDRE](https://stats.idre.ucla.edu/other/dae/): Useful resources on modeling in R and other languages
+### [UCLA IDRE](https://stats.idre.ucla.edu/other/dae/): Useful resources on modeling in R and other languages
