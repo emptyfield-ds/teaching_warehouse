@@ -126,7 +126,7 @@ direct_labels <- continent_data |>
 
 line_plot <- continent_data |>
   ggplot(aes(year, lifeExp, col = continent)) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   theme_minimal_hgrid() +
   scale_color_manual(values = continent_colors) +
   scale_x_continuous(expand = expansion()) +
@@ -201,7 +201,7 @@ africa <- left_join(africa, life_expectancy_dropped, by = "country")
 
 le_line_plot <- africa |>
   ggplot(aes(year, lifeExp, color = country, group = country)) +
-  geom_line(size = 1.2, alpha = .9, color = "#E58C23") +
+  geom_line(linewidth = 1.2, alpha = .9, color = "#E58C23") +
   theme_minimal(base_size = 14) +
   theme(
     ________________,

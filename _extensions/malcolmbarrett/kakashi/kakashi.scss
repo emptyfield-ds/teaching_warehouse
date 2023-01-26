@@ -206,6 +206,10 @@ section.has-dark-background .fragment:not(.current-fragment) del {
   background-color: lighten($light-grey, 3%);
 }
 
+section.has-dark-background .fragment:not(.current-fragment)::before {
+  background-color: lighten($dark-grey, 3%);
+}
+
 .fragment:not(.current-fragment) strong {
   color: $light-grey;
 }

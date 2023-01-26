@@ -39,10 +39,9 @@ measurements["blood_glucose"]
 measurements$blood_glucose
 ```
 
-
 ## Your Turn 2
 
-### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Name the new columns `bp_` + `mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
+### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Give the new columns the name pattern `column_function`, e.g. `bp.1s_mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
 
 ```{r}
 diabetes |> 
@@ -111,7 +110,7 @@ Do the same as #4 above but return a vector instead of a list.
 
 Check `diabetes` for any missing data. 
 
-1. Using the `~.f(.x)` shorthand, check each column for any missing values using `is.na()` and `any()`
+1. Using the `\(.x) .f(.x)` shorthand, check each column for any missing values using `is.na()` and `any()`
 
 2. Return a logical vector. Are any columns missing data? What happens if you don't include `any()`? Why?
 
@@ -130,10 +129,11 @@ Check `diabetes` for any missing data.
 3. Use `group_modify()` with `model_lm`
 
 ```{r}
+library(broom)
 model_lm <- function(.data, ...) {
   mdl <- lm(____, data = ____)
   # get model statistics
-  broom::glance(mdl)
+  glance(mdl)
 }
 
 diabetes |> 
@@ -145,9 +145,9 @@ diabetes |>
 
 1. Split the `gapminder` dataset into a list by `country` using the `split()` function
 
-2. Create a list of models using `map()`. For the first argument, pass `gapminder_countries`. For the second, use the `~.f()` notation to write a model with `lm()`. Use `lifeExp` on the left hand side of the formula and `year` on the second. Pass `.x` to the `data` argument.
+2. Create a list of models using `map()`. For the first argument, pass gapminder_countries. For the second, use the `\()` notation to write a model with `lm()`. Use `lifeExp` on the left hand side of the formula and `year` on the second. Pass `.x` to the data argument.
 
-3. Use `map2()` to take the models list and the data set list and map them to `predict()`. Since we're not adding new arguments, you don't need to use `~.f()`.
+3. Use `map2()` to take the models list and the data set list and map them to `predict()`. Since we're not adding new arguments, you don't need to use `\()`.
 
 ```{r}
 gapminder_countries <- ____(gapminder, gapminder$country)
@@ -163,7 +163,7 @@ By the way, we can also solve this problem with `group_map()` since `lm()` store
 ```{r}
 gapminder |> 
   group_by(country) |> 
-  group_map(~ lm(lifeExp ~ year, data = .x)) |> 
+  group_map(\(.x) lm(lifeExp ~ year, data = .x)) |> 
   map(predict)
 ```
 
@@ -174,7 +174,8 @@ Both solutions are fine in this case, but it's useful to know both strategies mo
 1. Create a new directory using the fs package. Call it "figures".
 
 ```{r}
-fs::dir_create(_______)
+library(fs)
+dir_create(_______)
 ```
 
 2. Write a function to plot a line plot of a given variable in gapminder over time, faceted by continent. Then, save the plot (how do you save a ggplot?). For the file name, paste together the folder, name of the variable, and extension so it follows the pattern `"folder/variable_name.png"`
@@ -183,8 +184,8 @@ fs::dir_create(_______)
 
 ```{r}
 ggsave_gapminder <- ________(variable) {
-  #  we're using `aes_string()` so we don't need the curly-curly syntax
-  p <- ggplot(gapminder, aes_string(x = "year", y = ____, color = "country")) + 
+  #  don't forget to use the curly-curly syntax!
+  p <- ggplot(gapminder, aes(x = year, y = ____, color = country)) + 
     _________() + 
     scale_color_manual(values = country_colors) + 
     facet_wrap(vars(________)) + 

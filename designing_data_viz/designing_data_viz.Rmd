@@ -794,7 +794,7 @@ gapminder |>
   group_by(continent, year) |>
   summarise(lifeExp = mean(lifeExp)) |>
   ggplot(aes(year, lifeExp, col = continent)) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   theme_minimal_hgrid() +
   scale_color_manual(values = continent_colors) +
   scale_x_continuous(expand = expansion()) +
@@ -836,7 +836,7 @@ direct_labels <- continent_data |>
 ```{r}
 line_plot <- continent_data |>
   ggplot(aes(year, lifeExp, col = continent)) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   theme_minimal_hgrid() +
   theme(legend.position = "none") + #<<
   scale_color_manual(values = continent_colors) +
@@ -1157,7 +1157,7 @@ africa <- gapminder |>
 
 africa |>
   ggplot(aes(year, lifeExp, color = country, group = country)) +
-  geom_line(size = 1.2, alpha = .9, color = "#E58C23") +
+  geom_line(linewidth = 1.2, alpha = .9, color = "#E58C23") +
   theme_minimal(base_size = 14) +
   theme(
     legend.position = "none",
@@ -1206,7 +1206,7 @@ africa <- left_join(africa, life_expectancy_dropped, by = "country")
 ```{r, echo=FALSE}
 le_line_plot <- africa |>
   ggplot(aes(year, lifeExp, color = country, group = country)) +
-  geom_line(size = 1.2, alpha = .9, color = "#E58C23") +
+  geom_line(linewidth = 1.2, alpha = .9, color = "#E58C23") +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "none",
@@ -1488,7 +1488,7 @@ kelvin2farenheit <- function(k) (9 / 5) * (k - 273) + 32
 base_map <- la_heat_income |>
   mutate(temp = kelvin2farenheit(X_median)) |>
   ggplot() +
-  geom_sf(aes(fill = temp), color = "white", size = .2) +
+  geom_sf(aes(fill = temp), color = "white", linewidth = .2) +
   cowplot::theme_map() +
   theme(legend.position = c(.9, .2)) +
   scale_fill_viridis_c(option = "inferno")
