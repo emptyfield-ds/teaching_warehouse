@@ -234,7 +234,11 @@ who |>
 
 ```{r}
 #| eval: false
-separate(<DATA>, <VARIABLE>, into = c("<VARIABLE1>", "<VARIABLE2>"))
+separate(
+  <DATA>, 
+  <VARIABLE>, 
+  into = c("<VARIABLE1>", "<VARIABLE2>")
+)
 
 unite(<DATA>, <VARIABLES>)
 ```
@@ -357,5 +361,5 @@ lotr |>
 #### `drop_na()` and `replace_na()`
 
 ## Resources {background-color="#23373B"}
-### [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
-### [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
+### [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+### [Posit Primers](https://posit.cloud/learn/primers): Free interactive courses in the Tidyverse

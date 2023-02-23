@@ -522,5 +522,5 @@ class: inverse, center
 
 # Resources
 ## [R Markdown](https://bookdown.org/yihui/rmarkdown/): A comprehensive but friendly introduction to R Markdown and friends. Free online.
-## [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+## [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
 ## [R Markdown for Scientists](https://rmd4sci.njtierney.com/): R Markdown for Scientists workshop material.

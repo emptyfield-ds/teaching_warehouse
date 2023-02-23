@@ -261,10 +261,10 @@ Function            | Writes
 `write_lines()`     | A vector of strings, one string per line
 `write_tsv()`       | Tab delimited values
 `write_rds()`       | A data type used by R to save objects
-`write_sas()`       | SAS .sas7bdat files
-`write_xpt()`       | SAS transport format, .xpt
-`write_sav()`       | SPSS .sav files
-`write_stata()`     | Stata .dta files
+`write_xpt()`       | SAS transport format, `.xpt`
+`write_sas()`       | SAS `.sas7bdat` files (experimental)
+`write_sav()`       | SPSS `.sav` files
+`write_stata()`     | Stata `.dta` files
 
 ## Writing data
 

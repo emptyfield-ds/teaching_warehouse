@@ -618,50 +618,12 @@ gapminder |>
   scale_color_manual(values = continent_colors)
 ```
 
-## `mutate(across())`
-
-. . . 
-
-```{r}
-#| label: mutate-across-concept-map
-#| eval: false
-#| code-line-numbers: "|3"
-mutate(
-  <DATA>, 
-  across(c(<VARIABLES>), list(<NAMES> = <FUNCTIONS>)) 
-)
-```
-
-## `mutate(across())`
-
-```{r}
-#| label: mutate-across-example-01
-#| code-line-numbers: "|3"
-#| output-location: slide
-mutate(
-  diamonds, 
-  across(c("carat", "depth"), list(sd = sd, mean = mean)) 
-)
-```
-
-## `mutate(across(where()))`
-
-```{r}
-#| label: mutate-across-where-example-01
-#| code-line-numbers: "|3"
-#| output-location: slide
-mutate(
-  gapminder, 
-  across(where(is.numeric), list(mean = mean, median = median)) 
-)
-```
-
 ## Joining data
 
 ### Use `left_join()`, `right_join()`, `full_join()`, or `inner_join()` to join datasets
 ### Use `semi_join()` or `anti_join()` to filter datasets against each other
 
 ## Resources {background-color="#23373B"}
-### [R for Data Science](http://r4ds.had.co.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
+### [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
 ### [Posit Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
 ### [10 dplyr tips](https://twitter.com/i/moments/1044926554239881217): a Twitter thread on other useful aspects of dplyr
