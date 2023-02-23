@@ -24,7 +24,7 @@ Alter the code to select just the `pop` column:
 select(gapminder, year, lifeExp)
 ```
 
-## Show of Hands
+## Make a Prediction
 
 Which of these is NOT a way to select the `country` and `continent` columns together?
 

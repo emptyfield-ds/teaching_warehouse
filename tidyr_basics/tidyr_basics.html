@@ -394,7 +394,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">1/25/23</p>
+  <p class="date">2/22/23</p>
 </section>
 <section id="tidyr" class="slide level2">
 <h2><strong>tidyr</strong></h2>
@@ -552,7 +552,7 @@ TODO: Update the art slide when Allison makes a pivot version
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   country     year   cases
-  &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;
 1 Afghanistan 1999     745
 2 Afghanistan 2000    2666
 3 Brazil      1999   37737
@@ -619,7 +619,7 @@ TODO: Update the art slide when Allison makes a pivot version
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   country      year  cases population prevalence
-  &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
 1 Afghanistan  1999    745   19987071       3.73
 2 Afghanistan  2000   2666   20595360      12.9 
 3 Brazil       1999  37737  172006362      21.9 
@@ -677,7 +677,7 @@ TODO: Update the art slide when Allison makes a pivot version
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 405,440 × 4
    country      year codes            n
-   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
  1 Afghanistan  1980 new_sp_m014     NA
  2 Afghanistan  1980 new_sp_m1524    NA
  3 Afghanistan  1980 new_sp_m2534    NA
@@ -693,9 +693,13 @@ TODO: Update the art slide when Allison makes a pivot version
 </div></section><section id="separateunite" class="slide level2">
 <h2><code>separate()</code>/<code>unite()</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">separate</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLE<span class="sc">&gt;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"&lt;VARIABLE1&gt;"</span>, <span class="st">"&lt;VARIABLE2&gt;"</span>))</span>
-<span id="cb19-2"><a href="#cb19-2"></a></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">unite</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLES<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">separate</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="sc">&lt;</span>VARIABLE<span class="sc">&gt;</span>, </span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"&lt;VARIABLE1&gt;"</span>, <span class="st">"&lt;VARIABLE2&gt;"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a>)</span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="fu">unite</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLES<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-turn-4" class="slide level2">
@@ -818,8 +822,8 @@ TODO: Update the art slide when Allison makes a pivot version
 </section>
 <section id="resources" class="slide level2" data-background-color="#23373B">
 <h2>Resources</h2>
-<h3 id="r-for-data-science-a-comprehensive-but-friendly-introduction-to-the-tidyverse.-free-online."><a href="http://r4ds.had.co.nz/">R for Data Science</a>: A comprehensive but friendly introduction to the tidyverse. Free online.</h3>
-<h3 id="rstudio-primers-free-interactive-courses-in-the-tidyverse"><a href="https://rstudio.cloud/learn/primers">RStudio Primers</a>: Free interactive courses in the Tidyverse</h3>
+<h3 id="r-for-data-science-a-comprehensive-but-friendly-introduction-to-the-tidyverse.-free-online."><a href="https://r4ds.hadley.nz/">R for Data Science</a>: A comprehensive but friendly introduction to the tidyverse. Free online.</h3>
+<h3 id="posit-primers-free-interactive-courses-in-the-tidyverse"><a href="https://posit.cloud/learn/primers">Posit Primers</a>: Free interactive courses in the Tidyverse</h3>
 <div class="footer footer-default">
 
 </div>
@@ -981,14 +985,14 @@ TODO: Update the art slide when Allison makes a pivot version
         previewLinks: true,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
+        transitionSpeed: 'fast',
 
         // Transition style for full page slide backgrounds
         // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'none',
+        backgroundTransition: 'fade',
 
         // Number of slides away from the current that are visible
         viewDistance: 3,
