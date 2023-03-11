@@ -1,67 +1,50 @@
 ---
 author: "Malcolm Barrett"
 title: "Reproduce Reports"
-output: 
-  distill::distill_article:
+format: 
+  html:
     toc: true
-    code_folding: true 
+    code-fold: true 
 params: 
   continent: Americas
 bibliography: citations.bib
 ---
 
 Chunks named "setup" are a little special.
-They will always run first in R Notebooks and interactively if they haven't been run yet.
+They will always run first in Quarto documents and interactively if they haven't been run yet.
 
 ```{r}
 #| label: setup
 #| echo: false
 #| message: false
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(tidyverse)
 library(gapminder)
+library(gt)
 
-copy_rmd_template <- function(template) {
-  copied <- file.copy(
-    file.path("templates", template),
-    "exercises.Rmd",
-    overwrite = TRUE
-  )
-  
-  if (!copied) {
-    stop(
-      file.path("templates", template), " not found. ", 
-      "Are you sure you're in the right working directory?",
-      call. = FALSE
-    )
-  }
-  
-  template_r <- usethis::ui_path(file.path("templates", template))
-  targets_r <- usethis::ui_path("exercises.Rmd")
-  usethis::ui_done("Copying {template_r} to {targets_r}")
-}
+# load the `copy_qmd_template()` helper function
+source("copy_qmd_template.R")
 ```
 
 ## Your turn 1
 
-Create a new R Markdown file.
-Go to File \> New File \> R Markdown.
-Press OK. Save the file and press the "Knit" button above.
+Create a new Quarto file.
+Go to File \> New File \> Quarto Document.
+Press OK. Save the file and press the "Render" button above.
 
 ## Your turn 2
 
-Read this short introduction to Visual R Markdown: <https://rstudio.github.io/visual-markdown-editing/#/intro?id=getting-started>
+Read this short introduction to the Visual Editor: <https://quarto.org/docs/visual-editor/>.
+You might Also find this link on editing content in the Visual Editor helpful: <https://quarto.org/docs/visual-editor/content.html>
 
-Turn on Visual R Markdown mode for this document.
+Turn on the Visual Editor mode for this document.
 Then, stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below.
 Experiment with bolding, italicizing, making lists, etc.
 
-GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.
-The unit is in international dollars, fixed 2011 prices.
-The data is adjusted for inflation and differences in the cost of living between countries, so-called PPP dollars.
+**GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.** The unit is in international dollars, fixed 2011 prices.
+The data is adjusted for inflation and differences in the cost of living between countries, so-called *PPP dollars*.
 The end of the time series, between 1990 and 2016, uses the latest GDP per capita data from the World Bank, from their World Development Indicators.
-To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
+
+-   To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
 
 ## Your turn 3
 
@@ -71,47 +54,43 @@ Put the following code in it:
 
 ```{r}
 #| echo: false
-gapminder |> slice(1:5) |> knitr::kable()
+gapminder |> 
+  head() |> 
+  gt()
 ```
 
-Knit the document
+Render the document
 
 ## Your turn 4
 
 Something not quite working from the last exercise?
-Run this code to update `exercises.Rmd` and catch up
+Run this code to update `exercises.qmd` and catch up
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_4.Rmd")
+copy_qmd_template("your_turn_4.qmd")
 ```
 
-Add `echo = FALSE` to the code chunk above and re-knit
-
-Remove `echo = FALSE` from the code chunk and move it to `knitr::opts_chunk$set()` in the `setup` code chunk.
-Re-knit.
-What's different about this?
-Look around the rest of the document.
-
-When you've figured it out, remove `echo = FALSE` from `knitr::opts_chunk$set()`.
+Add `echo: false` to the code chunk you created and re-render.
+What's the difference in the output?
 
 ## Your turn 5
 
 Something not quite working from the last exercise?
-Run this code to update `exercises.Rmd` and catch up:
+Run this code to update `exercises.qmd` and catch up:
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_5.Rmd")
+copy_qmd_template("your_turn_5.qmd")
 ```
 
 In the code chunk below:
 
-1.  Remove `eval = FALSE` so that R Markdown evaluates the code.
+1.  Remove `eval: false` so that Quarto evaluates the code.
 2.  Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
-3.  Use inline code to describe the data set in the text below the code chunk and re-knit.
+3.  Use inline code to describe the data set in the text below the code chunk and re-render.
 
 ```{r}
 n_years <- gapminder |> 
@@ -126,12 +105,12 @@ Gapminder observed data over `r n_years` different years.
 ## Your turn 6
 
 Something not quite working from the last exercise?
-Run this code to update `exercises.Rmd` and catch up:
+Run this code to update `exercises.qmd` and catch up:
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_6.Rmd")
+copy_qmd_template("your_turn_6.qmd")
 ```
 
 In the code chunk below:
@@ -141,20 +120,18 @@ In the code chunk below:
 
 2.  Add your name to the YAML header using `author: Your Name`.
 
-3.  Change the YAML header above from `output: html_document` to `output: distill::distill_article`.
+3.  Set `format: html` to use the `toc` and `code-fold` options and re-render (see the [Quarto documentation](https://quarto.org/docs/reference/formats/html.html) for details on these and other arguments. Add them to the YAML like this (be mindful of the indents! Also, make sure you have the Visual Editor turned on or the code below might look a little different):
 
-4.  Set `distill::distill_article` to use the `toc` and `code_folding` options and re-knit (see `?distill::distill_article` for details on these and other arguments. Add them to the YAML like this (be mindful of the indents! Also, make sure you have Visual R Markdown turned on or the code below might look a little different):
-
-    ``` {.yaml}
-    output: 
-      distill::distill_article:
-        _________: true
-        _________: true 
+    ``` yaml
+    format: 
+      html:
+        _____: true
+        _____: true 
     ```
 
 ```{r}
-#| dpi: 320.0
-#| fig.width: 6.0
+#| dpi: 300
+#| fig.width: 7.5
 gapminder |> 
   filter(continent != "Oceania") |> 
   ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
@@ -169,19 +146,19 @@ gapminder |>
 ## Your turn 7
 
 Something not quite working from the last exercise?
-Run this code to update `exercises.Rmd` and catch up:
+Run this code to update `exercises.qmd` and catch up:
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_7.Rmd")
+copy_qmd_template("your_turn_7.qmd")
 ```
 
 In the code chunk below:
 
-1.  Take a look at the output of this plot in the document you've knitted.
+1.  Take a look at the output of this plot in the document you've rendered.
 2.  Now, change the `params` option in the YAML header to use a different continent.
-3.  Re-knit. What's changed?
+3.  Re-render. What's changed?
 
 ```{r}
 gapminder |> 
@@ -197,27 +174,27 @@ gapminder |>
 ## Your turn 8
 
 Something not quite working from the last exercise?
-Run this code to update `exercises.Rmd` and catch up:
+Run this code to update `exercises.qmd` and catch up:
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_8.Rmd")
+copy_qmd_template("your_turn_8.qmd")
 ```
 
 In the sentence below:
 
-1.  Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources \> Bibliography.
+1.  Cite *Causal Inference* in text below. Using the citation wizard, find the right citation under My sources \> Bibliography.
 2.  Add the American Journal of Epidemiology CSL to the YAML using `csl: aje.csl`
-3.  Re-knit
+3.  Re-render
 
 We calculated the average treatment effect using g-computation \_\_\_\_\_\_\_\_.
 
-# Take aways
+# Takeaways
 
--   R Markdown has simple syntax that's easy to use
--   Your analysis and narrative are easy to intertwine in R Markdown
+-   Quarto has simple syntax that's easy to use
+-   Your analysis and narrative are easy to intertwine in Quarto
 -   You can re-run your analysis with different inputs and outputs
 -   Code chunks provide a variety of options to change the resulting report
--   Use YAML to set options for R Markdown
--   R Markdown supports a powerful citation system. Find more CSL styles at <https://github.com/citation-style-language/styles>
+-   Use YAML to set options for Quarto
+-   Quarto supports a powerful citation system. Find more CSL styles at <https://github.com/citation-style-language/styles>

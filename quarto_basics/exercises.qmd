@@ -36,11 +36,11 @@ Turn on the Visual Editor mode for this document.
 Then, stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below.
 Experiment with bolding, italicizing, making lists, etc.
 
-GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.
-The unit is in international dollars, fixed 2011 prices.
-The data is adjusted for inflation and differences in the cost of living between countries, so-called PPP dollars.
+**GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.** The unit is in international dollars, fixed 2011 prices.
+The data is adjusted for inflation and differences in the cost of living between countries, so-called *PPP dollars*.
 The end of the time series, between 1990 and 2016, uses the latest GDP per capita data from the World Bank, from their World Development Indicators.
-To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
+
+-   To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
 
 ## Your turn 3
 
@@ -48,7 +48,11 @@ Create a code chunk.
 You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above.
 Put the following code in it:
 
-gapminder \|\> head() \|\> gt()
+```{r}
+gapminder |> 
+  head() |> 
+  gt()
+```
 
 Render the document
 
@@ -63,7 +67,8 @@ Run this code to update `exercises.qmd` and catch up
 copy_qmd_template("your_turn_4.qmd")
 ```
 
-Add `echo: false` to the code chunk above and re-render
+Add `echo: false` to the code chunk you created and re-render.
+What's the difference in the output?
 
 ## Your turn 5
 
@@ -147,7 +152,7 @@ In the code chunk below:
 
 1.  Take a look at the output of this plot in the document you've rendered.
 2.  Now, change the `params` option in the YAML header to use a different continent.
-3.  re-render. What's changed?
+3.  Re-render. What's changed?
 
 ```{r}
 gapminder |> 
@@ -173,7 +178,7 @@ copy_qmd_template("your_turn_8.qmd")
 
 In the sentence below:
 
-1.  Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources \> Bibliography.
+1.  Cite *Causal Inference* in text below. Using the citation wizard, find the right citation under My sources \> Bibliography.
 2.  Add the American Journal of Epidemiology CSL to the YAML using `csl: aje.csl`
 3.  Re-render
 

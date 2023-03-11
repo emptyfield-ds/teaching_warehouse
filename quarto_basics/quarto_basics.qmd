@@ -14,6 +14,7 @@ options(
 )
 library(tidyverse)
 library(gapminder)
+library(gt)
 ```
 
 ```{r}
@@ -252,7 +253,7 @@ knitr::include_graphics("img/chunk_autocomplete_values.png")
 ```r
 gapminder |> 
   slice(1:5) |> 
-  knitr::kable()
+   gt()
 ```
 ### Render the document
 
@@ -260,7 +261,7 @@ gapminder |>
 
 ## *Your Turn 4*
   
-### Add `echo: false` to the code chunk above and re-render. What's different about this?
+### Add `echo: false` to the code chunk you created and re-render. What's the difference in the output? 
 
 ## Inline Code
 
@@ -407,7 +408,7 @@ csl: file.csl
 
 ## Your turn 8
 
-### Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources > Bibliography. 
+### Cite Causal Inference in text below. Using the citation wizard, find the right citation under My sources > Bibliography. 
 
 ### Add the American Journal of Epidemiology CSL to the YAML using csl: `aje.csl`
 
