@@ -7,8 +7,8 @@ format: html
 #| label: setup
 library(tidyverse)
 
-copy_rmd_template <- function(template) {
-  if (template == "your_turn_3.Rmd") {
+copy_qmd_template <- function(template) {
+  if (template == "your_turn_3.qmd") {
     file.copy(
       file.path("templates", "references.bib"),
       "references.bib",
@@ -17,7 +17,7 @@ copy_rmd_template <- function(template) {
   }
   copied <- file.copy(
     file.path("templates", template),
-    "whole_game.Rmd",
+    "whole_game.qmd",
     overwrite = TRUE
   )
   
@@ -30,16 +30,16 @@ copy_rmd_template <- function(template) {
   }
   
   template_r <- usethis::ui_path(file.path("templates", template))
-  targets_r <- usethis::ui_path("whole_game.Rmd")
+  targets_r <- usethis::ui_path("whole_game.qmd")
   usethis::ui_done("Copying {template_r} to {targets_r}")
 }
 ```
 
-*For this set of exercises, we'll work through an R Markdown report in `whole_game.Rmd`. Open up that file and follow along with these exercises:*
+*For this set of exercises, we'll work through an R Markdown report in `whole_game.qmd`. Open up that file and follow along with these exercises:*
 
 ## *Your Turn 1*
 
-1.  *Turn on Visual R Markdown mode for `exercises.Rmd` (this document) AND `whole_game.Rmd`*
+1.  *Turn on Visual R Markdown mode for `exercises.qmd` (this document) AND `whole_game.qmd`*
 2.  *In your local R session, run the code in the code chunk called "prep-data". Look at the chunk options (everything after "r prep-data". What do you think setting the `include` option does?*
 3.  *Knit the document and take a look. Were you right?*
 
@@ -49,12 +49,12 @@ copy_rmd_template <- function(template) {
 
 ## *Your Turn 3*
 
-*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
+*Something not quite working from the last exercise? Run this code to update `whole_game.qmd` and catch up*
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_3.Rmd")
+copy_qmd_template("your_turn_3.qmd")
 ```
 
 1.  *Take a look at the chunk called "descriptive-stats." What do you think `echo = FALSE` does, and how is it different from `include = FALSE`? What do you think `eval = FALSE` means?*
@@ -64,12 +64,12 @@ copy_rmd_template("your_turn_3.Rmd")
 
 ## *Your Turn 4*
 
-*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
+*Something not quite working from the last exercise? Run this code to update `whole_game.qmd` and catch up*
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_4.Rmd")
+copy_qmd_template("your_turn_4.qmd")
 ```
 
 1.  *In the code chunk called "table-one", create a descriptive table with `tbl_summary()`*
@@ -78,12 +78,12 @@ copy_rmd_template("your_turn_4.Rmd")
 
 ## *Your Turn 5*
 
-*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
+*Something not quite working from the last exercise? Run this code to update `whole_game.qmd` and catch up*
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_5.Rmd")
+copy_qmd_template("your_turn_5.qmd")
 ```
 
 1.  *In the code chunk called "figure-one", load the patchwork library*
@@ -92,7 +92,7 @@ copy_rmd_template("your_turn_5.Rmd")
 
 3.  *At the top of the document, change `format: html` to this code (be mindful to keep the indents as is):*
 
-``` {.yaml}
+``` yaml
 output: 
 bookdown::html_document2:
 number_sections: false
@@ -104,12 +104,12 @@ number_sections: false
 
 ## *Your Turn 6*
 
-*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
+*Something not quite working from the last exercise? Run this code to update `whole_game.qmd` and catch up*
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_6.Rmd")
+copy_qmd_template("your_turn_6.qmd")
 ```
 
 1.  *In the code chunk called "table-two", pass the results of both `lm()` and `glm()` to `tbl_regression()`*
@@ -120,12 +120,12 @@ copy_rmd_template("your_turn_6.Rmd")
 
 ## *Your Turn 7*
 
-*Something not quite working from the last exercise? Run this code to update `whole_game.Rmd` and catch up*
+*Something not quite working from the last exercise? Run this code to update `whole_game.qmd` and catch up*
 
 ```{r}
 #| eval: false
 #| echo: false
-copy_rmd_template("your_turn_7.Rmd")
+copy_qmd_template("your_turn_7.qmd")
 ```
 
 *Previously, we only had data for one location in the study---Buckingham. We've just received data from the other site, Louisa, and we need to update the tables, figures, and narrative text...*

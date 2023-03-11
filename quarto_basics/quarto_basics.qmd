@@ -1,0 +1,428 @@
+---
+title: "Dynamic documents in R"
+subtitle: "reproducible research with Quarto"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+library(tidyverse)
+library(gapminder)
+```
+
+```{r}
+#| echo: false
+#| out.width: 100%
+#| out.height: 100%
+knitr::include_graphics("img/quarto.png")
+```
+::: {.tiny}
+Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.
+:::
+
+---
+
+```{r}
+#| echo: false
+#| out.height: 100%
+#| out.width: 100%
+knitr::include_graphics("img/quarto-output.png")
+```
+
+## Quarto {.large}
+
+![](img/quarto-logo.svg){.absolute top=0 right=0 width=140}
+
+<br />
+
+. . .
+
+*Dynamic*: code and text in same document
+
+. . .
+
+*Reproducible*: re-run your analysis, re-render your document
+
+. . .
+
+*Flexible*: output to different formats easily
+
+## Rendering
+
+```{r}
+#| echo: false
+#| out.height: 130%
+#| out.width: 130%
+knitr::include_graphics("img/rendering.png")
+```
+
+
+## *Your Turn 1*
+
+### Create a new Quarto file. Go to File > New File > Quarto Document. Press OK. Save the file and press the "Render" button.
+
+
+```{r}
+#| echo: false
+#| out.height: 25%
+#| out.width: 25%
+knitr::include_graphics("img/render_button.png")
+```
+
+
+---
+
+```{r}
+#| echo: false
+#| out.height: 100%
+#| out.width: 100%
+knitr::include_graphics("img/quarto-components.jpg")
+```
+
+## Quarto
+
+![](img/quarto-logo.svg){.absolute top=0 right=0 width=140}
+
+### Prose
+### Code
+### Metadata
+
+## Quarto
+
+![](img/quarto-logo.svg){.absolute top=0 right=0 width=140}
+
+### **Prose** = *Markdown*
+### ~~Code~~
+### ~~Metadata~~
+
+## the Visual Editor
+
+```{r}
+#| echo: false
+#| out.height: 50%
+#| out.width: 50%
+knitr::include_graphics("img/visual-editing.png")
+```
+
+## Basic Markdown Syntax
+
+```
+*italic*   **bold**
+
+_italic_   __bold__
+```
+
+## Basic Markdown Syntax
+
+```
+# Header 1
+
+## Header 2
+
+### Header 3
+
+```
+
+## Basic Markdown Syntax
+
+```
+http://example.com
+
+[linked phrase](http://example.com)
+
+```
+
+## {.extra-large background-color="#23373B"}
+
+ *Learn more about Markdown Syntax with the ten-twenty minute tutorial on markdown at <https://commonmark.org/help/tutorial>.*
+
+## *Your Turn 2* (open **`exercises.qmd`**)
+
+### Read this short introduction to the Visual Editor: <https://quarto.org/docs/visual-editor/>
+
+### Use the Visual Editor to stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below. Experiment with bolding, italicizing, making lists, etc.
+
+
+## Quarto
+
+![](img/quarto-logo.svg){.absolute top=0 right=0 width=140}
+
+### ~~Prose~~
+### **Code** = *R code chunks*
+### ~~Metadata~~
+
+## Code chunks
+
+```{r}
+#| echo: false
+#| out.height: 200%
+#| out.width: 200%
+knitr::include_graphics("img/code-chunk1.jpg")
+```
+
+
+## Code chunks
+
+```{r}
+#| echo: false
+#| out.height: 200%
+#| out.width: 200%
+knitr::include_graphics("img/code-chunk2.jpg")
+```
+
+## Code chunks
+
+```{r}
+#| echo: false
+#| out.height: 200%
+#| out.width: 200%
+knitr::include_graphics("img/code-chunk3.jpg")
+```
+
+## Code chunks
+
+```{r}
+#| echo: false
+#| out.height: 200%
+#| out.width: 200%
+knitr::include_graphics("img/code-chunk4.jpg")
+```
+
+## Chunk options
+
+Option       | Effect
+-------------- | --------------------------
+`include: false`   | run the code but don't print it or results
+`eval: false`   | don't evaluate the code
+`echo: false`  | run the code and output but don't print code
+`message: false` | don't print messages (e.g. from a function)
+`warning: false`   | don't print warnings
+`fig.cap: "Figure 1"`   | caption output plot with "Figure 1"
+
+. . .
+
+See the [Quarto documentation](https://quarto.org/docs/reference/cells/cells-knitr.html)
+
+---
+
+## Other languages {.extra-large}
+
+. . .
+
+First-class support for [Python](https://quarto.org/docs/computations/python.html), [Julia](https://quarto.org/docs/computations/julia.html), and [Observable JS](https://quarto.org/docs/computations/ojs.html)
+
+. . .
+
+Supports Jupyter notebooks
+
+. . .
+
+`r length(knitr::knit_engines$get())` [knitr engines](https://bookdown.org/yihui/rmarkdown/language-engines.html)
+
+## Insert code chunks with **`cmd/ctrl + alt/option + I`** or Visual Editor
+
+```{r}
+#| echo: false
+#| out.height: 50%
+#| out.width: 50%
+knitr::include_graphics("img/chunk_setup_gui.png")
+```
+
+## Press `tab` to autocomplete chunk options
+
+```{r}
+#| echo: false
+#| out.height: 100%
+#| out.width: 100%
+#| layout-ncol: 2
+knitr::include_graphics("img/chunk_autocomplete.png")
+knitr::include_graphics("img/chunk_autocomplete_values.png")
+``` 
+
+## *Your Turn 3*
+
+### Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above. Put the following code in it:
+
+```r
+gapminder |> 
+  slice(1:5) |> 
+  knitr::kable()
+```
+### Render the document
+
+---
+
+## *Your Turn 4*
+  
+### Add `echo: false` to the code chunk above and re-render. What's different about this?
+
+## Inline Code
+
+```{r}
+#| echo: false
+#| out.height: 100%
+#| out.width: 100%
+knitr::include_graphics("img/inline.jpg")
+```
+
+## Inline Code
+
+```{r}
+#| echo: false
+#| out.height: 100%
+#| out.width: 100%
+knitr::include_graphics("img/inline-highlighted.jpg")
+```
+
+
+## *Your Turn 5*
+
+### Remove `eval: false` so that Quarto evaluates the code.
+### Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
+### Use inline code to describe the data set in the text below the code chunk and re-render.
+
+---
+
+## Quarto
+
+![](img/quarto-logo.svg){.absolute top=0 right=0 width=140}
+
+### ~~Prose~~
+### ~~Code~~
+### **Metadata** = *YAML*
+
+## YAML Metadata
+
+```{yaml}
+#| code-line-numbers: "|1,10|2|5-6|5,7-9"
+---
+title: "Howl"
+author: "Allen Ginsberg"
+date: "March 18, 1956"
+format: 
+  html: default
+  pdf: 
+    toc: true
+    number-sections: true
+---
+```
+
+## Output formats
+
+Format       | Outputs
+-------------- | --------------------------
+`html`   | HTML
+`pdf`  | PDF
+`word` | Word `.docx`
+`odt`   | OpenOffice `.odt`
+`gfm`   | GitHub-flavored Markdown
+`revealjs`   | Reveal Slides (HTML)
+`beamer`   | Beamer Slides (PDF)
+`pptx`   | Powerpoint Slides
+
+---
+
+## *Your Turn 6*
+
+#### Set figure chunk options to the code chunk below, such as `dpi`, `fig.width`, and `fig.height.` Run `knitr::opts_chunk$get()` in the console to see the defaults.
+#### Add your name to the YAML header using `author: Your Name`.
+#### Change `format: html` to use the `toc: true` and `code-fold: true` options and re-render 
+
+---
+
+## Parameters
+
+```{yaml}
+---
+params: 
+  param1: x
+  param2: y
+  data: df
+---
+```
+
+. . .
+
+*Calling parameters in R*
+
+```{r}
+#| eval: false
+params$param1
+params$param2
+params$data
+```
+
+## *Your Turn 7*
+
+###  Change the `params` option in the YAML header to use a different continent. Re-render.
+
+```{r}
+#| eval: false
+gapminder |> 
+  filter(continent == params$continent) |> 
+  ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
+  geom_line(lwd = 1, show.legend = FALSE) + 
+  scale_color_manual(values = country_colors) +
+  theme_minimal(14) + 
+  theme(strip.text = element_text(size = rel(1.1))) +
+  ggtitle(paste("Continent:", params$continent))
+```
+
+## Bibliographies and citations
+
+. . .
+
+*Bibliography files*: `.bib`, Zotero, others
+
+. . .
+
+*Citation styles*: `.csl`
+
+. . .
+
+`[@citation-label]`
+
+. . .
+
+*Visual Editor's citation wizard can help!*
+
+## Including bibliography files in YAML
+
+```yaml
+---
+bibliography: file.bib
+csl: file.csl
+---
+```
+
+. . .
+
+*the Visual Editor can also manage this for you.*
+
+## Your turn 8
+
+### Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources > Bibliography. 
+
+### Add the American Journal of Epidemiology CSL to the YAML using csl: `aje.csl`
+
+### Re-render
+
+## Make cool stuff in Quarto! {.large}
+
+- Books 
+- Blogs 
+- These slides!
+
+. . .
+
+See the [Gallery](https://quarto.org/docs/gallery/) for inspiration
+
+## Resources {background-color="#23373B"}
+### [Quarto Documentation](https://quarto.org/): A comprehensive but friendly introduction to Quarto. Written in Quarto!
+### [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online. Written in Quarto!
