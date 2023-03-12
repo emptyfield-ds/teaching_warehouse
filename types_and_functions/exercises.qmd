@@ -30,8 +30,8 @@ gapminder |>
 1. Create a numeric vector that has the following values: 3, 5, NA, 2, and NA. 
 2. Try using `sum()`. Then add `na.rm = TRUE`.
 3. Check which values are missing with `is.na()`; save the results to a new object and take a look
-4. Change all missing values of `x` to 0
-5. Try `sum()` again without `na.rm = TRUE`.
+4. Change all missing values of `x` to "-9999"
+5. Examine `x` again
 
 ```{r}
 x <- _____________
@@ -41,8 +41,8 @@ ___(x, ___)
 x_missing <- _______
 x_missing
 
-_________ <- 0
-sum(x)
+_________ <- "-9999"
+x
 ```
 
 ## Your Turn 3
@@ -70,7 +70,7 @@ _________
 
 Did you finish early? Try this extra exercise
 
-1. Set a seed for the random number generator using `set.seed()`. Check the help page if you're not sure how.
+1. Set a seed for the random number generator using `set.seed()`. Check the help page if you're not sure how. Hint: use `set.seed()` before using `tibble()`. You can put it before the function or within it.
 2. Call `sim_data()`
 3. Press the green play button several times. What's happening here?
 
@@ -232,7 +232,7 @@ plot_n_countries(2002)
 # Take aways
 
 * Vectors in R each have a type. These include numeric, integer, character, factor, logical, and date. 
-* You can subset vectors or modify them using brackets like `x[[1]]`
+* You can subset vectors or modify them using brackets like `x[1]` and `x[[1]]`
 * Writing functions in R follows this pattern:
 
 ```
@@ -244,4 +244,4 @@ function_name <- function(arg1, arg2 = NULL) {
 ```
 
 * Functions are objects in R like everything else!
-* To program with tidyverse functions, use `...` or curly-curly in the pattern of `{{x}}`. This lets us use bare names like we normally do with these functions.
+* To program with tidyverse functions, use `...` or curly-curly in the pattern of `{{ x }}`. This lets us use bare names like we normally do with these functions.
