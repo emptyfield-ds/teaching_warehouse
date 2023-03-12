@@ -41,7 +41,7 @@ library(gapminder)
 
 *Some vectors have names.*
 
-`names(c("x" = 1, "y = 1))`
+`names(c("x" = 1, "y" = 1))`
 
 . . .
 
