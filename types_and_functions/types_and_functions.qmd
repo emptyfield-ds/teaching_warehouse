@@ -133,7 +133,7 @@ gapminder |>
   theme_minimal()
 ```
 
-## Working with vectors {.large}
+## Working with vectors
 
 . . .
 
@@ -159,6 +159,15 @@ x[[2]]
 x[c(FALSE, TRUE, FALSE)]
 ```
 
+
+. . .
+
+```{r}
+#| error: true
+x[[c(FALSE, TRUE, FALSE)]]
+```
+
+
 ## Working with vectors {.large}
 
 ### Modify elements 
@@ -174,7 +183,7 @@ x
 ```{r}
 #| code-line-numbers: "|1"
 #| output-location: fragment
-x[2] <- 100
+x[[2]] <- 100
 x
 ```
 
@@ -229,7 +238,7 @@ gapminder |>
   ggplot(aes(year, lifeExp, group = country)) +
   geom_line( 
     data = function(x) filter(x, !rwanda), 
-    color = cols[1] 
+    color = cols[[1]]
   ) + 
   theme_minimal()
 ```
@@ -246,11 +255,11 @@ gapminder |>
   ggplot(aes(year, lifeExp, color = rwanda, group = country)) + 
   geom_line(
     data = function(x) filter(x, !rwanda), 
-    color = cols[1]
+    color = cols[[1]]
   ) +
   geom_line(
     data = function(x) filter(x, rwanda), 
-    color = cols[2], 
+    color = cols[[2]], 
     linewidth = 1.5 
   ) + 
   theme_minimal()
@@ -283,12 +292,57 @@ sum(x, na.rm = TRUE)
 x_missing <- is.na(x)
 x_missing
 
-x[x_missing] <- 0
+x[x_missing] <- "-9999"
 x
-sum(x)
 ```
 
 # Writing Functions {background-color="#23373B"}
+
+## Functions that return vectors
+
+```{r}
+gdpPercap <- gapminder |> 
+  filter(year == 1952, continent == "Americas") |> 
+  pull(gdpPercap)
+
+sum(gdpPercap)
+```
+
+
+## Functions that return data frames
+
+```{r}
+gapminder |> 
+  group_by(year) |> 
+  filter(continent == "Americas") |> 
+  summarize(gdpPercap = sum(gdpPercap))
+```
+
+
+## Functions that make plots
+
+```{r}
+gapminder |> 
+  group_by(year) |> 
+  filter(continent == "Americas") |> 
+  summarize(gdpPercap = sum(gdpPercap)) |> 
+  ggplot(aes(year, gdpPercap)) +
+  geom_point()
+```
+
+## Why write functions? {.large}
+
+. . .
+
+*To make repetitive code reusable*
+
+. . .
+
+*To make complex code understandable*
+
+. . .
+
+*To make useful code shareable*
 
 ## Writing functions
 
@@ -416,21 +470,21 @@ if (PREDICATE) {
 }
 ```
 
-## Other functions to control flow
+## If-else with vectors
 
 ```{r}
 #| eval: false
 #| code-line-numbers: "1|2-6|7-11"
-ifelse(PREDICATE, true_result, false_result)
+ifelse(PREDICATE_VECTOR, true_result, false_result)
 dplyr::case_when(
-  PREDICATE ~ true_result,
-  PREDICATE ~ true_result, 
-  TRUE ~ default_result
+  PREDICATE_VECTOR ~ true_result,
+  PREDICATE_VECTOR ~ next_true_result, 
+  .default = default_result
 )
 switch(
   x,
-  value1 = result,
-  value2 = result
+  value1 = result1,
+  value2 = result2
 )
 ```
 
@@ -550,6 +604,8 @@ evalue(3.9, type = "hr")
 evalue(3.9, type = "rd")
 ```
 
+# Programming with the tidyverse {background-color="#23373B"}
+
 ## Pass the dots: `...`
 
 ```{r}
@@ -590,7 +646,7 @@ filter_summarize(year == 2002, str_detect(country, " and "))
 
 ---
 
-## Programming with dplyr, ggplot2, and friends
+## Writing functions with dplyr, ggplot2, and friends
 
 ```{r}
 #| error: true

@@ -29,7 +29,7 @@ diabetes <- read_csv("diabetes.csv")
 ::: {.nonincremental}
 1. Making code clear
 2. Making code safe
-3. Working with lists and data frames
+3. Working iteratively with lists and data frames
 :::
 
 ## Lists, vectors, and data.frames (or tibbles)
@@ -63,7 +63,7 @@ measurements <- list(
 
 ---
 
-## *Your Turn 1* {.small}
+## *Your Turn 1*
 
 ```{r}
 measurements["blood_glucose"]
@@ -104,11 +104,25 @@ gapminder[1:6, "pop"]
 head(gapminder[["pop"]])
 ```
 
----
+## programming with functions
+
+*functions are objects, too*
+
+. . .
+
+```{r}
+#| label: slide-14-00
+f <- mean
+f
+
+identical(mean, f)
+```
 
 ## programming with functions
 
-### View source code of a function
+*source code of a function*
+
+. . .
 
 ```{r}
 #| label: slide-13-00
@@ -118,19 +132,6 @@ mean
 ```{r}
 #| label: slide-13-01
 sd
-```
-
-
-## programming with functions
-
-### functions are objects and can be assigned to variables
-
-```{r}
-#| label: slide-14-00
-f <- mean
-f
-
-identical(mean, f)
 ```
 
 ---
@@ -410,52 +411,70 @@ head(
 )
 ```
 
-##  Review: writing functions
+##  Review: writing functions {.small}
 
 ```{r}
 #| label: slide-54
 #| eval: false
-x <- x^2
-x <- scale(x)
-x <- max(x)
+library(readxl)
+weird_data1 <- read_excel(
+  "data/weird_data1.xlsx", 
+  col_names = c("id", "x", "y", "z"),
+  skip = 5
+)
 ```
 
-##  Review: writing functions
+##  Review: writing functionss {.small}
 
 ```{r}
 #| label: slide-55
 #| eval: false
-#| code-line-numbers: "|5,10"
-x <- x^2
-x <- scale(x)
-x <- max(x)
+#| code-line-numbers: "|9,14"
+library(readxl)
+weird_data1 <- read_excel(
+  "data/weird_data1.xlsx", 
+  col_names = c("id", "x", "y", "z"),
+  skip = 5
+)
 
-y <- x^2
-y <- scale(y)
-y <- max(y)
+weird_data2 <- read_excel(
+  "data/weird_data1.xlsx", 
+  col_names = c("id", "x", "y", "z"),
+  skip = 5
+)
 
-z <- z^2
-z <- scale(x)
-z <- max(z)
+weird_data1 <- read_excel(
+  "data/weird_data3.xlsx", 
+  col_names = c("id", "x", "y", "z"),
+  skip = 5
+)
 ```
 
-##  Review: writing functions
+##  Review: writing functionss {.small}
 
 ```{r}
 #| label: slide-57
 #| eval: false
-#| code-line-numbers: "1,5,9"
-x <- x^3 
-x <- scale(x)
-x <- max(x)
+#| code-line-numbers: "4|9-13,15-19"
+library(readxl)
+weird_data1 <- read_excel(
+  "data/weird_data1.xlsx", 
+  sheet = 2,
+  col_names = c("id", "x", "y", "z"),
+  skip = 6
+)
 
-y <- x^2 
-y <- scale(y)
-y <- max(y)
+weird_data2 <- read_excel(
+  "data/weird_data1.xlsx", 
+  col_names = c("id", "x", "y", "z"),
+  skip = 5
+)
 
-z <- z^2 
-z <- scale(x)
-z <- max(z)
+weird_data1 <- read_excel(
+  "data/weird_data3.xlsx", 
+  col_names = c("id", "x", "y", "z"),
+  skip = 5
+)
 ```
 
 ##  Review: writing functions
@@ -463,19 +482,39 @@ z <- max(z)
 ```{r}
 #| label: slide-58
 #| eval: false
-.f <- function(x) {
-  x <- x^3
-  x <- scale(x)
-  
-  max(x)
+#| code-line-numbers: "|2-9|11-13"
+library(readxl)
+read_weird_excel <- function(path) {
+  read_excel(
+    path, 
+    sheet = 2,
+    col_names = c("id", "x", "y", "z"),
+    skip = 6
+  )
 }
 
-.f(x)
-.f(y)
-.f(z)
+weird_data1 <- read_weird_excel("data/weird_data1")
+weird_data2 <- read_weird_excel("data/weird_data2")
+weird_data3 <- read_weird_excel("data/weird_data3")
 ```
 
-# If you copy and paste your code three times, it's time to write a function {background-color="#23373B"}
+# If you copy and paste your *code* three times, it's time to write a function {background-color="#23373B"}
+
+# If you copy and paste your *function* three times, it's (*probably*) time to iterate {background-color="#23373B"}
+
+##  Iterating with functions
+
+```{r}
+#| eval: false
+files <- c(
+  "data/weird_data1.xlsx", 
+  "data/weird_data2.xlsx", 
+  "data/weird_data3.xlsx"
+)
+
+weird_data <- map(files, read_weird_excel) |> 
+  bind_rows()
+```
 
 ## *Your Turn 5*
 
@@ -572,6 +611,30 @@ map(
 |`map_lgl()` | logical vector |
 |`map_dfc()` | data frame (by column) |
 |`map_dfr()` | data frame (by row) |
+
+## Iterating with functions: revisited
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|8"
+files <- c(
+  "data/weird_data1.xlsx", 
+  "data/weird_data2.xlsx", 
+  "data/weird_data3.xlsx"
+)
+
+weird_data <- map(files, read_weird_excel) |> 
+  bind_rows()
+```
+
+## Iterating with functions: revisited
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2"
+files <- c("data/weird_data1.xlsx", "data/weird_data2.xlsx", "data/weird_data3.xlsx")
+weird_data <- map_dfr(files, read_weird_excel)
+```
 
 ## Returning types
 
@@ -797,7 +860,7 @@ gapminder |>
   group_walk( 
     \(.x, .key) write_csv( 
       .x,
-      file = path(temp,  paste0(.key$continent, ".csv"))
+      file = path(temp,  paste0(.key$continent, ".xlsx"))
     )
   )
 ```
