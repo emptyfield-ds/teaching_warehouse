@@ -8,9 +8,9 @@
 <link href="purrr_basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="purrr_basics_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="purrr_basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-99.9.9">
+  <meta name="generator" content="quarto-1.3.280">
 
-  <meta name="dcterms.date" content="2023-03-12">
+  <meta name="dcterms.date" content="2023-03-29">
   <title>Functional programming in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -395,11 +395,11 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2023-03-12</p>
+  <p class="date">2023-03-29</p>
 </section>
 <section id="purrr-a-functional-programming-toolkit-for-r" class="slide level2">
 <h2>purrr: A functional programming toolkit for R</h2>
-<p><img data-src="img/purrr.png" class="absolute" style="top: 60px; right: 0px; width: 140px; "></p>
+<p><img data-src="img/purrr.png" class="absolute quarto-discovered-preview-image" style="top: 60px; right: 0px; width: 140px; "></p>
 <p><br><br><br></p>
 <h3 id="complete-and-consistent-set-of-tools-for-working-with-functions-and-vectors"><em>Complete and consistent set of tools for working with functions and vectors</em></h3>
 </section>
@@ -437,7 +437,7 @@ $num
 $fun
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x10520a7c0&gt;
+&lt;bytecode: 0x1597c1f48&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -534,7 +534,7 @@ UseMethod("mean")
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x10520a7c0&gt;
+&lt;bytecode: 0x1597c1f48&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">identical</span>(mean, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -553,7 +553,7 @@ UseMethod("mean")
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x10520a7c0&gt;
+&lt;bytecode: 0x1597c1f48&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -563,7 +563,7 @@ UseMethod("mean")
 <pre><code>function (x, na.rm = FALSE) 
 sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
     na.rm = na.rm))
-&lt;bytecode: 0x1202a45b0&gt;
+&lt;bytecode: 0x10bca5e10&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 </div>
@@ -1774,7 +1774,7 @@ $Algeria
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":false},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":false},
 'smaller': false,
  
         // Display controls in the bottom right corner
