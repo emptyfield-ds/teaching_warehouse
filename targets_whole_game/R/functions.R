@@ -101,7 +101,7 @@ plot_cause_hist <- function(brazil_loss) {
       alpha = .9
     ) +
     geom_col(aes(fill = "cause"), alpha = .9) +
-    facet_wrap(vars(cause), labeller = as_labeller(label_sentence)) +
+    facet_wrap(~ cause, labeller = as_labeller(label_sentence)) +
     cowplot::theme_minimal_hgrid() +
     theme(legend.position = "bottom", legend.justification = "center") +
     scale_y_continuous(
