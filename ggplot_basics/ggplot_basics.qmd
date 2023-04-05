@@ -637,9 +637,9 @@ Easily split your plot into panels
 
 . . .
 
-`facet_grid(`**`rows = vars(x)`**`,` **`cols = vars(y)`**`)`
+`facet_grid(`**`x ~ y`**`)`
 
-`facet_wrap(`**`vars(x)`**`)`
+`facet_wrap(`**`~ x`**`)`
 
 ---
 
@@ -649,7 +649,7 @@ Easily split your plot into panels
 diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
-  facet_grid(rows = vars(cut), cols = vars(clarity)) 
+  facet_grid(cut ~ clarity) 
 ```
 
 ## *Your Turn 8*
@@ -670,7 +670,7 @@ ggplot(diabetes, aes(weight, hip)) +
 ggplot(diabetes, aes(weight, hip)) + 
   geom_point() +
   geom_smooth() + 
-  facet_grid(rows = vars(gender), cols = vars(location))
+  facet_grid(gender ~ location)
 ```
 
 ## `facet_wrap()`
@@ -681,7 +681,7 @@ ggplot(diabetes, aes(weight, hip)) +
 diamonds |> 
   ggplot(aes(x = carat, y = price)) + 
   geom_point() + 
-  facet_wrap(vars(clarity))
+  facet_wrap(~ clarity)
 ```
 
 ## datasauRus
@@ -739,6 +739,6 @@ datasaurus_dozen |>
   ggplot(aes(x, y)) + 
   geom_point() + 
   geom_text(data = corrs, aes(label = corr, x = 50, y = 110)) +
-  facet_wrap(vars(dataset))
+  facet_wrap(~ dataset)
 ```
 

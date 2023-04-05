@@ -327,7 +327,7 @@ To create a plot similar to the one in the FT times, we'll need to duplicate eac
 
 When we facet our data by `country`, we will want to allow each facet have differing y axes (since each country has different baseline mortality), so we'll add the `scales = "free_y"` argument. 
 
-As a reminder, `facet_wrap()` usually looks something like this: `facet_wrap(vars(variable_name), scales = "free_y")`
+As a reminder, `facet_wrap()` usually looks something like this: `facet_wrap(~ variable_name, scales = "free_y")`
 
 For ease, we won't add the text annotations to this plot, although ggplot2 can certainly handle it. 
 Fill in the skeleton code to create a facetted plot.

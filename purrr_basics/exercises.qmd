@@ -188,7 +188,7 @@ ggsave_gapminder <- ________(variable) {
   p <- ggplot(gapminder, aes(x = year, y = ____, color = country)) + 
     _________() + 
     scale_color_manual(values = country_colors) + 
-    facet_wrap(vars(________)) + 
+    facet_wrap(~ ________)) + 
     theme(legend.position = "none")
     
   ______(filename = paste0("____", ____, ".png"), plot = p, dpi = 320)
