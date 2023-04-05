@@ -1,0 +1,897 @@
+---
+title: "Flipper Check"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+fs::file_copy(
+  palmerpenguins::path_to_file("penguins.csv" ), 
+  ".", 
+  overwrite = TRUE
+)
+```
+
+## Reading data
+
+After every module, I'll ask you a couple of questions about the material. You can try to answer them as many times as you like. Completing them contributes to your participation points for the course.
+
+For this ~~learning~~ flipper check, we're going to read in a CSV file of data on penguins that comes from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/index.html) package. 
+
+```{r}
+#| echo: false
+#| out.width: 30%
+knitr::include_graphics("palmerpenguins.png")
+```
+
+The data look like this.
+
+```{r}
+#| echo: false
+palmerpenguins::penguins
+```
+
+### Check 1: Fix the error
+
+I tried loading the data from `penguins.csv`, but I see this error: 
+
+```{r}
+#| error: true
+read_csv("penguins.csv")
+```
+
+Why are I am seeing this error and how to do I fix it?
+
+1. You haven't loaded the package from which this function comes. You need to include `library(readr)` or `library(tidyverse)` (correct: when we see an error like this it usually means we haven't loaded the package (or we mispelled the function name!))
+2. You misspelled the function name. It's `read.csv()`. (incorrect: good guess, but not in this case. `read.csv()` is a different function. We should use `read_csv()` from the tidyverse.)
+3. There's something wrong with R. You need to reinstall it. (incorrect)
+4. The file doesn't exist. You need to create it. (incorrect: Read the message closely; it says it can't find the *function*)
+
+
+### Check 2: Fix the error
+
+I tried my code again, this time loading the tidyverse, but I bumped into another error:
+
+```{r}
+#| error: true
+#| message: false
+library(tidyverse)
+read_csv("penguins.csv")
+penguins
+```
+
+Why do I get this one, and what can I do about it?
+
+1. The file doesn't exist. You need to create it. (incorrect: Read the message closely; it says it can't find `penguins`, not `penguins.csv`)
+2. No really, there's something wrong with R. Re-install everything! (incorrect: Have a little faith!)
+3. You didn't assign the results of `read_csv()` to `penguins`. You need `penguins <- read_csv("penguins.csv")`. (correct: R doesn't save the results of `read_csv()` unless we instruct it to with `<-`.)
+4. The object is called `penguins.csv`, not `penguins`. (incorrect: the *file name* is `penguins.csv`, but `read_csv()` doesn't create an object in R with the same name; we have to tell R what to call it.)
+
+
+## Wrangling data
+
+### Check 1: Re-arrange the code
+
+We're going to continue working with `penguins`, but this time we're going to load the data by loading the palmerpenguins package
+
+```{r}
+library(palmerpenguins)
+penguins
+```
+
+I used dplyr to create a new data frame from these data, which looks like this.
+
+```{r}
+#| echo: false
+#| message: false
+flipper_length <- penguins |> 
+  group_by(species, sex) |> 
+  summarize(flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE)) |> 
+  arrange(desc(flipper_length_mm))
+
+flipper_length
+```
+
+Re-arrange the code below to recreate this table
+
+```{r}
+#| eval: false
+flipper_length
+
+  arrange(desc(flipper_length_mm))
+  summarize(flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE)) |> 
+  group_by(species, sex) |> 
+flipper_length <- penguins |> 
+```
+
+#### Check 1: Solution
+
+```{r}
+#| eval: false
+flipper_length <- penguins |> 
+  group_by(species, sex) |> 
+  summarize(flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE)) |> 
+  arrange(desc(flipper_length_mm))
+
+flipper_length
+```
+
+### Check 2: Fix the error
+
+I bumped into an error. Why doesn't this code work, and what do I need to do?
+
+```{r}
+#| error: true
+penguins |> 
+  filter(year = 2007)
+```
+
+
+1. You misspelled the variable name. You need to fix your typo. (incorrect: `year` is a variable in `penguins`, and it's spelled correctly here)
+2. You need to use `==` to check equality, not `=`. `year == 2007` will fix it. (correct: Correct!)
+3. You need to use `select()` to subset rows (incorrect: `select()` subsets columns and `filter()` subsets rows)
+4. There's no year 2007 in the dataset (incorrect: `2007` is a valid value in this dataset)
+
+## Data visualization 1
+
+### Check 1: Drag and drop the functions
+
+I created this plot:
+
+```{r}
+#| echo: false
+#| message: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(x = flipper_length_mm, fill = sex)) + 
+  geom_density(alpha = .7, color = "white") + 
+  facet_grid(species ~ island)
+```
+
+Drag and drop the code into the right spot to recreate the plot. Consider what you're seeing in the plot and the arguments you're seeing in the code.
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(x = ____, fill = ____)) + 
+  ____(alpha = .7, color = "white") + 
+  ____(species ~ island)
+```
+
+
+Options:
+
+* `geom_density`
+* `geom_histogram`
+* `geom_point`
+* `island`
+* `flipper_length_mm`
+* `geom_point`
+* `facet_grid`
+* `body_mass_g`
+* `facet_wrap`
+
+#### Check 1: Solution
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(x = flipper_length_mm, fill = sex)) + 
+  geom_density(alpha = .7, color = "white") + 
+  facet_grid(species ~ island)
+```
+
+
+### Check 2: Fix the plot
+
+There's something strange happening when I try to make a plot of bill depth vs bill length
+
+I expected this plot 
+
+```{r}
+#| echo: false
+#| warning: false
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(
+    aes(shape = species),
+    color = "darkorchid",
+    size = 2
+  ) 
+```
+
+But this code produces something different
+
+```{r}
+#| warning: false
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(
+    aes(shape = species, color = "darkorchid"),
+    size = 2
+  ) 
+```
+
+What mistake did I make, and how do I fix it?
+
+1. "darkorchid" is not a color. You need to supply a valid color. (Incorrect: This is a color available in R)
+2. `color = "darkorchid"` should go in the `aes()` inside the `ggplot()` function (Incorrect: This will result in the same plot)
+3. `color` is not the right aesthetic. You need `fill`. (Incorrect: `color` is the right aesthetic)
+4. You put `color = "darkorchid"` inside `aes()`. It's not a variable, so it should go outside `aes()`. (Correct: `aes()` maps data to our plot. `"darkorchid"` isn't data in our dataset, it's the name of a color available in R.)
+
+## Data visualization 2
+
+### Check 1: Drag and drop the functions
+
+I created this plot:
+
+```{r}
+#| echo: false
+#| message: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(
+    x = flipper_length_mm,
+    y = body_mass_g, 
+    color = sex
+  )) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(se = FALSE, method = "lm") + 
+  scale_color_viridis_d(begin = .2, end = .8) + 
+  facet_wrap(~ species)
+```
+
+Drag and drop the functions into the right spot to recreate it. Consider what you're seeing in the plot and the arguments you're seeing in the code.
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(
+    x = flipper_length_mm,
+    y = body_mass_g, 
+    color = sex
+  )) +
+  _____(alpha = 0.3) +
+  _____(se = FALSE, method = "lm") + 
+  _____(begin = .2, end = .8) + 
+  _____(~ species)
+```
+
+
+Options:
+
+* `geom_line`
+* `scale_color_viridis_d`
+* `theme_minimal`
+* `facet_wrap`
+* `scale_log`
+* `geom_point`
+* `facet_grid`
+* `scale_y_log10`
+* `geom_smooth`
+
+#### Check 1: Solution
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(
+    x = flipper_length_mm,
+    y = body_mass_g, 
+    color = sex
+  )) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(se = FALSE, method = "lm") + 
+  scale_color_viridis_d(begin = .2, end = .8) + 
+  facet_wrap(~ species)
+```
+
+
+### Check 2: Fix the plot
+
+I'm trying to create a plot, but I keep seeing this error.
+
+```{r}
+#| error: true
+penguins |> 
+  drop_na() |> 
+  ggplot(aes(
+    x = body_mass_g,
+    fill = sex
+  )) |>
+  geom_density(alpha = 0.7, color = NA) |>
+  theme_minimal() |>
+  facet_wrap(~ species, ncol = 1)
+```
+
+What do I need to do to fix it?
+
+1. R can't find the dataset. Read in the `penguins` dataset.
+2. You used `|>` for ggplot2 functions, but you need to use `+`. (Correct)
+3. You haven't attached ggplot2. Load the ggplot2 package.
+4. You used `+` but you need to use `|>`
+
+## Tidying data
+
+### Check 1: See the tidiness
+
+Consider this summary table of the `penguins` dataset
+
+```{r}
+#| echo: false
+library(palmerpenguins)
+library(tidyverse)
+
+species_by_island_wide <- penguins |>
+  group_by(species, island) |>
+  summarize(n = n(), .groups = "drop") |> 
+  pivot_wider(
+    names_from = island, 
+    values_from = n
+  )
+
+species_by_island_wide
+```
+
+Is this data table tidy?
+
+1. No. It's a table of counts, which can't be tidy.
+2. Yes. Because the columns are counts for each island, it is tidy.
+3. No. Column one has values for rows instead of columns. 
+4. No. Column two through four represent values (island names), not variables (island). (Correct)
+
+### Check 2: Create the tidiness
+
+Take a look at this plot:
+
+```{r}
+#| include: false
+penguins_plot_data <- 
+  penguins |>
+  pivot_longer(
+    bill_length_mm:body_mass_g,
+    names_to = "type", 
+    values_to = "measurements"
+  )
+```
+
+```{r}
+#| message: false
+#| warning: false
+penguins_plot_data |>
+  drop_na() |>
+  ggplot(aes(measurements, fill = sex)) + 
+  geom_histogram() + 
+  facet_grid(species ~ type, scales = "free") +
+  theme_minimal() 
+```
+
+Which line of code did I use to reshape the data necessary for this plot?
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(tidyverse)
+penguins_plot_data <- penguins |>
+  _____
+```
+
+
+1. `pivot_longer(bill_length_mm:body_mass_g, names_to = "type", values_to = "measurements")` (correct)
+2. `pivot_wider(bill_length_mm:body_mass_g, names_to = "type", values_to = "measurements")`
+2. `pivot_wider(names_from = bill_length_mm:body_mass_g, values_from = everything())` 
+1. `pivot_longer(names_from = bill_length_mm:body_mass_g, values_from = everything()`
+
+As a reminder, here's what the original `penguins` dataset looks like
+
+```{r}
+penguins
+```
+
+## Types and functions
+
+### Check 1: Re-arrange the code
+
+Consider this function
+
+```{r}
+#| include: false
+plot_flipper_by_island <- function(.data, .island) {
+  .data |> 
+    filter(island == .island) |> 
+    ggplot(aes(flipper_length_mm, fill = sex)) + 
+    geom_histogram()
+}
+```
+
+```{r}
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(tidyverse)
+penguins |> 
+  plot_flipper_by_island("Torgersen")
+```
+
+Rearrange the following code to produce the above function
+
+```{r}
+#| eval: false
+}
+    filter(island == .island) |> 
+  .data |> 
+    geom_histogram()
+plot_flipper_by_island <- function(.data, .island) {
+    ggplot(aes(flipper_length_mm, fill = sex)) + 
+```
+
+### Check 1: solution
+
+```{r}
+plot_flipper_by_island <- function(.data, .island) {
+  .data |> 
+    filter(island == .island) |> 
+    ggplot(aes(flipper_length_mm, fill = sex)) + 
+    geom_histogram()
+}
+```
+
+### Check 2: Debug the function
+
+I want to change `plot_flipper_by_island()` to plot a histogram of any variable in the dataset. My code, however, doesn't work. 
+
+```{r}
+#| error: true
+plot_flipper_by_island <- function(.data, .var, .island) {
+  .data |> 
+    filter(island == .island) |> 
+    ggplot(aes(.var, fill = sex)) + 
+    geom_histogram()
+}
+
+penguins |> 
+  plot_flipper_by_island(bill_depth_mm, "Torgersen")
+```
+
+What is the problem?
+
+1. `.var` isn't a valid variable name. You need to change it to `var`.
+2. You didn't supply enough arguments to the function. You need to add one more.
+3. You need to define the `bill_depth_mm` object
+4. You didn't use curly-curly. You need to change `.var` to `{{ .var }}` so ggplot knows where to look for the variable (Correct)
+
+## Functional programming
+
+### Check 1: Drag and drop
+
+Consider this summary table
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(tidyverse)
+penguins |> 
+  drop_na() |> 
+  group_by(species, sex) |> 
+  summarize(
+    across(
+      bill_length_mm:body_mass_g, 
+      list(mean, sd)
+    )
+  )
+```
+
+Drag and drop the code into the right spot to recreate this table
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  ____ |> 
+  summarize(
+    ____(
+      ____, 
+      ____
+    )
+  )
+```
+
+Options:
+
+* `mutate`
+* `group_by(species, sex)`
+* `bill_length_mm:body_mass_g`
+* `starts_with("bill")`
+* `list(mean, sd)`
+* `map`
+* `across`
+
+### Check 1: Solution
+
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+
+penguins |> 
+  drop_na() |> 
+  group_by(species, sex) |> 
+  summarize(
+    across(
+      bill_length_mm:body_mass_g, 
+      list(mean, sd)
+    )
+  )
+```
+
+### Check 2: Debug the code
+
+I'm trying to calculate a vector of means for every column in `penguins` that's numeric. When I run my code, I see this error:
+
+```{r}
+#| error: true
+penguins |> 
+  select(where(is.numeric)) |> 
+  map_dbl(mean())
+```
+
+What did I do wrong, and how do I fix it?
+
+1. You wrote `mean()` but you shouldn't include `()` because we're passing the function to `map()`, not calling it. Remove the `()`. (Correct)
+2. You used `map_dbl()` but `mean()` returns an integer. Use `map_int()`.
+3. You didn't specify the `x` argument for `map()`. It should be `map(penguins, mean())`.
+4. `map()` doesn't work with dataframes. You need to give it a list.
+
+## Quarto 1
+ 
+### Check 1: Drag and drop
+
+Consider the following Quarto document
+
+::: {.shadow-lg .p-3 .mb-5 .bg-white .rounded}
+
+## A summary of penguin measurements
+
+```{r}
+#| label: include-diagram
+#| echo: false
+knitr::include_graphics("culmen_depth.png")
+```
+
+This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.
+
+```{r}
+#| label: summarize-data
+#| echo: false
+#| message: false
+penguins |> 
+  drop_na() |> 
+  group_by(species, sex) |> 
+  summarize(
+    across(
+      bill_length_mm:body_mass_g, 
+      list(mean, sd)
+    )
+  )
+```
+
+Measurements vary by both species and sex. See @fig-hist for more information. 
+```{r}
+#| label: fig-hist
+#| fig-cap: "Measurements by species and sex"
+#| echo: false
+#| message: false
+penguins |>
+  pivot_longer(
+    bill_length_mm:body_mass_g,
+    names_to = "type", 
+    values_to = "measurements"
+  ) |>
+  drop_na() |>
+  ggplot(aes(measurements, fill = sex)) + 
+  geom_histogram() + 
+  facet_grid(species ~ type, scales = "free") +
+  theme_minimal() 
+```
+
+:::
+
+Rearrange the following components to generate the report:
+
+````{verbatim}
+This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.
+
+## A summary of penguin measurements
+
+```{r}
+#| label: fig-hist
+#| fig-cap: "Measurements by species and sex"
+#| echo: false
+#| message: false
+penguins |>
+  pivot_longer(
+    bill_length_mm:body_mass_g,
+    names_to = "type", 
+    values_to = "measurements"
+  ) |>
+  drop_na() |>
+  ggplot(aes(measurements, fill = sex)) + 
+  geom_histogram() + 
+  facet_grid(species ~ type, scales = "free") +
+  theme_minimal() 
+```
+
+```{r}
+#| label: summarize-data
+#| echo: false
+#| message: false
+penguins |> 
+  drop_na() |> 
+  group_by(species, sex) |> 
+  summarize(
+    across(
+      bill_length_mm:body_mass_g, 
+      list(mean, sd)
+    )
+  )
+```
+
+```{r}
+#| label: include-diagram
+#| echo: false
+knitr::include_graphics("culmen_depth.png")
+```
+
+Measurements vary by both species and sex. See @fig-hist for more information. 
+
+````
+
+### Check 1: Solution
+
+````{verbatim}
+## A summary of penguin measurements
+
+```{r}
+#| label: include-diagram
+#| echo: false
+knitr::include_graphics("culmen_depth.png")
+```
+
+This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.
+
+```{r}
+#| label: summarize-data
+#| echo: false
+#| message: false
+penguins |> 
+  drop_na() |> 
+  group_by(species, sex) |> 
+  summarize(
+    across(
+      bill_length_mm:body_mass_g, 
+      list(mean, sd)
+    )
+  )
+```
+
+Measurements vary by both species and sex. See @fig-hist for more information. 
+
+```{r}
+#| label: fig-hist
+#| fig-cap: "Measurements by species and sex"
+#| echo: false
+#| message: false
+penguins |>
+  pivot_longer(
+    bill_length_mm:body_mass_g,
+    names_to = "type", 
+    values_to = "measurements"
+  ) |>
+  drop_na() |>
+  ggplot(aes(measurements, fill = sex)) + 
+  geom_histogram() + 
+  facet_grid(species ~ type, scales = "free") +
+  theme_minimal() 
+```
+````
+
+### Check 2: Debug the render error
+
+When I render the report, I see this error:
+
+```{r}
+#| echo: false
+#| error: true
+detach("package:dplyr")
+n_distinct(penguins$species)
+```
+
+What mistake did I make, and how do I fix it?
+
+1. `n_distinct()` isn't a function. You need to run `length(unique())`
+2. You didn't load your packages. Quarto documents run in fresh R sessions, so you need to include `library(tidyverse)` and `library(palmerpenguins)` in your document. (Correct)
+3. You didn't load your packages. You need to run `library(tidyverse)` and `library(palmerpenguins)` in the console before rendering.
+4. Your R session is misconfigured. You need to reinstall R.
+
+```{r}
+#| include: false
+library(dplyr)
+```
+
+## Quarto 2
+
+### Check 1: Drag and drop
+
+Consider the following Quarto document
+
+::: {.shadow-lg .p-3 .mb-5 .bg-white .rounded}
+
+## Flipper length by year and species
+
+```{r}
+#| label: include-figure
+#| echo: false
+knitr::include_graphics("lter_penguins.png")
+```
+
+This dataset includes information on `r n_distinct(penguins$species)` species across `r n_distinct(penguins$year)` years.
+
+```{r}
+#| label: fig-flippers
+#| fig-cap: "Flipper length by year and species"
+#| echo: false
+#| message: false
+penguins |> 
+  group_by(species, year) |> 
+  summarize(
+    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), 
+    .groups = "drop"
+) |> 
+  ggplot(aes(factor(year), mean_flipper_length)) + 
+  geom_point() + 
+  facet_wrap(~ species)
+```
+
+Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See @fig-flippers for more information. 
+:::
+
+Fill in the blanks to render the report correctly
+
+````{verbatim}
+## Flipper length by year and species
+
+```{r}
+#| label: setup
+#| include: false
+library(palmerpenguins)
+library(tidyverse)
+```
+
+____
+#| label: include-figure
+____
+knitr::include_graphics("lter_penguins.png")
+____
+
+This dataset includes information on `r n_distinct(penguins$species)` species across ____ years.
+
+```{r}
+_____
+#| fig-cap: "Flipper length by year and species"
+#| echo: false
+#| message: false
+penguins |> 
+  group_by(species, year) |> 
+  summarize(
+    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), 
+    .groups = "drop"
+) |> 
+  ggplot(aes(factor(year), mean_flipper_length)) + 
+  geom_point() + 
+  facet_wrap(~ species)
+```
+
+Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See ____ for more information. 
+````
+
+Options:
+
+* `` `r knitr::inline_expr("n_distinct(penguins$year)")` `` 
+* `#| label: fig-flippers`
+* `` `r knitr::inline_expr("n_distinct(penguins$island)")` `` 
+* `@fig-flippers`
+* ```` ```{r} ````
+* ```` ``` ````
+* `#| label: tbl-flippers`
+* `#| echo: false`
+
+### Check 1: Solution
+
+````{verbatim}
+## Flipper length by year and species
+
+```{r}
+#| label: setup
+#| include: false
+library(palmerpenguins)
+library(tidyverse)
+```
+
+```{r}
+#| label: include-figure
+#| echo: false
+knitr::include_graphics("lter_penguins.png")
+```
+
+This dataset includes information on `r n_distinct(penguins$species)` species across `r n_distinct(penguins$year)` years.
+
+```{r}
+#| label: fig-flippers
+#| fig-cap: "Flipper length by year and species"
+#| echo: false
+#| message: false
+penguins |> 
+  group_by(species, year) |> 
+  summarize(
+    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), 
+    .groups = "drop"
+) |> 
+  ggplot(aes(factor(year), mean_flipper_length)) + 
+  geom_point() + 
+  facet_wrap(~ species)
+```
+
+Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See @fig-flippers for more information. 
+````
+
+### Check 2: Fix the render error
+
+I copied and pasted the last chunk to make a second plot in the report, but now when I render the report, I see this error:
+
+```
+Error in parse_block(g[-1], g[1], params.src, markdown_mode) : 
+  Duplicate chunk label 'fig-flippers', which has been used for the chunk:
+penguins |> 
+  group_by(species, year) |> 
+  summarize(
+    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), 
+    .groups = "drop"
+) |> 
+  ggplot(aes(factor(year), mean_flipper_length)) + 
+  geom_point() + 
+  facet_wrap(~ species)
+Calls: .main ... process_file -> split_file -> lapply -> FUN -> parse_block
+Execution halted
+```
+
+What did I do wrong, and how do I fix it?
+
+1. You didn't save the file. Save it and re-render.
+2. You can't include the same plot twice in Quarto. Update your plotting code in one of the chunks.
+3. You forgot to load your packages. Load `library(tidyverse)`
+4. When you copied the previous chunk, you didn't change the chunk label. You can't have duplicate chunk labels, so you need to change it to something else. (Correct)
