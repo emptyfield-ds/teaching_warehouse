@@ -15,7 +15,17 @@ fs::file_copy(
 
 ## Reading data
 
-For this flipper check, we're going to read in a CSV file of data on penguins that comes from the palmerpenguins package. The data look like this.
+After every module, I'll ask you a couple of questions about the material. You can try to answer them as many times as you like. Completing them contributes to your participation points for the course.
+
+For this ~~learning~~ flipper check, we're going to read in a CSV file of data on penguins that comes from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/index.html) package. 
+
+```{r}
+#| echo: false
+#| out.width: 30%
+knitr::include_graphics("palmerpenguins.png")
+```
+
+The data look like this.
 
 ```{r}
 #| echo: false
@@ -24,24 +34,24 @@ palmerpenguins::penguins
 
 ### Check 1: Fix the error
 
-Let's try loading the data from `penguins.csv`
+I tried loading the data from `penguins.csv`, but I see this error: 
 
 ```{r}
 #| error: true
 read_csv("penguins.csv")
 ```
 
-Why are we seeing this error and how to do we fix it?
+Why are I am seeing this error and how to do I fix it?
 
-1. We haven't loaded the package from which this function comes. We need to include `library(readr)` or `library(tidyverse)` (correct: when we see an error like this it usually means we haven't loaded the package (or we mispelled the function name!))
-2. We misspelled the function name. It's `read.csv()`. (incorrect: good guess, but not in this case. `read.csv()` is a different function. We should use `read_csv()` from the tidyverse.)
-3. There's something wrong with R (incorrect)
-4. The file doesn't exist (incorrect: Read the message closely; it says it can't find the *function*)
+1. You haven't loaded the package from which this function comes. You need to include `library(readr)` or `library(tidyverse)` (correct: when we see an error like this it usually means we haven't loaded the package (or we mispelled the function name!))
+2. You misspelled the function name. It's `read.csv()`. (incorrect: good guess, but not in this case. `read.csv()` is a different function. We should use `read_csv()` from the tidyverse.)
+3. There's something wrong with R. You need to reinstall it. (incorrect)
+4. The file doesn't exist. You need to create it. (incorrect: Read the message closely; it says it can't find the *function*)
 
 
 ### Check 2: Fix the error
 
-Let's try again, this time loading the tidyverse.
+I tried my code again, this time loading the tidyverse, but I bumped into another error:
 
 ```{r}
 #| error: true
@@ -51,11 +61,11 @@ read_csv("penguins.csv")
 penguins
 ```
 
-Oh jeez, another error. Why do we get this one, and what can we do about it?
+Why do I get this one, and what can I do about it?
 
-1. The file doesn't exist (incorrect: Read the message closely; it says it can't find `penguins`, not `penguins.csv`)
-2. No really, there's something wrong with R. (incorrect: Have a little faith!)
-3. We didn't assign the results of `read_csv()` to `penguins`. We need `penguins <- read_csv("penguins.csv")`. (correct: R doesn't save the results of `read_csv()` unless we instruct it to with `<-`.)
+1. The file doesn't exist. You need to create it. (incorrect: Read the message closely; it says it can't find `penguins`, not `penguins.csv`)
+2. No really, there's something wrong with R. Re-install everything! (incorrect: Have a little faith!)
+3. You didn't assign the results of `read_csv()` to `penguins`. You need `penguins <- read_csv("penguins.csv")`. (correct: R doesn't save the results of `read_csv()` unless we instruct it to with `<-`.)
 4. The object is called `penguins.csv`, not `penguins`. (incorrect: the *file name* is `penguins.csv`, but `read_csv()` doesn't create an object in R with the same name; we have to tell R what to call it.)
 
 
@@ -63,20 +73,18 @@ Oh jeez, another error. Why do we get this one, and what can we do about it?
 
 ### Check 1: Re-arrange the code
 
-We're going to continue working with `penguins`, which looks like this
+We're going to continue working with `penguins`, but this time we're going to load the data by loading the palmerpenguins package
 
 ```{r}
-#| echo: false
-palmerpenguins::penguins
+library(palmerpenguins)
+penguins
 ```
 
-We're going to use dplyr to create a new data frame from these data, which looks like this.
+I used dplyr to create a new data frame from these data, which looks like this.
 
 ```{r}
 #| echo: false
 #| message: false
-penguins <- read_csv("penguins.csv")
-
 flipper_length <- penguins |> 
   group_by(species, sex) |> 
   summarize(flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE)) |> 
@@ -85,14 +93,11 @@ flipper_length <- penguins |>
 flipper_length
 ```
 
-
-Re-arrange the code below to correctly get the answer
+Re-arrange the code below to recreate this table
 
 ```{r}
 #| eval: false
 flipper_length
-
-penguins <- read_csv("penguins.csv")
 
   arrange(desc(flipper_length_mm))
   summarize(flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE)) |> 
@@ -104,8 +109,6 @@ flipper_length <- penguins |>
 
 ```{r}
 #| eval: false
-penguins <- read_csv("penguins.csv")
-
 flipper_length <- penguins |> 
   group_by(species, sex) |> 
   summarize(flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE)) |> 
@@ -116,7 +119,7 @@ flipper_length
 
 ### Check 2: Fix the error
 
-Why doesn't this code work, and what do we need to do?
+I bumped into an error. Why doesn't this code work, and what do I need to do?
 
 ```{r}
 #| error: true
@@ -125,21 +128,22 @@ penguins |>
 ```
 
 
-1. We misspelled the variable name (incorrect: `year` is a variable in `penguins`, and it's spelled correctly here)
-2. We need to use `==` to check equality, not `=`. `year == 2007` will fix it. (correct: Correct!)
-3. We need to use `select()` to subset rows (incorrect: `select()` subsets columns and `filter()` subsets rows)
+1. You misspelled the variable name. You need to fix your typo. (incorrect: `year` is a variable in `penguins`, and it's spelled correctly here)
+2. You need to use `==` to check equality, not `=`. `year == 2007` will fix it. (correct: Correct!)
+3. You need to use `select()` to subset rows (incorrect: `select()` subsets columns and `filter()` subsets rows)
 4. There's no year 2007 in the dataset (incorrect: `2007` is a valid value in this dataset)
 
 ## Data visualization 1
 
 ### Check 1: Drag and drop the functions
 
-We want to create this plot:
+I created this plot:
 
 ```{r}
 #| echo: false
 #| message: false
-penguins <- read_csv("penguins.csv")
+library(palmerpenguins)
+library(tidyverse)
 
 penguins |> 
   drop_na() |> 
@@ -148,10 +152,13 @@ penguins |>
   facet_grid(species ~ island)
 ```
 
-Drag and drop the code into the right spot. Consider what you're seeing in the plot and the arguments you're seeing in the code.
+Drag and drop the code into the right spot to recreate the plot. Consider what you're seeing in the plot and the arguments you're seeing in the code.
 
 ```{r}
 #| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
 penguins |> 
   drop_na() |> 
   ggplot(aes(x = ____, fill = ____)) + 
@@ -176,7 +183,8 @@ Options:
 
 ```{r}
 #| eval: false
-penguins <- read_csv("penguins.csv")
+library(palmerpenguins)
+library(tidyverse)
 
 penguins |> 
   drop_na() |> 
@@ -225,12 +233,13 @@ What mistake did I make, and how do I fix it?
 
 ### Check 1: Drag and drop the functions
 
-We want to create this plot:
+I created this plot:
 
 ```{r}
 #| echo: false
 #| message: false
-penguins <- read_csv("penguins.csv")
+library(palmerpenguins)
+library(tidyverse)
 
 penguins |> 
   drop_na() |> 
@@ -245,11 +254,12 @@ penguins |>
   facet_wrap(~ species)
 ```
 
-Drag and drop the functions into the right spot. Consider what you're seeing in the plot and the arguments you're seeing in the code.
+Drag and drop the functions into the right spot to recreate it. Consider what you're seeing in the plot and the arguments you're seeing in the code.
 
 ```{r}
 #| eval: false
-penguins <- read_csv("penguins.csv")
+library(palmerpenguins)
+library(tidyverse)
 
 penguins |> 
   drop_na() |> 
@@ -281,7 +291,8 @@ Options:
 
 ```{r}
 #| eval: false
-penguins <- read_csv("penguins.csv")
+library(palmerpenguins)
+library(tidyverse)
 
 penguins |> 
   drop_na() |> 
@@ -325,11 +336,12 @@ What do I need to do to fix it?
 
 ### Check 1: See the tidiness
 
-Consider this summary table  of the `penguins` dataset
+Consider this summary table of the `penguins` dataset
 
 ```{r}
 #| echo: false
-penguins <- read_csv("penguins.csv")
+library(palmerpenguins)
+library(tidyverse)
 
 species_by_island_wide <- penguins |>
   group_by(species, island) |>
@@ -342,7 +354,14 @@ species_by_island_wide <- penguins |>
 species_by_island_wide
 ```
 
-### Check 2:
+Is this data table tidy?
+
+1. No. It's a table of counts, which can't be tidy.
+2. Yes. Because the columns are counts for each island, it is tidy.
+3. No. Column one has values for rows instead of columns. 
+4. No. Column two through four represent values (island names), not variables (island). (Correct)
+
+### Check 2: Create the tidiness
 
 Take a look at this plot:
 
@@ -358,6 +377,8 @@ penguins_plot_data <-
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 penguins_plot_data |>
   drop_na() |>
   ggplot(aes(measurements, fill = sex)) + 
@@ -370,6 +391,8 @@ Which line of code did I use to reshape the data necessary for this plot?
 
 ```{r}
 #| eval: false
+library(palmerpenguins)
+library(tidyverse)
 penguins_plot_data <- penguins |>
   _____
 ```
@@ -403,12 +426,15 @@ plot_flipper_by_island <- function(.data, .island) {
 ```
 
 ```{r}
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(tidyverse)
 penguins |> 
   plot_flipper_by_island("Torgersen")
 ```
 
 Rearrange the following code to produce the above function
-
 
 ```{r}
 #| eval: false
@@ -419,7 +445,6 @@ Rearrange the following code to produce the above function
 plot_flipper_by_island <- function(.data, .island) {
     ggplot(aes(flipper_length_mm, fill = sex)) + 
 ```
-
 
 ### Check 1: solution
 
@@ -435,7 +460,6 @@ plot_flipper_by_island <- function(.data, .island) {
 ### Check 2: Debug the function
 
 I want to change `plot_flipper_by_island()` to plot a histogram of any variable in the dataset. My code, however, doesn't work. 
-
 
 ```{r}
 #| error: true
@@ -460,12 +484,15 @@ What is the problem?
 ## Functional programming
 
 ### Check 1: Drag and drop
-* Across + groupby + summarize
 
 Consider this summary table
 
 ```{r}
 #| echo: false
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(tidyverse)
 penguins |> 
   drop_na() |> 
   group_by(species, sex) |> 
@@ -477,10 +504,13 @@ penguins |>
   )
 ```
 
-Drag and drop the code into the right spot to create this table
+Drag and drop the code into the right spot to recreate this table
 
 ```{r}
 #| eval: false
+library(palmerpenguins)
+library(tidyverse)
+
 penguins |> 
   drop_na() |> 
   ____ |> 
@@ -494,17 +524,20 @@ penguins |>
 
 Options:
 
-mutate
-group_by(species, sex)
-bill_length_mm:body_mass_g
-starts_with("bill")
-list(mean, sd)
-map
-across
+* `mutate`
+* `group_by(species, sex)`
+* `bill_length_mm:body_mass_g`
+* `starts_with("bill")`
+* `list(mean, sd)`
+* `map`
+* `across`
 
 ### Check 1: Solution
 
 ```{r}
+library(palmerpenguins)
+library(tidyverse)
+
 penguins |> 
   drop_na() |> 
   group_by(species, sex) |> 
@@ -752,6 +785,13 @@ Fill in the blanks to render the report correctly
 ````{verbatim}
 ## Flipper length by year and species
 
+```{r}
+#| label: setup
+#| include: false
+library(palmerpenguins)
+library(tidyverse)
+```
+
 ____
 #| label: include-figure
 ____
@@ -780,19 +820,27 @@ Flipper length is greatest among Gentoo penguins. As penguins aged, their flippe
 ````
 
 Options:
-`r n_distinct(penguins$year)`
-#| label: fig-flippers
-`r n_distinct(penguins$island)`
-@fig-flippers
-```{r}
-```
-#| label: tbl-flippers
-#| echo: false
+
+* `` `r knitr::inline_expr("n_distinct(penguins$year)")` `` 
+* `#| label: fig-flippers`
+* `` `r knitr::inline_expr("n_distinct(penguins$island)")` `` 
+* `@fig-flippers`
+* ```` ```{r} ````
+* ```` ``` ````
+* `#| label: tbl-flippers`
+* `#| echo: false`
 
 ### Check 1: Solution
 
 ````{verbatim}
 ## Flipper length by year and species
+
+```{r}
+#| label: setup
+#| include: false
+library(palmerpenguins)
+library(tidyverse)
+```
 
 ```{r}
 #| label: include-figure
@@ -845,5 +893,5 @@ What did I do wrong, and how do I fix it?
 
 1. You didn't save the file. Save it and re-render.
 2. You can't include the same plot twice in Quarto. Update your plotting code in one of the chunks.
-3. You forgot to load your packages. Load `library(ti)
+3. You forgot to load your packages. Load `library(tidyverse)`
 4. When you copied the previous chunk, you didn't change the chunk label. You can't have duplicate chunk labels, so you need to change it to something else. (Correct)

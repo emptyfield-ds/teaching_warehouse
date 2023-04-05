@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.280">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -96,7 +96,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="reading-data" class="level2">
 <h2 class="anchored" data-anchor-id="reading-data">Reading data</h2>
-<p>For this flipper check, we’re going to read in a CSV file of data on penguins that comes from the palmerpenguins package. The data look like this.</p>
+<p>After every module, I’ll ask you a couple of questions about the material. You can try to answer them as many times as you like. Completing them contributes to your participation points for the course.</p>
+<p>For this <del>learning</del> flipper check, we’re going to read in a CSV file of data on penguins that comes from the <a href="https://allisonhorst.github.io/palmerpenguins/index.html">palmerpenguins</a> package.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="palmerpenguins.png" class="img-fluid" style="width:30.0%"></p>
+</div>
+</div>
+<p>The data look like this.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
@@ -118,24 +125,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="check-1-fix-the-error" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-fix-the-error">Check 1: Fix the error</h3>
-<p>Let’s try loading the data from <code>penguins.csv</code></p>
+<p>I tried loading the data from <code>penguins.csv</code>, but I see this error:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in read_csv("penguins.csv"): could not find function "read_csv"</code></pre>
 </div>
 </div>
-<p>Why are we seeing this error and how to do we fix it?</p>
+<p>Why are I am seeing this error and how to do I fix it?</p>
 <ol type="1">
-<li>We haven’t loaded the package from which this function comes. We need to include <code>library(readr)</code> or <code>library(tidyverse)</code> (correct: when we see an error like this it usually means we haven’t loaded the package (or we mispelled the function name!))</li>
-<li>We misspelled the function name. It’s <code>read.csv()</code>. (incorrect: good guess, but not in this case. <code>read.csv()</code> is a different function. We should use <code>read_csv()</code> from the tidyverse.)</li>
-<li>There’s something wrong with R (incorrect)</li>
-<li>The file doesn’t exist (incorrect: Read the message closely; it says it can’t find the <em>function</em>)</li>
+<li>You haven’t loaded the package from which this function comes. You need to include <code>library(readr)</code> or <code>library(tidyverse)</code> (correct: when we see an error like this it usually means we haven’t loaded the package (or we mispelled the function name!))</li>
+<li>You misspelled the function name. It’s <code>read.csv()</code>. (incorrect: good guess, but not in this case. <code>read.csv()</code> is a different function. We should use <code>read_csv()</code> from the tidyverse.)</li>
+<li>There’s something wrong with R. You need to reinstall it. (incorrect)</li>
+<li>The file doesn’t exist. You need to create it. (incorrect: Read the message closely; it says it can’t find the <em>function</em>)</li>
 </ol>
 </section>
 <section id="check-2-fix-the-error" class="level3">
 <h3 class="anchored" data-anchor-id="check-2-fix-the-error">Check 2: Fix the error</h3>
-<p>Let’s try again, this time loading the tidyverse.</p>
+<p>I tried my code again, this time loading the tidyverse, but I bumped into another error:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -161,11 +168,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Error in eval(expr, envir, enclos): object 'penguins' not found</code></pre>
 </div>
 </div>
-<p>Oh jeez, another error. Why do we get this one, and what can we do about it?</p>
+<p>Why do I get this one, and what can I do about it?</p>
 <ol type="1">
-<li>The file doesn’t exist (incorrect: Read the message closely; it says it can’t find <code>penguins</code>, not <code>penguins.csv</code>)</li>
-<li>No really, there’s something wrong with R. (incorrect: Have a little faith!)</li>
-<li>We didn’t assign the results of <code>read_csv()</code> to <code>penguins</code>. We need <code>penguins &lt;- read_csv("penguins.csv")</code>. (correct: R doesn’t save the results of <code>read_csv()</code> unless we instruct it to with <code>&lt;-</code>.)</li>
+<li>The file doesn’t exist. You need to create it. (incorrect: Read the message closely; it says it can’t find <code>penguins</code>, not <code>penguins.csv</code>)</li>
+<li>No really, there’s something wrong with R. Re-install everything! (incorrect: Have a little faith!)</li>
+<li>You didn’t assign the results of <code>read_csv()</code> to <code>penguins</code>. You need <code>penguins &lt;- read_csv("penguins.csv")</code>. (correct: R doesn’t save the results of <code>read_csv()</code> unless we instruct it to with <code>&lt;-</code>.)</li>
 <li>The object is called <code>penguins.csv</code>, not <code>penguins</code>. (incorrect: the <em>file name</em> is <code>penguins.csv</code>, but <code>read_csv()</code> doesn’t create an object in R with the same name; we have to tell R what to call it.)</li>
 </ol>
 </section>
@@ -174,8 +181,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="wrangling-data">Wrangling data</h2>
 <section id="check-1-re-arrange-the-code" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-re-arrange-the-code">Check 1: Re-arrange the code</h3>
-<p>We’re going to continue working with <code>penguins</code>, which looks like this</p>
+<p>We’re going to continue working with <code>penguins</code>, but this time we’re going to load the data by loading the palmerpenguins package</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -194,13 +203,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>We’re going to use dplyr to create a new data frame from these data, which looks like this.</p>
+<p>I used dplyr to create a new data frame from these data, which looks like this.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 3
 # Groups:   species [3]
   species   sex    flipper_length_mm
-  &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;
+  &lt;fct&gt;     &lt;fct&gt;              &lt;dbl&gt;
 1 Gentoo    male                222.
 2 Gentoo    &lt;NA&gt;                216.
 3 Gentoo    female              213.
@@ -211,37 +220,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 8 Adelie    &lt;NA&gt;                186.</code></pre>
 </div>
 </div>
-<p>Re-arrange the code below to correctly get the answer</p>
+<p>Re-arrange the code below to recreate this table</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>flipper_length</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(flipper_length_mm))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flipper_length_mm =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span> </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>flipper_length <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>flipper_length</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(flipper_length_mm))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flipper_length_mm =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>flipper_length <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="check-1-solution" class="level4">
 <h4 class="anchored" data-anchor-id="check-1-solution">Check 1: Solution</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>flipper_length <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flipper_length_mm =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(flipper_length_mm))</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>flipper_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>flipper_length <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flipper_length_mm =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(flipper_length_mm))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>flipper_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="check-2-fix-the-error-1" class="level3">
 <h3 class="anchored" data-anchor-id="check-2-fix-the-error-1">Check 2: Fix the error</h3>
-<p>Why doesn’t this code work, and what do we need to do?</p>
+<p>I bumped into an error. Why doesn’t this code work, and what do I need to do?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="at">year =</span> <span class="dv">2007</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="at">year =</span> <span class="dv">2007</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `filter()`:
 ! We detected a named input.
@@ -250,9 +255,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <ol type="1">
-<li>We misspelled the variable name (incorrect: <code>year</code> is a variable in <code>penguins</code>, and it’s spelled correctly here)</li>
-<li>We need to use <code>==</code> to check equality, not <code>=</code>. <code>year == 2007</code> will fix it. (correct: Correct!)</li>
-<li>We need to use <code>select()</code> to subset rows (incorrect: <code>select()</code> subsets columns and <code>filter()</code> subsets rows)</li>
+<li>You misspelled the variable name. You need to fix your typo. (incorrect: <code>year</code> is a variable in <code>penguins</code>, and it’s spelled correctly here)</li>
+<li>You need to use <code>==</code> to check equality, not <code>=</code>. <code>year == 2007</code> will fix it. (correct: Correct!)</li>
+<li>You need to use <code>select()</code> to subset rows (incorrect: <code>select()</code> subsets columns and <code>filter()</code> subsets rows)</li>
 <li>There’s no year 2007 in the dataset (incorrect: <code>2007</code> is a valid value in this dataset)</li>
 </ol>
 </section>
@@ -261,19 +266,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data-visualization-1">Data visualization 1</h2>
 <section id="check-1-drag-and-drop-the-functions" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-drag-and-drop-the-functions">Check 1: Drag and drop the functions</h3>
-<p>We want to create this plot:</p>
+<p>I created this plot:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="flipper_check_files/figure-html/unnamed-chunk-10-1.png" class="quarto-discovered-preview-image img-fluid" width="672"></p>
+<p><img src="flipper_check_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Drag and drop the code into the right spot. Consider what you’re seeing in the plot and the arguments you’re seeing in the code.</p>
+<p>Drag and drop the code into the right spot to recreate the plot. Consider what you’re seeing in the plot and the arguments you’re seeing in the code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ____, <span class="at">fill =</span> ____)) <span class="sc">+</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">____</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">____</span>(species <span class="sc">~</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ____, <span class="at">fill =</span> ____)) <span class="sc">+</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">____</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">____</span>(species <span class="sc">~</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Options:</p>
 <ul>
@@ -290,13 +298,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="check-1-solution-1" class="level4">
 <h4 class="anchored" data-anchor-id="check-1-solution-1">Check 1: Solution</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -306,18 +315,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I expected this plot</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="flipper_check_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="flipper_check_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>But this code produces something different</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">shape =</span> species, <span class="at">color =</span> <span class="st">"darkorchid"</span>),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">shape =</span> species, <span class="at">color =</span> <span class="st">"darkorchid"</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="flipper_check_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="flipper_check_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>What mistake did I make, and how do I fix it?</p>
@@ -333,27 +342,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data-visualization-2">Data visualization 2</h2>
 <section id="check-1-drag-and-drop-the-functions-1" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-drag-and-drop-the-functions-1">Check 1: Drag and drop the functions</h3>
-<p>We want to create this plot:</p>
+<p>I created this plot:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="flipper_check_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="flipper_check_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Drag and drop the functions into the right spot. Consider what you’re seeing in the plot and the arguments you’re seeing in the code.</p>
+<p>Drag and drop the functions into the right spot to recreate it. Consider what you’re seeing in the plot and the arguments you’re seeing in the code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> flipper_length_mm,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> body_mass_g, </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> sex</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="at">begin =</span> .<span class="dv">2</span>, <span class="at">end =</span> .<span class="dv">8</span>) <span class="sc">+</span> </span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="sc">~</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> body_mass_g, </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> sex</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="at">begin =</span> .<span class="dv">2</span>, <span class="at">end =</span> .<span class="dv">8</span>) <span class="sc">+</span> </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">_____</span>(<span class="sc">~</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Options:</p>
 <ul>
@@ -370,19 +380,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="check-1-solution-2" class="level4">
 <h4 class="anchored" data-anchor-id="check-1-solution-2">Check 1: Solution</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> flipper_length_mm,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> body_mass_g, </span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> sex</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">2</span>, <span class="at">end =</span> .<span class="dv">8</span>) <span class="sc">+</span> </span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> body_mass_g, </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> sex</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">2</span>, <span class="at">end =</span> .<span class="dv">8</span>) <span class="sc">+</span> </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -390,15 +401,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="check-2-fix-the-plot-1">Check 2: Fix the plot</h3>
 <p>I’m trying to create a plot, but I keep seeing this error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> body_mass_g,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> sex</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">|&gt;</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> body_mass_g,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> sex</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `geom_density()`:
 ! `mapping` must be created by `aes()`
@@ -420,28 +431,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="check-1-see-the-tidiness">Check 1: See the tidiness</h3>
 <p>Consider this summary table of the <code>penguins</code> dataset</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 344 Columns: 8
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (3): species, island, sex
-dbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   species   Biscoe Dream Torgersen
-  &lt;chr&gt;      &lt;int&gt; &lt;int&gt;     &lt;int&gt;
+  &lt;fct&gt;      &lt;int&gt; &lt;int&gt;     &lt;int&gt;
 1 Adelie        44    56        52
 2 Chinstrap     NA    68        NA
 3 Gentoo       124    NA        NA</code></pre>
 </div>
 </div>
+<p>Is this data table tidy?</p>
+<ol type="1">
+<li>No.&nbsp;It’s a table of counts, which can’t be tidy.</li>
+<li>Yes. Because the columns are counts for each island, it is tidy.</li>
+<li>No.&nbsp;Column one has values for rows instead of columns.</li>
+<li>No.&nbsp;Column two through four represent values (island names), not variables (island). (Correct)</li>
+</ol>
 </section>
-<section id="check-2" class="level3">
-<h3 class="anchored" data-anchor-id="check-2">Check 2:</h3>
+<section id="check-2-create-the-tidiness" class="level3">
+<h3 class="anchored" data-anchor-id="check-2-create-the-tidiness">Check 2: Create the tidiness</h3>
 <p>Take a look at this plot:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>penguins_plot_data <span class="sc">|&gt;</span></span>
@@ -450,17 +458,16 @@ dbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> type, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
 <div class="cell-output-display">
-<p><img src="flipper_check_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<p><img src="flipper_check_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Which line of code did I use to reshape the data necessary for this plot?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins_plot_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  _____</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>penguins_plot_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  _____</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li><code>pivot_longer(bill_length_mm:body_mass_g, names_to = "type", values_to = "measurements")</code> (correct)</li>
@@ -470,11 +477,11 @@ dbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
 </ol>
 <p>As a reminder, here’s what the original <code>penguins</code> dataset looks like</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
  1 Adelie  Torgersen           39.1          18.7               181        3750
  2 Adelie  Torgersen           39.5          17.4               186        3800
  3 Adelie  Torgersen           40.3          18                 195        3250
@@ -486,7 +493,7 @@ dbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
  9 Adelie  Torgersen           34.1          18.1               193        3475
 10 Adelie  Torgersen           42            20.2               190        4250
 # ℹ 334 more rows
-# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -497,52 +504,48 @@ dbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
 <h3 class="anchored" data-anchor-id="check-1-re-arrange-the-code-1">Check 1: Re-arrange the code</h3>
 <p>Consider this function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_flipper_by_island</span>(<span class="st">"Torgersen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_bin()`).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_flipper_by_island</span>(<span class="st">"Torgersen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="flipper_check_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<p><img src="flipper_check_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Rearrange the following code to produce the above function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(island <span class="sc">==</span> .island) <span class="sc">|&gt;</span> </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  .data <span class="sc">|&gt;</span> </span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plot_flipper_by_island <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, .island) {</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(flipper_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(island <span class="sc">==</span> .island) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  .data <span class="sc">|&gt;</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plot_flipper_by_island <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, .island) {</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(flipper_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-1-solution-3" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-solution-3">Check 1: solution</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>plot_flipper_by_island <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, .island) {</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  .data <span class="sc">|&gt;</span> </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(island <span class="sc">==</span> .island) <span class="sc">|&gt;</span> </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(flipper_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_flipper_by_island <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, .island) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  .data <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(island <span class="sc">==</span> .island) <span class="sc">|&gt;</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(flipper_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-2-debug-the-function" class="level3">
 <h3 class="anchored" data-anchor-id="check-2-debug-the-function">Check 2: Debug the function</h3>
 <p>I want to change <code>plot_flipper_by_island()</code> to plot a histogram of any variable in the dataset. My code, however, doesn’t work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plot_flipper_by_island <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, .var, .island) {</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  .data <span class="sc">|&gt;</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(island <span class="sc">==</span> .island) <span class="sc">|&gt;</span> </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(.var, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_flipper_by_island</span>(bill_depth_mm, <span class="st">"Torgersen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plot_flipper_by_island <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, .var, .island) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  .data <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(island <span class="sc">==</span> .island) <span class="sc">|&gt;</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(.var, <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_flipper_by_island</span>(bill_depth_mm, <span class="st">"Torgersen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `geom_histogram()`:
 ! Problem while computing aesthetics.
@@ -564,20 +567,13 @@ Caused by error in `FUN()`:
 <h2 class="anchored" data-anchor-id="functional-programming">Functional programming</h2>
 <section id="check-1-drag-and-drop" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-drag-and-drop">Check 1: Drag and drop</h3>
-<ul>
-<li>Across + groupby + summarize</li>
-</ul>
 <p>Consider this summary table</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'species'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 10
 # Groups:   species [3]
   species   sex    bill_length_mm_1 bill_length_mm_2 bill_depth_mm_1
-  &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+  &lt;fct&gt;     &lt;fct&gt;             &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
 1 Adelie    female             37.3             2.03            17.6
 2 Adelie    male               40.4             2.28            19.1
 3 Chinstrap female             46.6             3.11            17.6
@@ -588,33 +584,47 @@ Caused by error in `FUN()`:
 #   flipper_length_mm_2 &lt;dbl&gt;, body_mass_g_1 &lt;dbl&gt;, body_mass_g_2 &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Drag and drop the code into the right spot to create this table</p>
+<p>Drag and drop the code into the right spot to recreate this table</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  ____ <span class="sc">|&gt;</span> </span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">____</span>(</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>      ____, </span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>      ____</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  ____ <span class="sc">|&gt;</span> </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">____</span>(</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>      ____, </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>      ____</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Options:</p>
-<p>mutate group_by(species, sex) bill_length_mm:body_mass_g starts_with(“bill”) list(mean, sd) map across</p>
+<ul>
+<li><code>mutate</code></li>
+<li><code>group_by(species, sex)</code></li>
+<li><code>bill_length_mm:body_mass_g</code></li>
+<li><code>starts_with("bill")</code></li>
+<li><code>list(mean, sd)</code></li>
+<li><code>map</code></li>
+<li><code>across</code></li>
+</ul>
 </section>
 <section id="check-1-solution-4" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-solution-4">Check 1: Solution</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span> </span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>      bill_length_mm<span class="sc">:</span>body_mass_g, </span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(mean, sd)</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>      bill_length_mm<span class="sc">:</span>body_mass_g, </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(mean, sd)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'species'. You can override using the
 `.groups` argument.</code></pre>
@@ -623,7 +633,7 @@ Caused by error in `FUN()`:
 <pre><code># A tibble: 6 × 10
 # Groups:   species [3]
   species   sex    bill_length_mm_1 bill_length_mm_2 bill_depth_mm_1
-  &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+  &lt;fct&gt;     &lt;fct&gt;             &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
 1 Adelie    female             37.3             2.03            17.6
 2 Adelie    male               40.4             2.28            19.1
 3 Chinstrap female             46.6             3.11            17.6
@@ -639,9 +649,9 @@ Caused by error in `FUN()`:
 <h3 class="anchored" data-anchor-id="check-2-debug-the-code">Check 2: Debug the code</h3>
 <p>I’m trying to calculate a vector of means for every column in <code>penguins</code> that’s numeric. When I run my code, I see this error:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="fu">mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="fu">mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in mean.default(): argument "x" is missing, with no default</code></pre>
 </div>
@@ -675,7 +685,7 @@ Caused by error in `FUN()`:
 <pre><code># A tibble: 6 × 10
 # Groups:   species [3]
   species   sex    bill_length_mm_1 bill_length_mm_2 bill_depth_mm_1
-  &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+  &lt;fct&gt;     &lt;fct&gt;             &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
 1 Adelie    female             37.3             2.03            17.6
 2 Adelie    male               40.4             2.28            19.1
 3 Chinstrap female             46.6             3.11            17.6
@@ -699,97 +709,97 @@ Caused by error in `FUN()`:
 </div>
 </section>
 <p>Rearrange the following components to generate the report:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>## A summary of penguin measurements</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>#| label: fig-hist</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Measurements by species and sex"</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>penguins |&gt;</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  pivot_longer(</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    bill_length_mm:body_mass_g,</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>    names_to = "type", </span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    values_to = "measurements"</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  ) |&gt;</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt;</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(measurements, fill = sex)) + </span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  geom_histogram() + </span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  facet_grid(species ~ type, scales = "free") +</span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  theme_minimal() </span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>#| label: summarize-data</span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt; </span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>  group_by(species, sex) |&gt; </span>
-<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
-<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>    across(</span>
-<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>      bill_length_mm:body_mass_g, </span>
-<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>      list(mean, sd)</span>
-<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a>#| label: include-diagram</span>
-<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("culmen_depth.png")</span>
-<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a>Measurements vary by both species and sex. See @fig-hist for more information. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>## A summary of penguin measurements</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>#| label: fig-hist</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Measurements by species and sex"</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>penguins |&gt;</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  pivot_longer(</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    bill_length_mm:body_mass_g,</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    names_to = "type", </span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    values_to = "measurements"</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  ) |&gt;</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt;</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(measurements, fill = sex)) + </span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>  geom_histogram() + </span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  facet_grid(species ~ type, scales = "free") +</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  theme_minimal() </span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>#| label: summarize-data</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt; </span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  group_by(species, sex) |&gt; </span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>    across(</span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>      bill_length_mm:body_mass_g, </span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>      list(mean, sd)</span>
+<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a>#| label: include-diagram</span>
+<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("culmen_depth.png")</span>
+<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>Measurements vary by both species and sex. See @fig-hist for more information. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="check-1-solution-5" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-solution-5">Check 1: Solution</h3>
-<div class="sourceCode" id="cb45"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>## A summary of penguin measurements</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>#| label: include-diagram</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("culmen_depth.png")</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.</span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>#| label: summarize-data</span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
-<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt; </span>
-<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>  group_by(species, sex) |&gt; </span>
-<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
-<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>    across(</span>
-<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>      bill_length_mm:body_mass_g, </span>
-<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>      list(mean, sd)</span>
-<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>Measurements vary by both species and sex. See @fig-hist for more information. </span>
-<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a>#| label: fig-hist</span>
-<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Measurements by species and sex"</span>
-<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
-<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>penguins |&gt;</span>
-<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a>  pivot_longer(</span>
-<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>    bill_length_mm:body_mass_g,</span>
-<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>    names_to = "type", </span>
-<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a>    values_to = "measurements"</span>
-<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a>  ) |&gt;</span>
-<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt;</span>
-<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(measurements, fill = sex)) + </span>
-<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a>  geom_histogram() + </span>
-<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a>  facet_grid(species ~ type, scales = "free") +</span>
-<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a>  theme_minimal() </span>
-<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>## A summary of penguin measurements</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>#| label: include-diagram</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("culmen_depth.png")</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>#| label: summarize-data</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt; </span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  group_by(species, sex) |&gt; </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    across(</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>      bill_length_mm:body_mass_g, </span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>      list(mean, sd)</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>Measurements vary by both species and sex. See @fig-hist for more information. </span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>#| label: fig-hist</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Measurements by species and sex"</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>penguins |&gt;</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>  pivot_longer(</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>    bill_length_mm:body_mass_g,</span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>    names_to = "type", </span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>    values_to = "measurements"</span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>  ) |&gt;</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>  drop_na() |&gt;</span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(measurements, fill = sex)) + </span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>  geom_histogram() + </span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>  facet_grid(species ~ type, scales = "free") +</span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>  theme_minimal() </span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="check-2-debug-the-render-error" class="level3">
 <h3 class="anchored" data-anchor-id="check-2-debug-the-render-error">Check 2: Debug the render error</h3>
@@ -835,65 +845,89 @@ Caused by error in `FUN()`:
 <p>Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See <a href="#fig-flippers">Figure&nbsp;2</a> for more information.</p>
 </section>
 <p>Fill in the blanks to render the report correctly</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>## Flipper length by year and species</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>____</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>#| label: include-figure</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>____</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("lter_penguins.png")</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>____</span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species across ____ years.</span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>_____</span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Flipper length by year and species"</span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
-<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
-<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>  group_by(species, year) |&gt; </span>
-<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
-<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), </span>
-<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>    .groups = "drop"</span>
-<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>) |&gt; </span>
-<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(factor(year), mean_flipper_length)) + </span>
-<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>  geom_point() + </span>
-<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>  facet_wrap(~ species)</span>
-<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See ____ for more information. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Options: 3 #| label: fig-flippers 3 <a href="#fig-flippers">Figure&nbsp;2</a> ::: {.cell}</p>
-<p>::: #| label: tbl-flippers #| echo: false</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>## Flipper length by year and species</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>#| label: setup</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>#| include: false</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>library(palmerpenguins)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>____</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>#| label: include-figure</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>____</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("lter_penguins.png")</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>____</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species across ____ years.</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>_____</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Flipper length by year and species"</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>  group_by(species, year) |&gt; </span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), </span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>    .groups = "drop"</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>) |&gt; </span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(factor(year), mean_flipper_length)) + </span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>  geom_point() + </span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>  facet_wrap(~ species)</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See ____ for more information. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Options:</p>
+<ul>
+<li><code>`r n_distinct(penguins$year)`</code></li>
+<li><code>#| label: fig-flippers</code></li>
+<li><code>`r n_distinct(penguins$island)`</code></li>
+<li><code>@fig-flippers</code></li>
+<li><code>```{r}</code></li>
+<li><code>```</code></li>
+<li><code>#| label: tbl-flippers</code></li>
+<li><code>#| echo: false</code></li>
+</ul>
 <section id="check-1-solution-6" class="level3">
 <h3 class="anchored" data-anchor-id="check-1-solution-6">Check 1: Solution</h3>
-<div class="sourceCode" id="cb48"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>## Flipper length by year and species</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>#| label: include-figure</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("lter_penguins.png")</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species across `r n_distinct(penguins$year)` years.</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>#| label: fig-flippers</span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Flipper length by year and species"</span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  group_by(species, year) |&gt; </span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), </span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    .groups = "drop"</span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>) |&gt; </span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(factor(year), mean_flipper_length)) + </span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>  geom_point() + </span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>  facet_wrap(~ species)</span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See @fig-flippers for more information. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>## Flipper length by year and species</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>#| label: setup</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>#| include: false</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>library(palmerpenguins)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>#| label: include-figure</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics("lter_penguins.png")</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>This dataset includes information on `r n_distinct(penguins$species)` species across `r n_distinct(penguins$year)` years.</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>#| label: fig-flippers</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>#| fig-cap: "Flipper length by year and species"</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>#| echo: false</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>#| message: false</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>penguins |&gt; </span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>  group_by(species, year) |&gt; </span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>  summarize(</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), </span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>    .groups = "drop"</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>) |&gt; </span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>  ggplot(aes(factor(year), mean_flipper_length)) + </span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>  geom_point() + </span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>  facet_wrap(~ species)</span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See @fig-flippers for more information. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="check-2-fix-the-render-error" class="level3">
 <h3 class="anchored" data-anchor-id="check-2-fix-the-render-error">Check 2: Fix the render error</h3>
@@ -915,7 +949,7 @@ Execution halted</code></pre>
 <ol type="1">
 <li>You didn’t save the file. Save it and re-render.</li>
 <li>You can’t include the same plot twice in Quarto. Update your plotting code in one of the chunks.</li>
-<li>You forgot to load your packages. Load `library(ti)</li>
+<li>You forgot to load your packages. Load <code>library(tidyverse)</code></li>
 <li>When you copied the previous chunk, you didn’t change the chunk label. You can’t have duplicate chunk labels, so you need to change it to something else. (Correct)</li>
 </ol>
 </section>
