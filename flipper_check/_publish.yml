@@ -1,0 +1,4 @@
+- source: flipper_check.qmd
+  quarto-pub:
+    - id: 64d8c0d6-3c25-4225-a317-adf6d711cec0
+      url: 'https://malcolm.quarto.pub/flipper-check-cd69'
