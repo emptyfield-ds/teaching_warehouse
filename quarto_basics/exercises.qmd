@@ -34,13 +34,10 @@ You might Also find this link on editing content in the Visual Editor helpful: <
 
 Turn on the Visual Editor mode for this document.
 Then, stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below.
+
 Experiment with bolding, italicizing, making lists, etc.
 
-**GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.** The unit is in international dollars, fixed 2011 prices.
-The data is adjusted for inflation and differences in the cost of living between countries, so-called *PPP dollars*.
-The end of the time series, between 1990 and 2016, uses the latest GDP per capita data from the World Bank, from their World Development Indicators.
-
--   To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
+GDP per capita measures the value of everything produced in a country during a year, divided by the number of people. The unit is in international dollars, fixed 2011 prices.The data is adjusted for inflation and differences in the cost of living between countries, so-called PPP dollars.The end of the time series, between 1990 and 2016, uses the latest GDP per capita data from the World Bank, from their World Development Indicators. To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
 
 ## Your turn 3
 
@@ -48,11 +45,9 @@ Create a code chunk.
 You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above.
 Put the following code in it:
 
-```{r}
 gapminder |> 
   head() |> 
   gt()
-```
 
 Render the document
 
