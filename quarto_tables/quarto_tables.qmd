@@ -1,0 +1,664 @@
+---
+title: "Dynamic documents in R"
+subtitle: "Making tables in Quarto"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+library(tidyverse)
+library(gapminder)
+library(here)
+library(knitr)
+library(broom)
+library(gtsummary)
+diabetes <- read_csv("diabetes.csv")
+# create table_data
+table_data <- diabetes |>
+  mutate(
+    # create diabetic category based on A1c
+    diabetic = case_when(
+      glyhb >= 6.5 ~ "Diabetic", glyhb < 6.5 ~ "Healthy",
+      NA ~ NA_character_
+    ),
+    # calculate bmi
+    bmi = (weight / height^2) * 703
+  )
+model_data <- diabetes |> mutate(bmi = (weight / height^2) * 703)
+```
+
+## Working with descriptive tables {.small}
+
+```{r}
+#| label: descriptives
+#| code-line-numbers: "|1,11-17"
+descriptives <- diabetes |>
+  filter(!is.na(glyhb)) |>
+  mutate(
+    diabetic = case_when(
+      glyhb >= 6.5 ~ "Diabetic", 
+      glyhb < 6.5 ~ "Healthy",
+      NA ~ NA_character_
+    ),
+    bmi = (weight / height^2) * 703
+  ) |>
+  group_by(diabetic) |> 
+  summarise(
+    n = n(), 
+    across(
+      c(glyhb, bmi, age), 
+      \(.x) mean(.x, na.rm = TRUE)
+    ))
+```
+
+## Descriptive statistics table
+
+### Standard `tibble` display 
+
+```{r}
+#| label: view-descriptives
+descriptives
+```
+
+*Useful in console, but less so for reports or presentation*
+
+## Visual Editor tables
+
+```{r}
+#| label: vme-insert-table.png
+#| echo: false
+#| out.width: 30%
+knitr::include_graphics("img/vme-insert-table.png")
+```
+
+## Visual Editor tables
+
+```{r}
+#| label: vme-table-options.png
+#| echo: false
+#| out.width: 70%
+knitr::include_graphics("img/vme-table-options.png")
+```
+
+## *Your turn 1*
+
+###  Using Visual Editor, create a markdown table that represents these data: 
+
+### The Physicians' Health Study enrolled over 22,000 male physicians to study the effect of low-dose aspirin on myocardial infarctions (heart attacks). Of those who took aspirin, 129 had heart attacks, while 10,898 did not. Of those who took the placebo, 239 had heart attacks and 10,795 did not.
+
+## `knitr::kable()` 
+
+![](img/knitr.png){.absolute top=0 right=0 width=140}
+
+<br>
+
+`kable()` creates formatted tables from rectangular objects (data.frames, matrices, and tibbles)
+
+```{r}
+#| output-location: fragment
+kable(descriptives)
+```
+
+## `kable()` options: column names
+
+### Supply a vector of new names with `col.names` argument
+
+```{r}
+#| code-line-numbers: "|3"
+#| output-location: fragment
+kable(
+  descriptives,
+  col.names = c("Diabetes Status", "N", "A1c", "BMI", "Age") 
+)
+```
+
+---
+
+## *`kable()` options: number format*
+
+### Use `digits` for decimal place 
+
+```{r}
+#| label: kable-digits
+#| code-line-numbers: "|3"
+#| output-location: fragment
+kable(
+  descriptives,
+  digits = 1 
+)
+```
+
+## *Your turn 2*
+
+#### Using the `tidy()` function from `broom`, turn `response_model` and `marker_model` into dataframes, binding them together with `bind_rows()`
+#### Turn the resulting dataframe into a table using `kable()`
+#### Set the `eval` chunk option to `true` 
+#### Render
+
+```{r}
+response_model <- glm(response ~ age + stage, data = trial, 
+                      family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
+```
+
+## *Your turn 2*
+
+```{r}
+models <- bind_rows(tidy(response_model), tidy(marker_model))
+kable(models)
+```
+
+## gtsummary {.large}
+
+![](img/gtsummary.png){.absolute top=0 right=0 width=140}
+
+. . .
+
+Create publication-ready analytic and summary tables
+
+. . .
+
+Good support for wide variety of output formats
+
+. . .
+
+Built on the [gt package](https://gt.rstudio.com/index.html) 
+
+## `tbl_cross()`
+
+### Creates a **cross-tabulation** of two categorical variables
+
+```{r}
+#| eval: false
+library(gtsummary)
+tbl_cross(
+  data,
+  row = x,
+  col = y
+)
+```
+
+## `tbl_cross()`
+
+```{r}
+#| code-line-numbers: "|1,4,10"
+table_data <- diabetes |> 
+  mutate(
+    # create diabetic category based on A1c and calculate bmi
+    diabetic = case_when( 
+      glyhb >= 6.5 ~ "Diabetic", 
+      glyhb < 6.5 ~ "Healthy",
+      NA ~ NA_character_
+    ), bmi = (weight / height^2) * 703
+  ) |>
+  select(diabetic, age, gender, bmi) 
+```
+
+## `tbl_cross()`
+
+```{r}
+#| output-location: fragment
+tbl_cross(table_data, row = diabetic, col = gender) 
+```
+
+## `tbl_cross()`: variable names
+
+```{r}
+#| label: label-vars
+#| code-line-numbers: "|1,2"
+#| output-location: fragment
+library(labelled) 
+var_label(table_data$diabetic) <- "Diabetes Status"
+var_label(table_data$diabetic)
+```
+
+## `tbl_cross()`: variable names
+
+### Set multiple variable lables with `list()`
+
+```{r}
+#| label: tbl_cross-var_label-mult
+var_label(table_data) <- list( 
+  gender = "Gender",
+  diabetic = "Diabetes Status"
+) 
+```
+
+## `tbl_cross()`: variable names
+
+```{r}
+tbl_cross(table_data, diabetic, gender)
+```
+
+## *Your turn 3*
+
+### Create a contingency table of `trial` (a dataset from gtsummary) using `tbl_cross()`: set `trt` to the rows and `response` to the columns.
+### Add a p-value with `add_p()`
+### Render
+
+## *Your turn 3*
+
+```{r}
+trial |>
+  tbl_cross(row = trt, col = response) |>
+  add_p()
+```
+
+## `tbl_summary()` {.large}
+
+. . .
+
+Calculates descriptive statistics 
+
+. . .
+
+Can split calculations by groups (i.e. categorical or dichotomous variables)
+
+. . .
+
+Sensible defaults; easily customized
+
+## `tbl_summary()`
+
+```{r}
+#| label: baisc-tbl_summary
+#| message: false
+#| warning: false
+#| code-line-numbers: "|8"
+#| output-location: slide
+var_label(table_data) <- list( 
+  gender = "Gender",
+  diabetic = "Diabetes Status",
+  age = "Age",
+  bmi = "BMI"
+)
+
+tbl_summary(table_data)
+```
+
+## `tbl_summary()`: split by groups
+
+```{r}
+#| label: tbl_summary-by
+#| code-line-numbers: "|3"
+#| output-location: slide
+table_data |>
+  select(diabetic, age, gender, bmi) |>
+  tbl_summary(by = diabetic) 
+```
+
+## `tbl_summary()`: `digits`
+
+```{r}
+#| label: digits
+#| code-line-numbers: "|5"
+#| output-location: slide
+table_data |>
+  select(diabetic, age, gender, bmi) |>
+  tbl_summary(
+    by = diabetic,
+    digits = all_continuous() ~ 1 
+  )
+```
+
+## `tbl_summary()`: `missing_text`
+
+```{r}
+#| label: missing_text
+#| code-line-numbers: "|5"
+#| output-location: slide
+table_data |>
+  select(diabetic, age, gender, bmi) |>
+  tbl_summary(
+    by = diabetic,
+    missing_text = "(Missing)" 
+  )
+```
+
+## `tbl_summary()`: tests & p-values
+
+```{r}
+#| label: add_p
+#| code-line-numbers: "|4"
+#| output-location: slide
+table_data |>
+  select(diabetic, age, gender, bmi) |>
+  tbl_summary(by = diabetic) |>
+  add_p() 
+```
+
+## `tbl_summary()`: statistic
+
+```{r}
+#| code-line-numbers: "|3"
+#| output-location: fragment
+tbl_summary(
+  table_data,
+  statistic = list(all_continuous() ~ "{mean} ({sd})") 
+)
+```
+
+## `tbl_summary()`: statistic
+
+### Access variables by name or type (**`all_continuous()`**, **`all_categorical()`**, **`all_dichotomous()`**, etc.)
+
+## Add other elements to table
+
+```{r}
+#| echo: false
+tibble::tribble(
+  ~Function,             ~Description,
+  "`add_p()`",           "add p-values to the output comparing values across groups",
+  "`add_overall()`",     "add a column with overall summary statistics",
+  "`add_n()`",           "add a column with N (or N missing) for each variable",
+  "`add_difference()`",  "add column for difference between two group, confidence interval, and p-value",
+  "`add_stat_label()`",  "add label for the summary statistics shown in each row",
+  "`add_stat()`",        "generic function to add a column with user-defined values",
+  "`add_q()`",           "add a column of q values to control for multiple comparisons"
+) |>
+  gt::gt() |>
+  gt::fmt_markdown(columns = Function)
+```
+
+## gtsummary functions to format table
+
+```{r}
+#| echo: false
+tibble::tribble(
+  ~Function,                     ~Description,
+  "`modify_header()`",           "update column headers",   
+  "`modify_footnote()`",         "update column footnote",   
+  "`modify_spanning_header()`",  "update spanning headers",    "`bold_labels()`",             "bold variable labels",  
+  "`bold_levels()`",             "bold variable levels",  
+  "`italicize_labels()`",        "italicize variable labels",  
+  "`italicize_levels()`",        "italicize variable levels",  
+  "`bold_p()`",                  "bold significant p-values"
+) |>
+  gt::gt() |>
+  gt::fmt_markdown(columns = Function)
+```
+
+## *Your Turn 4*
+
+#### Create a summary table of `trial` by the `trt` variable.
+
+#### Modify the label for `grade` to say "Tumor Grade"
+
+#### Add an overall column and a p-value
+
+#### Modify the table to use Mean (SD) and n (%) via the `statistic` argument: `list(all_continuous() ~ "{mean} ({sd})", all_categorical() ~ "{n} ({p}%)")`
+
+#### Bold the labels
+
+####  Modify the header with `modify_spanning_header(c("stat_1", "stat_2") ~ "**Treatment Received**")`
+
+## *Your Turn 4*
+
+```{r}
+#| label: table-one
+#| eval: false
+trial |>
+  tbl_summary(
+    by = trt,
+    label = grade ~ "Tumor Grade",
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    )
+  ) |>
+  bold_labels() |>
+  modify_spanning_header(
+    c("stat_1", "stat_2") ~ "**Treatment Received**"
+  ) |>
+  add_overall() |>
+  add_p()
+```
+
+## *Your Turn 4*
+
+```{r}
+#| label: your-turn-4.png
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("img/your-turn-4.png")
+```
+
+## Other `tbl_summary()` arguments
+
+### See the other options with *`?tbl_summary()`*
+
+```{r}
+#| label: tbl_summary-args
+#| echo: false
+tibble::tribble(
+  ~Argument, ~Description,
+  "`label`", "specify the variable labels printed in table",
+  "`type`", "specify the variable type (e.g. continuous, categorical, etc.)",
+  "`statistic`", "change the summary statistics presented",
+  "`digits`", "number of digits the summary statistics will be rounded to",
+  "`missing`", "whether to display a row with the number of missing observations",
+  "`missing_text`", "text label for the missing number row",
+  "`sort`", "change the sorting of categorical levels by frequency",
+  "`percent`", "print column, row, or cell percentages",
+  "`include`", "list of variables to include in summary table"
+) |>
+  gt::gt() |>
+  gt::fmt_markdown(columns = Argument)
+```
+
+## `tbl_regression()`
+
+```{r}
+#| label: mod-tbl_regression
+#| code-line-numbers: "|3-4"
+#| output-location: fragment
+model_data <- diabetes |> 
+  mutate(bmi = (weight / height^2) * 703)
+glyhb_model <- lm(glyhb ~ bmi + age, data = model_data)
+tbl_regression(glyhb_model)
+```
+
+## `tbl_regression()`: variable labels
+
+### *Add labels just like `tbl_summary()`*
+
+```{r}
+#| label: tbl_regression-var_label
+#| code-line-numbers: "|1-5"
+#| output-location: fragment
+var_label(model_data) <- list( 
+  bmi = "BMI", 
+  glyhb = "A1c", 
+  age = "Age"
+)
+glyhb_model <- lm(glyhb ~ bmi + age, data = model_data)
+tbl_regression(glyhb_model)
+```
+
+## `tbl_regression()`: other options
+
+```{r}
+#| label: tbl_regression-options
+#| echo: false
+tibble::tribble(
+  ~Argument, ~Description,
+  "`label`", "modify variable labels in table",
+  "`exponentiate`", "exponentiate model coefficients",
+  "`include`", "names of variables to include in output. Default is all variables",
+  "`show_single_row`", "By default, categorical variables are printed on multiple rows. If a variable is dichotomous and you wish to print the regression coefficient on a single row, include the variable name(s) here.",
+  "`conf.level`", "confidence level of confidence interval",
+  "`intercept`", "indicates whether to include the intercept",
+  "`estimate_fun`", "function to round and format coefficient estimates",
+  "`pvalue_fun`", "function to round and format p-values",
+  "`tidy_fun`", "function to specify/customize tidier function"
+) |>
+  gt::gt() |>
+  gt::fmt_markdown(columns = c(Argument))
+```
+
+## `tbl_regression()`: Model statistics
+
+### Add model statistics from `broom::glance()`
+
+```{r}
+#| label: add_glance_source_note
+#| code-line-numbers: "|2"
+#| output-location: fragment
+tbl_regression(glyhb_model) |> 
+  add_glance_source_note() 
+```
+
+## `tbl_regression()`: other add options
+
+```{r}
+#| label: other-add-options
+#| echo: false
+tibble::tribble(
+  ~Function, ~Description,
+  "`add_global_p()`", "adds the global p-value for a categorical variables",
+  "`add_glance_source_note()`", "adds statistics from `glance()` as source note",
+  "`add_vif()`", "adds column of the variance inflation factors (VIF)",
+  "`add_q()`", "add a column of q values to control for multiple comparisons"
+) |>
+  gt::gt() |>
+  gt::fmt_markdown(columns = everything())
+```
+
+## `tbl_regression()`: format options
+
+```{r}
+#| label: tbl_regression-bold
+#| code-line-numbers: "|3-4"
+#| output-location: fragment
+tbl_regression(glyhb_model) |>
+  add_glance_source_note() |>
+  bold_p() |>
+  bold_labels() 
+```
+
+## Adding captions to tables
+
+### Use the `tbl-cap` chunk option
+
+````{verbatim}
+```{r}
+#| label: tbl-with-caption
+#| tbl-cap: "Association of BMI and A1c adjusted for age"
+tbl_regression(glyhb_model) |>
+  add_glance_source_note() |>
+  bold_p() |>
+  bold_labels() 
+```
+````
+
+## *Your turn 5*
+
+### Create a regression table for `response model`; exponentiate the output with `exponentiate = TRUE`
+### Add a global P-value
+### Add the model statistics via `add_glance_source_note()`
+### Italicize the variable levels
+### Merge the table you just made with `marker_table` using `tbl_merge()`
+
+## *Your turn 5*
+
+```{r}
+#| label: rebuild-models
+#| echo: false
+#| message: false
+#| warning: false
+response_model <- glm(response ~ age + stage, data = trial, family = binomial)
+marker_model <- lm(marker ~ trt + stage + age, data = trial)
+```
+
+```{r}
+#| label: your-turn-5-no-run
+#| output-location: slide
+response_table <- response_model |>
+  tbl_regression(
+    exponentiate = TRUE
+  ) |>
+  add_global_p() |>
+  add_glance_source_note() |>
+  italicize_levels()
+
+marker_table <- marker_model |>
+  tbl_regression() |>
+  add_global_p()
+
+both_tables <- list(response_table, marker_table)
+tbl_merge(both_tables)
+```
+
+## Cross-referencing tables
+
+1. A table caption (`#| tbl-cap: "Title"`)
+2. A labeled code chunk prefixed with `tbl-` (`#| label: tbl-chunk-name`)
+3. Reference with `@tbl-chunk-name`
+
+## *Your Turn 6*
+
+### Add a caption to the merged table above
+### Reference that table below using this format: `@tbl-name-of-chunk`
+### Render
+
+## *Your Turn 6*
+
+````{verbatim}
+#| code-line-numbers: "|2-3"
+```{r}
+#| label: table-two
+#| tbl-cap: "Regression models of participant markets and response"
+tbl_merge(both_tables)
+```
+````
+
+## *Your Turn 6*
+
+```{r}
+#| label: your-turn-6.png-2
+#| out.width: 70%
+#| echo: false
+knitr::include_graphics("img/your-turn-6.png")
+```
+
+. . .
+
+```{r}
+#| label: your-turn-6-ref.png
+#| out.width: 80%
+#| echo: false
+knitr::include_graphics("img/your-turn-6-ref.png")
+```
+
+## gtsummary: Output formats
+
+<br>
+
+```{r}
+#| label: supported_formats.png
+#| out.width: 70%
+#| echo: false
+knitr::include_graphics("img/supported_formats.png")
+```
+
+## Also check out the [gt package](https://gt.rstudio.com/)!
+
+### "construct a wide variety of useful tables with a cohesive set of table parts"
+
+```{r}
+#| label: gt_parts_of_a_table.svg
+#| out.width: 70%
+#| echo: false
+knitr::include_graphics("img/gt_parts_of_a_table.svg")
+```
+
+## Resources {background-color="#23373B"}
+### [Quarto: Tables](https://quarto.org/docs/authoring/tables.html): Quarto documentation on tables
+### [gtsummary Website](http://www.danieldsjoberg.com/gtsummary): Many vignettes to learn more about gtsummary
+### [gt Website](https://gt.rstudio.com/): Vignettes and a short course on learning gt

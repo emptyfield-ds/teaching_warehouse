@@ -3,12 +3,6 @@ title: "Reproduce Reports: figures"
 format: html
 ---
 
-## Your Turn 1
-
-1.  Using the chunk option defaults we discussed, set the global chunk options using `knitr::opts_chunk$set()`
-2.  Knit this document, and take a look at the first three figures. Do you like how they look?
-3.  Modify `fig.width` for each chunk until you're satisfied
-
 ```{r}
 #| label: setup
 #| include: false
@@ -18,14 +12,16 @@ library(gapminder)
 library(patchwork)
 diabetes <- read_csv("diabetes.csv") |> 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
-
-knitr::opts_chunk$set(
-  
-)
 ```
 
+## Your Turn 1
+
+1.  Using the chunk option defaults we discussed, set the global chunk options in the YAML metadata
+2.  Render this document, and take a look at the first three figures. Do you like how they look?
+3.  Modify `fig.width` for each chunk until you're satisfied
+
 ```{r}
-#| label: gapminder
+#| label: fig-gapminder
 #| fig.cap: A lineplot of life expectancy over time by country
 ggplot(gapminder, aes(year, lifeExp, color = country)) + 
   geom_line() + 
@@ -39,14 +35,14 @@ ggplot(gapminder, aes(year, lifeExp, color = country)) +
 ```
 
 ```{r}
-#| label: ggdag
+#| label: fig-ggdag
 #| fig.cap: A causal diagram illustrating butterfly bias
 ggdag(butterfly_bias()) + 
   theme_dag()
 ```
 
 ```{r}
-#| label: diabetes
+#| label: fig-diabetes
 #| fig.cap: Understanding the relationship between diabetes and hip/waist ratio
 fig1a <- diabetes |> 
   drop_na() |> 
@@ -85,28 +81,28 @@ fig1a + fig1b
 
 ## Your Turn 2
 
-1.  Load the here package in the setup chunk. In the setup chunk, globally set `fig.path` to "figures/figure-" using `here()`. This will tell knitr to create figures in the "figures" folder with a prefix of "figures-".
-2.  Knit this document and take a look at the images in the `figures` folder.
+1.  Globally set `fig.path` to "figures/figure-". This will tell knitr to create figures in the "figures" folder with a prefix of "figures-".
+2.  Render this document and take a look at the images in the `figures` folder.
 
 ## Your Turn 3
 
-1.  Change the output type to use bookdown and cross-reference one of the figures above.
+1.  Cross-reference one of the figures above.
 
 <!-- Describe a figure below! -->
 
-<!-- These are HTML comments, by the way. R Markdown ignores them! -->
+<!-- These are HTML comments, by the way. Quarto ignores them! -->
 
 ## Your Turn 4
 
 1.  Include `external_img/r_rollercoaster.png` in the code chunk below.
-2.  Knit
+2.  Render
 3.  Let's change a few chunk options:
 
--   Add a chunk name
+-   Add a chunk label
 -   Set `fig.alt` describing the image
 -   Modify `out.width` to use a different percentage than the default.
 
-4.  Knit again
+4.  Render again
 
 ```{r}
 
