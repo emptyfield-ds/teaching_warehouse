@@ -1,0 +1,38 @@
+---
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Flipper length by year and species
+
+```{r}
+#| label: include-figure
+#| echo: false
+knitr::include_graphics("lter_penguins.png")
+```
+
+This dataset includes information on `r n_distinct(penguins$species)` species across `r n_distinct(penguins$year)` years.
+
+```{r}
+#| label: fig-flippers
+#| fig-cap: "Flipper length by year and species"
+#| echo: false
+#| message: false
+penguins |> 
+  group_by(species, year) |> 
+  summarize(
+    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE), 
+    .groups = "drop"
+) |> 
+  ggplot(aes(factor(year), mean_flipper_length)) + 
+  geom_point() + 
+  facet_wrap(~ species)
+```
+
+Flipper length is greatest among Gentoo penguins. As penguins aged, their flippers got longer. See @fig-flippers for more information. 

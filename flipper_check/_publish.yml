@@ -2,3 +2,11 @@
   quarto-pub:
     - id: 64d8c0d6-3c25-4225-a317-adf6d711cec0
       url: 'https://malcolm.quarto.pub/flipper-check-cd69'
+- source: quarto_report_1.qmd
+  quarto-pub:
+    - id: 23e351f0-4760-4413-92eb-f7042f68f523
+      url: 'https://malcolm.quarto.pub/quarto_report_1'
+- source: quarto_report_2.qmd
+  quarto-pub:
+    - id: 064efa53-cfc3-4edb-b00a-c2da6b6a6049
+      url: 'https://malcolm.quarto.pub/quarto_report_2'

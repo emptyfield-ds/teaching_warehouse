@@ -1,0 +1,55 @@
+---
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## A summary of penguin measurements
+
+```{r}
+#| label: include-diagram
+#| echo: false
+knitr::include_graphics("culmen_depth.png")
+```
+
+This dataset includes information on `r n_distinct(penguins$species)` species from `r n_distinct(penguins$island)` Islands.
+
+```{r}
+#| label: summarize-data
+#| echo: false
+#| message: false
+penguins |> 
+  drop_na() |> 
+  group_by(species, sex) |> 
+  summarize(
+    across(
+      bill_length_mm:body_mass_g, 
+      list(mean, sd)
+    )
+  )
+```
+
+Measurements vary by both species and sex. See @fig-hist for more information. 
+```{r}
+#| label: fig-hist
+#| fig-cap: "Measurements by species and sex"
+#| echo: false
+#| message: false
+penguins |>
+  pivot_longer(
+    bill_length_mm:body_mass_g,
+    names_to = "type", 
+    values_to = "measurements"
+  ) |>
+  drop_na() |>
+  ggplot(aes(measurements, fill = sex)) + 
+  geom_histogram() + 
+  facet_grid(species ~ type, scales = "free") +
+  theme_minimal() 
+```
+
