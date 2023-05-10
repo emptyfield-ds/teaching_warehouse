@@ -157,6 +157,12 @@ ggplot(
   )
 ```
 
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/rwoVzw7.png")
+```
+
 These will be our previous year lines. Now we can plot the mean `deaths` per `week` grouped by `year` for the `"UK"` and store it in `gg_uk_recent_years`.
 
 In `geom_line()`, add `color = "grey75"` and make the lines slightly transparent with `alpha = 0.6`.
@@ -176,6 +182,12 @@ gg_uk_recent_years <- ggplot(
   )
 
 gg_uk_recent_years
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/VrRpgt3.png")
 ```
 
 ### Layer 2: Excess deaths (2020)
@@ -204,6 +216,12 @@ gg_uk_excess_deaths <- gg_uk_recent_years +
 gg_uk_excess_deaths
 ```
 
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/dozzQCY.png")
+```
+
 ### Layer 3: Total excess deaths (shading)
 
 The third layer uses the same data we've created above, but with a `geom_ribbon()`. 
@@ -229,6 +247,12 @@ gg_uk_total_excess_deaths <- gg_uk_excess_deaths +
 gg_uk_total_excess_deaths
 ```
 
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/EfQzXpT.png")
+```
+
 ### Layer 4: Historical averages 
 
 The final layer will be the historical average (the `mean` for **all** `year`s in the `"UK"` before `2020`). Instead of using the average of the years in the dataset, we'll used the `expected_deaths` variable that the authors calculated. In fact, `expected_deaths` is calculated the same way for every year (because it's based on all observed years), so we can grab this variable from any year. 
@@ -249,6 +273,12 @@ gg_uk_historical_average <- gg_uk_total_excess_deaths +
   ) 
 
 gg_uk_historical_average 
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/q6KEBaf.png")
 ```
 
 ### Layer 5: Add text annotations
@@ -273,6 +303,12 @@ gg_text_annotations <- ____________
 gg_text_annotations
 ```
 
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/RhQiKQO.png")
+```
+
 For the arrow, we'll add a second annotation with `annotate()` with the segment geom. Again, we won't use `aes()`; we'll just give the arguments directly to `annotate()`
 
 1. Add `annotate()` to `gg_text_annotations`. Don't forget to connect them with `+`!
@@ -291,6 +327,12 @@ gg_arrow_segment <- ____________
 gg_arrow_segment 
 ``` 
 
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/6YPliGW.png")
+```
+
 ### Add theme
 
 We're pretty close! Interestingly, the Financial Times team has its own R package, [`ftplottools`](https://github.com/Financial-Times/ftplottools), for use in their articles. ftplottools includes a ggplot2 theme function, `ft_theme()`, similar to the original plot's theme (although there are some differences, including the default background color).
@@ -301,6 +343,12 @@ Load ftplottools with `library()`, then add `ft_theme()` to `gg_arrow_segment`.
 #| label: ft_theme
 # Finish your plot with a theme!
 
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/pf2pWYx.png")
 ```
 
 ## Rinse, repeat
@@ -360,6 +408,12 @@ Alright, let's take a look!
 #| fig.width: 7.0
 gg_by_country + 
   ft_theme()
+```
+
+Your plot should look something like this:
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/i05JvCi.png")
 ```
 
 You did it! You can stop here, and only up to this point will be graded. Below this point, you'll have the opportunity to try out themes a bit more, if you like. At the bottom of the document, you'll find several resources related to this exercise.
