@@ -1,6 +1,7 @@
 ---
 title: "Whole Game: Analyzing the diabetes data set"
 format: html
+bibliography: references.bib
 ---
 
 # Introduction
@@ -20,7 +21,7 @@ library(labelled)
 ```{r}
 #| label: prep-data
 #| include: false
-diabetes <- read_csv("diabetes-buckingham.csv") |> 
+diabetes <- read_csv("../diabetes-buckingham.csv") |> 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 
 description <- list()
@@ -28,7 +29,7 @@ description <- list()
 
 # Methods
 
-These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans.
+These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans [@Willems1997].
 We sought to assess the relationship between waist-to-hip ratio on hemoglobin A1c and diabetes diagnosis.
 In this truncated report, we include basic descriptive statistics on participants by diabetes status.
 We also fit two regression models: 1) an ordinary least-squares regression model of the impact of waist-to-hip ratio on hemoglobin A1c, and 2) a logistic regression model of the impact of waist-to-hip ratio on diabetes status.
@@ -38,7 +39,7 @@ We adjusted both models for age.
 
 ```{r}
 #| label: descriptive-stats
-#| eval: false
+#| eval: true
 #| echo: false
 description <- diabetes |> 
   # calculate basic statistics by diabetes status
@@ -63,7 +64,7 @@ See below for more.
 ```{r}
 #| label: tbl-one
 #| tbl-cap: "Descriptive Statistics by Diabetic Status"
-#| eval: false
+#| eval: true
 #| echo: false
 #| message: false
 #| warning: false
@@ -82,17 +83,18 @@ var_label(diabetes) <- list(
 diabetes |> 
   select(diabetic, glyhb, ratio, age, chol, gender, frame) |> 
   filter(!is.na(diabetic)) |> 
-  _______(by = diabetic, missing_text = "(Missing)") |> 
-  _______()
+  tbl_summary(by = diabetic, missing_text = "(Missing)") |> 
+  add_difference()
 ```
 
 ```{r}
 #| label: fig-one
-#| eval: false
+#| eval: true
 #| echo: false
 #| message: false
 #| warning: false
-library(_______)
+#| fig-cap: "A1c and diabetes status by WH ratio"
+library(patchwork)
 
 fig1a <- diabetes |> 
   drop_na() |> 
@@ -120,12 +122,12 @@ ggplot(aes(ratio, fill = diabetic)) +
   labs(x = "Hip/waist ratio", tag = "B") +
   scale_fill_manual(values = c("steelblue", "firebrick"))
 
-_______
+fig1a + fig1b
 ```
 
-In \_\_\_\_\_\_\_ (a), we show the unadjusted relationship between A1c and waist-hip ratio (WH ratio is shown on the log scale).
+In @fig-one (a), we show the unadjusted relationship between A1c and waist-hip ratio (WH ratio is shown on the log scale).
 As WH ratio increases, A1c also increases.
-In \_\_\_\_\_\_\_ (b), we show the density of WH ratio among those with and without diabetes.
+In @fig-one (b), we show the density of WH ratio among those with and without diabetes.
 Participants with diabetes had a higher WH ratio than those without diabetes.
 
 ```{r}
@@ -137,10 +139,10 @@ diabetes <- diabetes |>
   mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic")))
 
 linear_mod_tbl <- lm(glyhb ~ ratio + age, data = diabetes) |> 
-  _______()
+  tbl_regression()
 
 logistic_mod_tbl <- glm(factor(diabetic) ~ ratio + age, data = diabetes, family = binomial()) |> 
-  _______(exponentiate = TRUE)
+  tbl_regression(exponentiate = TRUE)
 
 tbl_merge(
   tbls = list(linear_mod_tbl, logistic_mod_tbl),
@@ -151,7 +153,7 @@ tbl_merge(
 )
 ```
 
-In \_\_\_\_\_\_\_, we present two regression models: linear and logistic.
+In @tbl-two, we present two regression models: linear and logistic.
 In the linear model, we analyze the association of WH ratio an A1c adjusted for age.
 In the logistic model, we analyze the association of WH ratio on diabetes status adjusted for age.
 Increased WH ratio was associated with both higher A1c and a higher likelihood of being diabetic.
