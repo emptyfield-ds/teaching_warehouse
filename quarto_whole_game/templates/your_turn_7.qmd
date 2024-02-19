@@ -153,7 +153,7 @@ tbl_merge(
 )
 ```
 
-In \_\_\_\_\_\_\_, we present two regression models: linear and logistic.
+In @tbl-two, we present two regression models: linear and logistic.
 In the linear model, we analyze the association of WH ratio an A1c adjusted for age.
 In the logistic model, we analyze the association of WH ratio on diabetes status adjusted for age.
 Increased WH ratio was associated with both higher A1c and a higher likelihood of being diabetic.
