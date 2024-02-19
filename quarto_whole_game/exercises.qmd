@@ -68,7 +68,7 @@ copy_qmd_template("your_turn_5.qmd")
 
 3.  *In "fig-one", add a chunk option: `#| fig-cap: "A1c and diabetes status by WH ratio"` . Then, where it says "\_\_\_\_\_", add* \@fig-one
 
-4.  *In "figure-one", change `eval` to `true` and re-render*
+4.  *In "fig-one", change `eval` to `true` and re-render*
 
 ## *Your Turn 6*
 

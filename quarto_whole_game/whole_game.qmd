@@ -162,4 +162,3 @@ In this Quarto file, we generated a polished report of the diabetes dataset.
 Amazingly, when we were provided with an updated dataset, everything updated perfectly!
 
 # References
-
