@@ -1,5 +1,5 @@
 ---
-title: "Dynamic documents in R"
+title: "Dynamic documents in Python"
 subtitle: "reproducible research with Quarto"
 date: "`r Sys.Date()`"
 format: "kakashi-revealjs"
@@ -12,9 +12,6 @@ options(
   tibble.max_extra_cols = 6, 
   tibble.width = 60
 )
-library(tidyverse)
-library(gapminder)
-library(gt)
 ```
 
 ```{r}
@@ -66,16 +63,16 @@ knitr::include_graphics("img/rendering.png")
 
 ## *Your Turn 1*
 
-### Create a new Quarto file. Go to File > New File > Quarto Document. Press OK. Save the file and press the "Render" button.
-
+### Create a new Quarto file. Use the Command Palette (Cmd/ctrl + Shift + P) in VS Code to create a new Quarto document. Save the file and run the Render command.
 
 ```{r}
 #| echo: false
 #| out.height: 25%
 #| out.width: 25%
+#| layout-ncol: 2
+knitr::include_graphics("img/new_document_button.png")
 knitr::include_graphics("img/render_button.png")
 ```
-
 
 ---
 
@@ -145,7 +142,7 @@ http://example.com
 
 ## *Your Turn 2* (open **`exercises.qmd`**)
 
-### Read this short introduction to the Visual Editor: <https://quarto.org/docs/visual-editor/>
+### Read this short introduction to the Visual Editor: <https://quarto.org/docs/visual-editor/vscode/>
 
 ### Use the Visual Editor to stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below. Experiment with bolding, italicizing, making lists, etc.
 
@@ -155,7 +152,7 @@ http://example.com
 ![](img/quarto-logo.svg){.absolute top=0 right=0 width=140}
 
 ### ~~Prose~~
-### **Code** = *R code chunks*
+### **Code** = *Python code chunks*
 ### ~~Metadata~~
 
 ## Code chunks
@@ -204,11 +201,11 @@ Option       | Effect
 `echo: false`  | run the code and output but don't print code
 `message: false` | don't print messages (e.g. from a function)
 `warning: false`   | don't print warnings
-`fig.cap: "Figure 1"`   | caption output plot with "Figure 1"
+`fig-cap: "Figure 1"`   | caption output plot with "Figure 1"
 
 . . .
 
-See the [Quarto documentation](https://quarto.org/docs/reference/cells/cells-knitr.html)
+See the [Quarto documentation](https://quarto.org/docs/reference/cells/cells-jupyter.html)
 
 ---
 
@@ -216,26 +213,24 @@ See the [Quarto documentation](https://quarto.org/docs/reference/cells/cells-kni
 
 . . .
 
-First-class support for [Python](https://quarto.org/docs/computations/python.html), [Julia](https://quarto.org/docs/computations/julia.html), and [Observable JS](https://quarto.org/docs/computations/ojs.html)
+First-class support for [R](https://quarto.org/docs/computations/r.html), [Julia](https://quarto.org/docs/computations/julia.html), and [Observable JS](https://quarto.org/docs/computations/ojs.html)
 
 . . .
 
 Supports Jupyter notebooks
 
-. . .
-
-`r length(knitr::knit_engines$get())` [knitr engines](https://bookdown.org/yihui/rmarkdown/language-engines.html)
-
-## Insert code chunks with **`cmd/ctrl + alt/option + I`** or Visual Editor
+## Insert code chunks with **`cmd/ctrl + alt/option + I`**, Command Palette, or Visual Editor
 
 ```{r}
 #| echo: false
-#| out.height: 50%
-#| out.width: 50%
+#| out-height: 40%
+#| out-width: 40%
+#| layout-ncol: 2
 knitr::include_graphics("img/chunk_setup_gui.png")
+knitr::include_graphics("img/chunk_setup_gui2.png")
 ```
 
-## Press `tab` to autocomplete chunk options
+## Start typing and press `tab` to autocomplete chunk options
 
 ```{r}
 #| echo: false
@@ -250,10 +245,8 @@ knitr::include_graphics("img/chunk_autocomplete_values.png")
 
 ### Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above. Put the following code in it:
 
-```r
-gapminder |> 
-  slice(1:5) |> 
-   gt()
+```python
+GT(gapminder.head())
 ```
 ### Render the document
 
@@ -285,7 +278,8 @@ knitr::include_graphics("img/inline-highlighted.jpg")
 ## *Your Turn 5*
 
 ### Remove `eval: false` so that Quarto evaluates the code.
-### Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
+### Fill in the column name to use `.select()` and `to_numpy()` to get the the number of unique `years` in gapminder as a scalar.
+### Save the results as `n_years`.
 ### Use inline code to describe the data set in the text below the code chunk and re-render.
 
 ---
@@ -331,7 +325,7 @@ Format       | Outputs
 
 ## *Your Turn 6*
 
-#### Set figure chunk options to the code chunk below, such as `dpi`, `fig.width`, and `fig.height.` Run `knitr::opts_chunk$get()` in the console to see the defaults.
+#### Set figure chunk options to the code chunk below, such as `dpi`, `fig-width`, and `fig-height.` 
 #### Add your name to the YAML header using `author: Your Name`.
 #### Change `format: html` to use the `toc: true` and `code-fold: true` options and re-render 
 
@@ -339,52 +333,51 @@ Format       | Outputs
 
 ## Parameters
 
-```{yaml}
----
-params: 
-  param1: x
-  param2: y
-  data: df
----
+```python
+#| tags: [parameters]
+param1 = x
+param2 = y
+data = df
 ```
 
 . . .
 
-*Calling parameters in R*
+*Calling parameters in Python*
 
-```{r}
+```{python}
 #| eval: false
-params$param1
-params$param2
-params$data
+param1
+param2
+data
 ```
 
 . . .
 
-*From the Console*
+*From the Command Line*
 
-```{r}
-#| eval: false
-quarto::quarto_render(
-  "document.qmd", 
-  execute_params = list(param1 = 0.2, param2 = 0.3)
-)
+```bash
+quarto render document.qmd -P param1:0.2 -P param2:0.3
 ```
 
 ## *Your Turn 7*
 
 ###  Change the `params` option in the YAML header to use a different continent. Re-render.
 
-```{r}
+```{python}
 #| eval: false
-gapminder |> 
-  filter(continent == params$continent) |> 
-  ggplot(aes(x = year, y = lifeExp, group = country, color = country)) +
-  geom_line(lwd = 1, show.legend = FALSE) + 
-  scale_color_manual(values = country_colors) +
-  theme_minimal(14) + 
-  theme(strip.text = element_text(size = rel(1.1))) +
-  ggtitle(paste("Continent:", params$continent))
+gapminder_filtered = gapminder.filter(pl.col("continent") == continent)
+
+sns.lineplot(
+  data=gapminder_filtered, 
+  x="year", 
+  y="lifeExp", 
+  hue="country", 
+  palette="Spectral", 
+  linewidth=1, 
+  legend=False
+)
+plt.title(f"Continent: {continent}") 
+sns.set_theme(style="whitegrid")  
 ```
 
 ## Bibliographies and citations
@@ -438,4 +431,3 @@ See the [Gallery](https://quarto.org/docs/gallery/) for inspiration
 
 ## Resources {background-color="#23373B"}
 ### [Quarto Documentation](https://quarto.org/): A comprehensive but friendly introduction to Quarto. Written in Quarto!
-### [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online. Written in Quarto!

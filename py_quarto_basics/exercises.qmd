@@ -1,0 +1,217 @@
+---
+title: "Reproduce Reports"
+format: html
+bibliography: citations.bib
+---
+
+```{python}
+#| tags: [parameters]
+#| echo: false
+continent = "Americas"
+```
+
+Chunks named "setup" are a little special.
+They will always run first in Quarto documents and interactively if they haven't been run yet.
+
+```{python}
+#| label: setup
+import polars as pl
+import polars.selectors as cs
+import seaborn as sns
+import matplotlib.pyplot as plt
+from gapminder import gapminder
+from great_tables import GT
+
+# this loads the `copy_qmd_template()` helper function we'll use in this exercise
+from helpers import copy_qmd_template
+# load the gapminder dataset into polars
+gapminder = pl.from_pandas(gapminder)
+```
+
+## Your turn 1
+
+Create a new Quarto file.
+Use the Command Palette (Cmd/ctrl + Shift + P) in VS Code to create a new Quarto document.
+Save the file and run the Render command.
+
+To render or preview, you can also use the command line:
+
+``` bash
+quarto render your_document.qmd
+```
+
+## Your turn 2
+
+Read this short introduction to the Visual Editor: <https://quarto.org/docs/visual-editor/vscode/>.
+You might Also find this link on editing content in the Visual Editor helpful: <https://quarto.org/docs/visual-editor/content.html> (this link has examples from the Visual Editor in RStudio, but it works the same).
+
+Turn on the Visual Editor mode for this document.
+Then, stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below.
+
+Experiment with bolding, italicizing, making lists, etc.
+
+GDP per capita measures the value of everything produced in a country during a year, divided by the number of people.
+The unit is in international dollars, fixed 2011 prices.The data is adjusted for inflation and differences in the cost of living between countries, so-called PPP dollars.The end of the time series, between 1990 and 2016, uses the latest GDP per capita data from the World Bank, from their World Development Indicators.
+To go back in time before the World Bank series starts in 1990, we have used several sources, such as Angus Maddison.
+
+## Your turn 3 (`exercises.qmd`)
+
+Create a code chunk in this document.
+You can type it in manually, us the command palette (Cmd/Ctrl + Shift + P, looking for Quarto Insert Code Cell) use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the "Insert" button above.
+Put the following code in it:
+
+GT(gapminder.head())
+
+Render this document
+
+## Your turn 4
+
+Something not quite working from the last exercise?
+Run this code to update `exercises.qmd` and catch up
+
+```{python}
+#| eval: false
+#| echo: false
+copy_qmd_template("your_turn_4.qmd")
+```
+
+Add `echo: false` to the code chunk you created and re-render.
+What's the difference in the output?
+
+## Your turn 5
+
+Something not quite working from the last exercise?
+Run this code to update `exercises.qmd` and catch up:
+
+```{python}
+#| eval: false
+#| echo: false
+copy_qmd_template("your_turn_5.qmd")
+```
+
+In the code chunk below:
+
+1.  Remove `eval: false` so that Quarto evaluates the code.
+2.  Fill in the column name to use `.select()` and `to_numpy()` to get the the number of unique `years` in gapminder as a scalar.
+3.  Save the results as `n_years`.
+4.  Use inline code to describe the data set in the text below the code chunk and re-render.
+
+```{python}
+#| eval: false
+____ = (gapminder
+  # fill in the column name
+  .select(pl.col("____").unique().len())
+  .to_numpy()[0, 0]
+)
+```
+
+Gapminder observed data over \_\_\_\_\_\_\_\_\_ different years.
+
+## Your turn 6
+
+Something not quite working from the last exercise?
+Run this code to update `exercises.qmd` and catch up:
+
+```{python}
+#| eval: false
+#| echo: false
+copy_qmd_template("your_turn_6.qmd")
+```
+
+In the code chunk below:
+
+1.  Set figure chunk options to the code chunk below, such as `dpi`, `fig-width`, and `fig-height`.
+
+2.  Add your name to the YAML header using `author: Your Name`.
+
+3.  Set `format: html` to use the `toc` and `code-fold` options and re-render (see the [Quarto documentation](https://quarto.org/docs/reference/formats/html.html) for details on these and other arguments. Add them to the YAML like this (be mindful of the indents! Also, make sure you have the Visual Editor turned on or the code below might look a little different):
+
+    ``` yaml
+    format: 
+      html:
+        _____: true
+        _____: true 
+    ```
+
+```{python}
+life_exp_plot = sns.relplot(
+  gapminder.filter(pl.col("continent") != "Oceania"), 
+  x="year", 
+  y="lifeExp", 
+  kind="line", 
+  hue="country", 
+  col="continent", 
+  legend=False, 
+  col_wrap=3, 
+  palette="Spectral", 
+  linewidth=1, 
+  facet_kws={'sharex': False, 'sharey': False}
+)
+
+life_exp_plot.fig.suptitle('Life Expectancy Over Years by Country and Continent', fontsize=16)
+life_exp_plot.set_titles("{col_name}", size=14)  
+life_exp_plot.set_axis_labels("Year", "Life Expectancy") 
+life_exp_plot.tight_layout()
+sns.set_theme(style="whitegrid")  
+```
+
+## Your turn 7
+
+Something not quite working from the last exercise?
+Run this code to update `exercises.qmd` and catch up:
+
+```{python}
+#| eval: false
+#| echo: false
+copy_qmd_template("your_turn_7.qmd")
+```
+
+In the code chunk below:
+
+1.  Take a look at the output of this plot in the document you've rendered.
+2.  Now, change the `params` option in the earlier chunk tagged with `#| tags: [parameters]` to use a different continent.
+3.  Re-render. What's changed?
+
+```{python}
+gapminder_filtered = gapminder.filter(pl.col("continent") == continent)
+
+sns.lineplot(
+  data=gapminder_filtered, 
+  x="year", 
+  y="lifeExp", 
+  hue="country", 
+  palette="Spectral", 
+  linewidth=1, 
+  legend=False
+)
+plt.title(f"Continent: {continent}") 
+sns.set_theme(style="whitegrid")  
+```
+
+## Your turn 8
+
+Something not quite working from the last exercise?
+Run this code to update `exercises.qmd` and catch up:
+
+```{python}
+#| eval: false
+#| echo: false
+copy_qmd_template("your_turn_8.qmd")
+```
+
+In the sentence below:
+
+1.  Cite *Causal Inference* in text below. Using the citation wizard, find the right citation under My sources \> Bibliography.
+2.  Add the American Journal of Epidemiology CSL to the YAML using `csl: aje.csl`
+3.  Re-render
+
+We calculated the average treatment effect using g-computation \_\_\_\_\_\_\_\_.
+
+# Takeaways
+
+-   Quarto has simple syntax that's easy to use
+-   Your analysis and narrative are easy to intertwine in Quarto
+-   You can re-run your analysis with different inputs and outputs
+-   Code chunks provide a variety of options to change the resulting report
+-   Use YAML to set options for Quarto
+-   Quarto supports a powerful citation system. Find more CSL styles at <https://github.com/citation-style-language/styles>
