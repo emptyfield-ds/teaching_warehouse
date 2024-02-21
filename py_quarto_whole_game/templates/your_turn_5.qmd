@@ -1,0 +1,208 @@
+---
+title: "Whole Game: Analyzing the diabetes data set"
+format: html
+engine: jupyter
+bibliography: references.bib
+---
+
+# Introduction
+
+In this exercise, we'll look at a report generated completely in Python using Quarto.
+We're using an intentionally simplified report: what we're telling the readers, how we fit models, and so on, are all much simpler than you would use in practice.
+Instead, focus on the big idea here: reproducible reports!
+
+```{python}
+#| label: setup
+#| include: false
+import polars as pl
+import polars.selectors as cs
+import seaborn as sns
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from great_tables import GT
+```
+
+```{python}
+#| label: prep-data
+#| include: false
+diabetes = (
+  pl.read_csv("diabetes-buckingham.csv", null_values="NA")
+    .with_columns(
+      pl.when(pl.col("glyhb") >= 6.5)
+        .then(pl.lit("Diabetic"))
+        .when(pl.col("glyhb").is_null())
+        .then(pl.lit("Missing"))
+        .otherwise(pl.lit("Healthy"))
+        .alias("diabetic")
+))
+
+# we'll fill this in later
+description = {status: {key: None for key in ['diabetic', 'n', 'glyhb', 'ratio', 'age']} for status in ['Missing', 'Diabetic', 'Healthy']}
+```
+
+# Methods
+
+These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans [@Willems1997].
+We sought to assess the relationship between waist-to-hip ratio on hemoglobin A1c and diabetes diagnosis.
+In this truncated report, we include basic descriptive statistics on participants by diabetes status.
+We also fit two regression models: 1) an ordinary least-squares regression model of the impact of waist-to-hip ratio on hemoglobin A1c, and 2) a logistic regression model of the impact of waist-to-hip ratio on diabetes status.
+We adjusted both models for age.
+
+# Results
+
+```{python}
+#| label: descriptive-stats
+#| echo: false
+description_df = diabetes.group_by("diabetic").agg([
+    pl.len().alias("n"),
+    pl.mean("glyhb").round(1),
+    pl.mean("ratio").round(1),
+    pl.mean("age").round(1)
+])
+  
+# split into a dict of data frames by diabetes status
+description = {group[0]: {key: value[0] for key, value in df.to_dict(as_series=False).items()} for group, df in description_df.group_by(["diabetic"])}
+```
+
+There were `{python} description['Diabetic']['n']` participants with diabetes, who had an average A1c of `{python} description['Diabetic']['glyhb']`, and `{python} description['Healthy']['n']` participants without diabetes, who had an average A1c of `{python} description['Healthy']['glyhb']`.
+Non-diabetic participants were, on average, younger than those with diabetes (`{python} description['Healthy']['age']` vs `{python} description['Diabetic']['age']`).
+There were `{python} description['Missing']['n']` participants who were missing data.
+These participants were also younger, on average, than those with diabetes (`{python} description['Diabetic']['age']` vs `{python} description['Missing']['age']`).
+See below for more.
+
+```{python}
+#| label: tbl-one
+#| tbl-cap: "Descriptive Statistics by Diabetic Status"
+#| echo: false
+stats =  {group[0]: df.describe() for group, df in diabetes.select(pl.col("glyhb", "ratio", "age", "chol", "diabetic")).group_by(["diabetic"])}
+
+diabetes_desc = (stats["Diabetic"]
+  .with_columns(pl.lit("Diabetic").alias("diabetic"))
+  .vstack(
+    stats["Healthy"]
+      .with_columns(pl.lit("Healthy").alias("diabetic"))
+))
+
+(GT(
+  diabetes_desc, 
+  rowname_col="statistic", 
+  groupname_col="diabetic"
+)
+  .fmt_number(["glyhb", "ratio", "age", "chol"], decimals=1)
+  .cols_label(
+    diabetic="Diabetes Status", 
+    glyhb="Hemoglobin A1c",
+    ratio="Waist/Hip Ratio", 
+    age="Age", 
+    chol="Cholestorol"
+  ))
+```
+
+```{python}
+#| label: fig-one
+#| eval: false
+#| echo: false
+#| message: false
+#| warning: false
+plt.figure(figsize=(9, 3.5))
+
+plt.subplot(1, 2, 1)
+sns.regplot(
+  x='ratio', 
+  y='glyhb', 
+  data=diabetes.drop_nulls(), 
+  fit_reg=True, 
+  scatter_kws={'s': 2, 'color': 'white', 'edgecolor': 'grey'},
+  line_kws={'color': 'steelblue', 'lw': 1}
+)
+
+plt.xscale('log')
+plt.xlabel('Hip/waist ratio')
+plt.ylabel('Hemoglobin A1c')
+plt.title('A')
+
+plt.subplot(1, 2, 2)
+sns.histplot(
+  data=diabetes.drop_nulls(),
+  x='ratio', 
+  hue='diabetic', 
+  element='step',
+  fill=True, 
+  palette=['steelblue', 'firebrick'], 
+  alpha=0.8,
+  bins=30
+)
+plt.xlabel('Hip/waist ratio')
+plt.title('B')
+plt.legend(title='', loc='lower center')
+
+plt.tight_layout()
+```
+
+In \_\_\_\_\_ (a), we show the unadjusted relationship between A1c and waist-hip ratio (WH ratio is shown on the log scale).
+As WH ratio increases, A1c also increases.
+In \_\_\_\_\_ (b), we show the density of WH ratio among those with and without diabetes.
+Participants with diabetes had a higher WH ratio than those without diabetes.
+
+```{python}
+#| label: tbl-two
+#| eval: false
+#| echo: false
+
+# model summaries to df take a bit of processing
+# this function helps us get a df back quickly
+# see `helpers.py` for its definition
+from helpers import coefs_to_polars
+
+lm_model = smf.ols("glyhb ~ ratio + age", data=diabetes).fit()
+lm_coefficients_df = coefs_to_polars(lm_model, suffix="lm")
+
+diabetes = diabetes.with_columns(
+  pl.when(pl.col('diabetic') == "Diabetic").then(1).otherwise(0).alias("diabetic_bin")
+)
+
+logistic_model = smf.glm(
+  formula='diabetic_bin ~ ratio + age', 
+  data=diabetes, 
+  family=sm.families.Binomial()
+).fit()
+
+glm_coefficients_df = (coefs_to_polars(logistic_model, suffix="glm")
+  .select(pl.exclude("term_glm"))
+  # we want odds ratios for this model
+  .with_columns(
+    pl.all().exp()
+  )
+)
+
+(___(lm_coefficients_df.hstack(glm_coefficients_df))
+  .tab_spanner(label="Linear Model", columns=cs.ends_with("_lm"))
+  .tab_spanner(label="Logistic Model", columns=cs.ends_with("_glm"))
+  .cols_label(
+    term_lm = "Term",
+    coef_lm = "Coef",
+    ci_lower_lm = "Lower 95% CI",
+    ci_upper_lm = "Upper 95% CI",
+    coef_glm = "Odds Ratio",
+    ci_lower_glm = "Lower 95% CI",
+    ci_upper_glm = "Upper 95% CI",
+  )
+  .fmt_number(
+      columns=["coef_lm", "ci_lower_lm", "ci_upper_lm", "coef_glm", "ci_lower_glm", "ci_upper_glm"], 
+      decimals=2
+  )
+)
+```
+
+In \_\_\_\_\_, we present two regression models: linear and logistic.
+In the linear model, we analyze the association of WH ratio an A1c adjusted for age.
+In the logistic model, we analyze the association of WH ratio on diabetes status adjusted for age.
+Increased WH ratio was associated with both higher A1c and a higher likelihood of being diabetic.
+
+# Discussion
+
+In this Quarto file, we generated a polished report of the diabetes dataset.
+Amazingly, when we were provided with an updated dataset, everything updated perfectly!
+
+# References
