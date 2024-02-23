@@ -1,0 +1,18 @@
+---
+title: "Git: the basics"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+```
+
+
+## Resources {background-color="#23373B"}
+### 
