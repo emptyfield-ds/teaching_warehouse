@@ -13,6 +13,396 @@ options(
 )
 ```
 
+# Creating remote repositories {background-color="#23373B"}
+
+## {.center .middle}
+
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/octocat.png")
+```
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/git-warehouse2.png")
+```
+:::
+
+Art by Allison Horst
+
+## *Creating GitHub repositories* {.center .middle .small}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/new-repository.png")
+```
+:::
+
+## *Creating GitHub repositories* {.center .middle .small}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/new-repository-instructions.png")
+```
+:::
+
+
+## Linking local and remote repositories
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1-8|10-13|7|8|6"
+…or create a new repository on the command line
+echo "# gitex" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/malcolmbarrett/gitex.git
+git push -u origin main
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/malcolmbarrett/gitex.git
+git branch -M main
+git push -u origin main
+```
+
+## Linking local and remote repositories {background-color="#23373B"}
+
+1. GitHub then clone
+2. GitHub then create local
+3. Create local then GitHub
+
+## Interacting with your remote
+
+. . .
+
+`git push -u origin branch_name` pushes changes and tells git to link the remote and local branches. After this, you can just `git push`
+
+. . .
+
+`git pull` fetches changes then merges them into your local branch. `git fetch` -> `git merge`
+
+. . .
+
+It's often useful to `git fetch` to get changes without merging anything
+
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 75%
+#| out.width: 75%
+#| echo: false
+knitr::include_graphics("img/github-remote-local.png")
+```
+:::
+
+Art by Allison Horst
+
+## Forking repositories {.center .middle}
+
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/forktocat.jpeg")
+```
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 75%
+#| out.width: 75%
+#| echo: false
+knitr::include_graphics("img/repo-fork-create.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 90%
+#| out.width: 90%
+#| echo: false
+knitr::include_graphics("img/repo-forked-from.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/repo-fork-clone.png")
+```
+:::
+
+## *Your Turn 1*
+
+### Fork this repository to your account: <https://github.com/emptyfield-ds/github_project>
+### Clone *your fork* to your local computer
+### Open the project and run `git remote`
+### Now try `git remote show origin` to get a little more information 
+
+## *Your Turn 2*
+
+### Create a new branch and switch over to it
+### Run `git reflog` to get a detailed view of actions in the repository
+### Now, make three commits: 1) Add a Quarto file 2) Convert the script (pick either `script.R` or `script.py` depending on your preference) code to a Quarto code chunk 3) Delete the script file(s)
+### Run `git status` and `git log` to make sure you've got everything committed 
+
+# Creating pull requests {background-color="#23373B"}
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 90%
+#| out.width: 90%
+#| echo: false
+knitr::include_graphics("img/pr-fork-recent-pushes.png")
+```
+:::
+
+## *Your Turn 3* {.small}
+
+### Run `git diff main` to see the work you've done
+### Remind yourself of the remotes with `git remote` and the branch you're on with `git branch`. You want the remote for *your fork*, not the upstream repository
+### Run `git push -u REMOTE_NAME BRANCH_NAME`, replacing the remote and branch names. Don't forget the `-u` part! That links the remote and local branch
+### Open your fork of the repository on GitHub and make sure the branch is there
+
+
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 75%
+#| out.width: 75%
+#| echo: false
+knitr::include_graphics("img/pr-fork-base-repo.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 75%
+#| out.width: 75%
+#| echo: false
+knitr::include_graphics("img/pr-fork-open.png")
+```
+:::
+
+## Closing issues
+
+. . . 
+
+*GitHub Issues* are a good place to track thoughts, improvements, bugs, and so on
+
+. . .
+
+*Automatically close issues* when **merging pull requests** by including `"Closes #N"` or `"Fixes #N"` in the PR description
+
+
+## *Your Turn 4*
+
+### Open a Pull Request (PR) of the changes in your fork's branch into the main branch of the upstream repository
+### Add a title and a summary of the changes
+### Make sure to add "Closes #1", which will like the Pull Request to issue 1
+
+# Interacting with pull requests {background-color="#23373B"}
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-commits.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-diff.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-comment.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-suggestion.png")
+```
+:::
+
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-commit-suggestion.png")
+```
+:::
+
+## GitHub Reviews
+
+. . .
+
+GitHub has a formal code review mechanism to assign reviewers who then provide feedback on the PR
+
+. . .
+
+Reviewers can comment, discuss, request changes, reject, or approve changes
+
+. . .
+
+*"LGTM!"*
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-merge.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 100%
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/pr-merged-branch-deleted.png")
+```
+:::
+
+
+## {.center .middle}
+
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/yogitocat.png")
+```
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 75%
+#| out.width: 75%
+#| echo: false
+knitr::include_graphics("img/github-remote-local.png")
+```
+:::
+
+Art by Allison Horst
+
+## Workflows {background-color="#23373B"}
+1. Use PRs for most tasks (yours & forks!)
+2. On forks, still use branches
+3. Tidy up your branches, local and remote
+4. Pull frequently!
+5. Include `README.md`
+
+# Releases {background-color="#23373B"}
+
+## {.center .middle} 
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/release-repo.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 90%
+#| out.width: 90%
+#| echo: false
+knitr::include_graphics("img/release-download-create.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 80%
+#| out.width: 80%
+#| echo: false
+knitr::include_graphics("img/release-create.png")
+```
+:::
+
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 75%
+#| out.width: 75%
+#| echo: false
+knitr::include_graphics("img/release-tag.png")
+```
+:::
 
 ## Resources {background-color="#23373B"}
-### 
+### [GitHub Docs](https://docs.github.com/en): Helpful guidance on all things git and GitHub
+### [Happy git with R and RStudio](https://happygitwithr.com/): Focused on R but broadly useful
+### [PR Helpers in R](https://usethis.r-lib.org/articles/pr-functions.html): R-specific but highly recommended
+
