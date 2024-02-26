@@ -100,6 +100,19 @@ git push -u origin main
 
 It's often useful to `git fetch` to get changes without merging anything
 
+## {.center .middle}
+
+:::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+```{r}
+#| out.height: 50%
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/git-warehouse2.png")
+```
+:::
+
+Art by Allison Horst
+
 
 ## {.center .middle}
 
@@ -259,8 +272,8 @@ knitr::include_graphics("img/pr-diff.png")
 
 :::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
 ```{r}
-#| out.height: 100%
-#| out.width: 100%
+#| out.height: 80%
+#| out.width: 80%
 #| echo: false
 knitr::include_graphics("img/pr-comment.png")
 ```
@@ -270,8 +283,8 @@ knitr::include_graphics("img/pr-comment.png")
 
 :::{style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
 ```{r}
-#| out.height: 100%
-#| out.width: 100%
+#| out.height: 80%
+#| out.width: 80%
 #| echo: false
 knitr::include_graphics("img/pr-suggestion.png")
 ```

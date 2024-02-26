@@ -129,7 +129,7 @@ Date:   Sat Feb 24 12:45:42 2024 -0500
 
 . . .
 
-A commit is a both a noun and a verb
+*A commit is a both a noun and a verb*
 
 ## *Your Turn 2*
 
