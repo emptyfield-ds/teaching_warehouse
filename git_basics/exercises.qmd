@@ -1,0 +1,67 @@
+---
+title: "Version control with git"
+format: html
+---
+
+## Your Turn 1
+
+1. Create a git repository, either though the command line or through your favorite IDE.
+
+At the command line, you can create a new directory to become a repository or turn an existing directory into a repository.
+
+```bash
+git init my_project
+cd my_project
+```
+
+```bash
+git init 
+```
+
+## Your Turn 2
+
+1. Create a new Quarto document in your git repository. Save it as `report.qmd`.
+2. Check `git status`
+3. Add the file to the staging area then check `git status` again
+4. Commit the file, then check `git log`
+
+
+## Your Turn 3
+
+1. Modify the Quarto document by adding a new code chunk
+2. Check `git diff`
+3. Stage and commit the file
+4. Take a look at the log
+
+## Your Turn 4
+
+1. Create a new branch called `notebook`
+2. Switch to the new branch
+3. Add a new Quarto file called `notebook.qmd`
+4. Stage and commit the new document
+5. Check `git branch` and `git log`
+
+## Your Turn 4
+
+1. Switch back to the original branch
+2. Merge in the changes from the `notebook` branch
+3. Delete the `notebook` branch
+
+## Your Turn 5
+ 
+1. Restore the version of `report.qmd` from three commits prior using `--source=HEAD~3` in `git restore`
+2. Check `git status`
+3. Run `git restore report.qmd`. Which state is it in now? Why?
+
+***
+
+# Take aways
+
+* `git init` creates ` .git/` folder where changes in your project are tracked over time
+* `git add` tracks files and adds changes to the staging area, where you can `git commit` to store a change in your repository
+* `git status`, `git log`, and `git reflog` all give you different perspectives on your project
+* `git diff` lets you see the differences between different points in your project, such as comparing commits or branches.
+* `git branch` creates new branches, which you can switch to with `git switch` (or `git checkout`).
+* `git merge` merges a separate branch into the one you're on
+* `git reset` lets you change `HEAD` to another point in the past. `git restore` allows you to change the state of a file to another point in the past. `git revert` creates a new commit that undos another commit.
+* files, directories, and patterns listed in the `.gitignore` file won't be tracked by git.

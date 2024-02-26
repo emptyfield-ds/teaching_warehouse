@@ -1,0 +1,43 @@
+---
+title: "Collaborating on GitHub"
+format: html
+---
+
+## Your Turn 1
+
+1. Fork this repository to your account: https://github.com/emptyfield-ds/github_project
+2. Clone *your fork* to your local computer
+3. Open the project and run `git remote`
+4. Now try `git remote show origin` to get a little more information 
+
+## Your Turn 2
+
+1. Create a new branch and switch over to it
+2. Run `git reflog` to get a detailed view of actions in the repository
+3. Now, make three commits:
+ - Add a Quarto file
+ - Convert the script (pick either `script.R` or `script.py` depending on your preference) code to a Quarto code chunk
+ - Delete the script file(s)
+4. Run `git status` and `git log` to make sure you've got everything committed 
+
+## Your Turn 3
+
+1. Run `git diff main` to see the work you've done
+2. Remind yourself of the remotes with `git remote` and the branch you're on with `git branch`. You want the remote for *your fork*, not the upstream repository
+3. Run `git push -u REMOTE_NAME BRANCH_NAME`, replacing the remote and branch names. Don't forget the `-u` part! That links the remote and local branch
+4. Open your fork of the repository on GitHub and make sure the branch is there
+
+## Your Turn 4
+
+1. Open a Pull Request (PR) of the changes in your fork's branch into the main branch of the upstream repository
+2. Add a title and a summary of the changes
+3. Make sure to add "Closes #1", which will like the Pull Request to issue 1
+
+***
+
+# Take aways
+
+* Remotes link far-away projects. The most common use is to host a remote, the primary copy of a project, on a git-hosting service like GitHub
+* GitHub will tell you how to link an empty repository to your computer. Common patterns are "GitHub first, then clone" and  "Local first, then push to GitHub". 
+* Make pull requests (PRs) from branches. For repositories that you don't have access to, make a fork, then branch
+* Link issues and PRs with "Closes #issue_number"
