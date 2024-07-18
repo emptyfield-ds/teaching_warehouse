@@ -433,6 +433,6 @@ ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
 
 ## Resources {background-color="#23373B"}
 ### [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
-### [Posit Primers](https://posit.cloud/learn/primers): Free interactive courses in the Tidyverse
+### [Posit Recipes](https://posit.cloud/learn/recipes): Common code patterns in R (with some comparisons to SAS)
 ### [Data Visualization: A Practical Introduction](https://socviz.co/): Mostly free online; great ggplot2 intro
 

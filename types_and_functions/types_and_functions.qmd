@@ -725,4 +725,3 @@ top_scatter_plot(lifeExp, 2002) +
 ## Resources {background-color="#23373B"}
 ### [R for Data Science, 2nd ed.](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the Tidyverse. Free online.
 ### [Advanced R, 2nd ed.](https://adv-r.hadley.nz/): Detailed guide to how R works and how to make your code better. Free online.
-### [Posit Primers](https://posit.cloud/learn/primers): Free interactive courses in the Tidyverse
