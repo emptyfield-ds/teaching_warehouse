@@ -21,7 +21,7 @@ library(labelled)
 ```{r}
 #| label: prep-data
 #| include: false
-diabetes <- read_csv("../diabetes-buckingham.csv") |> 
+diabetes <- read_csv("diabetes-buckingham.csv") |> 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 
 description <- list()
@@ -75,7 +75,7 @@ var_label(diabetes) <- list(
   glyhb = "Hemoglobin A1c",
   ratio = "Waist/Hip Ratio", 
   age = "Age", 
-  chol = "Cholestorol", 
+  chol = "Cholesterol", 
   gender = "Sex", 
   frame = "Body Frame"
 ) 
@@ -132,7 +132,7 @@ Participants with diabetes had a higher WH ratio than those without diabetes.
 
 ```{r}
 #| label: tbl-two
-#| eval: false
+#| tbl-cap: "The relationship between Hemoglobin A1c (linear) and Diabetic status (logistic) and Hip/waist ratio."
 #| echo: false
 diabetes <- diabetes |> 
   drop_na() |> 

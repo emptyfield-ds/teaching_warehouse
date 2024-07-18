@@ -61,7 +61,7 @@ copy_qmd_template("your_turn_5.qmd")
 ```
 
 1.  *In the code chunk called "fig-one", read the code and predict what we want the output to be.*
-2.  *In "fig-one", add a chunk option: `#| fig-cap: "A1c and diabetes status by WH ratio"` . Then, where it says "\_\_\_\_\_", add* @fig-one
+2.  *In "fig-one", add a chunk option: `#| fig-cap: "A1c and diabetes status by WH ratio"` . Then, where it says "\_\_\_\_\_" in the text after the code chunk, add* \@fig-one (**\<-** don't copy and paste this because it's escaped to render correctly in visual mode).
 3.  *In "fig-one", change `eval` to `true` and re-render*
 
 ## *Your Turn 6*
@@ -76,7 +76,7 @@ copy_qmd_template("your_turn_6.qmd")
 
 1.  *In the code chunk called "tbl-two", pass the results of both `lm_coefficients_df` and `glm_coefficients_df` to `GT()` to create a GT object*
 2.  Add `#| tbl-cap: "The relationship between Hemoglobin A1c (linear) and Diabetic status (logistic) and Hip/waist ratio."` to the chunk metadata
-3.  In the narrative text following the code chunk, fill in the blank with @tbl-two
+3.  In the narrative text following the code chunk, fill in the blank with \@tbl-two
 4.  Take a look at the `tab_spanner()` method calls. What do you think this code is doing to the to the table? Predict what the result will be.
 5.  *change `eval` to `true` and re-render*
 

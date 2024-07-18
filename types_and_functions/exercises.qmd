@@ -30,8 +30,8 @@ gapminder |>
 1. Create a numeric vector that has the following values: 3, 5, NA, 2, and NA. 
 2. Try using `sum()`. Then add `na.rm = TRUE`.
 3. Check which values are missing with `is.na()`; save the results to a new object and take a look
-4. Change all missing values of `x` to "-9999"
-5. Examine `x` again
+4. Change all missing values of `x` to -9999
+5. Try `sum()` again without `na.rm = TRUE`
 
 ```{r}
 x <- _____________
@@ -41,7 +41,7 @@ ___(x, ___)
 x_missing <- _______
 x_missing
 
-_________ <- "-9999"
+_________ <- -9999
 x
 ```
 

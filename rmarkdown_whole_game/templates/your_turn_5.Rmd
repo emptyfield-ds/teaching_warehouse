@@ -56,7 +56,7 @@ lbls <- list(
   glyhb ~ "Hemoglobin A1c",
   ratio ~ "Waist/Hip Ratio", 
   age ~ "Age", 
-  chol ~ "Cholestorol", 
+  chol ~ "Cholesterol", 
   gender ~ "Sex", 
   frame ~ "Body Frame"
 )

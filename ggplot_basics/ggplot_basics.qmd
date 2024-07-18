@@ -107,8 +107,12 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
 ```
 
 ## `ggplot()`
-### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
-###  &nbsp;&nbsp; `<geom_function>()`
+
+```{r}
+#| eval: false
+ggplot(data = <data>, mapping = aes(<mapping>)) + 
+  <geom_function>()
+```
 
 . . .
 
@@ -146,8 +150,11 @@ ggplot(data = diabetes, mapping = aes(x = weight, y = hip)) +
 
 ## Aesthetics: `aes()`
 
-### `ggplot(data = <data>, mapping = aes(<mapping>)) + `
-###  &nbsp;&nbsp; `<geom_function>()`
+```{r}
+#| eval: false
+ggplot(data = <data>, mapping = aes(<mapping>)) + 
+  <geom_function>()
+```
  
 . . .
 
@@ -158,13 +165,17 @@ Aesthetics *map* the data to the plot
 ```{r}
 #| label: slide-23
 #| eval: false
-ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + geom_point()
+ggplot(mtcars, aes(x = mpg, y = hp, color = cyl)) + 
+  geom_point()
 
-ggplot(mtcars, aes(x = mpg, y = hp, size = cyl)) + geom_point()
+ggplot(mtcars, aes(x = mpg, y = hp, size = cyl)) + 
+  geom_point()
 
-ggplot(mtcars, aes(x = mpg, y = hp, alpha = cyl)) + geom_point()
+ggplot(mtcars, aes(x = mpg, y = hp, alpha = cyl)) + 
+  geom_point()
 
-ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + geom_point()
+ggplot(mtcars, aes(x = mpg, y = hp, shape = cyl)) + 
+  geom_point()
 ```
 
 ## *Your Turn 2*
@@ -397,7 +408,10 @@ diabetes |>
 
 ## Positions {.extra-large}
 
-### `geom_bar(position = "<POSITION>")`
+```{r}
+#| eval: false
+geom_bar(position = "<POSITION>")
+```
 
 . . .
 
@@ -628,14 +642,6 @@ ggplot(diabetes, aes(weight, hip)) +
 ## Facets {.large}
 
 Easily split your plot into panels
-
-. . .
-
-`facet_grid()`
-
-`facet_wrap()`
-
-. . .
 
 `facet_grid(`**`x ~ y`**`)`
 

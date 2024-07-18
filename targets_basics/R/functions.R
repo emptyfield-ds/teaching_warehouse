@@ -4,7 +4,7 @@ create_table_one <- function(diabetes) {
     glyhb ~ "Hemoglobin A1c",
     ratio ~ "Waist/Hip Ratio",
     age ~ "Age",
-    chol ~ "Cholestorol",
+    chol ~ "Cholesterol",
     gender ~ "Sex",
     frame ~ "Body Frame"
   )

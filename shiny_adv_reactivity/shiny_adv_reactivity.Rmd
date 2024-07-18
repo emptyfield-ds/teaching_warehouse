@@ -756,5 +756,4 @@ class: inverse, center
 
 # Resources
 ## [R for Data Science](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the tidyverse. Free online.
-## [RStudio Primers](https://rstudio.cloud/learn/primers): Free interactive courses in the Tidyverse
-## [10 dplyr tips](https://twitter.com/i/moments/1044926554239881217): a Twitter thread on other useful aspects of dplyr
+### [Posit Recipes](https://posit.cloud/learn/recipes): Common code patterns in R (with some comparisons to SAS)

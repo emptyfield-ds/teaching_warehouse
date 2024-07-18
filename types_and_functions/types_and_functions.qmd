@@ -270,7 +270,7 @@ gapminder |>
 ### Create a numeric vector that has the following values: 3, 5, NA, 2, and NA. 
 ### Try using `sum()`. Then add `na.rm = TRUE`.
 ### Check which values are missing with `is.na()`; save the results to a new object and take a look
-### Change all missing values of `x` to 0
+### Change all missing values of `x` to -9999.
 ### Try `sum()` again without `na.rm = TRUE`.
 
 ## *Your Turn 2*
@@ -292,7 +292,7 @@ sum(x, na.rm = TRUE)
 x_missing <- is.na(x)
 x_missing
 
-x[x_missing] <- "-9999"
+x[x_missing] <- -9999
 x
 ```
 
@@ -725,4 +725,3 @@ top_scatter_plot(lifeExp, 2002) +
 ## Resources {background-color="#23373B"}
 ### [R for Data Science, 2nd ed.](https://r4ds.hadley.nz/): A comprehensive but friendly introduction to the Tidyverse. Free online.
 ### [Advanced R, 2nd ed.](https://adv-r.hadley.nz/): Detailed guide to how R works and how to make your code better. Free online.
-### [Posit Primers](https://posit.cloud/learn/primers): Free interactive courses in the Tidyverse
