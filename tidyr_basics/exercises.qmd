@@ -47,9 +47,9 @@ table2 |>
   ________ |> 
   ________ |> 
   ggplot(________) + 
-     ________(size = 2) +
-     ________ + 
-     scale_x_continuous(breaks = c(1999L, 2000L))
+  ________(size = 2) +
+  ________ + 
+  scale_x_continuous(breaks = c(1999L, 2000L))
 ```
 
 ## Your Turn 3
@@ -89,9 +89,9 @@ There are two CSV files in this folder containing SEER data in breast cancer inc
 
 ______ |> 
   ggplot(aes(x = ______, y = ______, color = ______, group = race)) + 
-    geom_point() +
-    geom_line() + 
-    scale_x_discrete(breaks = seq(1975, 2011, by = 5)) # show years by fives
+  geom_point() +
+  geom_line() + 
+  scale_x_discrete(breaks = seq(1975, 2011, by = 5)) # show years by fives
 ```
 
 ***
