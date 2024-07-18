@@ -36,11 +36,11 @@ Import the .csv file below into `ft_excess_deaths` using `read_csv()`
 ft_excess_deaths <- ________("data/ft_excess_deaths.csv")
 ```
 
-To make our lives easier when we get to plotting, we'll also change "year" to a factor. We'll cover factors, and why they're useful when you're plotting, later in the course. 
+To make our lives easier when we get to plotting, we'll also change "year" to an ordered factor. We'll cover factors, and why they're useful when you're plotting, later in the course. 
 
 ```{r}
 #| label: year-factor
-ft_excess_deaths <- mutate(ft_excess_deaths, year = factor(year))
+ft_excess_deaths <- mutate(ft_excess_deaths, year = ordered(year))
 ```
 
 ### View the data 
