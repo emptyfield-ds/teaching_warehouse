@@ -95,7 +95,7 @@ diabetes_desc = (stats["Diabetic"]
     glyhb="Hemoglobin A1c",
     ratio="Waist/Hip Ratio", 
     age="Age", 
-    chol="Cholestorol"
+    chol="Cholesterol"
   ))
 ```
 
