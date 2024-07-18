@@ -81,9 +81,10 @@ copy_qmd_template("your_turn_6.qmd")
 ```
 
 1.  *In the code chunk called "tbl-two", pass the results of both `lm()` and `glm()` to `tbl_regression()`*
-2.  In the narrative text following the code chunk, fill in the blank with @tbl-two
-3.  Take a look at the `tbl_merge()` function call. What do you think this code is doing to the to the two objects created by `tbl_regression()`? Predict what the result will be.
-4.  *change `eval` to `true` and re-render*
+2.  Add `#| tbl-cap: "The relationship between Hemoglobin A1c (linear) and Diabetic status (logistic) and Hip/waist ratio."` to the chunk metadata
+3.  In the narrative text following the code chunk, fill in the blank with \@tbl-two
+4.  Take a look at the `tbl_merge()` function call. What do you think this code is doing to the to the two objects created by `tbl_regression()`? Predict what the result will be.
+5.  *change `eval` to `true` and re-render*
 
 ***Stretch goal**: The description for Table 2 is pretty sparse. It would probably be better to have some numbers included in the narrative text. Read gtsummary's [vignette on inline text](http://www.danieldsjoberg.com/gtsummary/articles/inline_text.html) and add a few important details.*
 
