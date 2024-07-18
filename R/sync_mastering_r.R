@@ -13,10 +13,9 @@ modules <- c(
   "quarto_whole_game",
   # because I usually touch these too when updating the above
   "py_quarto_basics",
-  "ds_whole_game",
   "py_quarto_whole_game",
+  "ds_whole_game",
   "tidy_tuesday"
 )
-
 
 purrr::walk(modules, shunyata::sync_module)
