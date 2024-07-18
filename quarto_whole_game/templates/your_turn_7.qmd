@@ -132,7 +132,7 @@ Participants with diabetes had a higher WH ratio than those without diabetes.
 
 ```{r}
 #| label: tbl-two
-#| eval: false
+#| tbl-cap: "The relationship between Hemoglobin A1c (linear) and Diabetic status (logistic) and Hip/waist ratio."
 #| echo: false
 diabetes <- diabetes |> 
   drop_na() |> 
