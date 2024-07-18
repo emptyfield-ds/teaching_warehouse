@@ -66,7 +66,7 @@ copy_qmd_template("your_turn_5.qmd")
 
 2.  *At the end of the code chunk, include this code: `fig1a + fig1b` . (Here, we're using the patchwork library, which allows you to join ggplots side by side with `+`).*
 
-3.  *In "fig-one", add a chunk option: `#| fig-cap: "A1c and diabetes status by WH ratio"` . Then, where it says "\_\_\_\_\_", add* \@fig-one
+3.  *In "fig-one", add a chunk option: `#| fig-cap: "A1c and diabetes status by WH ratio"` . Then, where it says "\_\_\_\_\_" in the text after the code chunk, add* \@fig-one (**\<-** don't copy and paste this because it's escaped to render correctly in visual mode).
 
 4.  *In "fig-one", change `eval` to `true` and re-render*
 
