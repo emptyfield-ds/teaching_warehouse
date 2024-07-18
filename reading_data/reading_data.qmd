@@ -107,7 +107,7 @@ a tibble **is** a data frame
 
 . . .
 
-It's common to use codes for **missing values** (-99, 8888)
+It's common to use codes for **missing values** (-99, 9999)
 
 . . .
 

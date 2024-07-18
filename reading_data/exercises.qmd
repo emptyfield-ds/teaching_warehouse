@@ -84,7 +84,7 @@ tibble is a core member of the tidyverse. It is loaded every time you call `libr
 
 ## Missing values
 
-It's very common to demarcate missing values with some code, like "-99" or "8888". The `na` option will replace such values with `NA`, the R object type for missing values.
+It's very common to demarcate missing values with some code, like "-99" or "9999". The `na` option will replace such values with `NA`, the R object type for missing values.
 
 ```{r}
 #| eval: false
