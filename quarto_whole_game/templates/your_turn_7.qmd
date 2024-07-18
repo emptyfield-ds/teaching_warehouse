@@ -21,7 +21,7 @@ library(labelled)
 ```{r}
 #| label: prep-data
 #| include: false
-diabetes <- read_csv("../diabetes-buckingham.csv") |> 
+diabetes <- read_csv("diabetes-buckingham.csv") |> 
   mutate(diabetic = ifelse(glyhb >= 6.5, "Diabetic", "Healthy"))
 
 description <- list()
