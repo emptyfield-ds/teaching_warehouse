@@ -17,14 +17,7 @@ options(styler.save_after_styling = TRUE)
 
 ## Playing the whole game
 
-We're now going to put these tools together to import and clean a data set, explore and model the data, and present the results. Our end goal is to create a model that predicts survival in passengers who were on the Titanic. When you're done, knit the results. Try to clean up results so the document works well as a report. 
-
-## A few useful tricks to make your report look nice:
-
-* use `knitr::kable()` to render data frames into a nice-looking table. See `?knitr::kable()` for information on rounding digits, column and row names, and more.
-* read any messages and warning you get. If you don't think they are important, use `warning = FALSE` and `message = FALSE` in the chunk header. Alternatively, set global chunk options in the `setup` chunk above.
-* set your figures to be a higher resolution. You may also want to change their height and width. These are all chunk options (which you can set in each figure-producing chunk individually or globally above). Try `dpi = 300` for resolution. `fig.height` and `fig.width` control height and width (in inches).
-* try adding themes to your plots
+We're now going to put these tools together to import and clean a data set, explore and model the data, and present the results. Our end goal is to create a model that predicts survival in passengers who were on the Titanic. When you're done, render the results.
 
 ## Import and clean the data
 
@@ -116,12 +109,13 @@ The main functions for mice are `mice()`, which imputes the data, and `complete(
 
 1. Use dplyr to send the following variables to `mice()`: age, pclass, sex, sibsp, parch, embarked, and title.
 2. Save the imputed data as `imputed_titanic`. 
+3. This chunk can take a while to run. Set the code chunk option `cache: true` for this one. `cache` saves the results so you don't need to keep re-rendering the document. 
 
 We'll save the imputed variables to the data as `mice_age` and `mice_embarked`, but you don't need to change that code.
 
-This chunk can take a while to run. Set the code chunk option `cache = TRUE` for this one. `cache` saves the results so you don't need to keep re-knitting the document.
 
 ```{r}
+#| cache: _____
 _______ <- titanic |> 
   ______ ___
   # remove labels because mice doesn't like them
