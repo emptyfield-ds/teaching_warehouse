@@ -9,7 +9,6 @@ format: html
 #| message: false
 library(tidyverse)
 library(broom)
-library(ggfortify)
 options(styler.save_after_styling = TRUE)
 ```
 
