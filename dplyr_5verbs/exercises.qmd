@@ -134,8 +134,8 @@ gapminder |>
   __________ |> 
   __________ |> 
   ggplot(aes(x = year, y = mean_le, col = continent)) +
-    geom_line() + 
-    scale_color_manual(values = continent_colors)
+  geom_line() + 
+  scale_color_manual(values = continent_colors)
 ```
 
 ***

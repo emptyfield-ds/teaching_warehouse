@@ -70,7 +70,7 @@ Try it with `.resid` vs `.fitted`. How does it look?
 _Bonus_: Add a regression line with geom_smooth(). Remember that with ggplot2, you add functions with `+` and not `|>`
 
 ```{r}
-# notice that here, `data = diabetes`, not `.`. 
+# notice that here, `data = diabetes`, not `_`. 
 # some people don't like to use pipes for a single command
 mod_wh <- lm(glyhb ~ waist_hip + gender + age, data = diabetes)
 
@@ -82,14 +82,11 @@ mod_wh |>
 
 ## Your Turn 5
 
-The `ggfortify` makes it easy to plot model diagnostics. `ggfortify` is not a part of the tidyverse but meant to work well within it. 
+The performance package makes it easy to plot model diagnostics. 
 
-Load the `ggfortify` package and use `autoplot()` on `mod_wh` to plot model diagnostics. 
-
-(If you completed the bonus exercise above, you may notice that the lines are different. The key difference is that `geom_smooth()` above is fitting to the data, while `autoplot()` is drawing the coefficients from the original model.)
+Load the `performance` package and use `check_model()` on `mod_wh` to plot model diagnostics. 
 
 ```{r}
-
 
 ```
 

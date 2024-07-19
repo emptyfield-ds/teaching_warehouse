@@ -21,8 +21,7 @@ diabetes <- read_csv("diabetes.csv")
 ```{r}
 diabetes |> 
   ggplot(aes(waist, hip, color = weight)) + 
-  geom_point() +
-  scale_color_viridis_c()
+  geom_point()
 ```
 
 ## Your Turn 11
@@ -41,6 +40,7 @@ diabetes |>
 ## Your Turn 12
 
 Take a look at the `diamonds` data set from ggplot2. How many rows does it have?
+
 ```{r}
 diamonds
 ```
