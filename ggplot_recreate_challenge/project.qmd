@@ -52,7 +52,7 @@ Use `glimpse()` to view the `ft_excess_deaths` data.
 glimpse(______)
 ```
 
-The skimr package has a function called `skim()`, which is a useful way to take a quick look at your data. Load the skimr package, then call `skim()` on `ft_excess_deaths.`
+The skimr package has a function called `skim()`, which is a useful way to take a quick look at your data. Load the skimr package, then call `skim()` on `ft_excess_deaths`.
 
 ```{r}
 #| label: skimr

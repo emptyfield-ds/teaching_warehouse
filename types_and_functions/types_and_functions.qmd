@@ -126,7 +126,7 @@ seq(from = 1, to = 3, by = .5)
 cols <- c("grey90", "steelblue") 
 
 gapminder |> 
-  mutate(rwanda = ifelse(country == "Rwanda", TRUE, FALSE)) |> 
+  mutate(rwanda = country == "Rwanda") |> 
   ggplot(aes(year, lifeExp, color = rwanda, group = country)) + 
   geom_line() +
   scale_color_manual(values = cols) +  

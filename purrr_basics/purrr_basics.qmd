@@ -279,10 +279,11 @@ diabetes |>
   summarise(
     across(
       starts_with("bp"), 
-      mean, 
+      list(mean = mean), 
       na.rm = TRUE, 
       .names = "{.col}_{.fn}"
-    ))
+    )
+  )
 ```
 
 ##  vectorized functions don't work on lists

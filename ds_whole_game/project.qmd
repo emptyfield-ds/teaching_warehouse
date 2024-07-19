@@ -62,7 +62,7 @@ ______ ___ _______ ___
     title = case_when(
       title %in% c("Mlle", "Ms") ~ "Miss",
       title == "Mme" ~ "Mrs",
-      TRUE ~ title
+      .default = title
     ),
     # make title a factor
     title = factor(title)
@@ -135,7 +135,6 @@ Does imputing age have a big impact on the estimate for its relationship with su
 Are they different?
 
 ```{r}
-
 ______(survived ~ age, data = titanic, family = binomial()) |> 
   ______()
 
@@ -152,7 +151,6 @@ It might also be useful to visualize their distributions.
 3. Color and fill the density plots by the new `key`.
 
 ```{r}
-# 
 titanic |> 
   ______ ___ 
   ______() |> 
@@ -205,7 +203,12 @@ _______ ___ glm(_______, data = titanic, family = binomial)
 survived_model |> 
   _______() |> 
   #  round all numeric variables to 2 digits
-  mutate(across(where(_______), round, digits = 2))
+  mutate(
+    across(
+      where(_______), 
+      \(.x) round(.x, digits = 2)
+    )
+  )
 ```
 
 What's going on with this model? Something looks wrong. Try to fix it. Hint: when variables on the right hand side of the formula are highly correlated with each other (collinear), it can sometimes mess up the model fit. This often shows itself through extremely high standard errors. The solution is usually to remove one of the two.
@@ -243,7 +246,12 @@ model_table <- survived_model2 |>
   filter(term != "(Intercept)") |> 
   ______(term, estimate, _______) |> 
   mutate(______(where(is.numeric), ___)) |>
-  mutate(across(_______(is.numeric), round, digits = 2))
+  mutate(
+    across(
+      _______(is.numeric), 
+      \(.x) round(.x, digits = 2)
+    )
+  )
 
 model_table
 ```
@@ -275,7 +283,7 @@ First, we need to re-tidy `survived_model2` because we got rid of `statistic`. T
 1. Tidy the model
 2. Arrange the data frame using the absolute value of `statistic`. 
 3. Create a new variable called `importance` that is defined by `abs(statistic)`
-4. Plot `term` on the x-axis and `importance` on the y-axis. (Notice that in the final plot we flipped the coordinates with `coord_flip()`, so actually it ends up the reverse of this!)
+4. Plot `importance` on the x-axis and `term` on the y-axis.
 
 ```{r}
 ## Variable importance (abs(statistic))
@@ -289,6 +297,5 @@ _______ |>
     term = fct_inorder(term)
   ) |> 
   ggplot(aes(x = _______, y = _______)) + 
-  geom_col() +
-  coord_flip()
+  geom_col()
 ```

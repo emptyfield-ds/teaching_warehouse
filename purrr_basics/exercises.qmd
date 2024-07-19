@@ -163,7 +163,7 @@ By the way, we can also solve this problem with `group_map()` since `lm()` store
 ```{r}
 gapminder |> 
   group_by(country) |> 
-  group_map(\(.x) lm(lifeExp ~ year, data = .x)) |> 
+  group_map(\(.x, ...) lm(lifeExp ~ year, data = .x)) |>
   map(predict)
 ```
 
