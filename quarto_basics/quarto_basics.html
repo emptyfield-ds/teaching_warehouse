@@ -8,9 +8,9 @@
 <link href="quarto_basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="quarto_basics_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="quarto_basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-99.9.9">
+  <meta name="generator" content="quarto-1.4.358">
 
-  <meta name="dcterms.date" content="2023-03-11">
+  <meta name="dcterms.date" content="2024-07-30">
   <title>Dynamic documents in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="quarto_basics_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="quarto_basics_files/libs/revealjs/dist/theme/quarto.css">
   <link href="quarto_basics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="quarto_basics_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="quarto_basics_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -221,7 +221,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -396,7 +397,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2023-03-11</p>
+  <p class="date">2024-07-30</p>
 </section>
 <section class="slide level2">
 
@@ -637,7 +638,7 @@ _italic_   __bold__</code></pre>
 <p>Supports Jupyter notebooks</p>
 </div>
 <div class="fragment">
-<p>58 <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html">knitr engines</a></p>
+<p>57 <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html">knitr engines</a></p>
 </div>
 </section>
 <section id="insert-code-chunks-with-cmdctrl-altoption-i-or-visual-editor" class="slide level2">
@@ -678,12 +679,12 @@ _italic_   __bold__</code></pre>
 <h3 id="create-a-code-chunk.-you-can-type-it-in-manually-use-the-keyboard-short-cut-cmdctrl-optionalt-i-or-use-the-insert-button-above.-put-the-following-code-in-it">Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the “Insert” button above. Put the following code in it:</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>gapminder <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3"></a>   <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <h3 id="render-the-document">Render the document</h3>
 </section>
 <section id="your-turn-4" class="slide level2">
 <h2><em>Your Turn 4</em></h2>
-<h3 id="add-echo-false-to-the-code-chunk-above-and-re-render.-whats-different-about-this">Add <code>echo: false</code> to the code chunk above and re-render. What’s different about this?</h3>
+<h3 id="add-echo-false-to-the-code-chunk-you-created-and-re-render.-whats-the-difference-in-the-output">Add <code>echo: false</code> to the code chunk you created and re-render. What’s the difference in the output?</h3>
 </section>
 <section id="inline-code" class="slide level2">
 <h2>Inline Code</h2>
@@ -806,19 +807,28 @@ _italic_   __bold__</code></pre>
 <span id="cb7-3"><a href="#cb7-3"></a>params<span class="sc">$</span>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<div class="fragment">
+<p><em>From the Console</em></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="st">"document.qmd"</span>, </span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="at">execute_params =</span> <span class="fu">list</span>(<span class="at">param1 =</span> <span class="fl">0.2</span>, <span class="at">param2 =</span> <span class="fl">0.3</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </section>
 <section id="your-turn-7" class="slide level2">
 <h2><em>Your Turn 7</em></h2>
 <h3 id="change-the-params-option-in-the-yaml-header-to-use-a-different-continent.-re-render.">Change the <code>params</code> option in the YAML header to use a different continent. Re-render.</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> params<span class="sc">$</span>continent) <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country, <span class="at">color =</span> country)) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">geom_line</span>(<span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">theme_minimal</span>(<span class="dv">14</span>) <span class="sc">+</span> </span>
-<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.1</span>))) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>  <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Continent:"</span>, params<span class="sc">$</span>continent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> params<span class="sc">$</span>continent) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">geom_line</span>(<span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="fu">theme_minimal</span>(<span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.1</span>))) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>  <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Continent:"</span>, params<span class="sc">$</span>continent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="bibliographies-and-citations" class="slide level2">
@@ -838,17 +848,17 @@ _italic_   __bold__</code></pre>
 </section>
 <section id="including-bibliography-files-in-yaml" class="slide level2">
 <h2>Including bibliography files in YAML</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1"></a><span class="pp">---</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> file.bib</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> file.csl</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1"></a><span class="pp">---</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> file.bib</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> file.csl</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p><em>the Visual Editor can also manage this for you.</em></p>
 </div>
 </section>
 <section id="your-turn-8" class="slide level2">
 <h2>Your turn 8</h2>
-<h3 id="cite-the-causal-inference-book-in-text-below.-using-the-citation-wizard-find-the-right-citation-under-my-sources-bibliography.">Cite the Causal Inference book in text below. Using the citation wizard, find the right citation under My sources &gt; Bibliography.</h3>
+<h3 id="cite-causal-inference-in-text-below.-using-the-citation-wizard-find-the-right-citation-under-my-sources-bibliography.">Cite Causal Inference in text below. Using the citation wizard, find the right citation under My sources &gt; Bibliography.</h3>
 <h3 id="add-the-american-journal-of-epidemiology-csl-to-the-yaml-using-csl-aje.csl">Add the American Journal of Epidemiology CSL to the YAML using csl: <code>aje.csl</code></h3>
 <h3 id="re-render">Re-render</h3>
 </section>
@@ -867,6 +877,7 @@ _italic_   __bold__</code></pre>
 <h2>Resources</h2>
 <h3 id="quarto-documentation-a-comprehensive-but-friendly-introduction-to-quarto.-written-in-quarto"><a href="https://quarto.org/">Quarto Documentation</a>: A comprehensive but friendly introduction to Quarto. Written in Quarto!</h3>
 <h3 id="r-for-data-science-a-comprehensive-but-friendly-introduction-to-the-tidyverse.-free-online.-written-in-quarto"><a href="https://r4ds.hadley.nz/">R for Data Science</a>: A comprehensive but friendly introduction to the tidyverse. Free online. Written in Quarto!</h3>
+<h3 id="posit-recipes-common-code-patterns-in-r-with-some-comparisons-to-sas"><a href="https://posit.cloud/learn/recipes">Posit Recipes</a>: Common code patterns in R (with some comparisons to SAS)</h3>
 <div class="footer footer-default">
 
 </div>
@@ -897,12 +908,11 @@ _italic_   __bold__</code></pre>
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":false},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":false},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1196,10 +1206,9 @@ _italic_   __bold__</code></pre>
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1209,8 +1218,17 @@ _italic_   __bold__</code></pre>
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

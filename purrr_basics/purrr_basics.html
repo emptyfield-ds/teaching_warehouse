@@ -8,9 +8,9 @@
 <link href="purrr_basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="purrr_basics_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="purrr_basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.280">
+  <meta name="generator" content="quarto-1.4.358">
 
-  <meta name="dcterms.date" content="2023-03-29">
+  <meta name="dcterms.date" content="2024-07-30">
   <title>Functional programming in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="purrr_basics_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="purrr_basics_files/libs/revealjs/dist/theme/quarto.css">
   <link href="purrr_basics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="purrr_basics_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="purrr_basics_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -221,7 +221,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -395,11 +396,11 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2023-03-29</p>
+  <p class="date">2024-07-30</p>
 </section>
 <section id="purrr-a-functional-programming-toolkit-for-r" class="slide level2">
 <h2>purrr: A functional programming toolkit for R</h2>
-<p><img data-src="img/purrr.png" class="absolute quarto-discovered-preview-image" style="top: 60px; right: 0px; width: 140px; "></p>
+<p><img data-src="img/purrr.png" class="absolute" style="top: 60px; right: 0px; width: 140px; "></p>
 <p><br><br><br></p>
 <h3 id="complete-and-consistent-set-of-tools-for-working-with-functions-and-vectors"><em>Complete and consistent set of tools for working with functions and vectors</em></h3>
 </section>
@@ -437,7 +438,7 @@ $num
 $fun
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x1597c1f48&gt;
+&lt;bytecode: 0x149125170&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -534,7 +535,7 @@ UseMethod("mean")
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x1597c1f48&gt;
+&lt;bytecode: 0x149125170&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">identical</span>(mean, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -553,7 +554,7 @@ UseMethod("mean")
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x1597c1f48&gt;
+&lt;bytecode: 0x149125170&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -563,7 +564,7 @@ UseMethod("mean")
 <pre><code>function (x, na.rm = FALSE) 
 sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
     na.rm = na.rm))
-&lt;bytecode: 0x10bca5e10&gt;
+&lt;bytecode: 0x13804f7b0&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 </div>
@@ -616,7 +617,8 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
  8 0.798 Very G… H     SI1      61.7    55   337  4.07  4.11
  9 0.798 Fair    E     VS2      61.7    61   337  3.87  3.78
 10 0.798 Very G… H     VS1      61.7    61   338  4     4.05
-# … with 53,930 more rows, and 1 more variable: z &lt;dbl&gt;</code></pre>
+# ℹ 53,930 more rows
+# ℹ 1 more variable: z &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -643,9 +645,9 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
  8  0.26 Very G… H     SI1      61.9    55   337  4.07  4.11
  9  0.22 Fair    E     VS2      65.1    61   337  3.87  3.78
 10  0.23 Very G… H     VS1      59.4    61   338  4     4.05
-# … with 53,930 more rows, and 5 more variables: z &lt;dbl&gt;,
-#   carat_mean &lt;dbl&gt;, carat_sd &lt;dbl&gt;, depth_mean &lt;dbl&gt;,
-#   depth_sd &lt;dbl&gt;</code></pre>
+# ℹ 53,930 more rows
+# ℹ 5 more variables: z &lt;dbl&gt;, carat_mean &lt;dbl&gt;,
+#   carat_sd &lt;dbl&gt;, depth_mean &lt;dbl&gt;, depth_sd &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -672,7 +674,7 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
  8 Afghanistan Asia      1980.    60.7 7023596.     3532.
  9 Afghanistan Asia      1980.    60.7 7023596.     3532.
 10 Afghanistan Asia      1980.    60.7 7023596.     3532.
-# … with 1,694 more rows</code></pre>
+# ℹ 1,694 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -702,7 +704,7 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
  8     59    170
  9     69    166
 10     63    202
-# … with 393 more rows</code></pre>
+# ℹ 393 more rows</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -723,7 +725,7 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
  8    NA    NA    NA    NA
  9   160    80   128    86
 10   108    72    NA    NA
-# … with 393 more rows</code></pre>
+# ℹ 393 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -743,14 +745,14 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
-  continent lifeExp_med lifeExp_iqr gdpPercap_med gdpPerca…¹
-  &lt;fct&gt;           &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
-1 Africa           47.8       12.0          1192.      1616.
-2 Americas         67.0       13.3          5466.      4402.
-3 Asia             61.8       18.1          2647.      7492.
-4 Europe           72.2        5.88        12082.     13248.
-5 Oceania          73.7        6.35        17983.      8072.
-# … with abbreviated variable name ¹​gdpPercap_iqr</code></pre>
+  continent lifeExp_med lifeExp_iqr gdpPercap_med
+  &lt;fct&gt;           &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+1 Africa           47.8       12.0          1192.
+2 Americas         67.0       13.3          5466.
+3 Asia             61.8       18.1          2647.
+4 Europe           72.2        5.88        12082.
+5 Oceania          73.7        6.35        17983.
+# ℹ 1 more variable: gdpPercap_iqr &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -770,14 +772,14 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
-  continent med_lifeExp iqr_lifeExp med_gdpPercap iqr_gdpP…¹
-  &lt;fct&gt;           &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
-1 Africa           47.8       12.0          1192.      1616.
-2 Americas         67.0       13.3          5466.      4402.
-3 Asia             61.8       18.1          2647.      7492.
-4 Europe           72.2        5.88        12082.     13248.
-5 Oceania          73.7        6.35        17983.      8072.
-# … with abbreviated variable name ¹​iqr_gdpPercap</code></pre>
+  continent med_lifeExp iqr_lifeExp med_gdpPercap
+  &lt;fct&gt;           &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+1 Africa           47.8       12.0          1192.
+2 Americas         67.0       13.3          5466.
+3 Asia             61.8       18.1          2647.
+4 Europe           72.2        5.88        12082.
+5 Oceania          73.7        6.35        17983.
+# ℹ 1 more variable: iqr_gdpPercap &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -794,16 +796,17 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb43-4"><a href="#cb43-4"></a>    <span class="fu">across</span>(</span>
 <span id="cb43-5"><a href="#cb43-5"></a>      <span class="fu">starts_with</span>(<span class="st">"bp"</span>), </span>
-<span id="cb43-6"><a href="#cb43-6"></a>      mean, </span>
+<span id="cb43-6"><a href="#cb43-6"></a>      <span class="fu">list</span>(<span class="at">mean =</span> mean), </span>
 <span id="cb43-7"><a href="#cb43-7"></a>      <span class="at">na.rm =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb43-8"><a href="#cb43-8"></a>      <span class="at">.names =</span> <span class="st">"{.col}_{.fn}"</span></span>
-<span id="cb43-9"><a href="#cb43-9"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-9"><a href="#cb43-9"></a>    )</span>
+<span id="cb43-10"><a href="#cb43-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
-  gender bp.1s_1 bp.1d_1 bp.2s_1 bp.2d_1
-  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 female    136.    82.5    153.    91.8
-2 male      138.    84.5    151.    93.5</code></pre>
+  gender bp.1s_mean bp.1d_mean bp.2s_mean bp.2d_mean
+  &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+1 female       136.       82.5       153.       91.8
+2 male         138.       84.5       151.       93.5</code></pre>
 </div>
 </div>
 </section>
@@ -1368,14 +1371,12 @@ $gdpPercap
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 13
 # Groups:   location [2]
-  location   r.squared adj.r.…¹ sigma stati…²  p.value    df
-  &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
-1 Buckingham     0.252    0.248  38.8    66.4 4.11e-14     1
-2 Louisa         0.204    0.201  39.4    51.7 1.26e-11     1
-# … with 6 more variables: logLik &lt;dbl&gt;, AIC &lt;dbl&gt;,
-#   BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;,
-#   nobs &lt;int&gt;, and abbreviated variable names
-#   ¹​adj.r.squared, ²​statistic</code></pre>
+  location  r.squared adj.r.squared sigma statistic  p.value
+  &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 Buckingh…     0.252         0.248  38.8      66.4 4.11e-14
+2 Louisa        0.204         0.201  39.4      51.7 1.26e-11
+# ℹ 7 more variables: df &lt;dbl&gt;, logLik &lt;dbl&gt;, AIC &lt;dbl&gt;,
+#   BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;, …</code></pre>
 </div>
 </div></section><section id="map2.x-.y-.f" class="slide level2 large">
 <h2><code>map2(.x, .y, .f)</code></h2>
@@ -1643,7 +1644,7 @@ $Algeria
 <span id="cb93-7"><a href="#cb93-7"></a>  ) <span class="sc">+</span> </span>
 <span id="cb93-8"><a href="#cb93-8"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb93-9"><a href="#cb93-9"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span> </span>
-<span id="cb93-10"><a href="#cb93-10"></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent)) <span class="sc">+</span> </span>
+<span id="cb93-10"><a href="#cb93-10"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent) <span class="sc">+</span> </span>
 <span id="cb93-11"><a href="#cb93-11"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
 <span id="cb93-12"><a href="#cb93-12"></a>    </span>
 <span id="cb93-13"><a href="#cb93-13"></a>  <span class="fu">ggsave</span>(</span>
@@ -1738,7 +1739,7 @@ $Algeria
 <h2>Resources</h2>
 <h3 id="jenny-bryans-purrr-tutorial-a-detailed-introduction-to-purrr.-free-online."><a href="https://jennybc.github.io/purrr-tutorial/">Jenny Bryan’s purrr tutorial</a>: A detailed introduction to purrr. Free online.</h3>
 <h3 id="r-for-data-science-2nd-ed.-a-comprehensive-but-friendly-introduction-to-the-tidyverse.-free-online."><a href="https://r4ds.hadley.nz/">R for Data Science, 2nd ed.</a>: A comprehensive but friendly introduction to the tidyverse. Free online.</h3>
-<h3 id="posit-primers-free-interactive-courses-in-the-tidyverse"><a href="https://posit.cloud/learn/primers">Posit Primers</a>: Free interactive courses in the Tidyverse</h3>
+<h3 id="posit-recipes-common-code-patterns-in-r-with-some-comparisons-to-sas"><a href="https://posit.cloud/learn/recipes">Posit Recipes</a>: Common code patterns in R (with some comparisons to SAS)</h3>
 <div class="footer footer-default">
 
 </div>
@@ -1769,7 +1770,6 @@ $Algeria
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -2068,10 +2068,9 @@ $Algeria
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -2081,8 +2080,17 @@ $Algeria
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
