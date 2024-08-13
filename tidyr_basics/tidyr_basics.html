@@ -8,9 +8,9 @@
 <link href="tidyr_basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="tidyr_basics_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="tidyr_basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.358">
+  <meta name="generator" content="quarto-1.5.56">
 
-  <meta name="dcterms.date" content="2024-07-30">
+  <meta name="dcterms.date" content="2024-08-13">
   <title>Tidying Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -42,7 +42,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -70,7 +70,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -84,7 +84,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -397,12 +397,13 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2024-07-30</p>
+  <p class="date">2024-08-13</p>
 </section>
 <section id="tidyr" class="slide level2">
 <h2><strong>tidyr</strong></h2>
 <!-- 
 TODO: Update the art slide when Allison makes a pivot version
+
 
 ::: {.cell layout-align="center"}
 ::: {.cell-output-display}
@@ -410,16 +411,20 @@ TODO: Update the art slide when Allison makes a pivot version
 :::
 :::
 
+
 .pull-right[Art by Allison Horst]
 -->
 <p><img data-src="img/tidyr.png" class="absolute" style="top: 0px; right: 0px; width: 140px; "></p>
-<h3 id="functions-for-tidying-data.">Functions for tidying data.</h3>
-<h3 id="what-is-tidy-data">What is tidy data?</h3>
-<p>. . .</p>
+<div class="large">
+<p>Functions for tidying data.</p>
+<p>What is tidy data?</p>
+</div>
+<div class="fragment">
 <div class="extra-large">
 <blockquote>
 <p>“Tidy datasets are all alike, but every messy dataset is messy in its own way.” — Hadley Wickham</p>
 </blockquote>
+</div>
 </div>
 </section>
 <section id="tidy-data" class="slide level2 large">
@@ -438,30 +443,30 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="pivot_longer" class="slide level2">
 <h2><code>pivot_longer()</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">pivot_longer</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>NAMES TO<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VALUES TO<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLES<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">pivot_longer</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>NAMES TO<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VALUES TO<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLES<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lord-of-the-rings" class="slide level2">
 <h2>Lord of the Rings</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>lotr <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>                         <span class="sc">~</span>film,    <span class="sc">~</span>race, <span class="sc">~</span>female, <span class="sc">~</span>male,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="st">"The Fellowship Of The Ring"</span>,    <span class="st">"Elf"</span>,   <span class="dv">1229</span>L,  <span class="dv">971</span>L,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="st">"The Fellowship Of The Ring"</span>, <span class="st">"Hobbit"</span>,     <span class="dv">14</span>L, <span class="dv">3644</span>L,</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="st">"The Fellowship Of The Ring"</span>,    <span class="st">"Man"</span>,      <span class="dv">0</span>L, <span class="dv">1995</span>L,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>              <span class="st">"The Two Towers"</span>,    <span class="st">"Elf"</span>,    <span class="dv">331</span>L,  <span class="dv">513</span>L,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>              <span class="st">"The Two Towers"</span>, <span class="st">"Hobbit"</span>,      <span class="dv">0</span>L, <span class="dv">2463</span>L,</span>
-<span id="cb2-8"><a href="#cb2-8"></a>              <span class="st">"The Two Towers"</span>,    <span class="st">"Man"</span>,    <span class="dv">401</span>L, <span class="dv">3589</span>L,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>      <span class="st">"The Return Of The King"</span>,    <span class="st">"Elf"</span>,    <span class="dv">183</span>L,  <span class="dv">510</span>L,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>      <span class="st">"The Return Of The King"</span>, <span class="st">"Hobbit"</span>,      <span class="dv">2</span>L, <span class="dv">2673</span>L,</span>
-<span id="cb2-11"><a href="#cb2-11"></a>      <span class="st">"The Return Of The King"</span>,    <span class="st">"Man"</span>,    <span class="dv">268</span>L, <span class="dv">2459</span>L</span>
-<span id="cb2-12"><a href="#cb2-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>lotr <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb2-2"><a href=""></a>                         <span class="sc">~</span>film,    <span class="sc">~</span>race, <span class="sc">~</span>female, <span class="sc">~</span>male,</span>
+<span id="cb2-3"><a href=""></a>  <span class="st">"The Fellowship Of The Ring"</span>,    <span class="st">"Elf"</span>,   <span class="dv">1229</span>L,  <span class="dv">971</span>L,</span>
+<span id="cb2-4"><a href=""></a>  <span class="st">"The Fellowship Of The Ring"</span>, <span class="st">"Hobbit"</span>,     <span class="dv">14</span>L, <span class="dv">3644</span>L,</span>
+<span id="cb2-5"><a href=""></a>  <span class="st">"The Fellowship Of The Ring"</span>,    <span class="st">"Man"</span>,      <span class="dv">0</span>L, <span class="dv">1995</span>L,</span>
+<span id="cb2-6"><a href=""></a>              <span class="st">"The Two Towers"</span>,    <span class="st">"Elf"</span>,    <span class="dv">331</span>L,  <span class="dv">513</span>L,</span>
+<span id="cb2-7"><a href=""></a>              <span class="st">"The Two Towers"</span>, <span class="st">"Hobbit"</span>,      <span class="dv">0</span>L, <span class="dv">2463</span>L,</span>
+<span id="cb2-8"><a href=""></a>              <span class="st">"The Two Towers"</span>,    <span class="st">"Man"</span>,    <span class="dv">401</span>L, <span class="dv">3589</span>L,</span>
+<span id="cb2-9"><a href=""></a>      <span class="st">"The Return Of The King"</span>,    <span class="st">"Elf"</span>,    <span class="dv">183</span>L,  <span class="dv">510</span>L,</span>
+<span id="cb2-10"><a href=""></a>      <span class="st">"The Return Of The King"</span>, <span class="st">"Hobbit"</span>,      <span class="dv">2</span>L, <span class="dv">2673</span>L,</span>
+<span id="cb2-11"><a href=""></a>      <span class="st">"The Return Of The King"</span>,    <span class="st">"Man"</span>,    <span class="dv">268</span>L, <span class="dv">2459</span>L</span>
+<span id="cb2-12"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lord-of-the-rings-1" class="slide level2">
 <h2>Lord of the Rings</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>lotr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>lotr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 4
   film                       race   female  male
@@ -484,7 +489,7 @@ TODO: Update the art slide when Allison makes a pivot version
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/new_data_alert_lotr.png" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="img/new_data_alert_lotr.png" class="quarto-figure quarto-figure-center" style="width:100.0%;height:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -493,12 +498,12 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="pivot_longer-1" class="slide level2">
 <h2><code>pivot_longer()</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|2-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>lotr <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb5-3"><a href="#cb5-3"></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>, </span>
-<span id="cb5-4"><a href="#cb5-4"></a>    <span class="at">values_to =</span> <span class="st">"words"</span>, </span>
-<span id="cb5-5"><a href="#cb5-5"></a>    <span class="at">cols =</span> female<span class="sc">:</span>male </span>
-<span id="cb5-6"><a href="#cb5-6"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|2-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>lotr <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb5-3"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>, </span>
+<span id="cb5-4"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"words"</span>, </span>
+<span id="cb5-5"><a href=""></a>    <span class="at">cols =</span> female<span class="sc">:</span>male </span>
+<span id="cb5-6"><a href=""></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -532,7 +537,7 @@ TODO: Update the art slide when Allison makes a pivot version
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/new_data_alert_tidyr.png" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="img/new_data_alert_tidyr.png" class="quarto-figure quarto-figure-center" style="width:100.0%;height:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -545,12 +550,12 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="your-turn-1-1" class="slide level2">
 <h2><em>Your Turn 1</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>table4a <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>    <span class="at">values_to =</span> <span class="st">"cases"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5"></a>    <span class="at">cols =</span> <span class="sc">-</span>country</span>
-<span id="cb7-6"><a href="#cb7-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>table4a <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb7-3"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb7-4"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"cases"</span>,</span>
+<span id="cb7-5"><a href=""></a>    <span class="at">cols =</span> <span class="sc">-</span>country</span>
+<span id="cb7-6"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   country     year   cases
@@ -567,24 +572,24 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="pivot_wider" class="slide level2">
 <h2><code>pivot_wider()</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">pivot_wider</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>NAMES FROM<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VALUES FROM<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">pivot_wider</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>NAMES FROM<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VALUES FROM<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
-<img data-src="img/tidyr-longer-wider.gif" style="width:65.0%" class="r-stretch quarto-figure-center"><p>Animation by Mara Averick</p>
+<img data-src="img/tidyr-longer-wider.gif" class="quarto-figure quarto-figure-center r-stretch" style="width:65.0%"><p>Animation by Mara Averick</p>
 </section>
 <section id="pivot_wider-1" class="slide level2">
 <h2><code>pivot_wider()</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|2-6|7-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lotr <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb10-3"><a href="#cb10-3"></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>, </span>
-<span id="cb10-4"><a href="#cb10-4"></a>    <span class="at">values_to =</span> <span class="st">"words"</span>, </span>
-<span id="cb10-5"><a href="#cb10-5"></a>    <span class="at">cols =</span> female<span class="sc">:</span>male </span>
-<span id="cb10-6"><a href="#cb10-6"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb10-8"><a href="#cb10-8"></a>    <span class="at">names_from =</span> race,</span>
-<span id="cb10-9"><a href="#cb10-9"></a>    <span class="at">values_from =</span> words</span>
-<span id="cb10-10"><a href="#cb10-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|2-6|7-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>lotr <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb10-3"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>, </span>
+<span id="cb10-4"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"words"</span>, </span>
+<span id="cb10-5"><a href=""></a>    <span class="at">cols =</span> female<span class="sc">:</span>male </span>
+<span id="cb10-6"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href=""></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb10-8"><a href=""></a>    <span class="at">names_from =</span> race,</span>
+<span id="cb10-9"><a href=""></a>    <span class="at">values_from =</span> words</span>
+<span id="cb10-10"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -606,18 +611,18 @@ TODO: Update the art slide when Allison makes a pivot version
 <h3 id="create-a-new-variable-called-prevalence-that-divides-cases-by-population-multiplied-by-100000.">Create a new variable called <code>prevalence</code> that divides <code>cases</code> by <code>population</code> multiplied by 100000.</h3>
 <h3 id="pass-the-data-frame-to-a-ggplot.-make-a-scatter-plot-with-year-on-the-x-axis-and-prevalence-on-the-y-axis.-set-the-color-aesthetic-aes-to-country.-use-size-2-for-the-points.-add-a-line-geom.">Pass the data frame to a ggplot. Make a scatter plot with <code>year</code> on the x axis and <code>prevalence</code> on the y axis. Set the color aesthetic (<code>aes()</code>) to <code>country</code>. Use <code>size = 2</code> for the points. Add a line geom.</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-turn-2-1" class="slide level2">
 <h2><em>Your Turn 2</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="3-4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>table2 <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb13-3"><a href="#cb13-3"></a>    <span class="at">names_from =</span> type, </span>
-<span id="cb13-4"><a href="#cb13-4"></a>    <span class="at">values_from =</span> count </span>
-<span id="cb13-5"><a href="#cb13-5"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">mutate</span>(<span class="at">prevalence =</span> (cases <span class="sc">/</span> population) <span class="sc">*</span> <span class="dv">100000</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="3-4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>table2 <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href=""></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb13-3"><a href=""></a>    <span class="at">names_from =</span> type, </span>
+<span id="cb13-4"><a href=""></a>    <span class="at">values_from =</span> count </span>
+<span id="cb13-5"><a href=""></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb13-6"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">prevalence =</span> (cases <span class="sc">/</span> population) <span class="sc">*</span> <span class="dv">100000</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   country      year  cases population prevalence
@@ -634,16 +639,16 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="your-turn-2-2" class="slide level2">
 <h2><em>Your Turn 2</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="7-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>table2 <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb15-3"><a href="#cb15-3"></a>    <span class="at">names_from =</span> type,</span>
-<span id="cb15-4"><a href="#cb15-4"></a>    <span class="at">values_from =</span> count</span>
-<span id="cb15-5"><a href="#cb15-5"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">mutate</span>(<span class="at">prevalence =</span> (cases <span class="sc">/</span> population) <span class="sc">*</span> <span class="dv">100000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prevalence, <span class="at">color =</span> country)) <span class="sc">+</span> </span>
-<span id="cb15-8"><a href="#cb15-8"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb15-9"><a href="#cb15-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb15-10"><a href="#cb15-10"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1999</span>L, <span class="dv">2000</span>L)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="7-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>table2 <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href=""></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb15-3"><a href=""></a>    <span class="at">names_from =</span> type,</span>
+<span id="cb15-4"><a href=""></a>    <span class="at">values_from =</span> count</span>
+<span id="cb15-5"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">prevalence =</span> (cases <span class="sc">/</span> population) <span class="sc">*</span> <span class="dv">100000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prevalence, <span class="at">color =</span> country)) <span class="sc">+</span> </span>
+<span id="cb15-8"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb15-9"><a href=""></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb15-10"><a href=""></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1999</span>L, <span class="dv">2000</span>L)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -651,7 +656,7 @@ TODO: Update the art slide when Allison makes a pivot version
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="tidyr_basics_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:80.0%"></p>
+<p><img data-src="tidyr_basics_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
@@ -659,19 +664,19 @@ TODO: Update the art slide when Allison makes a pivot version
 <h2><em>Your Turn 3</em></h2>
 <h3 id="pivot-the-5th-through-60th-columns-of-who-so-that-the-names-of-the-columns-go-into-a-new-variable-called-codes-and-the-values-go-into-a-new-variable-called-n.-then-select-just-the-country-year-codes-and-n-variables.">Pivot the 5th through 60th columns of <code>who</code> so that the names of the columns go into a new variable called <code>codes</code> and the values go into a new variable called <code>n</code>. Then select just the <code>country</code>, <code>year</code>, <code>codes</code> and <code>n</code> variables.</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>who</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>who</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-turn-3-1" class="slide level2">
 <h2><em>Your Turn 3</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>who <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb17-3"><a href="#cb17-3"></a>    <span class="at">names_to =</span> <span class="st">"codes"</span>, </span>
-<span id="cb17-4"><a href="#cb17-4"></a>    <span class="at">values_to =</span> <span class="st">"n"</span>, </span>
-<span id="cb17-5"><a href="#cb17-5"></a>    <span class="at">cols =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">60</span> </span>
-<span id="cb17-6"><a href="#cb17-6"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="fu">select</span>(country, year, codes, n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>who <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb17-3"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"codes"</span>, </span>
+<span id="cb17-4"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"n"</span>, </span>
+<span id="cb17-5"><a href=""></a>    <span class="at">cols =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">60</span> </span>
+<span id="cb17-6"><a href=""></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb17-7"><a href=""></a>  <span class="fu">select</span>(country, year, codes, n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -695,38 +700,38 @@ TODO: Update the art slide when Allison makes a pivot version
 </div></section><section id="separateunite" class="slide level2">
 <h2><code>separate()</code>/<code>unite()</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">separate</span>(</span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, </span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="sc">&lt;</span>VARIABLE<span class="sc">&gt;</span>, </span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"&lt;VARIABLE1&gt;"</span>, <span class="st">"&lt;VARIABLE2&gt;"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5"></a>)</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="fu">unite</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLES<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">separate</span>(</span>
+<span id="cb19-2"><a href=""></a>  <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, </span>
+<span id="cb19-3"><a href=""></a>  <span class="sc">&lt;</span>VARIABLE<span class="sc">&gt;</span>, </span>
+<span id="cb19-4"><a href=""></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"&lt;VARIABLE1&gt;"</span>, <span class="st">"&lt;VARIABLE2&gt;"</span>)</span>
+<span id="cb19-5"><a href=""></a>)</span>
+<span id="cb19-6"><a href=""></a></span>
+<span id="cb19-7"><a href=""></a><span class="fu">unite</span>(<span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="sc">&lt;</span>VARIABLES<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-turn-4" class="slide level2">
 <h2><em>Your Turn 4</em></h2>
 <h3 id="use-the-cases-data-below.-separate-the-sex_age-column-into-sex-and-age-columns.">Use the <code>cases</code> data below. Separate the <code>sex_age</code> column into <code>sex</code> and <code>age</code> columns.</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>   <span class="sc">~</span>id,     <span class="sc">~</span>sex_age,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>   <span class="st">"1"</span>,    <span class="st">"male_56"</span>,</span>
-<span id="cb20-4"><a href="#cb20-4"></a>   <span class="st">"2"</span>,  <span class="st">"female_77"</span>,    </span>
-<span id="cb20-5"><a href="#cb20-5"></a>   <span class="st">"3"</span>,  <span class="st">"female_49"</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a>)</span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="fu">separate</span>(_______, _______, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"_______"</span>, <span class="st">"_______"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb20-2"><a href=""></a>   <span class="sc">~</span>id,     <span class="sc">~</span>sex_age,</span>
+<span id="cb20-3"><a href=""></a>   <span class="st">"1"</span>,    <span class="st">"male_56"</span>,</span>
+<span id="cb20-4"><a href=""></a>   <span class="st">"2"</span>,  <span class="st">"female_77"</span>,    </span>
+<span id="cb20-5"><a href=""></a>   <span class="st">"3"</span>,  <span class="st">"female_49"</span></span>
+<span id="cb20-6"><a href=""></a>)</span>
+<span id="cb20-7"><a href=""></a><span class="fu">separate</span>(_______, _______, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"_______"</span>, <span class="st">"_______"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-turn-4-1" class="slide level2">
 <h2><em>Your Turn 4</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb21-2"><a href="#cb21-2"></a>   <span class="sc">~</span>id,     <span class="sc">~</span>sex_age,</span>
-<span id="cb21-3"><a href="#cb21-3"></a>   <span class="st">"1"</span>,    <span class="st">"male_56"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4"></a>   <span class="st">"2"</span>,  <span class="st">"female_77"</span>,    </span>
-<span id="cb21-5"><a href="#cb21-5"></a>   <span class="st">"3"</span>,  <span class="st">"female_49"</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a>)</span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="fu">separate</span>(cases, sex_age, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"age"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb21-2"><a href=""></a>   <span class="sc">~</span>id,     <span class="sc">~</span>sex_age,</span>
+<span id="cb21-3"><a href=""></a>   <span class="st">"1"</span>,    <span class="st">"male_56"</span>,</span>
+<span id="cb21-4"><a href=""></a>   <span class="st">"2"</span>,  <span class="st">"female_77"</span>,    </span>
+<span id="cb21-5"><a href=""></a>   <span class="st">"3"</span>,  <span class="st">"female_49"</span></span>
+<span id="cb21-6"><a href=""></a>)</span>
+<span id="cb21-7"><a href=""></a><span class="fu">separate</span>(cases, sex_age, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"age"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -742,18 +747,18 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="your-turn-4-2" class="slide level2">
 <h2><em>Your Turn 4</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="7-12|11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb23-2"><a href="#cb23-2"></a>   <span class="sc">~</span>id,     <span class="sc">~</span>sex_age,</span>
-<span id="cb23-3"><a href="#cb23-3"></a>   <span class="st">"1"</span>,    <span class="st">"male_56"</span>,</span>
-<span id="cb23-4"><a href="#cb23-4"></a>   <span class="st">"2"</span>,  <span class="st">"female_77"</span>,    </span>
-<span id="cb23-5"><a href="#cb23-5"></a>   <span class="st">"3"</span>,  <span class="st">"female_49"</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a>)</span>
-<span id="cb23-7"><a href="#cb23-7"></a><span class="fu">separate</span>(</span>
-<span id="cb23-8"><a href="#cb23-8"></a>  cases, </span>
-<span id="cb23-9"><a href="#cb23-9"></a>  sex_age, </span>
-<span id="cb23-10"><a href="#cb23-10"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"age"</span>), </span>
-<span id="cb23-11"><a href="#cb23-11"></a>  <span class="at">convert =</span> <span class="cn">TRUE</span></span>
-<span id="cb23-12"><a href="#cb23-12"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="7-12|11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb23-2"><a href=""></a>   <span class="sc">~</span>id,     <span class="sc">~</span>sex_age,</span>
+<span id="cb23-3"><a href=""></a>   <span class="st">"1"</span>,    <span class="st">"male_56"</span>,</span>
+<span id="cb23-4"><a href=""></a>   <span class="st">"2"</span>,  <span class="st">"female_77"</span>,    </span>
+<span id="cb23-5"><a href=""></a>   <span class="st">"3"</span>,  <span class="st">"female_49"</span></span>
+<span id="cb23-6"><a href=""></a>)</span>
+<span id="cb23-7"><a href=""></a><span class="fu">separate</span>(</span>
+<span id="cb23-8"><a href=""></a>  cases, </span>
+<span id="cb23-9"><a href=""></a>  sex_age, </span>
+<span id="cb23-10"><a href=""></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"age"</span>), </span>
+<span id="cb23-11"><a href=""></a>  <span class="at">convert =</span> <span class="cn">TRUE</span></span>
+<span id="cb23-12"><a href=""></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -778,18 +783,18 @@ TODO: Update the art slide when Allison makes a pivot version
 <section id="your-turn-5-no-solution" class="slide level2">
 <h2><em>Your Turn 5: No solution</em> 😈</h2>
 
-<img data-src="tidyr_basics_files/figure-revealjs/unnamed-chunk-22-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="tidyr_basics_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
 <section id="other-neat-tidyr-tools" class="slide level2">
 <h2>Other neat tidyr tools</h2>
 <h3 id="uncounting-frequency-tables">Uncounting frequency tables</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25" data-code-line-numbers="|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>lotr <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb25-3"><a href="#cb25-3"></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>,</span>
-<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">values_to =</span> <span class="st">"count"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">cols =</span> <span class="fu">c</span>(female, male)</span>
-<span id="cb25-6"><a href="#cb25-6"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb25-7"><a href="#cb25-7"></a>  <span class="fu">uncount</span>(count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25" data-code-line-numbers="|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>lotr <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb25-3"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>,</span>
+<span id="cb25-4"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"count"</span>,</span>
+<span id="cb25-5"><a href=""></a>    <span class="at">cols =</span> <span class="fu">c</span>(female, male)</span>
+<span id="cb25-6"><a href=""></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb25-7"><a href=""></a>  <span class="fu">uncount</span>(count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -826,8 +831,10 @@ TODO: Update the art slide when Allison makes a pivot version
 <h2>Resources</h2>
 <h3 id="r-for-data-science-a-comprehensive-but-friendly-introduction-to-the-tidyverse.-free-online."><a href="https://r4ds.hadley.nz/">R for Data Science</a>: A comprehensive but friendly introduction to the tidyverse. Free online.</h3>
 <h3 id="posit-recipes-common-code-patterns-in-r-with-some-comparisons-to-sas"><a href="https://posit.cloud/learn/recipes">Posit Recipes</a>: Common code patterns in R (with some comparisons to SAS)</h3>
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
@@ -1110,18 +1117,7 @@ TODO: Update the art slide when Allison makes a pivot version
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1153,7 +1149,47 @@ TODO: Update the art slide when Allison makes a pivot version
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -1190,7 +1226,11 @@ TODO: Update the art slide when Allison makes a pivot version
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

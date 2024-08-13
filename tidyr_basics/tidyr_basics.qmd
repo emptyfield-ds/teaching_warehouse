@@ -31,8 +31,11 @@ knitr::include_graphics("img/tidyr_spread_gather.png")
 
 ![](img/tidyr.png){.absolute top=0 right=0 width=140}
 
-### Functions for tidying data. 
-### What is tidy data?
+:::{.large}
+Functions for tidying data. 
+
+What is tidy data?
+:::
 
 . . . 
 
