@@ -68,7 +68,9 @@ knitr::include_graphics("img/function_call_assignment.png")
 
 ### Find `diabetes.csv` on your computer. Then read it into an object. Then view the results.
 
-. . .
+## *Your Turn 1*
+
+### Find `diabetes.csv` on your computer. Then read it into an object. Then view the results.
 
 ```{r}
 diabetes <- read_csv("diabetes.csv")
@@ -277,7 +279,9 @@ write_csv(diabetes, file = "diabetes-clean.csv")
 
 ### R has a few data file types, such as RDS and .Rdata. Save `diabetes` as `"diabetes.Rds"`.
 
-. . .
+## *Your Turn 4*
+
+### R has a few data file types, such as RDS and .Rdata. Save `diabetes` as `"diabetes.Rds"`.
 
 ```{r}
 #| eval: false
