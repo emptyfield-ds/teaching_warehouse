@@ -14,6 +14,8 @@ options(
 )
 library(tidyverse)
 library(datasauRus)
+# confirm hexbin installed for `geom_hex()`
+library(hexbin)
 diabetes <- read_csv("diabetes.csv")
 ```
 
