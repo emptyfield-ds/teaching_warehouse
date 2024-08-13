@@ -236,7 +236,13 @@ filter(diamonds, cut == "Ideal", carat > 3)
 ### All of the rows for El Salvador  
 ### All of the rows that have a missing value for `year`  (no need to edit this code)
 
-. . .
+## *Your turn 2*
+
+### Show:
+
+### All of the rows where `pop` is greater than or equal to 100000  
+### All of the rows for El Salvador  
+### All of the rows that have a missing value for `year`  (no need to edit this code)
 
 ```{r}
 #| label: filter-your-turn-02-output

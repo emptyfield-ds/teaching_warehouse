@@ -23,7 +23,7 @@ library(gapminder)
 ### `c(TRUE, FALSE, TRUE, TRUE)`
 ### `c("red", "blue")`
 
-## Vectors {.large}
+## Vectors 
 
 . . .
 
@@ -33,19 +33,25 @@ library(gapminder)
 
 *Vectors have a length*
 
-. . .
-
-`length(c("blue", "red"))`
+```{r}
+length(c("blue", "red"))
+```
 
 . . .
 
 *Some vectors have names.*
 
-`names(c("x" = 1, "y" = 1))`
+```{r}
+names(c("x" = 1, "y" = 1))
+```
 
 . . .
 
-*Vectors have types*
+*Vectors have types and classes*
+
+```{r}
+class(c("blue", "red"))
+```
 
 ## Types {.large}
 
@@ -73,7 +79,7 @@ library(gapminder)
 
 *Dates and times*
 
-## Packages to work with types {.large}
+## Packages to work with types and classes {.large}
 
 . . .
 
@@ -385,7 +391,7 @@ knitr::include_graphics("img/writing_functions_inputs_output.png")
 ### Create a function called `sim_data` that doesn't take any arguments.
 ### In the function body, we'll return a `tibble`. 
 ### For `x`, have `rnorm()` return 50 random numbers.  
-### For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector. for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you account for that.
+### For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you account for that.
 ### For `age()` use the `sample()` function to sample 50 numbers from 25 to 50 with replacement.
 ### Call `sim_data()`
 
@@ -442,7 +448,7 @@ evalue(3.9)
 ```{r}
 #| eval: false
 if (PREDICATE) {
-  true_result
+  do_something()
 }
 ```
 
@@ -451,9 +457,9 @@ if (PREDICATE) {
 ```{r}
 #| eval: false
 if (PREDICATE) {
-  true_result
+  do_something()
 } else {
-  default_result
+  do_something_for_everything_else()
 }
 ```
 
@@ -462,15 +468,43 @@ if (PREDICATE) {
 ```{r}
 #| eval: false
 if (PREDICATE) {
-  true_result
+  do_something()
 } else if (ANOTHER_PREDICATE) {
-  true_result
+  do_something_else()
 } else  {
-  default_result
+  do_something_for_everything_else()
 }
 ```
 
-## If-else with vectors
+## Make a prediction
+
+What will `y` be?
+
+```{r}
+#| output-location: fragment
+x <- 99
+if (x < 10) {
+  y <- "a"
+} else if (is.na(x)) {
+  y <- NA
+} else  {
+  y <- "z"
+}
+
+y
+```
+
+## If statements are for a single `TRUE` or `FALSE`
+
+```{r}
+#| error: true
+x <- rnorm(100)
+if (x > 0) {
+  x + 1
+}
+```
+
+## Conditional values with vectors
 
 ```{r}
 #| eval: false
@@ -481,10 +515,24 @@ dplyr::case_when(
   PREDICATE_VECTOR ~ next_true_result, 
   .default = default_result
 )
-switch(
-  x,
-  value1 = result1,
-  value2 = result2
+# also see `switch()`
+```
+
+
+## Conditional values with vectors
+
+```{r}
+x <- -2:2
+ifelse(x >= 0, "positive", "negative")
+```
+
+## If-else with vectors
+
+```{r}
+case_when(
+  x > 0 ~ "positive", 
+  x == 0 ~ "zero",
+  .default = "negative"
 )
 ```
 
@@ -619,12 +667,12 @@ select_gapminder <- function(...) {
 select_gapminder(pop, year)
 ```
 
-## *Your Turn 8*
+## *Your Turn 8* {.small}
 
 ### Use `...` to pass the arguments of your function, `filter_summarize()`, to `filter()`.
 ### In summarize, get the n and mean life expectancy for the data set
 ### Check `filter_summarize()` with `year == 1952`. 
-### Try `filter_summarize()` again for 2002, but also filter countries that have "and" in the country name. Use `str_detect()` from the stringr package.
+### Try `filter_summarize()` again for 2002, but also filter countries that have the word " and " in the country name (e.g., it should detect "Trinidad and Tobago" but not "Iceland"). Use `str_detect()` from the stringr package.
 
 ## *Your Turn 8*
 
@@ -694,14 +742,17 @@ plot_hist(lifeExp)
 ## *Your turn 9*
 
 ```{r}
-#| code-line-numbers: "|1,3|1,4,7"
+#| code-line-numbers: "|1,3|1,4,8"
 top_scatter_plot <- function(variable, .year) {
   gapminder |>
     filter(year == .year) |>
     arrange(desc({{ variable }})) |> 
     #  take the 10 lowest values
     tail(10) |> 
-    ggplot(aes(x = {{ variable }}, y = fct_inorder(factor(country)))) +
+    ggplot(aes(
+      x = {{ variable }}, 
+      y = fct_inorder(factor(country))
+    )) +
     geom_point() +
     theme_minimal()
 }

@@ -13,6 +13,11 @@ library(GGally)
 library(mice)
 library(broom)
 options(styler.save_after_styling = TRUE)
+
+# set a seed for reproducibility
+# here, this will give us the same results
+# for the multiple imputation algorithm we'll use
+set.seed(1234)
 ```
 
 ## Playing the whole game
@@ -28,13 +33,18 @@ The Titanic data is in the folder in a Stata file (.dta). Load the data, saving 
 
 ```
 
-Let's look at how many people survived. `survived` and `pclass` are stored as integers, so let's first transform them to factors (see the chapter on factors in [R for Data Science](https://r4ds.had.co.nz/factors.html)). Then, summarize how many people survived and how many died. You can use dplyr to group by survival and then summarize with `n()` or use the `table()` function on `titanic$survived`. 
+Let's look at how many people survived. `survived` is stored as 0 (died) and 1 (survived), so let's first transform them to factors (see the chapter on factors in [R for Data Science](https://r4ds.had.co.nz/factors.html)). We'll also turn any of the variables labels (from the `.dta` file) in the data into factors.
+
+Then, summarize how many people survived and how many died. You can use dplyr to group by survival and then summarize with `n()` or use the `table()` function on `titanic$survived`. 
 
 ```{r}
 titanic <- titanic |> 
   ______(
     survived = factor(survived, labels = c("Died", "Survived")),
-    pclass = factor(pclass)
+    across(
+      where(haven::is.labelled), 
+      haven::as_factor
+    )
   )
 
 # fill in the code below or use table()
@@ -118,9 +128,7 @@ We'll save the imputed variables to the data as `mice_age` and `mice_embarked`, 
 #| cache: _____
 _______ <- titanic |> 
   ______ ___
-  # remove labels because mice doesn't like them
-  purrr::map_df(haven::zap_labels) |> 
-  mice(method = "norm") |>
+  mice() |>
   complete()
 
 titanic$mice_age <- imputed_titanic$age

@@ -50,7 +50,7 @@ x
 1. Create a function called `sim_data` that doesn't take any arguments.
 2. In the function body, we'll return a `tibble`. 
 3. For `x`, have `rnorm()` return 50 random numbers.  
-4. For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector. for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you account for that.
+4. For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you account for that.
 5. For `age()` use the `sample()` function to sample 50 numbers from 25 to 50 with replacement.
 6. Call `sim_data()`
 
@@ -162,7 +162,7 @@ evalue(3.9, type = "rd")
 1. Use `...` to pass the arguments of your function, `filter_summarize()`, to `filter()`.
 2. In summarize, get the n and mean life expectancy for the data set
 3. Check `filter_summarize()` with `year == 1952`. 
-4. Try `filter_summarize()` again for 2002, but also filter countries that have "and" in the country name. Use `str_detect()` from the stringr package.
+4. Try `filter_summarize()` again for 2002, but also filter countries that have the word " and " in the country name (e.g., it should detect "Trinidad and Tobago" but not "Iceland"). Use `str_detect()` from the stringr package.
 
 ```{r}
 filter_summarize <- function(___) {
