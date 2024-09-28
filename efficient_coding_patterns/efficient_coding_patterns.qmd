@@ -132,6 +132,7 @@ nbm/cbm
 ## Arrow
 
 ```{r}
+#| eval: false
 library(arrow)
 fd_calls <- read_csv("fd_calls.csv")
 fd_calls |>
@@ -142,68 +143,14 @@ fd_calls |>
 ## Arrow
 
 ```{r}
-fs::dir_ls("fd_calls")
-```
-
-## Arrow
-
-```{r}
 #| code-line-numbers: "|1,6"
-#| output-location: slide
+#| eval: false
 open_dataset("fd_calls") |>
   filter(year == 2015) |>
   mutate(log_delay = log(Delay)) |>
   group_by(Neighborhood) |>
   summarise(log_delay = mean(log_delay)) |>
   collect()
-```
-
-## Arrow
-
-```{r}
-#| echo: false
-tv <- function() {
-  fd_calls <- read_csv(
-    "fd_calls.csv",
-    show_col_types = FALSE
-  )
-
-  fd_calls |>
-    filter(year == 2015) |>
-    group_by(Neighborhood) |>
-    summarise(log_delay = mean(log(Delay)))
-}
-
-
-dt <- function() {
-  fd_calls_dt <- fread("fd_calls.csv")
-  fd_calls_dt[
-    year == 2015,
-    .(log_delay = mean(log(Delay))),
-    by = Neighborhood
-  ]
-}
-
-ar <- function() {
-  open_dataset("fd_calls") |>
-    filter(year == 2015) |>
-    group_by(Neighborhood) |>
-    summarise(log_delay = mean(log(Delay))) |>
-    collect()
-}
-```
-
-```{r}
-bench::mark(
-  tv(),
-  dt(),
-  ar(),
-  relative = TRUE,
-  # the results are slightly different because they are 
-  # different classes of data frames. 
-  # thus, we won't check that they are the same.
-  check = FALSE
-)
 ```
 
 # Vectorize {background-color="#23373B"}
