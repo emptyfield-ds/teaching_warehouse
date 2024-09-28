@@ -1,0 +1,238 @@
+---
+title: "Efficient coding patterns in R and Python"
+format: html
+engine: jupyter
+---
+
+```{python}
+#| label: setup
+import pandas as pd
+import polars as pl
+import numpy as np
+import urllib.request
+
+url = "https://huggingface.co/datasets/malcolmbarrett/fire_dept_calls/resolve/main/fd_calls.csv"
+file_path = "fd_calls.csv"
+urllib.request.urlretrieve(url, file_path)
+```
+
+## Your Turn 1
+
+Read in the `fd_calls.csv` file. Create a new variable called `log_delay` that is the log of `Delay`. Subset the data frame to just use rows where `year` is 2015. 
+
+Then try the reverse order: first subset, then create the new variable.
+
+Below are examples in the Pandas and Polars; modify whichever style you prefer.
+
+### Pandas 
+
+```{python}
+fd_calls = pd.read_csv("fd_calls.csv", low_memory=False)
+
+```
+
+### Polars 
+
+```{python}
+fd_calls_pl = pl.read_csv("fd_calls.csv", infer_schema_length=75_000)
+
+```
+
+## Your Turn 2
+
+Benchmark the two approaches you wrote in Your Turn 1 using timeit First, write a function for each approach, then call the function in timeit.
+
+### Polars
+
+```{python}
+
+```
+
+### Stretch Goal: Arrow
+
+The Arrow specification allows you to do much less. Not only does it store data in a more efficient format (the file size is often substantially smaller), it reads and manipulates data much faster, in part because it only reads in the data it needs into memory.
+
+Run this code to create a set of parquet files for each `year`.
+
+```{python}
+fd_calls.to_parquet("fd_calls", partition_cols=["year"])
+```
+
+Let's do a slightly more involved complication than above to demonstrate some of Arrow's strengths. The pyarrow package comes with small data manipulation API. We could also read it in then convert to Pandas or Polars with zero copy time.
+
+```{python}
+import pyarrow as pa
+import pyarrow.dataset as ds
+dataset = ds.dataset("fd_calls", format="parquet", partitioning="hive")
+
+# Filter by partition column 'year' and perform the aggregation
+table = (dataset
+    .to_table(filter=ds.field('year') == 2015)  # Use partition field for filtering
+    .group_by(['Neighborhood'])
+    .aggregate([('Delay', 'mean')])
+)
+
+table = table.append_column('log_delay', pa.compute.ln(table['Delay_mean']))
+```
+
+Write a benchmark that compares the Arrow approach with these two approaches using Pandas and Polars.
+
+```{python}
+
+def arrow():
+    # fill in the arrow version 
+    
+def pandas():
+    fd_calls = pd.read_csv("fd_calls.csv", low_memory=False)
+    result = (
+        fd_calls[fd_calls['year'] == 2015]
+        .groupby('Neighborhood', as_index=False)
+        .agg(log_delay=('Delay', lambda x: np.mean(np.log(x))))
+    )
+    return result
+
+def polars():
+    fd_calls_pl = pl.read_csv("fd_calls.csv", infer_schema_length=75_000)
+    result = (
+        fd_calls_pl.filter(pl.col('year') == 2015)
+        .group_by('Neighborhood')
+        .agg(pl.col('Delay').log().mean().alias('log_delay'))
+    )
+    return result
+
+
+%timeit pandas()
+
+%timeit polars()
+
+%timeit arrow()
+```
+
+## Your Turn 3: Challenge!
+
+Below, we create three data frames: `population`, `age_effects`, and `condition_effects`. `population` is a simulated group of people. For each person, we want to take their age and condition and calculate a total cost.
+
+```{python}
+np.random.seed(123)
+n = 30_000
+ages = np.random.choice(np.arange(20, 81), size=n, replace=True)
+conditions = np.random.choice(['Healthy', 'Diabetes', 'Heart Disease'], size=n, replace=True, p=[0.6, 0.3, 0.1])
+
+population = pd.DataFrame({
+    'id': np.arange(1, n + 1),
+    'age': ages,
+    'condition': conditions
+})
+
+age_costs = pd.DataFrame({
+    'age': np.arange(20, 81),
+    'cost': np.linspace(200, 2000, num=61)
+})
+
+condition_costs = pd.DataFrame({
+    'condition': ['Healthy', 'Diabetes', 'Heart Disease'],
+    'cost': [100, 500, 1000]
+})
+
+noise = np.random.normal(size=n)
+```
+
+One way to do this is a for loop:
+
+```{python}
+population['cost_for_loop'] = np.nan
+
+for i in range(len(population)):
+    age_cost = age_costs.loc[age_costs['age'] == population.loc[i, 'age'], 'cost'].values[0]
+    condition_cost = condition_costs.loc[condition_costs['condition'] == population.loc[i, 'condition'], 'cost'].values[0]
+    population.at[i, 'cost_for_loop'] = age_cost + condition_cost + noise[i]
+```
+
+But if you run it, you'll see it takes a little bit to run.
+
+For this exercise, vectorize this for loop to make it more efficient. Benchmark the two approaches and compare.
+
+Here are a couple of clues. First, note that you can sample vectors in Python to a lesser or greater value than the length of the array For instance, to create a array of length 100 from the `age_effects['cost']` array, which has a length of 61, we just subset with the indices for 100 samples.
+
+```{python}
+idx = np.random.choice(
+    len(age_costs),  # 61 rows
+    size=100,  # but sample 100 of them
+    replace=True  # with replacement
+)
+
+len(age_costs['cost'].values[idx])
+```
+
+The second clue is that you can use `pd.Index().get_indexer()` to match an array against another. This returns the indices in the second array that match the values of the first array For example, `pd.Index(list("abcde")).get_indexer(["b"])` returns 1 because that's where "b" is in the alphabet (0-indexed in Python).
+
+```{python}
+letters = list('abcdefghijklmnopqrstuvwxyz')
+pd.Index(letters).get_indexer(['f', 'a', 'a', 'a', 's', 't'])
+```
+
+```{python}
+# vectorize the above for loop
+
+
+```
+
+```{python}
+# benchmark the two approaches
+
+```
+
+## Your Turn 4: Challenge!
+
+`profile.py` contains a script that defines the function `sum_squared_diffs()` as well as a matrix called `mat`. Source the code in that file, then profile the function. 
+
+In the terminal, run: 
+
+```bash
+scalene profile.py
+```
+
+Once you've identified the bottleneck, try to improve the speed of the code.
+
+```{python}
+
+```
+
+## Your Turn 5
+
+Python comes with many approaches to parallel processing, but we'll use concurrent.futures. First, run this code to set up. This will use 2 fewer than the number of cores on your computer. 
+
+```{python}
+from concurrent.futures import ProcessPoolExecutor
+from os import cpu_count
+
+n_cores = cpu_count() - 2
+times = 10_000
+```
+
+The following code imports a simple bootstrap procedure to calculate the median of `x`. `bootstrap.median()` bootstraps `sim_data` and returns the estimate for that resample. See `bootstrap.py` for the code.
+
+```{python}
+import bootstrap
+bootstrap.median()
+```
+
+Convert the following code to use `ProcessPoolExecutor`:
+
+```{python}
+boot_medians = [bootstrap.median(_) for _ in range(times)]
+boot_medians = np.array(boot_medians)
+np.quantile(boot_medians, [0.025, 0.5, 0.975])
+```
+
+***
+
+# Take aways
+
+* The fastest way to speed up your code is to do nothing. Try to do less! A simple way is to reduce the amount of data you're working with before making calculations
+* Benchmarking is a practical way to investigate and experiment with code to understand how long different strategies take
+* Vectorization is common in the design of many Python statistical tools, particularly numpy, and it's usually faster than trying to vectorize code yourself with for loops
+* Profiling can help you understand where bottlenecks are in your code so you can be more efficient in optimizing your code
+* Python has many tools for parallelization; use them when you have many repeated, independent actions. It doesn't speed up the code itself and comes with some over head, but it can be a substantial speed up in programmer time by doing many calculations simultaneously. 
+
+

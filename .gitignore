@@ -5,3 +5,5 @@
 
 /.quarto/
 __pycache__/
+efficient_coding_patterns_r/fd_calls.csv
+efficient_coding_patterns_r/fd_calls/
