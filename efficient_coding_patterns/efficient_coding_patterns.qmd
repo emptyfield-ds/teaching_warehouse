@@ -1,0 +1,523 @@
+---
+title: "Efficient coding patterns in R and Python"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+library(tidyverse)
+library(data.table)
+```
+
+## {background-color="#23373B"}
+
+1. Do less
+2. Benchmark and experiment
+3. Vectorize
+4. Profile to find bottlenecks
+5. Parallelize
+
+## {background-color="#23373B"}
+
+1. Use faster tools
+2. Write in a faster language
+
+# Do less {background-color="#23373B"}
+
+## Do less
+
+- Subset and aggregate in SQL
+- Subset rows earlier (before calculations)
+
+## *Your Turn 1* (`exercises_r.qmd`, `exercises_py.qmd`)
+
+### Read in the `fd_calls.csv` file. Create a new variable called `log_delay` that is the log of `Delay`. Subset the data frame to just use rows where `year` is 2015. 
+
+# Benchmark and experiment {background-color="#23373B"}
+
+## Benchmarking
+
+- Write your code as a function
+- Run it repeatedly to get information on speed
+
+## R: bench
+
+```{r}
+#| code-line-numbers: "|2|4-7"
+x <- runif(1000)
+sqrt2 <- function(x) x ^ 0.5
+
+bench::mark(
+  sqrt(x),
+  sqrt2(x)
+)
+```
+
+## R: bench
+
+```{r}
+#| code-line-numbers: "7"
+x <- runif(1000)
+sqrt2 <- function(x) x ^ 0.5
+
+bm <- bench::mark(
+  sqrt(x),
+  sqrt2(x),
+  relative = TRUE
+)
+
+bm
+```
+
+## R: bench
+
+```{r}
+plot(bm)
+```
+
+## Python: timeit
+
+```{python}
+#| eval: false
+#| code-line-numbers: "|2,9-10"
+import numpy as np
+import timeit
+
+x = np.random.uniform(size=1000)
+
+def sqrt2(x):
+    return x ** 0.5
+
+%timeit np.sqrt(x)
+%timeit sqrt2(x)
+```
+
+<br /> 
+<br /> 
+
+```
+658 ns ± 4.33 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+691 ns ± 7.46 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+```
+
+## Python: timeit
+
+```{python}
+#| code-line-numbers: "9-12"
+import numpy as np
+import timeit
+
+x = np.random.uniform(size=1000)
+
+def sqrt2(x):
+    return x ** 0.5
+
+nbm = timeit.timeit("np.sqrt(x)", globals=globals())
+cbm = timeit.timeit("sqrt2(x)", globals=globals())
+
+nbm/cbm
+```
+
+## *Your Turn 2*
+
+### Benchmark the two approaches you wrote in Your Turn 1 using benchmarking. First, write a function for each approach, then call the function in the benchmarking tool
+
+
+## Arrow
+
+```{r}
+#| eval: false
+library(arrow)
+fd_calls <- read_csv("fd_calls.csv")
+fd_calls |>
+  group_by(year) |>
+  write_dataset("fd_calls")
+```
+
+## Arrow
+
+```{r}
+#| code-line-numbers: "|1,6"
+#| eval: false
+open_dataset("fd_calls") |>
+  filter(year == 2015) |>
+  mutate(log_delay = log(Delay)) |>
+  group_by(Neighborhood) |>
+  summarise(log_delay = mean(log_delay)) |>
+  collect()
+```
+
+# Vectorize {background-color="#23373B"}
+
+## Vectorization: R
+
+```{r}
+xs <- runif(100)
+out <- xs[1]
+for (x in xs[-1]) {
+  out <- c(out, out[length(out)] + x)
+}
+
+head(out)
+```
+
+## Vectorization: R
+
+```{r}
+cumsum(xs) |> 
+  head()
+```
+
+## Vectorization: Python
+
+```{python}
+xs = np.random.uniform(size=100)
+np.cumsum(xs)[:6]
+```
+
+## {background-color="#23373B" .huge}
+
+**Of course someone has to write loops. It doesn’t have to be you.**
+
+**—Jenny Bryan**
+
+## {background-color="#23373B" .huge}
+
+**Vectorising is about taking a whole-object approach to a problem, thinking about vectors, not scalars.**
+
+**—Hadley Wickham**
+
+## Vectorization: smells and solutions
+
+- iterating by row: look for a way to work with the whole column as a vector
+- iterating by groups: use grouping and aggregating
+
+## *Your Turn 3: Challenge!*
+
+### This exercise contains a simulation with a population and two tables of effects. It uses a for loop to apply the effects to calculate a cost for each person in the population. For this exercise, vectorize this for loop to make it more efficient. Benchmark the two approaches and compare.
+
+## List-comprehensions
+
+```{python}
+sentences = [
+    "The better part of Valour, is Discretion.",
+    "I had rather have a fool to make me merry than " +  
+    "experience to make me sad.",
+    "I wasted time, and now doth time waste me.",
+    "The empty vessel makes the loudest sound.",
+    "Give every man thy ear, but few thy voice."
+]
+
+len(sentences[0].split())
+```
+
+## List-comprehensions
+
+```{python}
+n_words = []
+for sentence in sentences:
+    n_words.append(len(sentence.split()))
+
+n_words
+```
+
+## List-comprehensions
+
+```{python}
+n_words = [len(sentence.split()) for sentence in sentences]
+
+n_words
+```
+
+## Case when-style statements (Python)
+
+```{python}
+import pandas as pd
+
+# Sample dataframe
+df = pd.DataFrame({
+    'patient': ['Patient1', 'Patient2', 'Patient3', 'Patient4'],
+    'a1c': [5.2, 5.9, 6.8, 5.6]
+})
+```
+
+## Case when-style statements (Python)
+
+```{python}
+df['diabetes_status'] = None
+df.loc[df['a1c'] < 5.7, 'diabetes_status'] = 'Normal'
+df.loc[(df['a1c'] >= 5.7) & (df['a1c'] < 6.5), 'diabetes_status'] = 'Pre-diabetes'
+df.loc[df['a1c'] >= 6.5, 'diabetes_status'] = 'Diabetes'
+
+df
+```
+
+## Case when-style statements (Python)
+
+```{python}
+#| code-line-numbers: "3-7,9|11"
+import numpy as np
+
+conditions = [
+    (df['a1c'] < 5.7),
+    (df['a1c'] >= 5.7) & (df['a1c'] < 6.5),
+    (df['a1c'] >= 6.5)
+]
+
+choices = ['Normal', 'Pre-diabetes', 'Diabetes']
+
+df['diabetes_status'] = np.select(conditions, choices)
+df
+```
+
+## Case when-style statements (Tidyverse)
+
+```{r}
+#| code-line-numbers: "8-12"
+df <- data.frame(
+  patient = c("Patient1", "Patient2", "Patient3", "Patient4"),
+  a1c = c(5.2, 5.9, 6.8, 5.6)
+)
+
+df |> 
+  mutate(
+    diabetes_status = case_when(
+      a1c < 5.7 ~ "Normal",
+      a1c >= 5.7 & a1c < 6.5 ~ "Pre-diabetes",
+      a1c >= 6.5 ~ "Diabetes"
+    )
+  )
+```
+
+
+## Case when-style statements (data.table)
+
+```{r}
+#| code-line-numbers: "6-10"
+dt <- data.table(
+  patient = c("Patient1", "Patient2", "Patient3", "Patient4"),
+  a1c = c(5.2, 5.9, 6.8, 5.6)
+)
+
+dt[, diabetes_status := fcase(
+  a1c < 5.7, "Normal",
+  a1c >= 5.7 & a1c < 6.5, "Pre-diabetes",
+  a1c >= 6.5, "Diabetes"
+)]
+```
+
+
+## Functional programming (R)
+
+```{r}
+#| eval: false
+# base R
+lapply(a_list, \(.x) do_something(.x))
+
+# purrr
+map(a_list, \(.x) do_something(.x))
+```
+
+## Functional programming (Python)
+
+```{python}
+#| eval: false
+list(map(lambda x: do_something(x), a_list))
+```
+
+## Functional programming: reduce
+
+```{r}
+#| eval: false
+temp_df <- left_join(df1, df2, by = "key")
+temp_df <- left_join(temp_df, df3, by = "key")
+df <- left_join(temp_df, df4, by = "key")
+```
+
+## Functional programming: reduce
+
+```{r}
+#| eval: false
+df <- list(df1, df2, df3, df4) |> 
+  reduce(left_join, by = "key")
+```
+
+# Profile to find bottlenecks  {background-color="#23373B"}
+
+## Profiling code: R
+
+```{r}
+#| eval: false
+library(profvis)
+
+profvis({
+  x <- integer()
+  for (i in 1:1e4) {
+    x <- c(x, i)
+  }
+})
+```
+
+
+## Profiling code: R
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/profvis.png")
+```
+
+## Profiling code: R
+
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|2,4"
+library(profvis)
+source("your_code.R")
+profvis({
+  do_something_to(thing)
+})
+```
+
+## Profiling code: Python
+
+```{.python filename="your_code.py"}
+def generate_squares(n):
+    return [i * i for i in range(n)]
+
+def sum_squares(squares):
+    return sum(squares)
+
+n = 10_000_000
+squares = generate_squares(n)
+result = sum_squares(squares)
+
+print(result)
+```
+
+<br /> 
+
+```{.bash filename="terminal"}
+scalene your_code.py
+```
+
+## Profiling code: Python
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/scalene.png")
+```
+
+## Profiling code: Python
+
+```{python}
+#| eval: false
+#| code-line-numbers: "2"
+def generate_squares(n):
+    return (i * i for i in range(n))
+
+def sum_squares(squares):
+    return sum(squares)
+
+n = 10_000_000
+squares = generate_squares(n)
+result = sum_squares(squares)
+
+print(result)
+```
+
+## *Your Turn 4: Challenge!*
+
+### Profile the code in the stated file. Try to improve the speed of the code based on your findings. The R and Python versions use different examples for this exercise.
+
+# Parallelize {background-color="#23373B"}
+
+## Parallelizing code: R
+
+```{r}
+#| code-line-numbers: "|2|3"
+library(future)
+n_cores <- availableCores() - 2
+plan(multisession, workers = n_cores)
+```
+
+## Parallelizing code: Base R
+
+```{r}
+#| eval: false
+library(future.apply)
+future_lapply(a_list, do_something)
+```
+
+## Parallelizing code: Tidyverse
+
+```{r}
+#| eval: false
+library(furrr)
+future_map(a_list, do_something)
+```
+
+## Parallelizing code: Python
+
+```{python}
+#| eval: false
+#| code-line-numbers: "|1-3|5|7|8"
+from concurrent.futures import ProcessPoolExecutor
+from os import os.cpu_count
+from your_script import do_something
+
+n_cores = cpu_count() - 2
+
+with ProcessPoolExecutor(max_workers=n_cores) as exec:
+    results = list(exec.map(do_something, a_list))
+```
+
+## Tools that paralellize automagically
+
+- polars 
+- duckdb
+- (sometimes) data.table
+
+## *Your Turn 5*
+
+### In this exercise, modify the bootstrap procedure to use parallel processing
+
+# Use faster tools  {background-color="#23373B"}
+
+## Faster tools
+
+- duckdb
+- polars
+- data.table
+
+## Faster backends
+
+- Tidyverse: duckplyr, dtplyr, tidypolars, etc.
+- Pandas: dask, fireducks
+
+# Write in a faster language {background-color="#23373B"}
+
+## Compiled languages
+
+- C, C++
+- Rust
+- Look for tools already doing this!
+
+## {background-color="#23373B"}
+
+1. Do less
+2. Benchmark and experiment
+3. Vectorize
+4. Profile to find bottlenecks
+5. Parallelize
+
+## {background-color="#23373B"}
+
+1. Use faster tools
+2. Write in a faster language
