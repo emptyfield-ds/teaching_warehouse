@@ -64,7 +64,7 @@ def transform_then_filter_pd():
     return fd_calls[fd_calls['year'] == 2015]
 
 def filter_then_transform_pd():
-    fd_calls = fd_calls.loc[fd_calls['year'] == 2015, 'log_delay'] = np.log(filtered_calls['Delay'])
+    fd_calls.loc[fd_calls['year'] == 2015, 'log_delay'] = np.log(filtered_calls['Delay'])
     return fd_calls
 
 # Benchmark with %timeit
@@ -262,11 +262,13 @@ def for_loop_approach():
 
 # Function for the vectorized approach
 def vectorized_approach():
-    age_indexer = pd.Index(age_costs['age']).get_indexer(population['age'])
-    condition_indexer = pd.Index(condition_costs['condition']).get_indexer(population['condition'])
-    
-    population['age_cost'] = age_costs['cost'].values[age_indexer]
-    population['condition_cost'] = condition_costs['cost'].values[condition_indexer]
+    age_index = (pd.Index(age_costs['age'])
+    .get_indexer(population['age']))
+    condition_index = (pd.Index(condition_costs['condition'])
+    .get_indexer(population['condition']))
+
+    population['age_cost'] = age_costs['cost'].values[age_index]
+    population['condition_cost'] = condition_costs['cost'].values[condition_index]
     population['cost_lookup'] = population['age_cost'] + population['condition_cost'] + noise
 
 %timeit for_loop_approach()
