@@ -10,7 +10,7 @@
 <link href="efficient_coding_patterns_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.56">
 
-  <meta name="dcterms.date" content="2024-09-28">
+  <meta name="dcterms.date" content="2024-10-01">
   <title>Efficient coding patterns in R and Python</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -396,7 +396,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2024-09-28</p>
+  <p class="date">2024-10-01</p>
 </section>
 <section id="section" class="slide level2" data-background-color="#23373B">
 <h2></h2>
@@ -457,8 +457,8 @@
 <pre><code># A tibble: 2 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 sqrt(x)       984ns   1.44µs   519413.    7.86KB     51.9
-2 sqrt2(x)     9.39µs  10.29µs    91657.    7.86KB     18.3</code></pre>
+1 sqrt(x)       984ns   1.48µs   517210.    7.86KB     51.7
+2 sqrt2(x)     9.35µs   9.72µs    95764.    7.86KB     19.2</code></pre>
 </div>
 </div>
 </section>
@@ -479,8 +479,8 @@
 <pre><code># A tibble: 2 × 6
   expression   min median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 sqrt(x)     1      1         5.61         1     2.80
-2 sqrt2(x)    9.16   7.11      1            1     1   </code></pre>
+1 sqrt(x)     1      1         5.04         1     2.52
+2 sqrt2(x)    9.12   6.74      1            1     1   </code></pre>
 </div>
 </div>
 </section>
@@ -525,7 +525,7 @@
 <span id="cb8-11"><a href=""></a></span>
 <span id="cb8-12"><a href=""></a>nbm<span class="op">/</span>cbm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.9486925932733296</code></pre>
+<pre><code>0.9563533592899999</code></pre>
 </div>
 </div>
 </section>
@@ -546,66 +546,12 @@
 <section id="arrow-1" class="slide level2">
 <h2>Arrow</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="st">"fd_calls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>fd_calls/year=2000 fd_calls/year=2001 fd_calls/year=2002 fd_calls/year=2003 
-fd_calls/year=2004 fd_calls/year=2005 fd_calls/year=2006 fd_calls/year=2007 
-fd_calls/year=2008 fd_calls/year=2009 fd_calls/year=2010 fd_calls/year=2011 
-fd_calls/year=2012 fd_calls/year=2013 fd_calls/year=2014 fd_calls/year=2015 
-fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
-</div>
-</div>
-</section>
-<section id="arrow-2" class="slide level2">
-<h2>Arrow</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|1,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">open_dataset</span>(<span class="st">"fd_calls"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href=""></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_delay =</span> <span class="fu">log</span>(Delay)) <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a href=""></a>  <span class="fu">group_by</span>(Neighborhood) <span class="sc">|&gt;</span></span>
-<span id="cb13-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">log_delay =</span> <span class="fu">mean</span>(log_delay)) <span class="sc">|&gt;</span></span>
-<span id="cb13-6"><a href=""></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-</section>
-<section id="arrow-2-output" class="slide level2 output-location-slide"><h2>Arrow</h2><div class="cell output-location-slide" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 43 × 2
-   Neighborhood       log_delay
-   &lt;chr&gt;                  &lt;dbl&gt;
- 1 Haight Ashbury         0.987
- 2 Mission                1.08 
- 3 Nob Hill               1.10 
- 4 Tenderloin             1.08 
- 5 Japantown              1.08 
- 6 West of Twin Peaks     1.09 
- 7 South of Market        1.10 
- 8 Sunset/Parkside        1.14 
- 9 Pacific Heights        1.11 
-10 North Beach            1.11 
-# ℹ 33 more rows</code></pre>
-</div>
-</div></section><section id="arrow-3" class="slide level2">
-<h2>Arrow</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb15-2"><a href=""></a>  <span class="fu">tv</span>(),</span>
-<span id="cb15-3"><a href=""></a>  <span class="fu">dt</span>(),</span>
-<span id="cb15-4"><a href=""></a>  <span class="fu">ar</span>(),</span>
-<span id="cb15-5"><a href=""></a>  <span class="at">relative =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb15-6"><a href=""></a>  <span class="co"># the results are slightly different because they are </span></span>
-<span id="cb15-7"><a href=""></a>  <span class="co"># different classes of data frames. </span></span>
-<span id="cb15-8"><a href=""></a>  <span class="co"># thus, we won't check that they are the same.</span></span>
-<span id="cb15-9"><a href=""></a>  <span class="at">check =</span> <span class="cn">FALSE</span></span>
-<span id="cb15-10"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 6
-  expression   min median `itr/sec` mem_alloc `gc/sec`
-  &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 tv()        61.6   57.9      1        1144.     1   
-2 dt()        32.1   30.1      1.92     1093.     1.92
-3 ar()         1      1       50.9         1      2.54</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="|1,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">open_dataset</span>(<span class="st">"fd_calls"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_delay =</span> <span class="fu">log</span>(Delay)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href=""></a>  <span class="fu">group_by</span>(Neighborhood) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">log_delay =</span> <span class="fu">mean</span>(log_delay)) <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href=""></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -616,36 +562,36 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="vectorization-r" class="slide level2">
 <h2>Vectorization: R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>xs <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb17-2"><a href=""></a>out <span class="ot">&lt;-</span> xs[<span class="dv">1</span>]</span>
-<span id="cb17-3"><a href=""></a><span class="cf">for</span> (x <span class="cf">in</span> xs[<span class="sc">-</span><span class="dv">1</span>]) {</span>
-<span id="cb17-4"><a href=""></a>  out <span class="ot">&lt;-</span> <span class="fu">c</span>(out, out[<span class="fu">length</span>(out)] <span class="sc">+</span> x)</span>
-<span id="cb17-5"><a href=""></a>}</span>
-<span id="cb17-6"><a href=""></a></span>
-<span id="cb17-7"><a href=""></a><span class="fu">head</span>(out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>xs <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb12-2"><a href=""></a>out <span class="ot">&lt;-</span> xs[<span class="dv">1</span>]</span>
+<span id="cb12-3"><a href=""></a><span class="cf">for</span> (x <span class="cf">in</span> xs[<span class="sc">-</span><span class="dv">1</span>]) {</span>
+<span id="cb12-4"><a href=""></a>  out <span class="ot">&lt;-</span> <span class="fu">c</span>(out, out[<span class="fu">length</span>(out)] <span class="sc">+</span> x)</span>
+<span id="cb12-5"><a href=""></a>}</span>
+<span id="cb12-6"><a href=""></a></span>
+<span id="cb12-7"><a href=""></a><span class="fu">head</span>(out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2162673 0.2426854 0.5831013 1.4470240 1.5734867 2.4042482</code></pre>
+<pre><code>[1] 0.5425736 0.7233970 1.3887711 1.6195017 2.5664592 3.1194999</code></pre>
 </div>
 </div>
 </section>
 <section id="vectorization-r-1" class="slide level2">
 <h2>Vectorization: R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">cumsum</span>(xs) <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">cumsum</span>(xs) <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2162673 0.2426854 0.5831013 1.4470240 1.5734867 2.4042482</code></pre>
+<pre><code>[1] 0.5425736 0.7233970 1.3887711 1.6195017 2.5664592 3.1194999</code></pre>
 </div>
 </div>
 </section>
 <section id="vectorization-python" class="slide level2">
 <h2>Vectorization: Python</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a>xs <span class="op">=</span> np.random.uniform(size<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb21-2"><a href=""></a>np.cumsum(xs)[:<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>xs <span class="op">=</span> np.random.uniform(size<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb16-2"><a href=""></a>np.cumsum(xs)[:<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>array([0.51166308, 0.82914877, 1.74674184, 2.02938667, 2.75812311,
-       3.28107169])</code></pre>
+<pre><code>array([0.89019258, 1.74707015, 2.03977054, 2.96373589, 3.58784439,
+       4.25792404])</code></pre>
 </div>
 </div>
 </section>
@@ -673,16 +619,16 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="list-comprehensions" class="slide level2">
 <h2>List-comprehensions</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>sentences <span class="op">=</span> [</span>
-<span id="cb23-2"><a href=""></a>    <span class="st">"The better part of Valour, is Discretion."</span>,</span>
-<span id="cb23-3"><a href=""></a>    <span class="st">"I had rather have a fool to make me merry than "</span> <span class="op">+</span>  </span>
-<span id="cb23-4"><a href=""></a>    <span class="st">"experience to make me sad."</span>,</span>
-<span id="cb23-5"><a href=""></a>    <span class="st">"I wasted time, and now doth time waste me."</span>,</span>
-<span id="cb23-6"><a href=""></a>    <span class="st">"The empty vessel makes the loudest sound."</span>,</span>
-<span id="cb23-7"><a href=""></a>    <span class="st">"Give every man thy ear, but few thy voice."</span></span>
-<span id="cb23-8"><a href=""></a>]</span>
-<span id="cb23-9"><a href=""></a></span>
-<span id="cb23-10"><a href=""></a><span class="bu">len</span>(sentences[<span class="dv">0</span>].split())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a>sentences <span class="op">=</span> [</span>
+<span id="cb18-2"><a href=""></a>    <span class="st">"The better part of Valour, is Discretion."</span>,</span>
+<span id="cb18-3"><a href=""></a>    <span class="st">"I had rather have a fool to make me merry than "</span> <span class="op">+</span>  </span>
+<span id="cb18-4"><a href=""></a>    <span class="st">"experience to make me sad."</span>,</span>
+<span id="cb18-5"><a href=""></a>    <span class="st">"I wasted time, and now doth time waste me."</span>,</span>
+<span id="cb18-6"><a href=""></a>    <span class="st">"The empty vessel makes the loudest sound."</span>,</span>
+<span id="cb18-7"><a href=""></a>    <span class="st">"Give every man thy ear, but few thy voice."</span></span>
+<span id="cb18-8"><a href=""></a>]</span>
+<span id="cb18-9"><a href=""></a></span>
+<span id="cb18-10"><a href=""></a><span class="bu">len</span>(sentences[<span class="dv">0</span>].split())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>7</code></pre>
 </div>
@@ -691,11 +637,11 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="list-comprehensions-1" class="slide level2">
 <h2>List-comprehensions</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a>n_words <span class="op">=</span> []</span>
-<span id="cb25-2"><a href=""></a><span class="cf">for</span> sentence <span class="kw">in</span> sentences:</span>
-<span id="cb25-3"><a href=""></a>    n_words.append(<span class="bu">len</span>(sentence.split()))</span>
-<span id="cb25-4"><a href=""></a></span>
-<span id="cb25-5"><a href=""></a>n_words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a>n_words <span class="op">=</span> []</span>
+<span id="cb20-2"><a href=""></a><span class="cf">for</span> sentence <span class="kw">in</span> sentences:</span>
+<span id="cb20-3"><a href=""></a>    n_words.append(<span class="bu">len</span>(sentence.split()))</span>
+<span id="cb20-4"><a href=""></a></span>
+<span id="cb20-5"><a href=""></a>n_words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[7, 16, 9, 7, 9]</code></pre>
 </div>
@@ -704,9 +650,9 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="list-comprehensions-2" class="slide level2">
 <h2>List-comprehensions</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>n_words <span class="op">=</span> [<span class="bu">len</span>(sentence.split()) <span class="cf">for</span> sentence <span class="kw">in</span> sentences]</span>
-<span id="cb27-2"><a href=""></a></span>
-<span id="cb27-3"><a href=""></a>n_words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a>n_words <span class="op">=</span> [<span class="bu">len</span>(sentence.split()) <span class="cf">for</span> sentence <span class="kw">in</span> sentences]</span>
+<span id="cb22-2"><a href=""></a></span>
+<span id="cb22-3"><a href=""></a>n_words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[7, 16, 9, 7, 9]</code></pre>
 </div>
@@ -715,24 +661,24 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="case-when-style-statements-python" class="slide level2">
 <h2>Case when-style statements (Python)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb29-2"><a href=""></a></span>
-<span id="cb29-3"><a href=""></a><span class="co"># Sample dataframe</span></span>
-<span id="cb29-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb29-5"><a href=""></a>    <span class="st">'patient'</span>: [<span class="st">'Patient1'</span>, <span class="st">'Patient2'</span>, <span class="st">'Patient3'</span>, <span class="st">'Patient4'</span>],</span>
-<span id="cb29-6"><a href=""></a>    <span class="st">'a1c'</span>: [<span class="fl">5.2</span>, <span class="fl">5.9</span>, <span class="fl">6.8</span>, <span class="fl">5.6</span>]</span>
-<span id="cb29-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb24-2"><a href=""></a></span>
+<span id="cb24-3"><a href=""></a><span class="co"># Sample dataframe</span></span>
+<span id="cb24-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb24-5"><a href=""></a>    <span class="st">'patient'</span>: [<span class="st">'Patient1'</span>, <span class="st">'Patient2'</span>, <span class="st">'Patient3'</span>, <span class="st">'Patient4'</span>],</span>
+<span id="cb24-6"><a href=""></a>    <span class="st">'a1c'</span>: [<span class="fl">5.2</span>, <span class="fl">5.9</span>, <span class="fl">6.8</span>, <span class="fl">5.6</span>]</span>
+<span id="cb24-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="case-when-style-statements-python-1" class="slide level2">
 <h2>Case when-style statements (Python)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href=""></a>df[<span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb30-2"><a href=""></a>df.loc[df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">5.7</span>, <span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="st">'Normal'</span></span>
-<span id="cb30-3"><a href=""></a>df.loc[(df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">5.7</span>) <span class="op">&amp;</span> (df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">6.5</span>), <span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="st">'Pre-diabetes'</span></span>
-<span id="cb30-4"><a href=""></a>df.loc[df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">6.5</span>, <span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="st">'Diabetes'</span></span>
-<span id="cb30-5"><a href=""></a></span>
-<span id="cb30-6"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a>df[<span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb25-2"><a href=""></a>df.loc[df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">5.7</span>, <span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="st">'Normal'</span></span>
+<span id="cb25-3"><a href=""></a>df.loc[(df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">5.7</span>) <span class="op">&amp;</span> (df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">6.5</span>), <span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="st">'Pre-diabetes'</span></span>
+<span id="cb25-4"><a href=""></a>df.loc[df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">6.5</span>, <span class="st">'diabetes_status'</span>] <span class="op">=</span> <span class="st">'Diabetes'</span></span>
+<span id="cb25-5"><a href=""></a></span>
+<span id="cb25-6"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    patient  a1c diabetes_status
 0  Patient1  5.2          Normal
@@ -745,18 +691,18 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="case-when-style-statements-python-2" class="slide level2">
 <h2>Case when-style statements (Python)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32" data-code-line-numbers="3-7,9|11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb32-2"><a href=""></a></span>
-<span id="cb32-3"><a href=""></a>conditions <span class="op">=</span> [</span>
-<span id="cb32-4"><a href=""></a>    (df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">5.7</span>),</span>
-<span id="cb32-5"><a href=""></a>    (df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">5.7</span>) <span class="op">&amp;</span> (df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">6.5</span>),</span>
-<span id="cb32-6"><a href=""></a>    (df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">6.5</span>)</span>
-<span id="cb32-7"><a href=""></a>]</span>
-<span id="cb32-8"><a href=""></a></span>
-<span id="cb32-9"><a href=""></a>choices <span class="op">=</span> [<span class="st">'Normal'</span>, <span class="st">'Pre-diabetes'</span>, <span class="st">'Diabetes'</span>]</span>
-<span id="cb32-10"><a href=""></a></span>
-<span id="cb32-11"><a href=""></a>df[<span class="st">'diabetes_status'</span>] <span class="op">=</span> np.select(conditions, choices)</span>
-<span id="cb32-12"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27" data-code-line-numbers="3-7,9|11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb27-2"><a href=""></a></span>
+<span id="cb27-3"><a href=""></a>conditions <span class="op">=</span> [</span>
+<span id="cb27-4"><a href=""></a>    (df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">5.7</span>),</span>
+<span id="cb27-5"><a href=""></a>    (df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">5.7</span>) <span class="op">&amp;</span> (df[<span class="st">'a1c'</span>] <span class="op">&lt;</span> <span class="fl">6.5</span>),</span>
+<span id="cb27-6"><a href=""></a>    (df[<span class="st">'a1c'</span>] <span class="op">&gt;=</span> <span class="fl">6.5</span>)</span>
+<span id="cb27-7"><a href=""></a>]</span>
+<span id="cb27-8"><a href=""></a></span>
+<span id="cb27-9"><a href=""></a>choices <span class="op">=</span> [<span class="st">'Normal'</span>, <span class="st">'Pre-diabetes'</span>, <span class="st">'Diabetes'</span>]</span>
+<span id="cb27-10"><a href=""></a></span>
+<span id="cb27-11"><a href=""></a>df[<span class="st">'diabetes_status'</span>] <span class="op">=</span> np.select(conditions, choices)</span>
+<span id="cb27-12"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    patient  a1c diabetes_status
 0  Patient1  5.2          Normal
@@ -769,19 +715,19 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="case-when-style-statements-tidyverse" class="slide level2">
 <h2>Case when-style statements (Tidyverse)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34" data-code-line-numbers="8-12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb34-2"><a href=""></a>  <span class="at">patient =</span> <span class="fu">c</span>(<span class="st">"Patient1"</span>, <span class="st">"Patient2"</span>, <span class="st">"Patient3"</span>, <span class="st">"Patient4"</span>),</span>
-<span id="cb34-3"><a href=""></a>  <span class="at">a1c =</span> <span class="fu">c</span>(<span class="fl">5.2</span>, <span class="fl">5.9</span>, <span class="fl">6.8</span>, <span class="fl">5.6</span>)</span>
-<span id="cb34-4"><a href=""></a>)</span>
-<span id="cb34-5"><a href=""></a></span>
-<span id="cb34-6"><a href=""></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb34-7"><a href=""></a>  <span class="fu">mutate</span>(</span>
-<span id="cb34-8"><a href=""></a>    <span class="at">diabetes_status =</span> <span class="fu">case_when</span>(</span>
-<span id="cb34-9"><a href=""></a>      a1c <span class="sc">&lt;</span> <span class="fl">5.7</span> <span class="sc">~</span> <span class="st">"Normal"</span>,</span>
-<span id="cb34-10"><a href=""></a>      a1c <span class="sc">&gt;=</span> <span class="fl">5.7</span> <span class="sc">&amp;</span> a1c <span class="sc">&lt;</span> <span class="fl">6.5</span> <span class="sc">~</span> <span class="st">"Pre-diabetes"</span>,</span>
-<span id="cb34-11"><a href=""></a>      a1c <span class="sc">&gt;=</span> <span class="fl">6.5</span> <span class="sc">~</span> <span class="st">"Diabetes"</span></span>
-<span id="cb34-12"><a href=""></a>    )</span>
-<span id="cb34-13"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29" data-code-line-numbers="8-12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb29-2"><a href=""></a>  <span class="at">patient =</span> <span class="fu">c</span>(<span class="st">"Patient1"</span>, <span class="st">"Patient2"</span>, <span class="st">"Patient3"</span>, <span class="st">"Patient4"</span>),</span>
+<span id="cb29-3"><a href=""></a>  <span class="at">a1c =</span> <span class="fu">c</span>(<span class="fl">5.2</span>, <span class="fl">5.9</span>, <span class="fl">6.8</span>, <span class="fl">5.6</span>)</span>
+<span id="cb29-4"><a href=""></a>)</span>
+<span id="cb29-5"><a href=""></a></span>
+<span id="cb29-6"><a href=""></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb29-7"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-8"><a href=""></a>    <span class="at">diabetes_status =</span> <span class="fu">case_when</span>(</span>
+<span id="cb29-9"><a href=""></a>      a1c <span class="sc">&lt;</span> <span class="fl">5.7</span> <span class="sc">~</span> <span class="st">"Normal"</span>,</span>
+<span id="cb29-10"><a href=""></a>      a1c <span class="sc">&gt;=</span> <span class="fl">5.7</span> <span class="sc">&amp;</span> a1c <span class="sc">&lt;</span> <span class="fl">6.5</span> <span class="sc">~</span> <span class="st">"Pre-diabetes"</span>,</span>
+<span id="cb29-11"><a href=""></a>      a1c <span class="sc">&gt;=</span> <span class="fl">6.5</span> <span class="sc">~</span> <span class="st">"Diabetes"</span></span>
+<span id="cb29-12"><a href=""></a>    )</span>
+<span id="cb29-13"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   patient a1c diabetes_status
 1 Patient1 5.2          Normal
@@ -794,47 +740,47 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="case-when-style-statements-data.table" class="slide level2">
 <h2>Case when-style statements (data.table)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36" data-code-line-numbers="6-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(</span>
-<span id="cb36-2"><a href=""></a>  <span class="at">patient =</span> <span class="fu">c</span>(<span class="st">"Patient1"</span>, <span class="st">"Patient2"</span>, <span class="st">"Patient3"</span>, <span class="st">"Patient4"</span>),</span>
-<span id="cb36-3"><a href=""></a>  <span class="at">a1c =</span> <span class="fu">c</span>(<span class="fl">5.2</span>, <span class="fl">5.9</span>, <span class="fl">6.8</span>, <span class="fl">5.6</span>)</span>
-<span id="cb36-4"><a href=""></a>)</span>
-<span id="cb36-5"><a href=""></a></span>
-<span id="cb36-6"><a href=""></a>dt[, diabetes_status <span class="sc">:</span><span class="er">=</span> <span class="fu">fcase</span>(</span>
-<span id="cb36-7"><a href=""></a>  a1c <span class="sc">&lt;</span> <span class="fl">5.7</span>, <span class="st">"Normal"</span>,</span>
-<span id="cb36-8"><a href=""></a>  a1c <span class="sc">&gt;=</span> <span class="fl">5.7</span> <span class="sc">&amp;</span> a1c <span class="sc">&lt;</span> <span class="fl">6.5</span>, <span class="st">"Pre-diabetes"</span>,</span>
-<span id="cb36-9"><a href=""></a>  a1c <span class="sc">&gt;=</span> <span class="fl">6.5</span>, <span class="st">"Diabetes"</span></span>
-<span id="cb36-10"><a href=""></a>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31" data-code-line-numbers="6-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(</span>
+<span id="cb31-2"><a href=""></a>  <span class="at">patient =</span> <span class="fu">c</span>(<span class="st">"Patient1"</span>, <span class="st">"Patient2"</span>, <span class="st">"Patient3"</span>, <span class="st">"Patient4"</span>),</span>
+<span id="cb31-3"><a href=""></a>  <span class="at">a1c =</span> <span class="fu">c</span>(<span class="fl">5.2</span>, <span class="fl">5.9</span>, <span class="fl">6.8</span>, <span class="fl">5.6</span>)</span>
+<span id="cb31-4"><a href=""></a>)</span>
+<span id="cb31-5"><a href=""></a></span>
+<span id="cb31-6"><a href=""></a>dt[, diabetes_status <span class="sc">:</span><span class="er">=</span> <span class="fu">fcase</span>(</span>
+<span id="cb31-7"><a href=""></a>  a1c <span class="sc">&lt;</span> <span class="fl">5.7</span>, <span class="st">"Normal"</span>,</span>
+<span id="cb31-8"><a href=""></a>  a1c <span class="sc">&gt;=</span> <span class="fl">5.7</span> <span class="sc">&amp;</span> a1c <span class="sc">&lt;</span> <span class="fl">6.5</span>, <span class="st">"Pre-diabetes"</span>,</span>
+<span id="cb31-9"><a href=""></a>  a1c <span class="sc">&gt;=</span> <span class="fl">6.5</span>, <span class="st">"Diabetes"</span></span>
+<span id="cb31-10"><a href=""></a>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="functional-programming-r" class="slide level2">
 <h2>Functional programming (R)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># base R</span></span>
-<span id="cb37-2"><a href=""></a><span class="fu">lapply</span>(a_list, \(.x) <span class="fu">do_something</span>(.x))</span>
-<span id="cb37-3"><a href=""></a></span>
-<span id="cb37-4"><a href=""></a><span class="co"># purrr</span></span>
-<span id="cb37-5"><a href=""></a><span class="fu">map</span>(a_list, \(.x) <span class="fu">do_something</span>(.x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="co"># base R</span></span>
+<span id="cb32-2"><a href=""></a><span class="fu">lapply</span>(a_list, \(.x) <span class="fu">do_something</span>(.x))</span>
+<span id="cb32-3"><a href=""></a></span>
+<span id="cb32-4"><a href=""></a><span class="co"># purrr</span></span>
+<span id="cb32-5"><a href=""></a><span class="fu">map</span>(a_list, \(.x) <span class="fu">do_something</span>(.x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="functional-programming-python" class="slide level2">
 <h2>Functional programming (Python)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href=""></a><span class="bu">list</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: do_something(x), a_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href=""></a><span class="bu">list</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: do_something(x), a_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="functional-programming-reduce" class="slide level2">
 <h2>Functional programming: reduce</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a>temp_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"key"</span>)</span>
-<span id="cb39-2"><a href=""></a>temp_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(temp_df, df3, <span class="at">by =</span> <span class="st">"key"</span>)</span>
-<span id="cb39-3"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(temp_df, df4, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>temp_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"key"</span>)</span>
+<span id="cb34-2"><a href=""></a>temp_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(temp_df, df3, <span class="at">by =</span> <span class="st">"key"</span>)</span>
+<span id="cb34-3"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(temp_df, df4, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="functional-programming-reduce-1" class="slide level2">
 <h2>Functional programming: reduce</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">list</span>(df1, df2, df3, df4) <span class="sc">|&gt;</span> </span>
-<span id="cb40-2"><a href=""></a>  <span class="fu">reduce</span>(left_join, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">list</span>(df1, df2, df3, df4) <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a href=""></a>  <span class="fu">reduce</span>(left_join, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -845,14 +791,14 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="profiling-code-r" class="slide level2">
 <h2>Profiling code: R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">library</span>(profvis)</span>
-<span id="cb41-2"><a href=""></a></span>
-<span id="cb41-3"><a href=""></a><span class="fu">profvis</span>({</span>
-<span id="cb41-4"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">integer</span>()</span>
-<span id="cb41-5"><a href=""></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e4</span>) {</span>
-<span id="cb41-6"><a href=""></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, i)</span>
-<span id="cb41-7"><a href=""></a>  }</span>
-<span id="cb41-8"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">library</span>(profvis)</span>
+<span id="cb36-2"><a href=""></a></span>
+<span id="cb36-3"><a href=""></a><span class="fu">profvis</span>({</span>
+<span id="cb36-4"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">integer</span>()</span>
+<span id="cb36-5"><a href=""></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e4</span>) {</span>
+<span id="cb36-6"><a href=""></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, i)</span>
+<span id="cb36-7"><a href=""></a>  }</span>
+<span id="cb36-8"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="profiling-code-r-1" class="slide level2">
@@ -862,11 +808,11 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="profiling-code-r-2" class="slide level2">
 <h2>Profiling code: R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb42" data-code-line-numbers="|2,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">library</span>(profvis)</span>
-<span id="cb42-2"><a href=""></a><span class="fu">source</span>(<span class="st">"your_code.R"</span>)</span>
-<span id="cb42-3"><a href=""></a><span class="fu">profvis</span>({</span>
-<span id="cb42-4"><a href=""></a>  <span class="fu">do_something_to</span>(thing)</span>
-<span id="cb42-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37" data-code-line-numbers="|2,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">library</span>(profvis)</span>
+<span id="cb37-2"><a href=""></a><span class="fu">source</span>(<span class="st">"your_code.R"</span>)</span>
+<span id="cb37-3"><a href=""></a><span class="fu">profvis</span>({</span>
+<span id="cb37-4"><a href=""></a>  <span class="fu">do_something_to</span>(thing)</span>
+<span id="cb37-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="profiling-code-python" class="slide level2">
@@ -875,24 +821,24 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <div class="code-with-filename-file">
 <pre><strong>your_code.py</strong></pre>
 </div>
-<div class="sourceCode" id="cb43" data-filename="your_code.py"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href=""></a><span class="kw">def</span> generate_squares(n):</span>
-<span id="cb43-2"><a href=""></a>    <span class="cf">return</span> [i <span class="op">*</span> i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)]</span>
-<span id="cb43-3"><a href=""></a></span>
-<span id="cb43-4"><a href=""></a><span class="kw">def</span> sum_squares(squares):</span>
-<span id="cb43-5"><a href=""></a>    <span class="cf">return</span> <span class="bu">sum</span>(squares)</span>
-<span id="cb43-6"><a href=""></a></span>
-<span id="cb43-7"><a href=""></a>n <span class="op">=</span> <span class="dv">10_000_000</span></span>
-<span id="cb43-8"><a href=""></a>squares <span class="op">=</span> generate_squares(n)</span>
-<span id="cb43-9"><a href=""></a>result <span class="op">=</span> sum_squares(squares)</span>
-<span id="cb43-10"><a href=""></a></span>
-<span id="cb43-11"><a href=""></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38" data-filename="your_code.py"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href=""></a><span class="kw">def</span> generate_squares(n):</span>
+<span id="cb38-2"><a href=""></a>    <span class="cf">return</span> [i <span class="op">*</span> i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)]</span>
+<span id="cb38-3"><a href=""></a></span>
+<span id="cb38-4"><a href=""></a><span class="kw">def</span> sum_squares(squares):</span>
+<span id="cb38-5"><a href=""></a>    <span class="cf">return</span> <span class="bu">sum</span>(squares)</span>
+<span id="cb38-6"><a href=""></a></span>
+<span id="cb38-7"><a href=""></a>n <span class="op">=</span> <span class="dv">10_000_000</span></span>
+<span id="cb38-8"><a href=""></a>squares <span class="op">=</span> generate_squares(n)</span>
+<span id="cb38-9"><a href=""></a>result <span class="op">=</span> sum_squares(squares)</span>
+<span id="cb38-10"><a href=""></a></span>
+<span id="cb38-11"><a href=""></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb44" data-filename="terminal"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href=""></a><span class="ex">scalene</span> your_code.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39" data-filename="terminal"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href=""></a><span class="ex">scalene</span> your_code.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="profiling-code-python-1" class="slide level2">
@@ -902,17 +848,17 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="profiling-code-python-2" class="slide level2">
 <h2>Profiling code: Python</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45" data-code-line-numbers="2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href=""></a><span class="kw">def</span> generate_squares(n):</span>
-<span id="cb45-2"><a href=""></a>    <span class="cf">return</span> (i <span class="op">*</span> i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n))</span>
-<span id="cb45-3"><a href=""></a></span>
-<span id="cb45-4"><a href=""></a><span class="kw">def</span> sum_squares(squares):</span>
-<span id="cb45-5"><a href=""></a>    <span class="cf">return</span> <span class="bu">sum</span>(squares)</span>
-<span id="cb45-6"><a href=""></a></span>
-<span id="cb45-7"><a href=""></a>n <span class="op">=</span> <span class="dv">10_000_000</span></span>
-<span id="cb45-8"><a href=""></a>squares <span class="op">=</span> generate_squares(n)</span>
-<span id="cb45-9"><a href=""></a>result <span class="op">=</span> sum_squares(squares)</span>
-<span id="cb45-10"><a href=""></a></span>
-<span id="cb45-11"><a href=""></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40" data-code-line-numbers="2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href=""></a><span class="kw">def</span> generate_squares(n):</span>
+<span id="cb40-2"><a href=""></a>    <span class="cf">return</span> (i <span class="op">*</span> i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n))</span>
+<span id="cb40-3"><a href=""></a></span>
+<span id="cb40-4"><a href=""></a><span class="kw">def</span> sum_squares(squares):</span>
+<span id="cb40-5"><a href=""></a>    <span class="cf">return</span> <span class="bu">sum</span>(squares)</span>
+<span id="cb40-6"><a href=""></a></span>
+<span id="cb40-7"><a href=""></a>n <span class="op">=</span> <span class="dv">10_000_000</span></span>
+<span id="cb40-8"><a href=""></a>squares <span class="op">=</span> generate_squares(n)</span>
+<span id="cb40-9"><a href=""></a>result <span class="op">=</span> sum_squares(squares)</span>
+<span id="cb40-10"><a href=""></a></span>
+<span id="cb40-11"><a href=""></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-turn-4-challenge" class="slide level2">
@@ -927,36 +873,36 @@ fd_calls/year=2016 fd_calls/year=2017 fd_calls/year=2018 </code></pre>
 <section id="parallelizing-code-r" class="slide level2">
 <h2>Parallelizing code: R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46" data-code-line-numbers="|2|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">library</span>(future)</span>
-<span id="cb46-2"><a href=""></a>n_cores <span class="ot">&lt;-</span> <span class="fu">availableCores</span>() <span class="sc">-</span> <span class="dv">2</span></span>
-<span id="cb46-3"><a href=""></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> n_cores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41" data-code-line-numbers="|2|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">library</span>(future)</span>
+<span id="cb41-2"><a href=""></a>n_cores <span class="ot">&lt;-</span> <span class="fu">availableCores</span>() <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb41-3"><a href=""></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> n_cores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="parallelizing-code-base-r" class="slide level2">
 <h2>Parallelizing code: Base R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">library</span>(future.apply)</span>
-<span id="cb47-2"><a href=""></a><span class="fu">future_lapply</span>(a_list, do_something)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">library</span>(future.apply)</span>
+<span id="cb42-2"><a href=""></a><span class="fu">future_lapply</span>(a_list, do_something)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="parallelizing-code-tidyverse" class="slide level2">
 <h2>Parallelizing code: Tidyverse</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">library</span>(furrr)</span>
-<span id="cb48-2"><a href=""></a><span class="fu">future_map</span>(a_list, do_something)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">library</span>(furrr)</span>
+<span id="cb43-2"><a href=""></a><span class="fu">future_map</span>(a_list, do_something)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="parallelizing-code-python" class="slide level2">
 <h2>Parallelizing code: Python</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49" data-code-line-numbers="|1-3|5|7|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href=""></a><span class="im">from</span> concurrent.futures <span class="im">import</span> ProcessPoolExecutor</span>
-<span id="cb49-2"><a href=""></a><span class="im">from</span> os <span class="im">import</span> os.cpu_count</span>
-<span id="cb49-3"><a href=""></a><span class="im">from</span> your_script <span class="im">import</span> do_something</span>
-<span id="cb49-4"><a href=""></a></span>
-<span id="cb49-5"><a href=""></a>n_cores <span class="op">=</span> cpu_count() <span class="op">-</span> <span class="dv">2</span></span>
-<span id="cb49-6"><a href=""></a></span>
-<span id="cb49-7"><a href=""></a><span class="cf">with</span> ProcessPoolExecutor(max_workers<span class="op">=</span>n_cores) <span class="im">as</span> <span class="bu">exec</span>:</span>
-<span id="cb49-8"><a href=""></a>    results <span class="op">=</span> <span class="bu">list</span>(<span class="bu">exec</span>.<span class="bu">map</span>(do_something, a_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44" data-code-line-numbers="|1-3|5|7|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href=""></a><span class="im">from</span> concurrent.futures <span class="im">import</span> ProcessPoolExecutor</span>
+<span id="cb44-2"><a href=""></a><span class="im">from</span> os <span class="im">import</span> os.cpu_count</span>
+<span id="cb44-3"><a href=""></a><span class="im">from</span> your_script <span class="im">import</span> do_something</span>
+<span id="cb44-4"><a href=""></a></span>
+<span id="cb44-5"><a href=""></a>n_cores <span class="op">=</span> cpu_count() <span class="op">-</span> <span class="dv">2</span></span>
+<span id="cb44-6"><a href=""></a></span>
+<span id="cb44-7"><a href=""></a><span class="cf">with</span> ProcessPoolExecutor(max_workers<span class="op">=</span>n_cores) <span class="im">as</span> <span class="bu">exec</span>:</span>
+<span id="cb44-8"><a href=""></a>    results <span class="op">=</span> <span class="bu">list</span>(<span class="bu">exec</span>.<span class="bu">map</span>(do_something, a_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tools-that-paralellize-automagically" class="slide level2">
