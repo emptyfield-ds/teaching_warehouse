@@ -36,7 +36,7 @@ ipython==8.21.0
 ipywidgets==8.1.2
 isoduration==20.11.0
 jedi==0.19.1
-Jinja2==3.1.4
+Jinja2==3.1.5
 json5==0.9.17
 jsonpointer==2.4
 jsonschema==4.21.1
