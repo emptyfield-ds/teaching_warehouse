@@ -1,5 +1,5 @@
 ---
-title: "Data validation in R and Python with "
+title: "Data validation in R and Python with pointblank"
 date: "`r Sys.Date()`"
 format: "kakashi-revealjs"
 ---
