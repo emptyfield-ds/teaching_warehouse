@@ -1,0 +1,289 @@
+---
+title: "Data validation in R and Python"
+format: html
+---
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(pointblank)
+worlds_fairs <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-13/worlds_fairs.csv')
+```
+
+## Your Turn 1: Discussion
+
+What's the strangest thing you've ever seen in your data? What's are some times changes in data broke your code?
+
+## Your Turn 2
+
+Using the `worlds_fairs` data frame, use pointblank to verify that all start years are greater than or equal to 1851, the year of the first Worlds Fair:
+
+1. Create an agent
+2. Specify that the `start_year` column is greater than or equal to 1851
+3. Interrogate the data
+
+```{r}
+create_agent(worlds_fairs) |> 
+  col_vals_gte(start_year, value = 1851) |> 
+  interrogate()
+```
+
+## Your Turn 3
+
+Validate the following steps:
+
+* `visitors`, `cost`, `area`, and `attending_countries` are all greater than or equal to 0. Allow for them to also be missing with `na_pass = TRUE`.
+* The `start_date` is less than or equal to the `end_date`
+* For expos of the category "World Expo", `start_date` is increasing
+
+```{r}
+worlds_fairs |> 
+  mutate(
+    start_date = my(paste0(start_month, "-", start_year)),
+    end_date = my(paste0(end_month, "-", end_year))
+  ) |> 
+  create_agent(tbl_name = "worlds_fair") |> 
+  col_vals_gte(
+    c(visitors, cost, area, attending_countries),
+    value = 0, 
+    na_pass = TRUE
+  ) |> 
+  col_vals_lte(
+    start_date,
+    vars(end_date)
+  ) |> 
+  col_vals_increasing(
+    start_year, 
+    preconditions = \(.x) filter(.x, category == "World Expo")
+  ) |> 
+  interrogate()
+```
+
+## Your Turn 4
+
+Validate the following steps:
+
+* The following variables are numeric:
+  - start_month
+  - start_year
+  - end_month
+  - end_year
+  - area
+  - visitors
+  - cost
+  - area
+  - attending_countries
+  
+* The following variables are character:
+  - name_of_exposition
+  - country
+  - city
+  - category
+  - theme
+  - notables
+
+```{r}
+worlds_fairs |> 
+  create_agent(tbl_name = "worlds_fair") |> 
+  col_is_numeric(c(
+    start_month,
+    start_year,
+    end_month,
+    end_year,
+    area,
+    visitors,
+    cost,
+    area,
+    attending_countries
+  )) |> 
+  col_is_character(c(
+    name_of_exposition,
+    country,
+    city,
+    category,
+    theme,
+    notables
+  )) |> 
+  interrogate()
+```
+
+## Your Turn 5
+
+Validate the following steps:
+
+* All rows are distinct
+* All rows have complete values of the start and end month and year, and the name of the exhibition
+
+```{r}
+worlds_fairs |> 
+  create_agent(tbl_name = "worlds_fair") |> 
+  rows_distinct() |> 
+  rows_complete(
+    c(
+      starts_with("start"), 
+      starts_with("end"), 
+      name_of_exposition
+    )
+  ) |> 
+  interrogate()
+```
+
+## Your Turn 6
+
+Run the following validation and inspect the report:
+
+```{r}
+al <- action_levels(
+  warn_at = .01, 
+  stop_at = .2
+)
+
+agent_report <- worlds_fairs |> 
+  create_agent(tbl_name = "worlds_fair", actions = al) |> 
+  col_vals_not_in_set(country, c("South Korea", "North Korea")) |> 
+  col_vals_between(attending_countries, 10, 100) |> 
+  rows_distinct() |> 
+  rows_complete() |> 
+  interrogate()
+
+agent_report
+```
+
+Extract the failing data with `get_data_extracts()`. 
+Identify why the set of rows failed given the expectation. 
+
+```{r}
+
+```
+
+## Your Turn 7: Challenge!
+
+For this exercise, let's use a new dataset
+
+```{r}
+english_monarchs_marriages <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-20/english_monarchs_marriages_df.csv')
+```
+
+Take a look at `english_monarchs_marriages` in detail.
+
+```{r}
+english_monarchs_marriages
+```
+
+We're going to clean this data frame up. First, though, write down your expectations of the data. What are the properties of the table, rows, columns, and values that you expect? 
+
+Put these expectations down as code via pointblank and validating the data as-is. Use `get_sundered_data()` and `get_data_extracts()` to explore what parts of the data are passing and what parts are not.
+
+```{r}
+validate_data <- function(x) {
+  create_agent(
+    tbl = x,
+    tbl_name = "english_monarchs_marriages",
+    actions = action_levels(
+      warn_at = 0.0001,
+      stop_at = 0.10
+    )
+  )  |>  
+  col_vals_regex(
+    columns = everything(),
+    # ^...$: entire string
+    # [^?]*: zero or more characters that are NOT '?'
+    # So any occurrence of '?' will fail this step.
+    regex = "^[^?]*$",
+    na_pass = TRUE
+  ) |>
+    col_vals_regex(
+      columns = everything(),
+      # ^: start of string
+      # (?![-–]+$): negative lookahead: fail if entire string is ONLY dashes (ASCII or en-dash)
+      # .*: otherwise allow any characters
+      # $: end of string
+      regex = "^(|.*[^-–].*)$",
+      na_pass = TRUE
+    ) |>   
+    col_vals_lt(
+      columns = king_age,
+      96,
+      na_pass = TRUE
+    ) |> 
+    col_exists(c(
+      "king_name_uncertain", 
+      "king_age_uncertain", 
+      "consort_name_uncertain",
+      "year_of_marriage_uncertain"
+    )) |> 
+    # Expect that column schemas match
+    col_schema_match(
+      schema = col_schema(
+        king_name = "character",
+        king_age = "numeric",
+        consort_name = "character",
+        consort_age = "numeric",
+        year_of_marriage = "numeric",
+        king_name_uncertain = "logical",
+        king_age_uncertain = "logical",
+        consort_name_uncertain = "logical",
+        year_of_marriage_uncertain = "logical"
+      )
+    ) |>
+    rows_distinct() |> 
+    interrogate()
+}
+
+agent <- validate_data(english_monarchs_marriages)
+agent
+
+get_sundered_data(agent)
+
+get_sundered_data(agent, type = "fail")
+```
+
+Now change the data so they pass your data validation specifications. 
+
+```{r}
+english_monarchs_marriages2 <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-20/english_monarchs_marriages_df.csv', na = c("?", "-", "–"))
+
+english_monarchs_marriages2 <- english_monarchs_marriages2 |> 
+  mutate(
+    across(
+      where(is.character),
+      \(.x) str_detect(.x, "\\?"),
+      .names = "{.col}_uncertain"
+    ),
+    across(
+      c(king_age, year_of_marriage),
+      # warnings expected since there are ? characters
+      \(.x) suppressWarnings(parse_number(.x))
+    ),
+    across(
+      .cols = where(is.character),
+      \(.x) str_replace_all(.x, "\\?", "")
+    )
+  )
+
+```
+
+```{r}
+agent2 <- validate_data(english_monarchs_marriages2)
+agent2
+
+all_passed(agent2)
+```
+
+
+***
+
+# Take aways
+
+* Data is weird and can get weirder 
+* Writing down expectations about data can help identify issues now and in the future
+* pointblank offers an API for doing this:
+
+```r
+create_agent(.df) |> 
+  # ... validation steps
+  interrogate()
+```
+
+* With pointblank, we can assess properties of the data values with `col_vals_*()`, columns with `col_is_*()`, rows with `row_*()`, and at the table level with `*_match()`
+* Investigate data validation results with `get_sundered_data()` and `get_data_extracts()`

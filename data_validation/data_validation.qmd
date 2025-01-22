@@ -1,0 +1,343 @@
+---
+title: "Data validation in R and Python with "
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+library(tidyverse)
+library(reticulate)
+# virtualenv_create("data_validation")
+# py_install(envname = "data_validation", c("pandas", "polars", "pointblank"))
+use_virtualenv("data_validation")
+```
+
+## Data is weird {background-color="#23373B"}
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/data_is_weird1.png")
+```
+
+## Data gets weirder {background-color="#23373B"}
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/data_is_weird2.png")
+```
+
+## *Your Turn 1* (`exercises_r.qmd`, `exercises_py.qmd`) 
+
+
+:::{.large}
+Discussion: What's the strangest thing you've ever seen in your data? What's are some times changes in data broke your code?
+:::
+
+## Data validation {background-color="#23373B"}
+
+1. Values
+2. Rows and columns
+3. Dataset properties
+4. Logical consistency
+5. Scientific consistency
+
+## {background-color="#23373B" .huge}
+
+> It’s not that we don’t test our code, it’s that we don’t store our tests so they can be re-run automatically. ---Hadley Wickham
+
+# Writing down and testing expectations about data {background-color="#23373B"}
+
+## pointblank ![](img/pointblank.svg){.absolute top=0 right=0 width=140}
+
+- methodically validate your data by writing down expectations and testing them
+- Works in R and Python, although the Python version is less mature
+- Works with local data frames and remote databases
+
+## `create_agent()`/`pb.Validate()`
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### R
+
+```{r}
+#| eval: false
+library(pointblank)
+df |> 
+  create_agent() |> 
+  # ... validation steps
+  interrogate()
+```
+
+:::
+
+::: {.column width="50%"}
+### Python
+
+```{python}
+#| eval: false
+import pointblank as pb
+validation = (
+  pb.Validate(data=df)
+  # ... validation steps
+  .interrogate()
+)
+```
+
+:::
+
+::::
+
+## `create_agent()`/`pb.Validate()`
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/pb_pipeline.svg")
+```
+
+
+## Interoggation reports
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/agent_report.png")
+```
+
+## `small_table` / `pb.load_dataset("small_table")`
+
+::: {.small}
+
+```{r}
+library(pointblank)
+small_table
+```
+
+:::
+
+
+## Testing cell values: `col_vals_*()` {.small}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### R
+
+```{r}
+#| eval: false
+library(pointblank)
+small_table |> 
+  create_agent() |> 
+  col_vals_gte(a, 0) |> 
+  interrogate()
+```
+
+:::
+
+::: {.column width="50%"}
+### Python
+
+```{python}
+#| eval: false
+import pointblank as pb
+validation = (
+  pb.Validate(
+    data=pb.load_dataset("small_table")
+  )
+  .col_vals_gte("a", 0)
+  .interrogate()
+)
+
+validation
+```
+
+:::
+
+::::
+
+## *Your Turn 2*
+
+::: {.small}
+```{r}
+worlds_fairs <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-13/worlds_fairs.csv')
+
+worlds_fairs
+```
+:::
+
+## Testing cell values: arguments
+
+* Refer to other columns as values: `vars(other_col)` (R) or `pb.col("other_col")` (Python)
+* Preprocess data with a function: `precondition` (R) or `pre` (Python)
+* Test by groups: `segment` (R), not yet available in Python
+
+## *Your Turn 3*
+
+Validate the steps in the exercise file.
+
+## Testing columns: `col_is_*()`/`col_schema_match()`
+
+```{r}
+create_agent(tbl = small_table) |> 
+  col_is_date(columns = date) |> 
+  interrogate() |> 
+  all_passed()
+```
+
+## *Your Turn 4*
+
+Validate the steps in the exercise file.
+
+## Testing rows: `row_*()`
+
+* `rows_distinct()`
+* `rows_complete()` (R only)
+* `rows_distinct(c(var1, var2, ...))`
+* `rows_complete(c(var1, var2, ...))` (R only)
+
+## 
+
+```{r}
+create_agent(tbl = small_table) |> 
+  rows_distinct() |> 
+  interrogate() |> 
+  all_passed()
+```
+
+```{r}
+create_agent(tbl = small_table) |> 
+  rows_complete() |> 
+  interrogate() |> 
+  all_passed()
+```
+
+## *Your Turn 5*
+
+Validate the steps in the exercise file.
+
+## Testing table properties: `*_match()`
+
+* `col_schema_match(schema)`
+* `row_count_match(n)`, `row_count_match(tbl)`
+* `col_count_match(n)`, `col_count_match(tbl)`
+
+## Testing table properties: `*_match()`
+
+```{r}
+create_agent(small_table) |> 
+  row_count_match(13) |> 
+  col_count_match(8) |> 
+  interrogate() |> 
+  all_passed()
+```
+
+## Exploring test results
+
+* Extract failures from a given step: `get_data_extracts()`
+* Get passing or failing rows: `get_sundered_data()`
+
+## Exploring test results
+
+```{r}
+agent <- create_agent(tbl = small_table) |> 
+  col_vals_gte(a, 0) |> 
+  col_vals_lt(b, 1110) |> 
+  rows_complete() |> 
+  interrogate()
+
+get_agent_x_list(agent)$n_failed
+```
+
+## Exploring test results
+
+```{r}
+get_data_extracts(agent, i = 3)
+```
+
+## Exploring test results
+
+```{r}
+get_sundered_data(agent)
+```
+
+## Exploring test results
+
+```{r}
+get_sundered_data(agent, type = "fail")
+```
+
+
+## Exploring test results
+
+```{r}
+get_sundered_data(agent, pass_fail = "fail")
+```
+
+## Severity and action (R)
+
+```{r}
+al <- action_levels(warn_at = .001, stop_at = .2)
+
+agent <- create_agent(
+  tbl = small_table,
+  actions = al
+) |> 
+  col_vals_gte(a, 0) |> 
+  col_vals_lt(d, 1110) |> 
+  interrogate()
+
+get_agent_x_list(agent)$warn
+get_agent_x_list(agent)$stop
+```
+
+## Severity and action (Python)
+
+```{python}
+import pointblank as pb
+tld = pb.Thresholds(warn_at=.001, stop_at=.2)
+validation = (
+    pb.Validate(
+      data=pb.load_dataset("small_table"),
+      thresholds=tld
+    )
+    .col_vals_ge("a", 0)
+    .col_vals_lt("d", 1110)
+    .interrogate()
+)
+
+validation.warn()
+validation.stop()
+```
+
+
+## *Your Turn 6*
+
+Validate the steps in the exercise file.
+
+## *Your Turn 7: Challenge!*
+
+```{r}
+english_monarchs_marriages <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-20/english_monarchs_marriages_df.csv')
+
+english_monarchs_marriages
+```
+
+
+## Bonus functions! (R only... for now!)
+
+* `data_scan()`
+* `draft_validation()`
+* Other workflows (testing, YAML, etc)
+
+## Data validation {background-color="#23373B"}
+
+1. Values
+2. Rows and columns
+3. Dataset properties
+4. Logical consistency
+5. Scientific consistency
