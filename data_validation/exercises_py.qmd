@@ -1,0 +1,227 @@
+---
+title: "Data validation in R and Python"
+format: html
+engine: jupyter
+---
+
+```{python}
+#| label: setup
+import pointblank as pb
+import pandas as pd
+
+# Load the dataset
+worlds_fairs = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-13/worlds_fairs.csv')
+```
+
+## Your Turn 1: Discussion
+
+What's the strangest thing you've ever seen in your data? What's are some times changes in data broke your code?
+
+## Your Turn 2
+
+Using the `worlds_fairs` data frame, use pointblank to verify that all start years are greater than or equal to 1851, the year of the first Worlds Fair:
+
+1. Create an agent
+2. Specify that the `start_year` column is greater than or equal to 1851
+3. Interrogate the data
+
+You can find the reference page for the many pointblank validation functions here: https://rich-iannone.github.io/pointblank/reference/#validation-steps
+
+```{python}
+validation = (
+    pb._______(data=worlds_fairs)
+        .______(columns="_______", value=____)
+        .______()
+)
+
+validation
+```
+
+## Your Turn 3
+
+Validate the following steps:
+
+* `visitors`, `cost`, `area`, and `attending_countries` are all greater than or equal to 0. Allow for them to also be missing with `na_pass = TRUE`.
+* The `start_date` is less than or equal to the `end_date`
+* For expos of the category "World Expo", `start_date` is increasing
+
+Python's pointblank doesn't yet have a couple of features we need for this, so we're going to do a little preprocessing. No need to change this code.
+
+```{python}
+def convert_to_numeric_date(year, month):
+    return pd.to_numeric(pd.to_datetime(
+        month.astype(str) + '-' + year.astype(str),
+        format="%m-%Y"
+    ))
+
+worlds_fairs['start_date'] = convert_to_numeric_date(worlds_fairs['start_year'], worlds_fairs['start_month'])
+worlds_fairs['end_date'] = convert_to_numeric_date(worlds_fairs['end_year'], worlds_fairs['end_month'])
+
+def calculate_increasing(series):
+    result = series.diff().gt(0).astype(int)  # 1 for strictly increasing, 0 otherwise
+    # Ensure the first row is marked as 1
+    result.iloc[0] = 1  
+    return result
+
+worlds_fairs['start_date_increasing'] = (
+    worlds_fairs
+    .groupby('category', group_keys=False)['start_date']
+    .apply(calculate_increasing)
+)
+```
+
+To check for increasing values for `start_date`, check that `start_date_increasing` is equal to 1 for the subset of rows where `category=='World Expo'`.
+
+```{python}
+validation = (
+    pb.Validate(data=worlds_fairs)
+    # ... fill in the rest
+    .interrogate()
+)
+
+validation
+```
+
+## Your Turn 4
+
+Validate the following steps:
+
+* The following variables are Int64:
+  - start_month
+  - start_year
+  - end_month
+  - end_year
+  
+* The following variables are String:
+  - name_of_exposition
+  - country
+  - city
+  - category
+  - theme
+  - notables
+
+* The following variables are Float64:
+  - area
+  - visitors
+  - cost
+  - area
+  - attending_countries
+
+In Python, we need to use `pb.Schema()` and `.col_schema_match()`. First, create a schema that maps the column name to the type. Then, in `.col_schema_match()`, use `expected_schema` and set the arguments `complete=False` and `in_order=False`. This will allow you to check just a subset of the column types.
+
+```{python}
+expected_schema = pb.Schema(
+    columns=[
+        # Int64
+        ('start_month', 'Int64'),
+        # ... fill in the rest
+
+        # String
+        # ... fill in the rest
+
+        # Float64
+        # ... fill in the rest
+    ]
+)
+
+# Perform the validation
+validation = (
+    pb.Validate(data=worlds_fairs)
+    # ... fill in the rest
+    .interrogate()
+)
+
+validation
+```
+
+## Your Turn 5
+
+Validate the following steps:
+
+* All rows are distinct
+* All rows have complete values of the start and end month and year, and the name of the exhibition (use `.col_vals_not_null()` for this)
+
+```{python}
+validation = (
+    pb.Validate(data=worlds_fairs)
+    # ... fill in the rest
+    .interrogate()
+)
+
+validation
+```
+
+## Your Turn 6
+
+Run the following validation and inspect the report:
+
+```{python}
+thresholds = pb.Thresholds(warn_at=0.01, stop_at=0.2)
+
+validation = (
+    pb.Validate(data=worlds_fairs, thresholds=thresholds)
+    .col_vals_not_in_set(columns="country", set=['South Korea', 'North Korea'])
+    .col_vals_between(columns="attending_countries", left=10, right=100)
+    .rows_distinct()
+    # all rows are complete
+    .col_vals_not_null(pb.everything())
+    .interrogate()
+)
+
+validation
+```
+
+Extract the failing data with `.get_data_extracts()` or `.get_sundered_data()`. 
+Identify why the set of rows failed given the expectation. 
+
+```{python}
+
+```
+
+## Your Turn 7: Challenge!
+
+For this exercise, let's use a new dataset
+
+```{python}
+english_monarchs_marriages = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-20/english_monarchs_marriages_df.csv')
+```
+
+Take a look at `english_monarchs_marriages` in detail.
+
+```{python}
+english_monarchs_marriages
+```
+
+We're going to clean this data frame up. First, though, write down your expectations of the data. What are the properties of the table, rows, columns, and values that you expect? 
+
+Put these expectations down as code via pointblank and validating the data as-is. Use `.get_sundered_data()` and `.get_data_extracts()` to explore what parts of the data are passing and what parts are not.
+
+```{python}
+
+```
+
+Now change the data so they pass your data validation specifications. 
+
+```{python}
+
+```
+
+
+***
+
+# Take aways
+
+* Data is weird and can get weirder 
+* Writing down expectations about data can help identify issues now and in the future
+* pointblank offers an API for doing this:
+
+```python
+validation = (
+    pb.Validate(data=df)
+    # ... validation steps
+    .interrogate()
+)
+```
+
+* With pointblank, we can assess properties of the data values with `.col_vals_*()`, columns with `.col_schema_match()`, rows with `.row_*()`, and at the table level with `.*_match()`
+* Investigate data validation results with `.get_sundered_data()` and `.get_data_extracts()`

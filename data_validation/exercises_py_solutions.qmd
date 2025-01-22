@@ -1,0 +1,325 @@
+---
+title: "Data validation in R and Python"
+format: html
+engine: jupyter
+---
+
+```{python}
+#| label: setup
+import pointblank as pb
+import pandas as pd
+
+# Load the dataset
+worlds_fairs = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-13/worlds_fairs.csv')
+```
+
+## Your Turn 1: Discussion
+
+What's the strangest thing you've ever seen in your data? What's are some times changes in data broke your code?
+
+## Your Turn 2
+
+Using the `worlds_fairs` data frame, use pointblank to verify that all start years are greater than or equal to 1851, the year of the first Worlds Fair:
+
+1. Create an agent
+2. Specify that the `start_year` column is greater than or equal to 1851
+3. Interrogate the data
+
+```{python}
+validation = (
+    pb.Validate(data=worlds_fairs)
+        .col_vals_ge(columns="start_year", value=1851)
+        .interrogate()
+)
+
+validation
+```
+
+## Your Turn 3
+
+Validate the following steps:
+
+* `visitors`, `cost`, `area`, and `attending_countries` are all greater than or equal to 0. Allow for them to also be missing with `na_pass = TRUE`.
+* The `start_date` is less than or equal to the `end_date`
+* For expos of the category "World Expo", `start_date` is increasing
+
+Python's pointblank doesn't yet have a couple of features we need for this, so we're going to do a little preprocessing to make it work. No need to change this code.
+
+```{python}
+def convert_to_numeric_date(year, month):
+    return pd.to_numeric(pd.to_datetime(
+        month.astype(str) + '-' + year.astype(str),
+        format="%m-%Y"
+    ))
+
+worlds_fairs['start_date'] = convert_to_numeric_date(worlds_fairs['start_year'], worlds_fairs['start_month'])
+worlds_fairs['end_date'] = convert_to_numeric_date(worlds_fairs['end_year'], worlds_fairs['end_month'])
+
+def calculate_increasing(series):
+    result = series.diff().gt(0).astype(int)  # 1 for strictly increasing, 0 otherwise
+    # Ensure the first row is marked as 1
+    result.iloc[0] = 1  
+    return result
+
+worlds_fairs['start_date_increasing'] = (
+    worlds_fairs
+    .groupby('category', group_keys=False)['start_date']
+    .apply(calculate_increasing)
+)
+```
+
+To check for increasing values for `start_date`, check that `start_date_increasing` is equal to 1 for the subset of rows where `category=='World Expo'`.
+
+```{python}
+validation = (
+    pb.Validate(data=worlds_fairs)
+    .col_vals_ge(columns=['visitors', 'cost', 'area', 'attending_countries'], value=0, na_pass=True)
+    .col_vals_le(columns="start_date", value=pb.col("end_date"))
+    .col_vals_eq(columns='start_date_increasing', value=1, na_pass=True, pre=lambda df: df.query("category=='World Expo'"))
+    .interrogate()
+)
+
+validation
+```
+
+## Your Turn 4
+
+Validate the following steps:
+
+* The following variables are Int64:
+  - start_month
+  - start_year
+  - end_month
+  - end_year
+  
+* The following variables are String:
+  - name_of_exposition
+  - country
+  - city
+  - category
+  - theme
+  - notables
+
+* The following variables are Float64:
+  - area
+  - visitors
+  - cost
+  - area
+  - attending_countries
+
+For now in Python, we need to use `pb.Schema()` and `.col_schema_match()`. For 
+
+```{python}
+expected_schema = pb.Schema(
+    columns=[
+        # Int64
+        ('start_month', 'Int64'),
+        ('start_year', 'Int64'),
+        ('end_month', 'Int64'),
+        ('end_year', 'Int64'),
+
+        # String
+        ('name_of_exposition', 'String'),
+        ('country', 'String'),
+        ('city', 'String'),
+        ('category', 'String'),
+        ('theme', 'String'),
+        ('notables', 'String'),
+
+        # Float64
+        ('visitors', 'Float64'),
+        ('cost', 'Float64'),
+        ('area', 'Float64'),
+        ('attending_countries', 'Float64')
+    ]
+)
+
+# Perform the validation
+validation = (
+    pb.Validate(data=worlds_fairs)
+    .col_schema_match(schema=expected_schema, complete=False, 
+    in_order=False)
+    .interrogate()
+)
+
+validation
+```
+
+## Your Turn 5
+
+Validate the following steps:
+
+* All rows are distinct
+* All rows have complete values of the start and end month and year, and the name of the exhibition (use `.col_vals_not_null()` for this)
+
+```{python}
+validation = (
+    pb.Validate(data=worlds_fairs)
+    .rows_distinct()
+    # all rows are complete for these variables
+    .col_vals_not_null(columns=['start_month', 'start_year', 'end_month', 'end_year', 'name_of_exposition'])
+    .interrogate()
+)
+
+validation
+```
+
+## Your Turn 6
+
+Run the following validation and inspect the report:
+
+```{python}
+thresholds = pb.Thresholds(warn_at=0.01, stop_at=0.2)
+
+validation = (
+    pb.Validate(data=worlds_fairs, thresholds=thresholds)
+    .col_vals_not_in_set(columns="country", set=['South Korea', 'North Korea'])
+    .col_vals_between(columns="attending_countries", left=10, right=100)
+    .rows_distinct()
+    # all rows are complete
+    .col_vals_not_null(pb.everything())
+    .interrogate()
+)
+
+validation
+```
+
+Extract the failing data with `validation.get_data_extracts()`. 
+Identify why the set of rows failed given the expectation. 
+
+```{python}
+
+```
+
+## Your Turn 7: Challenge!
+
+For this exercise, let's use a new dataset
+
+```{python}
+english_monarchs_marriages = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-20/english_monarchs_marriages_df.csv')
+```
+
+Take a look at `english_monarchs_marriages` in detail.
+
+```{python}
+english_monarchs_marriages
+```
+
+We're going to clean this data frame up. First, though, write down your expectations of the data. What are the properties of the table, rows, columns, and values that you expect? 
+
+Put these expectations down as code via pointblank and validating the data as-is. Use `.get_sundered_data()` and `.get_data_extracts()` to explore what parts of the data are passing and what parts are not.
+
+```{python}
+def validate_data(df):
+    """
+    Validate the provided DataFrame using pointblank.
+    """
+    # Define thresholds
+    thresholds = pb.Thresholds(warn_at=0.0001, stop_at=0.10)
+
+    # Identify string columns
+    string_columns = df.select_dtypes(include=["object"]).columns.tolist()
+
+    # Define the schema with Polars-style dtypes
+    schema = pb.Schema(
+        columns=[
+            ("king_name", "String"),
+            ("king_age", "Float64"),
+            ("consort_name", "String"),
+            ("consort_age", "Float64"),
+            ("year_of_marriage", "Float64"),
+            ("king_name_uncertain", "Boolean"),
+            ("king_age_uncertain", "Boolean"),
+            ("consort_name_uncertain", "Boolean"),
+            ("year_of_marriage_uncertain", "Boolean")
+        ]
+    )
+
+    # Validate the DataFrame
+    validation = (
+        pb.Validate(data=df, thresholds=thresholds)
+        .col_vals_regex(
+            columns=string_columns,  # Apply regex only to string columns
+            pattern="^[^?]*$",  # Fail if any '?' is present
+            na_pass=True
+        )
+        .col_vals_regex(
+            columns=string_columns,  # Apply regex only to string columns
+            pattern="^(|.*[^-–].*)$",  # Fail if only dashes are present
+            na_pass=True
+        )
+        .col_exists(
+            columns=[
+                "king_name_uncertain", 
+                "king_age_uncertain", 
+                "consort_name_uncertain",
+                "year_of_marriage_uncertain"
+            ]
+        )
+        .col_schema_match(schema=schema)  # Validate the schema
+        .rows_distinct()  # Check for duplicate rows
+        .interrogate()
+    )
+    return validation
+
+validation1 = validate_data(english_monarchs_marriages)
+validation
+```
+
+Now change the data so they pass your data validation specifications. 
+
+```{python}
+english_monarchs_marriages2 = pd.read_csv(
+    "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-20/english_monarchs_marriages_df.csv", 
+    na_values=["NA", "", "?", "-", "–"], 
+    encoding="utf-8"  
+)
+
+# Transform the data
+english_monarchs_marriages2 = (
+    english_monarchs_marriages2
+    .assign(
+        # Add columns to flag uncertainties
+        king_name_uncertain=lambda df: df["king_name"].str.contains(r"\?", na=False),
+        king_age_uncertain=lambda df: df["king_age"].astype(str).str.contains(r"\?", na=False),
+        consort_name_uncertain=lambda df: df["consort_name"].str.contains(r"\?", na=False),
+        year_of_marriage_uncertain=lambda df: df["year_of_marriage"].astype(str).str.contains(r"\?", na=False)
+    )
+    .assign(
+        # Parse numeric columns, ignoring '?' and dashes
+        king_age=lambda df: pd.to_numeric(df["king_age"].replace(r"[^\d.]", "", regex=True), errors="coerce"),
+        consort_age=lambda df: pd.to_numeric(df["consort_age"].replace(r"[^\d.]", "", regex=True), errors="coerce"),
+        year_of_marriage=lambda df: pd.to_numeric(df["year_of_marriage"].replace(r"[^\d.]", "", regex=True), errors="coerce")
+    )
+)
+
+# Remove '?' from string columns only
+string_columns = english_monarchs_marriages2.select_dtypes(include=["object"]).columns
+english_monarchs_marriages2[string_columns] = english_monarchs_marriages2[string_columns].apply(
+    lambda col: col.str.replace(r"\?", "", regex=True)
+)
+```
+
+```{python}
+validation2 = validate_data(english_monarchs_marriages2)
+validation2
+```
+
+***
+
+# Take aways
+
+* Data is weird and can get weirder 
+* Writing down expectations about data can help identify issues now and in the future
+* pointblank offers an API for doing this:
+
+```python
+validation = (
+    pb.Validate(data=df)
+    # ... validation steps
+    .interrogate()
+)
+```
+
+* With pointblank, we can assess properties of the data values with `.col_vals_*()`, columns with `.col_schema_match()`, rows with `.row_*()`, and at the table level with `.*_match()`
+* Investigate data validation results with `.get_sundered_data()` and `.get_data_extracts()`
