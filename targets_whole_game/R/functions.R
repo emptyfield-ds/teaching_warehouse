@@ -1,13 +1,13 @@
 map_2010_forest_conversion <- function(forest) {
-  world <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
+  world <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) |>
     mutate(ID = ifelse(ID == "USA", "United States", ID))
 
-  forest <- forest %>% filter(year == 2010, entity != "World")
+  forest <- forest |> filter(year == 2010, entity != "World")
 
-  world %>%
-    left_join(forest, by = c("ID" = "entity")) %>%
-    sf::st_as_sf() %>%
-    filter(ID != "Antarctica") %>%
+  world |>
+    left_join(forest, by = c("ID" = "entity")) |>
+    sf::st_as_sf() |>
+    filter(ID != "Antarctica") |>
     ggplot(aes(fill = net_forest_conversion)) +
     geom_sf(color = "white", size = 0.1) +
     cowplot::theme_map() +
@@ -21,11 +21,11 @@ map_2010_forest_conversion <- function(forest) {
 }
 
 barplot_top_10_change <- function(forest) {
-  forest %>%
-    filter(year == 2010, entity != "World") %>%
-    slice_max(abs(net_forest_conversion), n = 10) %>%
-    arrange(net_forest_conversion) %>%
-    mutate(entity = fct_inorder(entity)) %>%
+  forest |>
+    filter(year == 2010, entity != "World") |>
+    slice_max(abs(net_forest_conversion), n = 10) |>
+    arrange(net_forest_conversion) |>
+    mutate(entity = fct_inorder(entity)) |>
     ggplot(aes(
       x = net_forest_conversion,
       y = entity,
@@ -57,11 +57,11 @@ plot_top_change_2010 <- function(forest) {
 }
 
 clean_2010_causes <- function(brazil_loss) {
-  brazil_loss %>%
-    filter(year == 2010) %>%
-    select(-entity:-year) %>%
-    pivot_longer(everything(), names_to = "cause", values_to = "hectacres") %>%
-    arrange(desc(hectacres)) %>%
+  brazil_loss |>
+    filter(year == 2010) |>
+    select(-entity:-year) |>
+    pivot_longer(everything(), names_to = "cause", values_to = "hectacres") |>
+    arrange(desc(hectacres)) |>
     mutate(cause = to_sentence(cause))
 }
 
@@ -77,23 +77,23 @@ table_brazil_causes <- function(brazil_causes_2010) {
   gt(
     brazil_causes_2010,
     caption = "Causes of Brazilian forest loss in 2010"
-  ) %>%
-    fmt_number(hectacres, decimals = 0) %>%
+  ) |>
+    fmt_number(hectacres, decimals = 0) |>
     summary_rows(
       columns = hectacres,
       fns = list(Total = "sum"),
       decimals = 0,
       missing_text = ""
-    ) %>%
+    ) |>
     cols_label(cause = md("*Cause*"), hectacres = md("*Hectacres*"))
 }
 
 plot_cause_hist <- function(brazil_loss) {
-  brazil_loss %>%
-    select(-entity, -code) %>%
-    pivot_longer(-year, names_to = "cause", values_to = "hectacres") %>%
-    arrange(desc(hectacres)) %>%
-    mutate(cause = fct_inorder(cause)) %>%
+  brazil_loss |>
+    select(-entity, -code) |>
+    pivot_longer(-year, names_to = "cause", values_to = "hectacres") |>
+    arrange(desc(hectacres)) |>
+    mutate(cause = fct_inorder(cause)) |>
     ggplot(aes(x = year, y = hectacres)) +
     geom_col(
       data = function(x) select(x, -cause),

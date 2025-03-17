@@ -18,5 +18,5 @@ tar_plan(
   brazil_causes_2010 = clean_2010_causes(brazil_loss),
   brazil_causes_table = table_brazil_causes(brazil_causes_2010),
   brazil_causes_hist = plot_cause_hist(brazil_loss),
-  tar_render(report, "whole_game.Rmd")
+  tar_quarto(report, "whole_game.qmd")
 )
