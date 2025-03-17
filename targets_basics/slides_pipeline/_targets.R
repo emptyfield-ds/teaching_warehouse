@@ -1,7 +1,7 @@
 library(targets)
 options(tidyverse.quiet = TRUE)
 tar_option_set(packages = "tidyverse")
-source("R/functions.R")
+source("R/slide_functions")
 
 list(
   tar_target(gapminder_file, "gapminder.csv", format = "file"),
