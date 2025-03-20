@@ -1,0 +1,101 @@
+---
+title: "Whole Game: Analyzing deforestation"
+format: html
+execute:
+  echo: false
+---
+
+## Introduction
+
+For this module, we generate a report using a Make pipeline and Python.
+Each result (maps, tables, histograms) is produced as an independent target,
+and the report is rendered via Quarto.
+
+For this module, we'll focus on generating a report using a Make pipeline and Python..
+We'll create each result as a series of targets, including them in `Makefile`.
+We'll iterate through, one or two targets at a time, running `make` to check our work.
+Check `exercises.qmd` for guidance on creating this report!
+This will be an intentionally simplified report: we'll focus on the basics of creating output as targets and including them here as rendered material.
+
+
+```{python}
+#| label: setup
+#| include: false
+import dill as pickle
+import polars as pl
+import matplotlib.pyplot as plt
+import sys
+sys.path.append("scripts") 
+from functions import table_brazil_causes
+```
+
+## Methods
+
+In this analysis, we look at the net change in forestation in 2010 as well as the causes of deforestation in Brazil.
+These data come from [Our World in Data](https://ourworldindata.org/forests-and-deforestation).
+
+## Results
+
+```{python}
+forest = pl.scan_parquet("data/forest.parquet")
+top_changes = (
+    forest.filter((pl.col("year") == 2010) & (pl.col("entity") != "World"))
+          .sort(pl.col("net_forest_conversion").abs(), descending=True)
+          .head(2)
+          .collect()
+)
+
+def pull_net(top_changes, country):
+    """Extracts and formats the net forest conversion for a given country from top_changes."""
+    # Filter rows for the specified country and get the single value
+    value = top_changes.filter(pl.col("entity") == country)["net_forest_conversion"].item()
+    # Format the value with comma separators and no decimals.
+    return f"{value:,.0f}"
+```
+
+
+@fig-forest-map presents a map of net forest conversion in 2010, as well as the 10 countries with the highest absolute change in forest.
+In 2010, the China gained more forest than any other country, a net growth of `{python} pull_net(top_changes, "China")` hectacres; Brazil lost more forest than any other country, a net loss of `{python} pull_net(top_changes, "Brazil")` hectacres.
+
+```{python}
+#| label: fig-forest-map
+#| fig-cap: "Net Forest Conversion in 2010"
+import IPython.display as disp
+disp.Image("figures/forest_map.png")
+```
+
+```{python}
+def pull_hect(brazil_causes_2010, reason):
+    # Filter rows where the 'cause' column equals the specified reason
+    filtered = brazil_causes_2010.filter(pl.col("cause") == reason).collect()
+    # Extract the value from the 'hectacres' column (assumes one matching row)
+    value = filtered["hectacres"].item()
+    # Format the number with comma separators and zero decimals
+    return f"{value:,.0f}"
+
+brazil_causes_2010 = pl.scan_parquet("data/brazil_causes_2010.parquet")
+```
+
+@tbl-causes-table shows the causes of deforestation in Brazil in 2010.
+The top cause was clearing for pasture (`{python} pull_hect(brazil_causes_2010, "Pasture")` hectacres), followed by fire (`{python} pull_hect(brazil_causes_2010, "Fire")` hectacres), then small scale clearing (`{python} pull_hect(brazil_causes_2010, "Small scale clearing")` hectacres).
+
+```{python}
+#| label: tbl-causes-table
+#| tbl-cap: "The causes of deforestation in Brazil in 2010."
+brazil_causes_2010 = pl.read_parquet("data/brazil_causes_2010.parquet")
+table_brazil_causes(brazil_causes_2010)
+```
+
+@fig-causes-hist shows that, while deforestation has decreased in Brazil since the early 2000s, it remains steady at over 1 million hectacres lost per year.
+Pasture clearing is consistently the top cause, while fire---generally being accidental---varies from year to year.
+
+```{python}
+#| label: fig-causes-hist
+#| fig-cap: "Causes of deforestation in Brazil over time, sorted by maximum loss"
+disp.Image("figures/brazil_causes_hist.png")
+```
+
+## Discussion
+
+We've combined the magic of Quarto for generating reports with the reliability of Make for managing our code, when we render the report, and understanding what targets the report depends on.
+Make also let's us focus more on communicating and less on including lots of code in our report; it's all handled by our pipeline.

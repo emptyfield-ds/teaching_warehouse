@@ -1,0 +1,13 @@
+.PHONY: all clean format check
+
+data/forest.parquet: scripts/read_forest.py data/forest.csv
+	uv run scripts/read_forest.py
+
+clean:
+	rm -f pickles/*.pkl figures/*.png data/*.parquet whole_game.html
+
+style:
+	uvx ruff format .
+
+lint:
+	uvx ruff check .
