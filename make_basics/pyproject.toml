@@ -1,0 +1,22 @@
+[project]
+name = "make-basics"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "great-tables>=0.17.0",
+    "ipykernel>=6.29.5",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.1",
+    "polars>=1.25.2",
+    "pyarrow>=19.0.1",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.4",
+]
+
+[tool.uv.sources]
+great-tables = { git = "https://github.com/posit-dev/great-tables.git", rev = "refs/pull/641/head" }
+
+[tool.uv.workspace]
+members = ["../slides_pipeline"]
