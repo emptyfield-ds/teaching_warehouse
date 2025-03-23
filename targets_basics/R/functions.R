@@ -1,6 +1,5 @@
 create_table_one <- function(diabetes) {
   lbls <- list(
-    diabetic ~ "Diabetes Status",
     glyhb ~ "Hemoglobin A1c",
     ratio ~ "Waist/Hip Ratio",
     age ~ "Age",
@@ -17,17 +16,18 @@ create_table_one <- function(diabetes) {
 }
 
 listify_descriptions <- function(diabetes) {
-  diabetes |>
+  diabetes <- diabetes |>
     # calculate basic statistics by diabetes status
     group_by(diabetic) |>
-    summarise(n = n(), across(c(glyhb, ratio, age), mean, na.rm = TRUE)) |>
+    summarise(n = n(), across(c(glyhb, ratio, age), \(x) mean(x, na.rm = TRUE))) |>
     # clean up data to include in text
     mutate(
       across(where(is.numeric), round),
-      diabetic = fct_explicit_na(diabetic, na_level = "Missing")
-    ) |>
-    # split into a list of data frames by diabetes status
-    split(.$diabetic)
+      diabetic = fct_na_value_to_level(diabetic, level = "Missing")
+    )
+
+  # split into a list of data frames by diabetes status
+  split(diabetes, diabetes$diabetic)
 }
 
 create_figure_one <- function(diabetes) {
@@ -36,7 +36,7 @@ create_figure_one <- function(diabetes) {
     ggplot(aes(ratio, glyhb)) +
     geom_point(shape = 21, fill = "grey80", color = "white", size = 2) +
     geom_smooth(
-      size = 1,
+      linewidth = 1,
       color = "steelblue",
       se = FALSE,
       method = "lm",
