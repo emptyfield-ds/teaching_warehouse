@@ -1,0 +1,128 @@
+---
+title: "Manage code pipelines with Make"
+format: html
+---
+
+```{python}
+#| label: setup
+#| include: false
+from copy_makefile_template import copy_makefile_template
+```
+
+## Your Turn 1
+
+1. Open `Makefile` and read the contents
+2. Running `make` will execute the first target and any of its out-of-date dependencies. Predict how many targets would be run with `make`. Try `make --dry-run` to confirm.
+3. Run `make`. What happened, and what's changed in the directory?
+4. Run `make` again. What do you see? Why?
+
+## Your Turn 2
+
+1. Run this code to load a new `Makefile`:
+
+```{python}
+# this function is imported in the `setup` chunk above!
+copy_makefile_template("your_turn_2")
+```
+
+2. The first target we want to create is `parquet/diabetes.parquet`. First, let's change the `all` target to `all: parquet/diabetes.parquet`. Since `all` is the first target, telling Make that `all` depends on `parquet/diabetes.parquet` allows us to control what gets created when we run `make`
+3. Now, let's actually add the target for `parquet/diabetes.parquet`. We want Make to update this target any time `scripts/read_diabetes.py` or `diabetes-buckingham.csv` change. These are the `parquet/diabetes.parquet`'s *dependencies* or *pre-requisites*. To create the target, we want to execute the script with `uv run scripts/read_diabetes.py`.
+
+Remember, the format for a target is:
+
+```make
+target: dependency1 dependency2...
+  recipe
+```
+
+3. Run `make -n` in the terminal to see Make's plan. `make -n` is a shortcut for `make --dry-run`, which we'll use instead going forward.
+4. Run `make` in the terminal.
+5. Check that the file `diabetes.parquet` was created in the `parquet` folder.
+
+## Your Turn 3
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_3")
+```
+
+1. Change the `parquet/diabetes.parquet` target to depend on `diabetes.csv` instead. Also modify `scripts/read_diabetes.py` to use this file.
+2. Predict which targets are going to re-run, then run `make -n`. Were you right?
+3. Run `make`
+
+Stretch goal: take a look at the phony targets at the bottom. Try them out.
+
+## Your Turn 4
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_4")
+```
+
+1. Add a new target in the `Makefile`: 
+
+  * The target should create `pickles/table_one.pickle`
+  * It should depend on `scripts/create_table_one.py parquet/diabetes.parquet`
+  * To create the target file, we should run this recipe: `uv run scripts/create_table_one.py`
+  
+2. Run `make -n`
+3. Run `make`
+
+## Your Turn 5
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_5")
+```
+
+1. Open `scripts/create_table_one.py` and modify the GT table: Format the numeric columns to use one decimal point with `.fmt_number(["glyhb", "ratio", "age", "chol"], decimals=1)`. Make sure to save your file after you've made the change.
+2. Predict which targets are going to re-run. Run `make -n` in the terminal to confirm.
+3. Run `make`.
+
+## Your Turn 6
+
+1. Let's skip ahead in our analysis. Run this code to create a new `Makefile` file that has most of the targets we want to create. Open the file to make sure it was created correctly. 
+
+```{python}
+#| label: create-targets-r
+copy_makefile_template("your_turn_6")
+```
+
+2. Run `make` to catch up on the new targets.
+3. Open `report.qmd`. Which target files does this report depend on? Look for `pl.read_parquet()`, `open()`, and `disp.Image()` for places we are using files.
+4. Add a new target to generate your report in HTML format. The format for for rendering a Quarto file into html is:
+
+```make
+name_of_report.html: name_of_report.qmd other_dependencies
+  uv run quarto render name_of_report.qmd
+```
+
+Note that the dependencies for the target should just be the files that the Quarto document imports. Let Make worry about how to create them!
+
+5.  Run `make -n` and `make`. Open your rendered report from the Files pane.
+
+## Your Turn 7
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_7")
+```
+
+Confirm that you can reproduce your entire pipeline from scratch. In the terminal:
+
+1.  Run `make clean`
+2.  Run `make -n` to check we will run all targets 
+3.  Run `make`
+
+# Take aways
+
+- Make allows you to write a clear description of your analysis pipeline using file-based declarations
+- Once you tell Make which parts of your pipeline depend on the others, it only re-runs what it needs to
+- `Makefile` is how you tell Make what to run. `make` will run the first target, or we can run a specific target with `make target_name`.
+- `make` renders your pipeline, and `make -n` shows you what needs to be re-run.
+- It can be helpful to include phony targets to manage your project, like `clean` to remove all files created by the pipeline or even custom targets to do things like style your code, manage git, and so on.
+

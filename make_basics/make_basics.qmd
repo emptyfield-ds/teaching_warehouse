@@ -1,0 +1,597 @@
+---
+title: "Code pipelines in Python"
+subtitle: "Managing code with Make"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+# Strategies for reproduciblity {background-color="#23373B"}
+
+## 
+
+```{r}
+#| out.width: 80%
+#| echo: false
+library(tidyverse)
+library(gapminder)
+knitr::include_graphics("img/bless-this-workflow.png")
+```
+
+:::{.tiny}
+Art by Allison Horst
+:::
+
+## Clean execution environments
+
+### *Quarto documents*
+
+```{r}
+#| out.width: 100%
+#| echo: false
+knitr::include_graphics("img/quarto.png")
+```
+
+## Clean execution environments
+
+### *Fresh Jupyter Kernels*
+
+```{r}
+#| out.width: 50%
+#| echo: false
+knitr::include_graphics("img/jupyter-restart.png")
+```
+
+
+## Strategies for reproduciblity
+
+- **Quarto** for reproducible documents
+- **Virtual environments** for package version management, such as `conda` or `uv`
+- **git/GitHub** for version control 
+
+## Script-oriented workflows 
+
+:::{.large}
+```
+01-read-data.py
+02-clean-data.py
+03-decriptive-stats.py
+...
+n-output.py
+report.qmd
+```
+:::
+
+- Doesn't scale well—in terms of both time and scope
+- Not clear what we can skip
+
+## `GNU Make`
+
+![](img/make.png){.absolute top=0 right=0 width=140}
+
+
+</br></br>
+```{r}
+#| out.width: 95%
+#| echo: false
+knitr::include_graphics("img/targets_overview.svg")
+```
+
+## Setting up a pipeline
+
+- Make requires a `Makefile` file in the root directory of your project
+
+## {.small}
+
+```{bash}
+#| eval: false
+#| filename: "Makefile"
+#| code-line-numbers: "|1|2"
+figures/gapminder_plot.png: scripts/create_line_plot.py data/gapminder.csv
+	uv run scripts/create_line_plot.py
+```
+
+</br>
+
+```
+├── data
+│   └── gapminder.csv
+├── scripts
+│   └── create_line_plot.py
+└── Makefile
+```
+
+
+## {.small}
+
+```{python}
+#| eval: false
+#| filename: "scripts/create_line_plot.py"
+#| code-line-numbers: "|6|1,7,13"
+def create_line_plot(df: pl.DataFrame) -> plt.Figure:
+    ## -- snip --
+    return fig
+  
+def main():
+    gapminder = pl.read_csv("data/gapminder.csv")
+    fig = create_line_plot(gapminder)
+    
+    # Ensure the output directory exists.
+    os.makedirs("figures", exist_ok=True)
+    
+    # Save the figure as a PNG image.
+    fig.savefig("figures/gapminder_plot.png", dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+if __name__ == "__main__":
+    main()
+
+```
+
+## Visualizing `Makefile`
+
+:::{.small}
+
+```{bash}
+#| eval: false
+#| filename: "Makefile"
+figures/gapminder_plot.png: scripts/create_line_plot.py data/gapminder.csv
+	uv run scripts/create_line_plot.py
+```
+
+:::
+
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n4("data/gapminder.csv")
+    n2{{"figures/gapminder_plot.png"}}:::dirty
+    n3("scripts/create_line_plot.py")
+    n4 --> n2
+    n3 --> n2
+```
+
+## What's Make's plan?
+
+```{bash}
+#| eval: false
+make --dry-run
+```
+
+</br>
+
+```{bash}
+#| eval: false
+uv run scripts/create_line_plot.py
+```
+
+:::{.fragment}
+Run this **in the terminal**! Don't put it in `Makefile` or other scripts.
+:::
+
+## What's Make's plan?
+
+```{bash}
+#| eval: false
+make -n
+```
+
+## Building the pipeline
+
+```{bash}
+#| eval: false
+make
+```
+
+
+:::{.fragment .large}
+```
+uv run scripts/create_line_plot.py
+```
+:::
+
+:::{.fragment .large}
+```
+├── Makefile
+├── data
+│   └── gapminder.csv
+├── figures
+│   └── gapminder_plot.png
+└── scripts
+    └── create_line_plot.py
+```
+:::
+
+
+## 
+
+```{r}
+#| out.width: 95%
+#| echo: false
+knitr::include_graphics("img/gapminder_plot.png")
+```
+
+## `GNU Make`
+
+![](img/make.png){.absolute top=0 right=0 width=140}
+
+</br></br></br></br>
+```{r}
+#| out.width: 95%
+#| echo: false
+knitr::include_graphics("img/targets_overview.svg")
+```
+
+## *Your Turn 1* {.small}
+
+### Work through *Your Turn 1* in `exercises.qmd`
+
+## `Makefile`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1|2"
+target: dependency
+	recipe
+```
+
+:::{.fragment}
+The indent *must* be a tab!
+:::
+
+## `Makefile`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1"
+target: dependency1 dependency2
+	recipe
+```
+
+## `Makefile`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1,4"
+target1: target2
+	recipe1
+	
+target2: dependency1 dependency2
+	recipe2
+```
+
+
+## `Makefile`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1"
+all: target2 
+
+target1: dependency1 dependency2
+	recipe1
+	
+target2: target1
+	recipe2
+```
+
+## `Makefile`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1,6,9"
+all: target2 target3
+
+target1: dependency1 dependency2
+	recipe1
+	
+target2: target1
+	recipe2
+	
+target3: dependency3
+	recipe3
+```
+
+## `Makefile`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1"
+.PHONY: all
+all: target2 target3
+
+target1: dependency1 dependency2
+	recipe1
+	
+target2: target1
+	recipe2
+	
+target3: dependency3
+	recipe3
+```
+
+## `Makefile`
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n2{{"all"}}:::dirty
+    n5("dependency1")
+    n6("dependency2")
+    n8("dependency3")
+    n4{{"target1"}}:::dirty
+    n3{{"target2"}}:::dirty
+    n7{{"target3"}}:::dirty
+    n3 --> n2
+    n7 --> n2
+    n5 --> n4
+    n6 --> n4
+    n4 --> n3
+    n8 --> n7
+```
+
+
+## `Makefile`: `make clean`
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1,6-7"
+.PHONY: all clean
+all: target2 target3
+
+# --snip--
+
+clean:
+  rm -f target1 target2 target3
+```
+
+## *Your Turn 2*
+
+### Work through Your Turn 2 in `exercises.qmd`
+
+## *Your Turn 2*
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n2{{"all"}}:::dirty
+    n5("data/diabetes-buckingham.csv")
+    n3{{"parquet/diabetes.parquet"}}:::dirty
+    n4("scripts/read_diabetes.py")
+    n3 --> n2
+    n5 --> n3
+    n4 --> n3
+```
+
+
+## Re-running targets
+
+```{bash}
+#| eval: false
+make
+```
+
+</br>
+
+```{bash}
+#| eval: false
+make: `figures/gapminder_plot.png' is up to date.
+```
+
+## 
+
+```{python}
+#| eval: false
+#| filename: "scripts/create_line_plot.py"
+#| code-line-numbers: "|10"
+def create_line_plot(df: pl.DataFrame) -> plt.Figure:
+    ## -- snip --
+    g = sns.FacetGrid(
+        df, 
+        col="continent", 
+        col_wrap=2, 
+        height=4, 
+        sharey=True,
+        hue="country",
+        palette="mako"
+    )
+    ## -- snip --
+    return fig
+  
+## -- snip --
+```
+
+## Outdated targets
+
+```{bash}
+#| eval: false
+make --dry-run
+```
+
+</br>
+
+```{bash}
+#| eval: false
+uv run scripts/create_line_plot.py
+```
+
+## Outdated targets
+
+```{bash}
+#| eval: false
+make
+```
+
+:::{.fragment .large}
+```
+uv run scripts/create_line_plot.py
+```
+:::
+
+## 
+
+```{r}
+#| out.width: 95%
+#| echo: false
+knitr::include_graphics("img/gapminder_plot2.png")
+```
+
+## *Your Turn 3*
+
+### Change the `parquet/diabetes.parquet` target to depend on `diabetes.csv` instead. Also modify `scripts/read_diabetes.py` to use this file.
+### Predict which targets are going to re-run, then run `make -n`. Were you right?
+### Run `make`
+
+## *Your Turn 3*
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n2{{"all"}}:::dirty
+    n5("data/diabetes.csv")
+    n3{{"parquet/diabetes.parquet"}}:::dirty
+    n4("scripts/read_diabetes.py")
+    n3 --> n2
+    n5 --> n3
+    n4 --> n3
+```
+
+## Building up your pipeline
+
+- *Good targets are meaningful units of your analysis or important dependencies like files*
+- *Add one or two targets at a time*
+- *Run `make -n` and `make` often*
+
+## *Your Turn 4* and *Your Turn 5*
+
+### Work through *Your Turn 4* and *Your Turn 5* in `exercises.qmd`
+
+TODO: add mermaid for 4 and 5
+
+## Including Quarto files as targets: `report.qmd`
+
+````{verbatim}
+```{python}
+#| label: setup
+#| include: false
+import polars as pl
+gapminder = pl.read_csv("data/gapminder.csv")
+```
+
+These data have `{python} len(gapminder)` observations.
+
+```{python}
+#| label: fig-one
+#| fig-cap: "Figure 1"
+import IPython.display as disp
+disp.Image("figures/gapminder_plot.png")
+```
+````
+
+## {.small}
+
+```{bash}
+#| eval: false
+#| filename: "Makefile"
+#| code-line-numbers: "2|1"
+report.html: report.qmd figures/gapminder_plot.png data/gapminder.csv
+	uv run quarto render report.qmd
+
+figures/gapminder_plot.png: scripts/create_line_plot.py data/gapminder.csv
+	uv run scripts/create_line_plot.py
+```
+
+
+## `make`
+
+:::{.large}
+```
+uv run quarto render report.qmd
+```
+:::
+
+## Including Quarto files as targets
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n6("data/gapminder.csv")
+    n4{{"figures/gapminder_plot.png"}}:::dirty
+    n2{{"report.html"}}:::dirty
+    n3("report.qmd")
+    n5("scripts/create_line_plot.py")
+    n6 --> n4
+    n5 --> n4
+    n6 --> n2
+    n4 --> n2
+    n3 --> n2
+```
+
+
+## *Your Turn 6*
+
+### Work through Your Turn 6 in `exercises.qmd`
+
+TODO: mermaid
+
+## Removing target files
+
+-  **make clean**: A custom but common command to remove all created targets. Resets the pipeline to scratch.
+
+## *Your Turn 7*
+
+### Confirm that you can reproduce your entire pipeline from scratch. In the terminal:
+
+### Run `make clean`
+### Run `make -n`
+### Run `make`
+
+## Automatic parallelization
+
+```{bash}
+#| eval: false
+make --jobs=N
+```
+
+## Automatic parallelization
+
+```{bash}
+#| eval: false
+make --jobs=4
+```
+
+## Automatic parallelization
+
+```{bash}
+#| eval: false
+make -j4
+```
+
+## Wildcards {.small}
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|12-13"
+.PHONY: all clean
+
+# Find all CSV files in the data/ directory.
+CSV_FILES := $(wildcard data/*.csv)
+# Generate a list of Parquet file names in the parquet/ directory.
+PARQUET_FILES := $(patsubst data/%.csv,parquet/%.parquet,$(CSV_FILES))
+
+# Default target: build all Parquet files.
+all: $(PARQUET_FILES)
+
+# Pattern rule: convert each CSV file to a Parquet file.
+parquet/%.parquet: data/%.csv
+	uv run scripts/convert_csv_to_parquet.py $< $@
+
+clean:
+	rm -f parquet/*.parquet
+```
+
+
+## Resources {background-color="#23373B"}
+
+### [The GNU Make Manual](https://www.gnu.org/software/make/manual/make.html)
+### [The Software Carpentry Make Course](https://swcarpentry.github.io/make-novice/)
