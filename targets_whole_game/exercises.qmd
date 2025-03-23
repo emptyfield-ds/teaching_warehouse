@@ -142,3 +142,20 @@ copy_targets_template("your_turn_7.R")
 2.  Run `tar_visnetwork()`. What's different?
 3.  Run `tar_make()`
 4.  Take a look at your rendered report
+
+### Stretch goal: parallelize 
+
+targets comes with automatic parallelization. Since it knows the relationships between targets, it also knows what can be run at the same time. Doing so is easy with the crew package. Let's say we wanted to use 4 cores. In `_targets.R`, first load the crew package. Then, add `crew_controller_local()` to the `controller` argument of `tar_option_set()`.
+
+```{r}
+library(crew)
+n_cores <- 4
+tar_option_set(
+  # other arguments to tar_option_set()
+  controller = crew_controller_local(workers = n_cores)
+)
+```
+
+That's it! Now, try running `tar_destroy()` and `tar_make()` with parallelization.
+
+

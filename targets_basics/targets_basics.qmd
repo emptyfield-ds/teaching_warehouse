@@ -630,11 +630,42 @@ knitr::include_graphics("img/viznetwork4.png")
 
 ---
 
-## Other features of targets
+## *Automatic parallelization*
 
-- *Automatic parallelization*
-- *Branching*
-- *Cloud integration*
+```{r}
+#| eval: false
+#| filename: "_targets.R"
+# --snip--
+library(crew)
+n_cores <- 4
+tar_option_set(
+  controller = crew_controller_local(workers = n_cores)
+)
+# --snip--
+```
+
+:::{.fragment}
+See [crew.cluster](https://wlandau.github.io/crew.cluster/) for Slurm and other HPC support controllers
+:::
+
+## *Branching* 
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|2-5|6-10|4,9"
+list(
+  tar_files(
+    csv_files,
+    fs::dir_ls("data", regexp = "\\.csv$")
+  ),
+  tar_target(
+    parquet_files,
+    convert_csv_to_parquet(csv_files),
+    pattern = map(csv_files)
+  )
+)
+```
+
 
 ## Resources {background-color="#23373B"}
 

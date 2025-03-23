@@ -10,7 +10,7 @@
 <link href="targets_basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.56">
 
-  <meta name="dcterms.date" content="2025-03-17">
+  <meta name="dcterms.date" content="2025-03-23">
   <title>Code pipelines in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -397,7 +397,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2025-03-17</p>
+  <p class="date">2025-03-23</p>
 </section>
 <section>
 <section id="strategies-for-reproduciblity" class="title-slide slide level1 center" data-background-color="#23373B">
@@ -578,7 +578,7 @@ rmarkdown::render("report.qmd")</code></pre>
 <span id="cb6-4"><a href=""></a><span class="fu">source</span>(<span class="st">"R/functions.R"</span>) </span>
 <span id="cb6-5"><a href=""></a></span>
 <span id="cb6-6"><a href=""></a><span class="fu">list</span>( </span>
-<span id="cb6-7"><a href=""></a>  <span class="fu">tar_target</span>(gapminder_file, <span class="st">"gapminder.csv"</span>, <span class="at">format =</span> <span class="st">"file"</span>), <span class="co">#&lt;&lt;</span></span>
+<span id="cb6-7"><a href=""></a>  <span class="fu">tar_target</span>(gapminder_file, <span class="st">"gapminder.csv"</span>, <span class="at">format =</span> <span class="st">"file"</span>), </span>
 <span id="cb6-8"><a href=""></a>  <span class="fu">tar_target</span>(gapminder, <span class="fu">read_csv</span>(gapminder_file, <span class="at">col_types =</span> <span class="fu">cols</span>())), </span>
 <span id="cb6-9"><a href=""></a>  <span class="fu">tar_target</span>(plot, <span class="fu">create_line_plot</span>(gapminder)) </span>
 <span id="cb6-10"><a href=""></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -699,8 +699,8 @@ rmarkdown::render("report.qmd")</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb16" data-code-line-numbers="3-4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">tar_plan</span>(  </span>
 <span id="cb16-2"><a href=""></a>  <span class="fu">tar_target</span>(gapminder_file, <span class="st">"gapminder.csv"</span>, <span class="at">format =</span> <span class="st">"file"</span>), </span>
-<span id="cb16-3"><a href=""></a>  <span class="at">gapminder =</span> <span class="fu">read_csv</span>(gapminder_file, <span class="at">col_types =</span> <span class="fu">cols</span>()), <span class="co">#&lt;&lt;</span></span>
-<span id="cb16-4"><a href=""></a>  <span class="at">plot =</span> <span class="fu">create_line_plot</span>(gapminder) <span class="co">#&lt;&lt;</span></span>
+<span id="cb16-3"><a href=""></a>  <span class="at">gapminder =</span> <span class="fu">read_csv</span>(gapminder_file, <span class="at">col_types =</span> <span class="fu">cols</span>()), </span>
+<span id="cb16-4"><a href=""></a>  <span class="at">plot =</span> <span class="fu">create_line_plot</span>(gapminder) </span>
 <span id="cb16-5"><a href=""></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -746,7 +746,7 @@ rmarkdown::render("report.qmd")</code></pre>
 <span id="cb19-9"><a href=""></a>    )) <span class="sc">+</span></span>
 <span id="cb19-10"><a href=""></a>    <span class="fu">geom_line</span>(<span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb19-11"><a href=""></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent) <span class="sc">+</span></span>
-<span id="cb19-12"><a href=""></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span> <span class="co">#&lt;&lt; </span></span>
+<span id="cb19-12"><a href=""></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span>  </span>
 <span id="cb19-13"><a href=""></a>    <span class="fu">theme_minimal</span>(<span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb19-14"><a href=""></a>    <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.1</span>)))</span>
 <span id="cb19-15"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -762,11 +762,11 @@ rmarkdown::render("report.qmd")</code></pre>
 <div class="sourceCode cell-code" id="cb20" data-code-line-numbers="4,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">library</span>(targets)</span>
 <span id="cb20-2"><a href=""></a><span class="fu">library</span>(tarchetypes)</span>
 <span id="cb20-3"><a href=""></a><span class="fu">options</span>(<span class="at">tidyverse.quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-4"><a href=""></a><span class="fu">tar_option_set</span>(<span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"gapminder"</span>)) <span class="co">#&lt;&lt;</span></span>
+<span id="cb20-4"><a href=""></a><span class="fu">tar_option_set</span>(<span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"gapminder"</span>)) </span>
 <span id="cb20-5"><a href=""></a><span class="fu">source</span>(<span class="st">"R/functions.R"</span>) </span>
 <span id="cb20-6"><a href=""></a></span>
 <span id="cb20-7"><a href=""></a><span class="fu">tar_plan</span>(  </span>
-<span id="cb20-8"><a href=""></a>  <span class="fu">tar_file</span>(gapminder_file, <span class="st">"gapminder.csv"</span>), <span class="co">#&lt;&lt;</span></span>
+<span id="cb20-8"><a href=""></a>  <span class="fu">tar_file</span>(gapminder_file, <span class="st">"gapminder.csv"</span>), </span>
 <span id="cb20-9"><a href=""></a>  <span class="at">gapminder =</span> <span class="fu">read_csv</span>(gapminder_file, <span class="at">col_types =</span> <span class="fu">cols</span>()),</span>
 <span id="cb20-10"><a href=""></a>  <span class="at">plot =</span> <span class="fu">create_line_plot</span>(gapminder) </span>
 <span id="cb20-11"><a href=""></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -879,10 +879,6 @@ rmarkdown::render("report.qmd")</code></pre>
 <span id="cb25-13"><a href=""></a>tar_read(plot)</span>
 <span id="cb25-14"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="report.qmd-1" class="slide level2">
-<h2><code>report.qmd</code></h2>
-
-<img data-src="img/tar_render2.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="section-12" class="slide level2">
 <h2></h2>
 <div class="cell" data-layout-align="center">
@@ -937,13 +933,41 @@ rmarkdown::render("report.qmd")</code></pre>
 <h3 id="run-tar_destroy">Run <code>tar_destroy()</code></h3>
 <h3 id="run-tar_make">Run <code>tar_make()</code></h3>
 </section>
-<section id="other-features-of-targets" class="slide level2">
-<h2>Other features of targets</h2>
-<ul>
-<li class="fragment"><em>Automatic parallelization</em></li>
-<li class="fragment"><em>Branching</em></li>
-<li class="fragment"><em>Cloud integration</em></li>
-</ul>
+<section id="automatic-parallelization" class="slide level2">
+<h2><em>Automatic parallelization</em></h2>
+<div class="cell" data-layout-align="center">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_targets.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># --snip--</span></span>
+<span id="cb28-2"><a href=""></a><span class="fu">library</span>(crew)</span>
+<span id="cb28-3"><a href=""></a>n_cores <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb28-4"><a href=""></a><span class="fu">tar_option_set</span>(</span>
+<span id="cb28-5"><a href=""></a>  <span class="at">controller =</span> <span class="fu">crew_controller_local</span>(<span class="at">workers =</span> n_cores)</span>
+<span id="cb28-6"><a href=""></a>)</span>
+<span id="cb28-7"><a href=""></a><span class="co"># --snip--</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p>See <a href="https://wlandau.github.io/crew.cluster/">crew.cluster</a> for Slurm and other HPC support controllers</p>
+</div>
+</section>
+<section id="branching" class="slide level2">
+<h2><em>Branching</em></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29" data-code-line-numbers="|2-5|6-10|4,9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">list</span>(</span>
+<span id="cb29-2"><a href=""></a>  <span class="fu">tar_files</span>(</span>
+<span id="cb29-3"><a href=""></a>    csv_files,</span>
+<span id="cb29-4"><a href=""></a>    fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="st">"data"</span>, <span class="at">regexp =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>)</span>
+<span id="cb29-5"><a href=""></a>  ),</span>
+<span id="cb29-6"><a href=""></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb29-7"><a href=""></a>    parquet_files,</span>
+<span id="cb29-8"><a href=""></a>    <span class="fu">convert_csv_to_parquet</span>(csv_files),</span>
+<span id="cb29-9"><a href=""></a>    <span class="at">pattern =</span> <span class="fu">map</span>(csv_files)</span>
+<span id="cb29-10"><a href=""></a>  )</span>
+<span id="cb29-11"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="resources" class="slide level2" data-background-color="#23373B">
 <h2>Resources</h2>
