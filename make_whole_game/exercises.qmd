@@ -1,0 +1,171 @@
+---
+title: "Make: Whole Game"
+format: html
+---
+
+For this set of exercises, we'll work through a Make pipeline to run an analysis and generate Quarto report in `whole_game.qmd`. 
+Read that file for a little information on our data and analysis!
+Open `Makefile`---our file to manage the Make pipeline---to get started.
+
+```{python}
+#| label: setup
+from copy_makefile_template import copy_makefile_template
+```
+
+
+## Your Turn 1
+
+Run this code to make a fresh copy of `Makefile`:
+
+```{python}
+# this function is imported in the `setup` chunk above!
+copy_makefile_template("your_turn_1")
+```
+
+1.  Open `Makefile` and take a look at the structure of the file. Make requires this file to run! 
+2.  We're going to add a target to the `Makefile`. Remember, the format for a target is:
+
+```make
+target: dependencies
+  recipe
+```
+
+Create a target for `data/forest.parquet` that depends on `scripts/read_forest.py` and `data/forest.csv`. Take a look at that file so you understand what is happening.
+
+For the recipe to make the target, run the script with `uv run scripts/read_forest.py`.
+
+1.  Then, run `make -n` in the terminal to see what Make wil run.
+2.  Run `make` in the terminal (not in your script)
+3.  Take a look at the `data` folder to confirm `data/forest.parquet` was generated.
+4.  Run `make` again to see what happens.
+
+## Your Turn 2
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_2")
+```
+
+1.  Open `scripts/plot_forest_map.py` and take a look at the first function, `map_2010_forest_conversion()`. This function takes a data frame---forest---and generates a map of forest conversion in 2010.
+2.  Let's add this map to our targets plan. Add `figures/forest_map.png` as a target that depends on `scripts/plot_forest_map.py` and `data/forest.parquet`. For the recipe, add `uv run scripts/plot_forest_map.py`.
+3.  Run `make -n` to see a dry run. What is Make's plan?
+4.  When we run `make`, it runs the first target and any needed dependencies. At the top of your `Makefile`, add a phony target: `all: figures/forest_map.png`
+5.  Run `make -n` again
+6.  Run `make`
+7.  Check the figures folder for the file created for this target
+
+## Your Turn 3
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_3")
+```
+
+1.  The next function in `scripts/plot_barplot_change.py` , `barplot_top_10_change()`, takes `forest` and returns a barplot of the 10 countries with the highest absolute change in 2010. Create a target for `figures/forest_change.png` that depends on the script and `data/forest.parquet`. For the recipe, run the script.
+2.  Change `all` to `all: figures/forest_map.png figures/forest_change.png`
+2.  Take a look with `make -n` and then run the pipeline with `make`.
+3.  Take at the figure that you generated.
+
+## Your Turn 4
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_4")
+```
+
+2.  Remove the `figures/forest_change.png` target (as well as from `all`) and change the `figures/forest_map.png` target to use `plot_top_change_2010(forest)` (also defined in `scripts/plot_forest_map.py`) instead.
+3. `figures/forest_map.png` now also depends on `scripts/plot_barplot_change.py`, since `plot_top_change_2010()` uses a function defined there. Add it to the dependencies for `figures/forest_map.png`.
+3.  Take a look with `make -n` and then run the pipeline with `make`. Take a look at the figure.
+4.  We just got rid of `figures/forest_change.png` in the pipeline, but the file is still there. Let's start from scratch. Run `make clean` and then `make`. Check `figures/` to make sure that file is gone.
+
+## Your Turn 5
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_5")
+```
+
+1.  One at a time, running `make -n` , `make`, and checking the target file at each step, add four new targets. For each target, you can use `uv run` with the script to generate the target. You might need to tweak `all` throughout the process.
+
+    -   Add "data/brazil_loss.parquet" as a target that depends on `scripts/read_brazil_loss.py` and `data/brazil_loss.csv`
+
+    -   Add a new target called `data/brazil_causes_2010.parquet` using `scripts/clean_brazil_loss.py` that also depends on `data/brazil_loss.parquet` and `scripts/utils.py`.
+
+    -   Add a new target called `pickles/brazil_causes_table.pkl` using `scripts/table_brazil_causes.py` that also depends on `data/brazil_causes_2010.parquet`.
+
+    -   Add a new target called `figures/brazil_causes_hist.png` using `scripts/plot_cause_hist.py` that also depends on `data/brazil_loss.parquet` and `scripts/utils.py`.
+    
+    -   Modify `all` to be `all: figures/forest_map.png pickles/brazil_causes_table.pkl figures/brazil_causes_hist.png`
+
+### Stretch goal: refactor `Makefile` to run the same command
+
+Have you noticed we're following the same pattern here? We're declaring a target, and the first dependency is the script used to generate it. Then we run that script with `uv run <script_name>`. Make allows us to reuse commands and grab information about the target and dependencies using special characters. 
+
+The special commands in Make are: 
+
+* `$@`: The file name of the target of the rule.
+* `$<`: The first dependency.
+* `$^`: A list of all the dependencies, with duplicates removed.
+* `$+`: Similar to `$^`, but preserves duplicates.
+* `$?`: A list of all prerequisites that are newer than the target.
+
+What we want is a command that will always run the first dependency with `uv run`. To save a command, we can treat it like a variable in a bash script but without quotation marks. We'll use the `$<` shortcut to get the first dependency, the Python script.
+
+1. At the top of your `Makefile`, add `run = uv run $<`
+2. For every instance of `uv run <script_name>`, replace the recipe with the saved command: `$(run)` such that each target looks something like
+
+```make
+target: dependency.py ...
+  $(run)
+```
+
+## Your Turn 6
+
+Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
+
+```{python}
+copy_makefile_template("your_turn_6")
+```
+
+1.  Open `whole_game.qmd` and take a look. This is a report that uses the targets we created in our pipeline.
+2.  We need to import the various files we created. Walk through the report and fill in the blanks for the following targets:
+  * `data/forest.parquet`
+  * `figures/forest_map.png`
+  * `data/brazil_causes_2010.parquet`
+  * `figures/brazil_causes_hist.png`
+4.  Add the report to your pipeline in `Makefile`. The target is `whole_game.html`, the rendered report, which depends on: `whole_game.qmd figures/forest_map.png figures/brazil_causes_hist.png pickles/brazil_causes_table.pkl data/forest.parquet data/brazil_causes_2010.parquet`. For the recipe, run `uv run quarto render whole_game.qmd`. 
+5. Change the `all` target to `all: whole_game.html`. Since this file depends on everything, we can simplify this command. Now the pipeline has one purpose: to generate this report and everything we need to render it.
+5.  Run `make -n` and `make`. Open your rendered report from the files pane.
+
+## Your Turn 7
+
+```{python}
+copy_makefile_template("your_turn_7")
+```
+
+1.  Run `make clean` in the terminal
+2.  Run `make -n`. What's different?
+3.  Run `make` 
+4.  Take a look at your rendered report
+
+### Stretch goal: parallelize 
+
+Make comes with automatic parallelization. Since it knows the relationships between targets, it also knows what can be run at the same time. Doing so is easy: run `make --jobs=N` where `N` is the number of cores to use.
+
+For instance, to re-run the pipeline from scratch with 8 cores, first run `make clean`, the run:
+
+```make
+make --jobs=8
+```
+
+If you like, you can simply this command to `-jN` where `N` is the number of cores to use. This is identical to the command above:
+
+```make
+make -j8
+```
+
+

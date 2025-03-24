@@ -7,26 +7,8 @@ format: html
 #| label: setup
 #| include: false
 library(targets)
-
-copy_targets_template <- function(template) {
-  copied <- file.copy(
-    file.path("templates", template),
-    "_targets.R",
-    overwrite = TRUE
-  )
-  
-  if (!copied) {
-    stop(
-      file.path("templates", template), " not found. ", 
-      "Are you sure you're in the right working directory?",
-      call. = FALSE
-    )
-  }
-  
-  template_r <- usethis::ui_path(file.path("templates", template))
-  targets_r <- usethis::ui_path("_targets.R")
-  usethis::ui_done("Copying {template_r} to {targets_r}")
-}
+# this loads the `copy_targets_template()` helper function we'll use in this exercise
+source("copy_targets_template.R")
 ```
 
 ## Your Turn 1
@@ -108,8 +90,8 @@ copy_targets_template("your_turn_6.R")
 ```
 
 2. Run `tar_make()` to catch up on the new targets.
-3. Open `report.Rmd`. Which targets does this report depend on? Look for `tar_load()` and `tar_read()`.
-4. Add a new target to generate your report. The format for for rendering a R Markdown file is `tar_render(name_of_target, "name_of_report.Rmd")`.
+3. Open `report.qmd`. Which targets does this report depend on? Look for `tar_load()` and `tar_read()`.
+4. Add a new target to generate your report. The format for for rendering a Quarto file is `tar_quarto(name_of_target, "name_of_report.qmd")`.
 5.  Run `tar_visnetwork()` and `tar_make()`. Open your rendered report from the Files pane.
 
 ## Your Turn 7
@@ -131,5 +113,5 @@ Confirm that you can reproduce your entire pipeline from scratch. In the console
 - targets knows which parts of your code depend on the others, so it only re-runs what it needs to
 - `_targets.R` is how you tell targets what to run: end in a `list()` of `tar_target()`s or use `tarchetypes::tar_plan()` to use the format `target = action(other_target)`.
 - `tar_make()` renders your pipeline, and `tar_visnetwork()` visualizes it
-- Render R Markdown reports in targets with `tarcheypes::tar_render()`
+- Render Quarto reports in targets with `tarcheypes::tar_quarto()`
 

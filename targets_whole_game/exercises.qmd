@@ -3,33 +3,15 @@ title: "targets: Whole Game"
 format: html
 ---
 
-For this set of exercises, we'll work through a targets pipeline to run an analysis and generate an R Markdown report in `whole_game.Rmd`. 
+For this set of exercises, we'll work through a targets pipeline to run an analysis and generate a Quarto report in `whole_game.qmd`. 
 Read that file for a little information on our data and analysis!
 Open `_targets.R`---our file to manage the targets pipeline---to get started.
 
 ```{r}
 #| label: setup
 library(targets)
-
-copy_targets_template <- function(template) {
-  copied <- file.copy(
-    file.path("templates", template),
-    "_targets.R",
-    overwrite = TRUE
-  )
-  
-  if (!copied) {
-    stop(
-      file.path("templates", template), " not found. ", 
-      "Are you sure you're in the right working directory?",
-      call. = FALSE
-    )
-  }
-  
-  template_r <- usethis::ui_path(file.path("templates", template))
-  targets_r <- usethis::ui_path("_targets.R")
-  usethis::ui_done("Copying {template_r} to {targets_r}")
-}
+# this loads the `copy_targets_template()` helper function we'll use in this exercise
+source("copy_targets_template.R")
 ```
 
 
@@ -126,10 +108,10 @@ Something not quite working from the last exercise? Run this code to update `_ta
 copy_targets_template("your_turn_6.R")
 ```
 
-1.  Open `whole_game.Rmd` and take a look. This is a report that uses the targets we created in our pipeline.
+1.  Open `whole_game.qmd` and take a look. This is a report that uses the targets we created in our pipeline.
 2.  Use `tar_load()` to load `forest` and `brazil_causes_2010` in the `setup` chunk. This time, you will include `tar_load()` directly in your code!
 3.  Use `tar_read()` in the following chunks: `forest-map`, `causes-table`, and `causes-hist`.
-4.  Add the report to your pipeline in `_targets.R`. The format for for rendering a R Markdown file is `tar_render(name_of_target, "name_of_report.Rmd")`.
+4.  Add the report to your pipeline in `_targets.R`. The format for for rendering a Quarto file is `tar_quarto(name_of_target, "name_of_report.qmd")`.
 5.  Run `tar_visnetwork()` and `tar_make()`. Open your rendered report from the Files pane.
 
 ## Your Turn 7
@@ -142,3 +124,20 @@ copy_targets_template("your_turn_7.R")
 2.  Run `tar_visnetwork()`. What's different?
 3.  Run `tar_make()`
 4.  Take a look at your rendered report
+
+### Stretch goal: parallelize 
+
+targets comes with automatic parallelization. Since it knows the relationships between targets, it also knows what can be run at the same time. Doing so is easy with the crew package. Let's say we wanted to use 4 cores. In `_targets.R`, first load the crew package. Then, add `crew_controller_local()` to the `controller` argument of `tar_option_set()`.
+
+```{r}
+library(crew)
+n_cores <- 4
+tar_option_set(
+  # other arguments to tar_option_set()
+  controller = crew_controller_local(workers = n_cores)
+)
+```
+
+That's it! Now, try running `tar_destroy()` and `tar_make()` with parallelization.
+
+

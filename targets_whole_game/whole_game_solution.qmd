@@ -1,0 +1,104 @@
+---
+title: "Whole Game: Analyzing deforestation"
+format: html
+bibliography: packages.bib
+nocite: |
+  @*
+---
+
+## Introduction
+
+For this module, we'll focus on generating a report using targets.
+We'll create each result as a series of targets, including them in `_targets.R`.
+We'll iterate through, one or two targets at a time, running `tar_make()` and `tar_visnetwork()` to check our work.
+Check `exercises.qmd` for guidance on creating this report!
+This will be an intentionally simplified report: we'll focus on the basics of creating output as targets and including them here as rendered material.
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  dev = "ragg_png",
+  dpi = 320, 
+  out.width = "80%",
+  fig.width = 6,
+  fig.asp = 0.618,
+  fig.retina = 2,
+  fig.align = "center",
+  fig.show = "hold"
+)
+
+library(tidyverse)
+library(targets)
+source("R/functions.R")
+
+# write a bibliography file for all the packages we're using
+knitr::write_bib(file = "packages.bib")
+
+tar_load(forest)
+tar_load(brazil_causes_2010)
+```
+
+## Methods
+
+In this analysis, we look at the net change in forestation in 2010 as well as the causes of deforestation in Brazil.
+These data come from [Our World in Data](https://ourworldindata.org/forests-and-deforestation).
+
+## Results
+
+```{r}
+#| label: top-forest-changes
+top_changes <- forest |> 
+  filter(year == 2010, entity != "World") |> 
+  slice_max(abs(net_forest_conversion), n = 2)
+
+pull_net <- function(top_changes, country) {
+  top_changes |> 
+    filter(entity == country) |> 
+    pull(net_forest_conversion) |> 
+    scales::comma()
+}
+```
+
+```{r}
+#| label: fig-forest-map
+#| fig-cap: "Net Forest Conversion in 2010"
+#| fig-width: 9
+tar_read(forest_map)
+```
+
+@fig-forest-map presents a map of net forest conversion in 2010, as well as the 10 countries with the highest absolute change in forest.
+In 2010, the China gained more forest than any other country, a net growth of `r pull_net(top_changes, "China")` hectacres; Brazil lost more forest than any other country, a net loss of `r pull_net(top_changes, "Brazil")` hectacres.
+
+```{r}
+#| label: tbl-causes-table
+#| tbl-cap: "The causes of deforestation in Brazil in 2010."
+pull_hect <- function(brazil_causes_2010, reason) {
+  brazil_causes_2010 |> 
+    filter(cause == reason) |> 
+    pull(hectacres) |> 
+    scales::comma()
+}
+
+tar_read(brazil_causes_table)
+```
+
+@tbl-causes-table shows the causes of deforestation in Brazil in 2010.
+The top cause was clearing for pasture (`r pull_hect(brazil_causes_2010, "Pasture")` hectacres), followed by fire (`r pull_hect(brazil_causes_2010, "Fire")` hectacres), then small scale clearing (`r pull_hect(brazil_causes_2010, "Small scale clearing")` hectacres).
+
+```{r}
+#| label: fig-causes-hist
+#| fig-cap: "Causes of deforestation in Brazil over time, sorted by maximum loss"
+#| fig-width: 9
+tar_read(brazil_causes_hist)
+```
+
+@fig-causes-hist shows that, while deforestation has decreased in Brazil since the early 2000s, it remains steady at over 1 million hectacres lost per year.
+Pasture clearing is consistently the top cause, while fire---generally being accidental---varies from year to year.
+
+## Discussion
+
+We've combined the magic of Quarto for generating reports with the reliability of targets for managing our code, when we render the report, and understanding what targets the report depends on.
+targets also let's us focus more on communicating and less on including lots of code in our report; it's all handled by our pipeline.
+Using `tar_load()` and `tar_read()` allows us to grab targets and associated them with this report!

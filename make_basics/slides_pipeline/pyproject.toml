@@ -1,0 +1,14 @@
+[project]
+name = "slides-pipeline"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.1",
+    "polars>=1.25.2",
+    "pyarrow>=19.0.1",
+    "seaborn>=0.13.2",
+]

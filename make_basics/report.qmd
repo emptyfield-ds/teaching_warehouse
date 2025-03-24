@@ -1,0 +1,92 @@
+---
+title: "Whole Game: Analyzing the diabetes data set"
+format: html
+engine: jupyter
+bibliography: references.bib
+---
+
+# Introduction
+
+In this exercise, we'll look at a report generated completely in Python using Quarto.
+We're using an intentionally simplified report: what we're telling the readers, how we fit models, and so on, are all much simpler than you would use in practice.
+Instead, focus on the big idea here: reproducible reports!
+
+
+```{python}
+#| label: setup
+#| include: false
+import polars as pl
+import polars.selectors as cs
+from great_tables import GT
+import pickle
+```
+
+# Methods
+
+These data were collected as part of a study to estimate the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia for African-Americans [@Willems1997].
+We sought to assess the relationship between waist-to-hip ratio on hemoglobin A1c and diabetes diagnosis.
+In this truncated report, we include basic descriptive statistics on participants by diabetes status.
+We also fit two regression models: 1) an ordinary least-squares regression model of the impact of waist-to-hip ratio on hemoglobin A1c, and 2) a logistic regression model of the impact of waist-to-hip ratio on diabetes status.
+We adjusted both models for age.
+
+# Results
+
+```{python}
+#| label: load-description
+#| include: false
+# Load the descriptive summary table.
+description_df = pl.read_parquet("parquet/description.parquet")
+# split into a dict of data frames by diabetes status
+description = {group[0]: {key: value[0] for key, value in df.to_dict(as_series=False).items()} for group, df in description_df.group_by(["diabetic"])}
+
+```
+
+There were `{python} description['Diabetic']['n']` participants with diabetes, who had an average A1c of `{python} description['Diabetic']['glyhb']`, and `{python} description['Healthy']['n']` participants without diabetes, who had an average A1c of `{python} description['Healthy']['glyhb']`.
+Non-diabetic participants were, on average, younger than those with diabetes (`{python} description['Healthy']['age']` vs `{python} description['Diabetic']['age']`).
+There were `{python} description['Missing']['n']` participants who were missing data.
+These participants were also younger, on average, than those with diabetes (`{python} description['Diabetic']['age']` vs `{python} description['Missing']['age']`).
+See below for more.
+
+```{python}
+#| label: tbl-one
+#| tbl-cap: "Descriptive Statistics by Diabetic Status"
+#| echo: false
+with open("pickles/table_one.pickle", "rb") as f:
+    tbl1 = pickle.load(f)
+tbl1
+```
+
+```{python}
+#| label: fig-one
+#| echo: false
+#| fig-cap: "A1c and diabetes status by WH ratio"
+import IPython.display as disp
+disp.Image("figures/figure_one.png")
+```
+
+In @fig-one (a), we show the unadjusted relationship between A1c and waist-hip ratio (WH ratio is shown on the log scale).
+As WH ratio increases, A1c also increases.
+In @fig-one (b), we show the density of WH ratio among those with and without diabetes.
+Participants with diabetes had a higher WH ratio than those without diabetes.
+
+
+```{python}
+#| label: tbl-two
+#| echo: false
+#| tbl-cap: "The relationship between Hemoglobin A1c (linear) and Diabetic status (logistic) and Hip/waist ratio."
+with open("pickles/table_two.pickle", "rb") as f:
+    tbl2 = pickle.load(f)
+tbl2
+```
+
+In @tbl-two, we present two regression models: linear and logistic.
+In the linear model, we analyze the association of WH ratio an A1c adjusted for age.
+In the logistic model, we analyze the association of WH ratio on diabetes status adjusted for age.
+Increased WH ratio was associated with both higher A1c and a higher likelihood of being diabetic.
+
+# Discussion
+
+In this Quarto file, we generated a polished report of the diabetes dataset.
+Amazingly, when we were provided with an updated dataset, everything updated perfectly!
+
+# References

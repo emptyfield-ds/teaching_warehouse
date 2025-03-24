@@ -1,0 +1,13 @@
+.PHONY: all clean style lint
+
+# add a target here
+
+
+clean:
+	rm -f pickles/*.pkl figures/*.png data/*.parquet whole_game.html
+
+style:
+	uvx ruff format .
+
+lint:
+	uvx ruff check .

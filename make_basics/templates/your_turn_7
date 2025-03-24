@@ -1,0 +1,30 @@
+.PHONY: all clean
+
+all: report.html
+
+# Convert diabetes.csv to a Parquet file with a new "diabetic" column.
+parquet/diabetes.parquet: scripts/read_diabetes.py data/diabetes.csv
+	uv run scripts/read_diabetes.py
+
+# Generate summary descriptions by diabetic status and save as Parquet.
+parquet/description.parquet: scripts/listify_descriptions.py parquet/diabetes.parquet
+	uv run scripts/listify_descriptions.py
+
+# Create descriptive Table One and save as Parquet.
+pickles/table_one.pickle: scripts/create_table_one.py parquet/diabetes.parquet
+	uv run scripts/create_table_one.py
+
+# Create Figure One (combined scatter/density plot) and save as PNG.
+figures/figure_one.png: scripts/create_figure_one.py parquet/diabetes.parquet
+	uv run scripts/create_figure_one.py
+
+# Create regression Table Two and save as Parquet.
+pickles/table_two.pickle: scripts/create_table_two.py parquet/diabetes.parquet
+	uv run scripts/create_table_two.py
+
+# Render the final Quarto report.
+report.html: report.qmd parquet/description.parquet pickles/table_one.pickle figures/figure_one.png pickles/table_two.pickle
+	uv run quarto render report.qmd
+
+clean:
+	rm -f parquet/*.parquet pickles/*.pickle figures/*.png report.html

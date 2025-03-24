@@ -1,6 +1,5 @@
 create_table_one <- function(diabetes) {
   lbls <- list(
-    diabetic ~ "Diabetes Status",
     glyhb ~ "Hemoglobin A1c",
     ratio ~ "Waist/Hip Ratio",
     age ~ "Age",
@@ -9,34 +8,35 @@ create_table_one <- function(diabetes) {
     frame ~ "Body Frame"
   )
 
-  diabetes %>%
-    select(diabetic, glyhb, ratio, age, chol, gender, frame) %>%
-    filter(!is.na(diabetic)) %>%
-    tbl_summary(by = diabetic, label = lbls) %>%
+  diabetes |>
+    select(diabetic, glyhb, ratio, age, chol, gender, frame) |>
+    filter(!is.na(diabetic)) |>
+    tbl_summary(by = diabetic, label = lbls) |>
     add_difference(include = all_continuous())
 }
 
 listify_descriptions <- function(diabetes) {
-  diabetes %>%
+  diabetes <- diabetes |>
     # calculate basic statistics by diabetes status
-    group_by(diabetic) %>%
-    summarise(n = n(), across(c(glyhb, ratio, age), mean, na.rm = TRUE)) %>%
+    group_by(diabetic) |>
+    summarise(n = n(), across(c(glyhb, ratio, age), \(x) mean(x, na.rm = TRUE))) |>
     # clean up data to include in text
     mutate(
       across(where(is.numeric), round),
-      diabetic = fct_explicit_na(diabetic, na_level = "Missing")
-    ) %>%
-    # split into a list of data frames by diabetes status
-    split(.$diabetic)
+      diabetic = fct_na_value_to_level(diabetic, level = "Missing")
+    )
+
+  # split into a list of data frames by diabetes status
+  split(diabetes, diabetes$diabetic)
 }
 
 create_figure_one <- function(diabetes) {
-  fig1a <- diabetes %>%
-    drop_na() %>%
+  fig1a <- diabetes |>
+    drop_na() |>
     ggplot(aes(ratio, glyhb)) +
     geom_point(shape = 21, fill = "grey80", color = "white", size = 2) +
     geom_smooth(
-      size = 1,
+      linewidth = 1,
       color = "steelblue",
       se = FALSE,
       method = "lm",
@@ -50,9 +50,9 @@ create_figure_one <- function(diabetes) {
       tag = "A"
     )
 
-  fig1b <- diabetes %>%
-    drop_na() %>%
-    mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) %>%
+  fig1b <- diabetes |>
+    drop_na() |>
+    mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic"))) |>
     ggplot(aes(ratio, fill = diabetic)) +
     geom_density(color = "white", alpha = .8) +
     theme_minimal(14) +
@@ -70,18 +70,18 @@ create_figure_one <- function(diabetes) {
 create_table_two <- function(diabetes) {
   lbls_reg <- list(age ~ "Age", ratio ~ "Waist/Hip Ratio")
 
-  diabetes <- diabetes %>%
-    drop_na() %>%
+  diabetes <- diabetes |>
+    drop_na() |>
     mutate(diabetic = factor(diabetic, levels = c("Healthy", "Diabetic")))
 
-  linear_mod_tbl <- lm(glyhb ~ ratio + age, data = diabetes) %>%
+  linear_mod_tbl <- lm(glyhb ~ ratio + age, data = diabetes) |>
     tbl_regression(label = lbls_reg)
 
   logistic_mod_tbl <- glm(
     factor(diabetic) ~ ratio + age,
     data = diabetes,
     family = binomial()
-  ) %>%
+  ) |>
     tbl_regression(label = lbls_reg, exponentiate = TRUE)
 
   tbl_merge(

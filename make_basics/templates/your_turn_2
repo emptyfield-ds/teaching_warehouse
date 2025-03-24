@@ -1,0 +1,11 @@
+.PHONY: all clean
+
+all: _________
+
+# Convert diabetes.csv to a Parquet file with a new "diabetic" column.
+# `scripts/read_diabetes.py` can do this for us
+_________: _________ _________
+	uv run _________
+
+clean:
+	rm -f parquet/*.parquet pickles/*.pickle figures/*.png report.html
