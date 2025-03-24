@@ -29,7 +29,9 @@ knitr::opts_chunk$set(
   fig.show = "hold"
 )
 
+library(tidyverse)
 library(targets)
+source("R/functions.R")
 
 # write a bibliography file for all the packages we're using
 knitr::write_bib(file = "packages.bib")
