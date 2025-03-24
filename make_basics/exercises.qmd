@@ -26,7 +26,7 @@ copy_makefile_template("your_turn_2")
 ```
 
 2. The first target we want to create is `parquet/diabetes.parquet`. First, let's change the `all` target to `all: parquet/diabetes.parquet`. Since `all` is the first target, telling Make that `all` depends on `parquet/diabetes.parquet` allows us to control what gets created when we run `make`
-3. Now, let's actually add the target for `parquet/diabetes.parquet`. We want Make to update this target any time `scripts/read_diabetes.py` or `diabetes-buckingham.csv` change. These are the `parquet/diabetes.parquet`'s *dependencies* or *pre-requisites*. To create the target, we want to execute the script with `uv run scripts/read_diabetes.py`.
+3. Now, let's actually add the target for `parquet/diabetes.parquet`. We want Make to update this target any time `scripts/read_diabetes.py` or `data/diabetes-buckingham.csv` change. These are the `parquet/diabetes.parquet`'s *dependencies* or *pre-requisites*. To create the target, we want to execute the script with `uv run scripts/read_diabetes.py`.
 
 Remember, the format for a target is:
 
@@ -47,11 +47,9 @@ Something not quite working from the last exercise? Run this code to update `Mak
 copy_makefile_template("your_turn_3")
 ```
 
-1. Change the `parquet/diabetes.parquet` target to depend on `diabetes.csv` instead. Also modify `scripts/read_diabetes.py` to use this file.
+1. Change the `parquet/diabetes.parquet` target to depend on `data/diabetes.csv` instead. Also modify `scripts/read_diabetes.py` to use this file.
 2. Predict which targets are going to re-run, then run `make -n`. Were you right?
 3. Run `make`
-
-Stretch goal: take a look at the phony targets at the bottom. Try them out.
 
 ## Your Turn 4
 
@@ -66,9 +64,10 @@ copy_makefile_template("your_turn_4")
   * The target should create `pickles/table_one.pickle`
   * It should depend on `scripts/create_table_one.py parquet/diabetes.parquet`
   * To create the target file, we should run this recipe: `uv run scripts/create_table_one.py`
-  
-2. Run `make -n`
-3. Run `make`
+
+2. Add `pickles/table_one.pickle` to `all`
+3. Run `make -n`
+4. Run `make`
 
 ## Your Turn 5
 
@@ -102,7 +101,8 @@ name_of_report.html: name_of_report.qmd other_dependencies
 
 Note that the dependencies for the target should just be the files that the Quarto document imports. Let Make worry about how to create them!
 
-5.  Run `make -n` and `make`. Open your rendered report from the Files pane.
+5. Change `all` to `all: report.html`
+6. Run `make -n` and `make`. Open your rendered report from the Files pane.
 
 ## Your Turn 7
 
