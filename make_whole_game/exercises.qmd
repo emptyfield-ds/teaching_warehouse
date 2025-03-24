@@ -15,11 +15,11 @@ from copy_makefile_template import copy_makefile_template
 
 ## Your Turn 1
 
-Run this code to make a fresh copy of `_targets.R`:
+Run this code to make a fresh copy of `Makefile`:
 
 ```{python}
 # this function is imported in the `setup` chunk above!
-copy_targets_template("your_turn_1")
+copy_makefile_template("your_turn_1")
 ```
 
 1.  Open `Makefile` and take a look at the structure of the file. Make requires this file to run! 
@@ -44,11 +44,11 @@ For the recipe to make the target, run the script with `uv run scripts/read_fore
 Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
 
 ```{python}
-copy_targets_template("your_turn_2")
+copy_makefile_template("your_turn_2")
 ```
 
 1.  Open `scripts/plot_forest_map.py` and take a look at the first function, `map_2010_forest_conversion()`. This function takes a data frame---forest---and generates a map of forest conversion in 2010.
-2.  Let's add this map to our targets plan. Add `figures/forest_map.png` as a target that depends on `scripts/plot_forest_map.py` and `data/brazil_loss.csv`. For the recipe, add `uv run scripts/plot_forest_map.py`.
+2.  Let's add this map to our targets plan. Add `figures/forest_map.png` as a target that depends on `scripts/plot_forest_map.py` and `data/forest.parquet`. For the recipe, add `uv run scripts/plot_forest_map.py`.
 3.  Run `make -n` to see a dry run. What is Make's plan?
 4.  When we run `make`, it runs the first target and any needed dependencies. At the top of your `Makefile`, add a phony target: `all: figures/forest_map.png`
 5.  Run `make -n` again
@@ -60,7 +60,7 @@ copy_targets_template("your_turn_2")
 Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
 
 ```{python}
-copy_targets_template("your_turn_3")
+copy_makefile_template("your_turn_3")
 ```
 
 1.  The next function in `scripts/plot_barplot_change.py` , `barplot_top_10_change()`, takes `forest` and returns a barplot of the 10 countries with the highest absolute change in 2010. Create a target for `figures/forest_change.png` that depends on the script and `data/forest.parquet`. For the recipe, run the script.
@@ -73,10 +73,11 @@ copy_targets_template("your_turn_3")
 Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
 
 ```{python}
-copy_targets_template("your_turn_4")
+copy_makefile_template("your_turn_4")
 ```
 
 2.  Remove the `figures/forest_change.png` target (as well as from `all`) and change the `figures/forest_map.png` target to use `plot_top_change_2010(forest)` (also defined in `scripts/plot_forest_map.py`) instead.
+3. `figures/forest_map.png` now also depends on `scripts/plot_barplot_change.py`, since `plot_top_change_2010()` uses a function defined there. Add it to the dependencies for `figures/forest_map.png`.
 3.  Take a look with `make -n` and then run the pipeline with `make`. Take a look at the figure.
 4.  We just got rid of `figures/forest_change.png` in the pipeline, but the file is still there. Let's start from scratch. Run `make clean` and then `make`. Check `figures/` to make sure that file is gone.
 
@@ -85,7 +86,7 @@ copy_targets_template("your_turn_4")
 Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
 
 ```{python}
-copy_targets_template("your_turn_5")
+copy_makefile_template("your_turn_5")
 ```
 
 1.  One at a time, running `make -n` , `make`, and checking the target file at each step, add four new targets. For each target, you can use `uv run` with the script to generate the target. You might need to tweak `all` throughout the process.
@@ -127,7 +128,7 @@ target: dependency.py ...
 Something not quite working from the last exercise? Run this code to update `Makefile` and catch up:
 
 ```{python}
-copy_targets_template("your_turn_6")
+copy_makefile_template("your_turn_6")
 ```
 
 1.  Open `whole_game.qmd` and take a look. This is a report that uses the targets we created in our pipeline.
@@ -143,7 +144,7 @@ copy_targets_template("your_turn_6")
 ## Your Turn 7
 
 ```{python}
-copy_targets_template("your_turn_7")
+copy_makefile_template("your_turn_7")
 ```
 
 1.  Run `make clean` in the terminal

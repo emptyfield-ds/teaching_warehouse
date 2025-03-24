@@ -24,9 +24,6 @@ This will be an intentionally simplified report: we'll focus on the basics of cr
 import dill as pickle
 import polars as pl
 import matplotlib.pyplot as plt
-import sys
-sys.path.append("scripts") 
-from functions import table_brazil_causes
 ```
 
 ## Methods
@@ -86,12 +83,9 @@ The top cause was clearing for pasture (`{python} pull_hect(brazil_causes_2010, 
 ```{python}
 #| label: tbl-causes-table
 #| tbl-cap: "The causes of deforestation in Brazil in 2010."
-# pickling is not well-supported in GT yet
-# see https://github.com/posit-dev/great-tables/issues/640
-# so in the meantime, we'll use the pickle file as a proxy to track
-# this dependency, even though we are recreating the table here.
-brazil_causes_2010 = brazil_causes_2010.collect()
-table_brazil_causes(brazil_causes_2010)
+with open("__________", "rb") as f:
+    causes_table = pickle.load(f)
+causes_table
 ```
 
 @fig-causes-hist shows that, while deforestation has decreased in Brazil since the early 2000s, it remains steady at over 1 million hectacres lost per year.

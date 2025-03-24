@@ -1,6 +1,7 @@
-.PHONY: all clean format check
+.PHONY: all clean style lint
 
-all:
+# add a target here
+
 
 clean:
 	rm -f pickles/*.pkl figures/*.png data/*.parquet whole_game.html

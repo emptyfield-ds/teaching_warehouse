@@ -1,0 +1,18 @@
+.PHONY: all clean style lint
+
+all: figures/forest_map.png
+
+data/forest.parquet: scripts/read_forest.py data/forest.csv
+	uv run scripts/read_forest.py
+
+figures/forest_map.png: scripts/plot_forest_map.py data/forest.parquet
+	uv run scripts/plot_forest_map.py
+
+clean:
+	rm -f pickles/*.pkl figures/*.png data/*.parquet whole_game.html
+
+style:
+	uvx ruff format .
+
+lint:
+	uvx ruff check .

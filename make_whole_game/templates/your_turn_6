@@ -1,6 +1,6 @@
 .PHONY: all clean style lint
 
-all: whole_game.html
+all: figures/forest_map.png pickles/brazil_causes_table.pkl figures/brazil_causes_hist.png
 
 run = uv run $<
 
@@ -12,8 +12,7 @@ data/brazil_loss.parquet: scripts/read_brazil_loss.py data/brazil_loss.csv
 	$(run)
 
 # Create the forest map figure from forest data and save as a pickle
-figures/forest_map.png: scripts/plot_forest_map.py scripts/plot_barplot_change.py \
-  data/forest.parquet
+figures/forest_map.png: scripts/plot_forest_map.py data/forest.parquet
 	$(run)
 
 # Clean Brazil loss data for 2010 (saving the output as pickle)
@@ -30,12 +29,6 @@ pickles/brazil_causes_table.pkl: scripts/table_brazil_causes.py \
 figures/brazil_causes_hist.png: scripts/plot_cause_hist.py \
   data/brazil_loss.parquet scripts/utils.py
 	$(run)
-
-# Render the report using Quarto (the report depends on the figures and table)
-whole_game.html: whole_game.qmd figures/forest_map.png \
-  figures/brazil_causes_hist.png pickles/brazil_causes_table.pkl \
-  data/forest.parquet data/brazil_causes_2010.parquet
-	uv run quarto render whole_game.qmd
 
 clean:
 	rm -f pickles/*.pkl figures/*.png data/*.parquet whole_game.html
