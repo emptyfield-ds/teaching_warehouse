@@ -1,10 +1,5 @@
-library(targets)
-options(tidyverse.quiet = TRUE)
-tar_option_set(packages = "tidyverse")
-source("R/slide_functions")
+report.html: report.qmd figures/gapminder_plot.png data/gapminder.csv
+  uv run quarto render report.qmd
 
-list(
-  tar_target(gapminder_file, "gapminder.csv", format = "file"),
-  tar_target(gapminder, read_csv(gapminder_file, col_types = cols())),
-  tar_target(plot, create_line_plot(gapminder))
-)
+figures/gapminder_plot.png: scripts/create_line_plot.py data/gapminder.csv
+  uv run scripts/create_line_plot.py

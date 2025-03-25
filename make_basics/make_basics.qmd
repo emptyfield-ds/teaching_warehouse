@@ -466,7 +466,57 @@ flowchart TD
 
 ### Work through *Your Turn 4* and *Your Turn 5* in `exercises.qmd`
 
-TODO: add mermaid for 4 and 5
+## *Your Turn 4*
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n2{{"all"}}:::dirty
+    n5("data/diabetes.csv")
+    n3{{"parquet/diabetes.parquet"}}:::dirty
+    n6{{"pickles/table_one.pickle"}}:::dirty
+    n7("scripts/create_table_one.py")
+    n4("scripts/read_diabetes.py")
+    n3 --> n2
+    n6 --> n2
+    n5 --> n3
+    n4 --> n3
+    n3 --> n6
+    n7 --> n6
+```
+
+## *Your Turn 5*
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n2{{"all"}}:::dirty
+    n7("data/diabetes.csv")
+    n10{{"figures/figure_one.png"}}:::dirty
+    n3{{"parquet/description.parquet"}}:::dirty
+    n5{{"parquet/diabetes.parquet"}}:::dirty
+    n8{{"pickles/table_one.pickle"}}:::dirty
+    n12{{"pickles/table_two.pickle"}}:::dirty
+    n11("scripts/create_figure_one.py")
+    n9("scripts/create_table_one.py")
+    n13("scripts/create_table_two.py")
+    n4("scripts/listify_descriptions.py")
+    n6("scripts/read_diabetes.py")
+    n10 --> n2
+    n3 --> n2
+    n8 --> n2
+    n12 --> n2
+    n5 --> n10
+    n11 --> n10
+    n5 --> n3
+    n4 --> n3
+    n7 --> n5
+    n6 --> n5
+    n5 --> n8
+    n9 --> n8
+    n5 --> n12
+    n13 --> n12
+```
 
 ## Including Quarto files as targets: `report.qmd`
 
@@ -532,7 +582,42 @@ flowchart TD
 
 ### Work through Your Turn 6 in `exercises.qmd`
 
-TODO: mermaid
+## *Your Turn 6*
+
+```{mermaid}
+%%| fig-align: center
+flowchart TD
+    n2{{"all"}}:::dirty
+    n9("data/diabetes.csv")
+    n12{{"figures/figure_one.png"}}:::dirty
+    n5{{"parquet/description.parquet"}}:::dirty
+    n7{{"parquet/diabetes.parquet"}}:::dirty
+    n10{{"pickles/table_one.pickle"}}:::dirty
+    n14{{"pickles/table_two.pickle"}}:::dirty
+    n3{{"report.html"}}:::dirty
+    n4("report.qmd")
+    n13("scripts/create_figure_one.py")
+    n11("scripts/create_table_one.py")
+    n15("scripts/create_table_two.py")
+    n6("scripts/listify_descriptions.py")
+    n8("scripts/read_diabetes.py")
+    n3 --> n2
+    n7 --> n12
+    n13 --> n12
+    n7 --> n5
+    n6 --> n5
+    n9 --> n7
+    n8 --> n7
+    n7 --> n10
+    n11 --> n10
+    n7 --> n14
+    n15 --> n14
+    n12 --> n3
+    n5 --> n3
+    n10 --> n3
+    n14 --> n3
+    n4 --> n3
+```
 
 ## Removing target files
 
