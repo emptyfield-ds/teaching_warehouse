@@ -10,7 +10,7 @@
 <link href="make_basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.56">
 
-  <meta name="dcterms.date" content="2025-03-22">
+  <meta name="dcterms.date" content="2025-03-25">
   <title>Code pipelines in Python</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -400,7 +400,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2025-03-22</p>
+  <p class="date">2025-03-25</p>
 </section>
 <section>
 <section id="strategies-for-reproduciblity" class="title-slide slide level1 center" data-background-color="#23373B">
@@ -835,7 +835,74 @@ report.qmd</code></pre>
 <section id="your-turn-4-and-your-turn-5" class="slide level2">
 <h2><em>Your Turn 4</em> and <em>Your Turn 5</em></h2>
 <h3 id="work-through-your-turn-4-and-your-turn-5-in-exercises.qmd">Work through <em>Your Turn 4</em> and <em>Your Turn 5</em> in <code>exercises.qmd</code></h3>
-<p>TODO: add mermaid for 4 and 5</p>
+</section>
+<section id="your-turn-4" class="slide level2">
+<h2><em>Your Turn 4</em></h2>
+<div class="cell" data-reveal="true" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    n2{{"all"}}:::dirty
+    n5("data/diabetes.csv")
+    n3{{"parquet/diabetes.parquet"}}:::dirty
+    n6{{"pickles/table_one.pickle"}}:::dirty
+    n7("scripts/create_table_one.py")
+    n4("scripts/read_diabetes.py")
+    n3 --&gt; n2
+    n6 --&gt; n2
+    n5 --&gt; n3
+    n4 --&gt; n3
+    n3 --&gt; n6
+    n7 --&gt; n6
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn-5" class="slide level2">
+<h2><em>Your Turn 5</em></h2>
+<div class="cell" data-reveal="true" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    n2{{"all"}}:::dirty
+    n7("data/diabetes.csv")
+    n10{{"figures/figure_one.png"}}:::dirty
+    n3{{"parquet/description.parquet"}}:::dirty
+    n5{{"parquet/diabetes.parquet"}}:::dirty
+    n8{{"pickles/table_one.pickle"}}:::dirty
+    n12{{"pickles/table_two.pickle"}}:::dirty
+    n11("scripts/create_figure_one.py")
+    n9("scripts/create_table_one.py")
+    n13("scripts/create_table_two.py")
+    n4("scripts/listify_descriptions.py")
+    n6("scripts/read_diabetes.py")
+    n10 --&gt; n2
+    n3 --&gt; n2
+    n8 --&gt; n2
+    n12 --&gt; n2
+    n5 --&gt; n10
+    n11 --&gt; n10
+    n5 --&gt; n3
+    n4 --&gt; n3
+    n7 --&gt; n5
+    n6 --&gt; n5
+    n5 --&gt; n8
+    n9 --&gt; n8
+    n5 --&gt; n12
+    n13 --&gt; n12
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="including-quarto-files-as-targets-report.qmd" class="slide level2">
 <h2>Including Quarto files as targets: <code>report.qmd</code></h2>
@@ -904,7 +971,51 @@ report.qmd</code></pre>
 <section id="your-turn-6" class="slide level2">
 <h2><em>Your Turn 6</em></h2>
 <h3 id="work-through-your-turn-6-in-exercises.qmd">Work through Your Turn 6 in <code>exercises.qmd</code></h3>
-<p>TODO: mermaid</p>
+</section>
+<section id="your-turn-6-1" class="slide level2">
+<h2><em>Your Turn 6</em></h2>
+<div class="cell" data-reveal="true" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    n2{{"all"}}:::dirty
+    n9("data/diabetes.csv")
+    n12{{"figures/figure_one.png"}}:::dirty
+    n5{{"parquet/description.parquet"}}:::dirty
+    n7{{"parquet/diabetes.parquet"}}:::dirty
+    n10{{"pickles/table_one.pickle"}}:::dirty
+    n14{{"pickles/table_two.pickle"}}:::dirty
+    n3{{"report.html"}}:::dirty
+    n4("report.qmd")
+    n13("scripts/create_figure_one.py")
+    n11("scripts/create_table_one.py")
+    n15("scripts/create_table_two.py")
+    n6("scripts/listify_descriptions.py")
+    n8("scripts/read_diabetes.py")
+    n3 --&gt; n2
+    n7 --&gt; n12
+    n13 --&gt; n12
+    n7 --&gt; n5
+    n6 --&gt; n5
+    n9 --&gt; n7
+    n8 --&gt; n7
+    n7 --&gt; n10
+    n11 --&gt; n10
+    n7 --&gt; n14
+    n15 --&gt; n14
+    n12 --&gt; n3
+    n5 --&gt; n3
+    n10 --&gt; n3
+    n14 --&gt; n3
+    n4 --&gt; n3
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="removing-target-files" class="slide level2">
 <h2>Removing target files</h2>
