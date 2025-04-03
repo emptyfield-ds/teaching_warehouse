@@ -16,3 +16,6 @@ dependencies = [
     "pyarrow>=19.0.1",
     "seaborn>=0.13.2",
 ]
+
+[tool.uv.sources]
+great-tables = { git = "https://github.com/posit-dev/great-tables.git", rev = "refs/pull/641/head" }

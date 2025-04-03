@@ -18,5 +18,3 @@ dependencies = [
 [tool.uv.sources]
 great-tables = { git = "https://github.com/posit-dev/great-tables.git", rev = "refs/pull/641/head" }
 
-[tool.uv.workspace]
-members = ["../slides_pipeline"]
