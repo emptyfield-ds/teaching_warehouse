@@ -335,7 +335,7 @@ knitr::include_graphics("https://i.imgur.com/6YPliGW.png")
 
 ### Add theme
 
-We're pretty close! Interestingly, the Financial Times team has its own R package, [`ftplottools`](https://github.com/Financial-Times/ftplottools), for use in their articles. ftplottools includes a ggplot2 theme function, `ft_theme()`, similar to the original plot's theme (although there are some differences, including the default background color).
+We're pretty close! Interestingly, the Financial Times team has its own R package, [`ftplottools`](https://github.com/malcolmbarrett/ftplottools), for use in their articles. ftplottools includes a ggplot2 theme function, `ft_theme()`, similar to the original plot's theme (although there are some differences, including the default background color).
 
 Load ftplottools with `library()`, then add `ft_theme()` to `gg_arrow_segment`.
 
