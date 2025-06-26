@@ -184,7 +184,7 @@ dir_create(_______)
 
 ```{r}
 ggsave_gapminder <- ________(variable) {
-  # this allows use to accept both bare names and characters
+  # this allows us to accept both bare names and characters
   variable <- rlang::ensym(variable)
   
   #  don't forget to use the curly-curly syntax!
