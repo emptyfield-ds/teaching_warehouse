@@ -899,6 +899,7 @@ unlink(temp, recursive = TRUE, force = TRUE)
 dir_create("figures")
 
 ggsave_gapminder <- function(variable) {
+  variable <- rlang::ensym(variable)
   p <- ggplot(
     gapminder, 
     aes(x = year, y = {{ variable }}, color = country)
