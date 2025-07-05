@@ -1,0 +1,14 @@
+[project]
+name = "py-quarto-basics"
+version = "0.1.0"
+description = "Quarto for Python: The basics"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gapminder>=0.1",
+    "great-tables>=0.17.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.3",
+    "polars>=1.31.0",
+    "seaborn>=0.13.2",
+]

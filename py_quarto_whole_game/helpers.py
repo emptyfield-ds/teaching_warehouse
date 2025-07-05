@@ -1,12 +1,8 @@
 import shutil
-import os
 import io
 from pathlib import Path
 import polars as pl
 import polars.selectors as cs
-
-import shutil
-from pathlib import Path
 
 def copy_qmd_template(template):
     """
