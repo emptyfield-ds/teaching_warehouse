@@ -133,7 +133,7 @@ _italic_   __bold__
 ## Basic Markdown Syntax
 
 ```
-http://example.com
+<http://example.com>
 
 [linked phrase](http://example.com)
 
