@@ -33,7 +33,9 @@ download_cheatsheet <- function(.file) {
 
   usethis::ui_done("Downloading {cheatsheet}")
   usethis:::download_url(
-    glue::glue("https://github.com/rstudio/cheatsheets/raw/master/{cheatsheet}"),
+    glue::glue(
+      "https://github.com/rstudio/cheatsheets/raw/master/{cheatsheet}"
+    ),
     .file
   )
   cat("\n")

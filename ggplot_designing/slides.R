@@ -55,19 +55,33 @@ set.seed(1010)
 gapminder |>
   filter(year == 2007) |>
   ggplot(aes(log(gdpPercap), lifeExp)) +
-  geom_point(size = 3.5, alpha = .9, shape = 21, col = "white", fill = "#0162B2") +
-  geom_text_repel(aes(label = country), size = 4.5,
-                  point.padding = .2, box.padding = .4, force = 1,
-                  min.segment.length = 0) +
+  geom_point(
+    size = 3.5,
+    alpha = .9,
+    shape = 21,
+    col = "white",
+    fill = "#0162B2"
+  ) +
+  geom_text_repel(
+    aes(label = country),
+    size = 4.5,
+    point.padding = .2,
+    box.padding = .4,
+    force = 1,
+    min.segment.length = 0
+  ) +
   theme_minimal(14) +
-  theme(legend.position = "none",
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank()) +
-  labs(x = "log(GDP per capita)",
-       y = "life expectancy")
+  theme(
+    legend.position = "none",
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank()
+  ) +
+  labs(x = "log(GDP per capita)", y = "life expectancy")
 
 
-nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
+nyc_squirrels <- readr::read_csv(
+  "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv"
+)
 
 dog_sighting <- nyc_squirrels |>
   mutate(dog = str_detect(other_activities, "dog")) |>
@@ -86,7 +100,14 @@ nyc_squirrels |>
   ) +
   ggrepel::geom_label_repel(
     data = filter(dog_sighting, str_detect(other_activities, "teasing")),
-    aes(x = long, y = lat, label = str_wrap("All other dog sightings involved a squirrel hiding or being chased. This squirrel, however, was actively teasing a dog.", 30)),
+    aes(
+      x = long,
+      y = lat,
+      label = str_wrap(
+        "All other dog sightings involved a squirrel hiding or being chased. This squirrel, however, was actively teasing a dog.",
+        30
+      )
+    ),
     nudge_x = .015,
     segment.color = "grey70"
   ) +
@@ -133,9 +154,20 @@ lightning_plot <- emperors |>
   xlab("number of emperors")
 
 
-label <- str_wrap("Carus, Roman emperor from 282–283, allegedly died of a lightning strike while campaigning against the Empire of Iranians. He was succeded by his sons, Carinus, who died in battle, and Numerian, whose cause of death is unknown.", 50)
+label <- str_wrap(
+  "Carus, Roman emperor from 282–283, allegedly died of a lightning strike while campaigning against the Empire of Iranians. He was succeded by his sons, Carinus, who died in battle, and Numerian, whose cause of death is unknown.",
+  50
+)
 lightning_plot +
-  geom_label(data = data.frame(x = 5.8, y = 5, label = label), aes(x = x, y = y, label = label), hjust = 0, lineheight = .8, size = 5, inherit.aes = FALSE, label.size = NA) +
+  geom_label(
+    data = data.frame(x = 5.8, y = 5, label = label),
+    aes(x = x, y = y, label = label),
+    hjust = 0,
+    lineheight = .8,
+    size = 5,
+    inherit.aes = FALSE,
+    label.size = NA
+  ) +
   geom_curve(
     data = data.frame(x = 5.6, y = 5, xend = 1.2, yend = 5),
     mapping = aes(x = x, y = y, xend = xend, yend = yend),
@@ -152,5 +184,3 @@ la_heat_income |>
   geom_sf(aes(fill = temp), color = "white", size = .2) +
   cowplot::theme_map() +
   scale_fill_viridis_c(option = "inferno")
-
-

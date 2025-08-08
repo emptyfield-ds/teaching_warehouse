@@ -11,4 +11,3 @@ sum_squared_diffs <- function(mat) {
 
 set.seed(42)
 mat <- matrix(rnorm(1e6), nrow = 1000, ncol = 1000)
-

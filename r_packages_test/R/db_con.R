@@ -11,7 +11,9 @@
 #'
 #' @importFrom stats runif
 #'
-db_con <- function(dbname = c("residents_per_sector", "shinra_reactor_output", "donations")) {
+db_con <- function(
+  dbname = c("residents_per_sector", "shinra_reactor_output", "donations")
+) {
   dbname <- match.arg(dbname)
   # We will set up real database connections later. For now, we'll just return
   # some hard-coded data instead.
@@ -42,4 +44,3 @@ db_con <- function(dbname = c("residents_per_sector", "shinra_reactor_output", "
 
   x
 }
-

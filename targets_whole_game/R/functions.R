@@ -47,12 +47,10 @@ barplot_top_10_change <- function(forest) {
 
 plot_top_change_2010 <- function(forest) {
   map_2010_forest_conversion(forest) /
-    (
+    (plot_spacer() +
+      barplot_top_10_change(forest) +
       plot_spacer() +
-        barplot_top_10_change(forest) +
-        plot_spacer() +
-        plot_layout(widths = c(1, 8, 1))
-    ) +
+      plot_layout(widths = c(1, 8, 1))) +
     plot_layout(heights = c(2, 1))
 }
 
@@ -101,7 +99,7 @@ plot_cause_hist <- function(brazil_loss) {
       alpha = .9
     ) +
     geom_col(aes(fill = "cause"), alpha = .9) +
-    facet_wrap(~ cause, labeller = as_labeller(label_sentence)) +
+    facet_wrap(~cause, labeller = as_labeller(label_sentence)) +
     cowplot::theme_minimal_hgrid() +
     theme(legend.position = "bottom", legend.justification = "center") +
     scale_y_continuous(

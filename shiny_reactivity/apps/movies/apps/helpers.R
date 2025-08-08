@@ -1,5 +1,5 @@
 # Function for prettifying axis labels
-prettify_label <- function(x){
+prettify_label <- function(x) {
   x %>%
     str_replace_all("_", " ") %>%
     str_to_title() %>%

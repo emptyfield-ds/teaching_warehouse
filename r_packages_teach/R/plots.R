@@ -12,9 +12,12 @@
 plot_donations <- function(...) {
   x <- count_donations(...)
 
-  ggplot2::ggplot(x, ggplot2::aes(
-    forcats::fct_reorder(.data$sector, .data$donations),
-    .data$donations)
+  ggplot2::ggplot(
+    x,
+    ggplot2::aes(
+      forcats::fct_reorder(.data$sector, .data$donations),
+      .data$donations
+    )
   ) +
     ggplot2::geom_col() +
     ggplot2::coord_flip() +

@@ -4,7 +4,9 @@ options(tidyverse.quiet = TRUE)
 
 # load packages prior to our pipeline
 # this is the same as including a script that calls `library()` for each package
-tar_option_set(packages = c("tidyverse", "maps", "sf", "scico", "patchwork", "gt"))
+tar_option_set(
+  packages = c("tidyverse", "maps", "sf", "scico", "patchwork", "gt")
+)
 
 source("R/functions.R")
 

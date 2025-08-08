@@ -1,6 +1,5 @@
 # patterns:
 
-
 # facet with data shadows -------------------------------------------------
 
 #  set up background geom
@@ -55,7 +54,7 @@ ggdraw(line_plot_direct_labels)
 # as a function
 direct_label <- function(p, .data, .labels, .x = x, .y = y, axis = "y", ...) {
   direct_labels_axis <- axis_canvas(p, axis = "y") +
-    geom_text(data = .data, aes({{.x}}, {{.y}}, label = {{.labels}}), ...)
+    geom_text(data = .data, aes({{ .x }}, {{ .y }}, label = {{ .labels }}), ...)
 
   p_direct_labels <- insert_yaxis_grob(p, direct_labels_axis)
 
@@ -65,12 +64,22 @@ direct_label <- function(p, .data, .labels, .x = x, .y = y, axis = "y", ...) {
 direct_label(p, data, x = 1, y = max(y), label = "label text")
 
 
-
 # pointy notes ------------------------------------------------------------
 
-label <- str_wrap("Carus, Roman emperor from 282–283, allegedly died of a lightning strike while campaigning against the Empire of Iranians. He was succeded by his sons, Carinus, who died in battle, and Numerian, whose cause of death is unknown.", 50)
+label <- str_wrap(
+  "Carus, Roman emperor from 282–283, allegedly died of a lightning strike while campaigning against the Empire of Iranians. He was succeded by his sons, Carinus, who died in battle, and Numerian, whose cause of death is unknown.",
+  50
+)
 lightning_plot +
-  geom_label(data = data.frame(x = 5.8, y = 5, label = label), aes(x = x, y = y, label = label), hjust = 0, lineheight = .8, size = 5, inherit.aes = FALSE, label.size = NA) +
+  geom_label(
+    data = data.frame(x = 5.8, y = 5, label = label),
+    aes(x = x, y = y, label = label),
+    hjust = 0,
+    lineheight = .8,
+    size = 5,
+    inherit.aes = FALSE,
+    label.size = NA
+  ) +
   geom_curve(
     data = data.frame(x = 5.6, y = 5, xend = 1.2, yend = 5),
     mapping = aes(x = x, y = y, xend = xend, yend = yend),
@@ -102,4 +111,3 @@ plot +
     curvature = -0.1,
     arrow = arrow()
   )
-

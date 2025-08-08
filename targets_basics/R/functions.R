@@ -19,7 +19,10 @@ listify_descriptions <- function(diabetes) {
   diabetes <- diabetes |>
     # calculate basic statistics by diabetes status
     group_by(diabetic) |>
-    summarise(n = n(), across(c(glyhb, ratio, age), \(x) mean(x, na.rm = TRUE))) |>
+    summarise(
+      n = n(),
+      across(c(glyhb, ratio, age), \(x) mean(x, na.rm = TRUE))
+    ) |>
     # clean up data to include in text
     mutate(
       across(where(is.numeric), round),

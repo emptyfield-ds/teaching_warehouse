@@ -10,9 +10,16 @@
 #'
 #' @return invisibly, the path of the analysis directory
 #' @export
-create_analysis <- function(path = ".", folder = "avalanche_analysis", author = "Author", title = "Untitled Analysis") {
+create_analysis <- function(
+  path = ".",
+  folder = "avalanche_analysis",
+  author = "Author",
+  title = "Untitled Analysis"
+) {
   analysis_path <- fs::path(path, folder)
-  if (fs::dir_exists(analysis_path)) fs::dir_delete(analysis_path)
+  if (fs::dir_exists(analysis_path)) {
+    fs::dir_delete(analysis_path)
+  }
 
   usethis::ui_done("Writing {usethis::ui_path(folder)}")
   fs::dir_create(analysis_path)
@@ -36,5 +43,3 @@ use_avalanche_template <- function(template, folder, data = list()) {
     package = "__________"
   )
 }
-
-

@@ -11,21 +11,20 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+  titlePanel("Midgar reactor output"),
 
-    titlePanel("Midgar reactor output"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        "sector_number",
+        "Midgar Sector",
+        choices = 1:8,
+      )
+    ),
 
-    sidebarLayout(
-        sidebarPanel(
-            selectInput(
-                "sector_number",
-                "Midgar Sector",
-                choices = 1:8,
-            )
-        ),
-
-        mainPanel(
-            plotOutput("reactor_plot"),
-            gt::gt_output("reactor_data")
-        )
+    mainPanel(
+      plotOutput("reactor_plot"),
+      gt::gt_output("reactor_data")
     )
+  )
 ))

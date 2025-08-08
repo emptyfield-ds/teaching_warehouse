@@ -7,7 +7,8 @@ copy_targets_template <- function(template) {
 
   if (!copied) {
     stop(
-      file.path("templates", template), " not found. ",
+      file.path("templates", template),
+      " not found. ",
       "Are you sure you're in the right working directory?",
       call. = FALSE
     )
