@@ -151,7 +151,7 @@ diabetes |>
 
 ```{r}
 gapminder_countries <- ____(gapminder, gapminder$country)
-models <- map(________, ~ ________)
+models <- map(________, ________)
 preds <- map2(________, ________, ________)
 
 # Look at the first six elements of the list 
