@@ -1,5 +1,7 @@
 project:
   title: "r_teaching_warehouse"
+  render: []
 
-
-
+profile:
+  group:
+    - [dev, mastering-r]

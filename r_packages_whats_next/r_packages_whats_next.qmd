@@ -1,0 +1,56 @@
+---
+title: "R Packages: What's next?"
+subtitle: ""
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r setup, include=FALSE}
+options(
+  htmltools.dir.version = FALSE, 
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE, 
+  dev = "ragg_png",
+  dpi = 320,
+  out.width = "80%",
+  fig.width = 6,
+  fig.asp = 0.618,
+  fig.retina = 2,
+  fig.align = "center",
+  fig.show = "hold"
+)
+
+library(tidyverse)
+```
+
+# submitting to CRAN
+
+## Key helper functions:
+
+## `usethis::use_release_issue()`
+## `devtools::check_win_devel()`
+## `devtools::submit_cran()`
+
+. . .
+
+## Also see https://github.com/ThinkR-open/prepare-for-cran
+
+## Sharing in other ways
+
+## GitHub or other git service
+## RStudio Package Manager
+## Talk to your IT and DevOps people
+
+## Tell people about it!
+
+## **No one will use your helpful new package if they don’t know that it exists.** —Hadley Wickham and Jenny Bryan
+
+. . .
+
+## Tweet it on #rstats, blog about it, share it on R Weekly or another venue
+

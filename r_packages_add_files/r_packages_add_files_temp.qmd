@@ -1,0 +1,4 @@
+---
+title: "Add data and files to R packages"
+format: "kakashi-revealjs"
+---

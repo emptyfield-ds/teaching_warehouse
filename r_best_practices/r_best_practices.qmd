@@ -1,16 +1,7 @@
 ---
 title: "Best Practices in R"
 date: "`r paste(Sys.Date(), '<br><br>developed by Emil Hvitfeldt')`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
 
 
@@ -36,7 +27,8 @@ knitr::include_graphics("img/r_first_then.png")
 
 ## Change Settings
 
-.pull-left[
+::: {.columns}
+::: {.column width="50%"}
 .medium[**Keyboard shortcut to open settings**]  
 `⌘ + ,` in Mac OS,  
 `ctrl + ,` in Windows  
@@ -44,36 +36,47 @@ knitr::include_graphics("img/r_first_then.png")
 ### ✓ - Uncheck "Restore .RData into work space at start up"  
 
 ### ✓ - Set "Save work space to .Rdata on exit" to "Never"
-]
+:::
 
-.pull-right[![Settings window](img/settings-general.png)]
+::: {.column width="50%"}
+![Settings window](img/settings-general.png)
+:::
+:::
 
 ---
 
 ## Change Appearance
 
-.pull-left[
+::: {.columns}
+::: {.column width="50%"}
 ## RStudio themes
 ## Fonts
 ## Font Sizes
 ## Editor Themes
-]
+:::
 
-.pull-right[![Settings window](img/settings-appearance.png)]
+::: {.column width="50%"}
+![Settings window](img/settings-appearance.png)
+:::
+:::
 
 ---
 
 ## Pane layouts
 
-.pull-left[
+::: {.columns}
+::: {.column width="50%"}
 ## Change the layout of the panes  
 
 ## Source on top?  
 ## Source down to the right?  
 ## It's all up to you!
-]
+:::
 
-.pull-right[![Settings window](img/settings-pane-layout.png)]
+::: {.column width="50%"}
+![Settings window](img/settings-pane-layout.png)
+:::
+:::
 
 ---
 
@@ -129,15 +132,17 @@ keep all the files associated with a project together — input data, R scripts,
 
 ## RStudio Projects - Creation 1 / 4
 
-.pull-left[
+::: {.columns}
+::: {.column width="50%"}
 Click File > New Project  
 ![Up right tick](img/rstudio-project-1.png)
-]
+:::
 
-.pull-right[
+::: {.column width="50%"}
 Or click on the upper right
 ![Up right tick](img/rstudio-project-2.png)
-]
+:::
+:::
 
 ---
 
@@ -187,7 +192,7 @@ name_of_project
 
 ---
 
-class: inverse
+## {background-color="#23373B"}
 
 1. Raw data separate from cleaned data
 1. Reports and scripts are separated
@@ -308,7 +313,9 @@ Follow narrative from folder structure slide
 jenny Bryan naming things
 
 ---
-class: inverse
+
+## {background-color="#23373B"}
+
 .small[
 1. Avoid spaces, punctuation, special characters and case sensitivity
 1. Deliberate use of delimiters
@@ -375,9 +382,7 @@ dir_ls("data/", regexp = "health-study") |>
 
 ---
 
-class: inverse
-
-## Naming Things - Objects
+## Naming Things - Objects {background-color="#23373B"}
 
 1. Only use lowercase letters, numbers, and `_`
 1. Use names that are not jargony, **weight** instead of **K**
@@ -491,7 +496,7 @@ source(here("scripts", "03-tidy.R"))
 
 ---
 
-class: inverse
+## {background-color="#23373B"}
 
 1. Makes navigating the R Markdown document easier
 1. Makes your R Markdown easier to understand
@@ -554,9 +559,7 @@ Give examples of styles to follow
 
 ---
 
-class: center, middle
-
-# Use the styler package to style your code for you
+## Use the styler package to style your code for you
 
 ---
 
@@ -683,7 +686,9 @@ knitr::include_graphics(path = "img/datapasta-reprex-spreadsheet.gif")
 #| echo: false
 knitr::include_graphics(path = "img/reprex.png")
 ```
-.pull-right[Art by Allison Horst]
+::: {style="text-align: right;"}
+Art by Allison Horst
+:::
 ---
 
 ## Where to get help
@@ -734,6 +739,8 @@ If you have a Twitter account, check out `#rstats`: https://twitter.com/hashtag/
 knitr::include_graphics("img/welcome_to_rstats_twitter.png")
 ```
 
-.pull-right[Art by Allison Horst]
+::: {style="text-align: right;"}
+Art by Allison Horst
+:::
 
 

@@ -1,0 +1,520 @@
+---
+title: "Reactive apps with shiny"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, eval = FALSE)
+library(tidyverse)
+library(shiny)
+```
+
+::: columns
+::: {.column width="50%"}
+## UI
+```{r, eval = FALSE}
+sliderInput(
+  inputId = "alpha",
+  label = "Alpha:",
+  min = 0,
+  max = 1,
+  value = 0.5
+)
+```
+:::
+
+::: {.column width="50%"}
+## Server
+```{r, eval = FALSE}
+ggplot(...) +
+  geom_point(alpha = input$alpha)
+```
+:::
+:::
+---
+
+## Inputs are reactive
+
+```{r, eval = FALSE}
+# in server <- function(input, output) {}
+output$scatterplot <- renderPlot({
+  ggplot(
+    data = movies, 
+    aes_string(x = input$x, y = input$y, color = input$z)
+  ) +
+    geom_point(alpha = input$alpha) #<<
+})
+```
+
+---
+
+## Inputs are reactive
+
+```{r, eval = FALSE}
+# in server <- function(input, output) {}
+output$scatterplot <- renderPlot({
+  ggplot(
+    data = movies, 
+    aes_string(x = input$x, y = input$y, color = input$z)
+  ) +
+    geom_point(alpha = input$alpha) 
+})
+```
+
+## When the user changes the `alpha` slider, **`input$alpha`** changes. 
+
+---
+
+# Reactivity
+## Shiny **watches** reactive objects like `input$alpha`
+
+---
+
+# Reactivity
+## ~~Shiny watches reactive objects like `input$alpha`~~
+## Shiny **caches** and **updates** reactives
+
+---
+# Reactivity
+## ~~Shiny watches reactive objects like `input$alpha`~~
+## ~~Shiny caches and updates reactives~~
+## `render*()` functions are **reactive contexts**
+
+---
+
+# Render functions
+
+```{r, echo=FALSE, eval = TRUE, out.width="100%", out.height="100%"}
+knitr::include_graphics("img/outputs_full.png")
+```
+
+---
+
+## Your Turn 1
+
+### Start with `movies_05.R`
+### Add a new slider to the UI to select `size` of the points from 0 to 5
+### Add the value to `geom_point()`
+### Run the app and update the points 
+
+---
+
+## Your Turn 1 (solutions in `movies_06.R`)
+
+```{r, eval=FALSE}
+sliderInput(
+  inputId = "size",
+  label = "Size:",
+  min = 0, 
+  max = 5,
+  value = 2
+)
+```
+
+```{r, eval=FALSE}
+ggplot(...) + 
+  geom_point(alpha = input$alpha, size = input$size)
+```
+
+---
+
+## Making data reactive
+
+```{r}
+checkboxGroupInput( #<<
+  inputId = "selected_type", #<<
+  label = "Select movie type(s)",
+  choices = c("Documentary", "Feature Film", "TV Movie"),
+  selected = "Feature Film"
+)
+```
+
+---
+
+## Making data reactive
+
+
+```{r, eval=FALSE}
+movies_subset <- reactive({ #<<
+  req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+
+```{r, eval=FALSE}
+movies_subset <- reactive({ 
+  req(input$selected_type) #<<
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+
+```{r, eval=FALSE}
+movies_subset <- reactive({ 
+  req(input$selected_type) 
+  filter(#<<
+    movies, title_type %in% input$selected_type #<<
+  )#<<
+})
+```
+
+
+
+---
+
+## Making data reactive
+
+
+```{r, eval=FALSE}
+movies_subset <- reactive({
+  req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+
+movies_subset() #<<
+```
+
+---
+
+## Making data reactive
+
+
+```{r, eval=FALSE}
+movies_subset <- reactive({
+  req(input$selected_type)
+  filter(
+    movies, title_type %in% input$selected_type
+  )
+})
+
+movies_subset()
+movies_subset()$title_type #<<
+```
+
+
+---
+
+## Making data reactive
+
+```{r, eval=FALSE}
+output$scatterplot <- renderPlot({
+  ggplot(
+    data = movies_subset(), #<<
+    aes_string(...),
+  ) + 
+  ...
+})
+```
+
+
+---
+
+## Making data reactive
+
+```{r}
+# in mainPanel()
+uiOutput("n")
+```
+
+```{r}
+# in server
+output$n <- renderUI({
+  types <- movies_subset()$title_type %>%
+    factor(levels = input$selected_type)
+  counts <- table(types)
+
+  HTML(
+    paste(
+      "There are", 
+      counts, 
+      input$selected_type, 
+      "movies in this dataset. <br>"
+    )
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+```{r}
+# in mainPanel()
+uiOutput("n") #<<
+```
+
+```{r}
+# in server
+output$n <- renderUI({ #<<
+  types <- movies_subset()$title_type %>%
+    factor(levels = input$selected_type)
+  counts <- table(types)
+
+  HTML( #<<
+    paste(
+      "There are", 
+      counts, 
+      input$selected_type, 
+      "movies in this dataset. <br>"
+    )
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+```{r}
+# in mainPanel()
+uiOutput("n")
+```
+
+```{r}
+# in server
+output$n <- renderUI({
+  types <- movies_subset()$title_type %>% #<<
+    factor(levels = input$selected_type)
+  counts <- table(types)
+
+  HTML(
+    paste(
+      "There are", 
+      counts, 
+      input$selected_type, 
+      "movies in this dataset. <br>"
+    )
+  )
+})
+```
+
+---
+
+## Making data reactive
+
+## **Open `movies-07.R`**
+
+---
+
+## Your Turn 2
+
+## Update the data table to use the reactive version of the data
+## Run the app
+
+---
+
+## Your Turn 2 (solution: movies-08.R)
+
+```{r}
+# in server
+output$moviestable <- DT::renderDataTable({
+  DT::datatable(
+    data = movies_subset()[, 1:7], #<<
+    options = list(pageLength = 10),
+    rownames = FALSE
+  )
+})
+```
+
+---
+
+## Your Turn 3
+
+### Create a new reactive data set called `movies_sample`. Require `input$n_samp`. Return a sample of `movies_subset()` with `sample_n()`
+### Use `movies_sample()` as the data for your plot, table, and UI outputs.
+### Create the corresponding UI input for `input$n_samp` with `numericInput()`: set `min` to 1 and `max` to `nrows(movies)`. Set the default value to 50.
+### Run the app
+
+---
+
+## Your Turn 3 (solution: movies-09.R)
+
+```{r}
+# in ui
+numericInput(
+  inputId = "n_samp",
+  label = "Sample size:",
+  min = 1, max = nrow(movies),
+  value = 50
+)
+```
+
+```{r}
+# in server
+movies_sample <- reactive({
+  req(input$n_samp)
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+---
+
+
+## Your Turn 4
+
+## `movies-10.R` tries to add a dynamic plot title, but it doesn't work. Fix it using `reactive()`.
+
+---
+
+## Your Turn 4 (solution: movies-11.R)
+
+```{r}
+# in server
+pretty_plot_title <- reactive({ #<<
+  str_to_title(input$plot_title) 
+})
+```
+
+```{r}
+# in server
+output$scatterplot <- renderPlot({
+  ggplot(...) + 
+    labs(
+      ...,
+      title = pretty_plot_title() #<<
+    )
+})
+```
+
+---
+
+# Show of hands
+
+## Does updating the title update the data sample?
+
+---
+
+## Reactivity is lazy
+
+```{r}
+# in server
+movies_subset <- reactive({
+  req(input$selected_type) 
+  filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+```{r}
+# in server
+movies_sample <- reactive({
+  req(input$n_samp) 
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+```{r}
+# in server
+pretty_plot_title <- reactive({ 
+  str_to_title(input$plot_title) 
+})
+```
+
+---
+
+## Reactivity is lazy
+
+```{r}
+# in server
+movies_subset <- reactive({
+  req(input$selected_type)  #<<
+  filter(movies, title_type %in% input$selected_type) #<<
+})
+```
+
+
+```{r}
+# in server
+movies_sample <- reactive({
+  req(input$n_samp) 
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+```{r}
+# in server
+pretty_plot_title <- reactive({ 
+  str_to_title(input$plot_title) 
+})
+```
+
+---
+
+## Reactivity is lazy
+
+```{r}
+# in server
+movies_subset <- reactive({
+  req(input$selected_type) 
+  filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+```{r}
+# in server
+movies_sample <- reactive({
+  req(input$n_samp)  #<<
+  sample_n(movies_subset(), input$n_samp) #<<
+})
+```
+
+
+```{r}
+# in server
+pretty_plot_title <- reactive({ 
+  str_to_title(input$plot_title) 
+})
+```
+
+---
+
+## Reactivity is lazy
+
+```{r}
+# in server
+movies_subset <- reactive({
+  req(input$selected_type) 
+  filter(movies, title_type %in% input$selected_type)
+})
+```
+
+
+```{r}
+# in server
+movies_sample <- reactive({
+  req(input$n_samp) 
+  sample_n(movies_subset(), input$n_samp)
+})
+```
+
+
+```{r}
+# in server
+pretty_plot_title <- reactive({ 
+  str_to_title(input$plot_title) #<<
+})
+```
+
+# Resources {background-color="#23373B"}
+## [Shiny Website](https://shiny.rstudio.com): A collection of articles on Shiny
+## [Mastering Shiny](https://mastering-shiny.org): A Work-in-progress book from Hadley Wickham
+

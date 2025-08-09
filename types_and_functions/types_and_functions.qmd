@@ -392,7 +392,7 @@ knitr::include_graphics("img/writing_functions_inputs_output.png")
 ### In the function body, we'll return a `tibble`. 
 ### For `x`, have `rnorm()` return 50 random numbers.  
 ### For `sex`, use `rep()` to create 50 values of "male" and "female". Hint: You'll have to give `rep()` a character vector for the first argument. The `times` argument is how many times `rep()` should repeat the first argument, so make sure you account for that.
-### For `age()` use the `sample()` function to sample 50 numbers from 25 to 50 with replacement.
+### For `age` use the `sample()` function to sample 50 numbers from 25 to 50 with replacement.
 ### Call `sim_data()`
 
 ## *Your Turn 3*
@@ -720,7 +720,7 @@ plot_hist <- function(x) {
 plot_hist("lifeExp")
 ```
 
-## Curly-curly: `{{ variable }}`
+## Curly-curly: `{{{ variable }}}`
 
 ```{r}
 #| code-line-numbers: "2,5"

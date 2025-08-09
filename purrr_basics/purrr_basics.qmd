@@ -179,7 +179,7 @@ mutate(
 #| output-location: fragment
 mutate(
   diamonds, 
-  across(c("carat", "depth"), list(mean = mean, sd = sd)) 
+  across(c("carat", "depth"), list(mean = mean, sd = sd))
 )
 ```
 
@@ -198,35 +198,9 @@ mutate(
 
 ## Review: `tidyselect`
 
-### Workhorse for `dplyr::select()`, `dplyr::pull()`, and `tidyr::pivot_` functions
+### Workhorse for `dplyr::select()`, `dplyr::pull()`, `tidyr::pivot_*()`, etc.
 
 ### `starts_with()`, `ends_with()`, `contains()`, `matches()`, etc.
-
-## Review: `tidyselect` {.small}
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-#| label: slide-21-left-tidyselect
-# column names contain a word
-select(diabetes, ends_with("ht"))
-```
-
-:::
-
-::: {.column width="50%"}
-
-```{r}
-#| label: slide-21-right-tidyselect
-# regular expression
-select(diabetes, matches("\\d")) 
-```
-
-:::
-
-::::
 
 ## `mutate(across())` & `summarise()`
 
@@ -243,29 +217,10 @@ gapminder |>
   ))
 ```
 
-## `mutate(across())` & `summarise()`
-
-### Control output names with `.names` argument 
-
-```{r}
-#| label: slide-26-code
-#| code-line-numbers: "7"
-#| output-location: fragment
-gapminder |> 
-  group_by(continent) |> 
-  summarise(
-    across(
-      c("lifeExp", "gdpPercap"), 
-      list(med = median, iqr = IQR),
-      .names = "{.fn}_{.col}"
-    )) 
-```
 
 ## *Your Turn 2*
 
-### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Give the new columns the name pattern `column_function`, e.g. `bp.1s_mean`.
-
-### hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name
+### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. 
 
 ---
 
@@ -279,7 +234,7 @@ diabetes |>
   summarise(
     across(
       starts_with("bp"), 
-      list(mean = mean), 
+      mean, 
       na.rm = TRUE, 
       .names = "{.col}_{.fn}"
     )

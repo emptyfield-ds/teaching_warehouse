@@ -118,8 +118,6 @@ kable(
 )
 ```
 
----
-
 ## *`kable()` options: number format*
 
 ### Use `digits` for decimal place 

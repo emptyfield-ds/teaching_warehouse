@@ -20,20 +20,46 @@ researchers. The Shiny materials here were heavily influenced by the
 by RStudio. Additionally, many of my amazing collaborators have
 influenced or contributed to this work:
 
-  - [Corinne Riddell](https://corinne-riddell.github.io/)
-  - [Martin Frigaard](https://www.martinfrigaard.io/)
-  - [Emil Hvitfeldt](https://www.hvitfeldt.me/about/)
-  - [Lucy D’Agostino McGowan](https://www.lucymcgowan.com/)
-  - [Richard Iannone](https://randr.rocks/)
+- [Corinne Riddell](https://corinne-riddell.github.io/)
+- [Martin Frigaard](https://www.martinfrigaard.io/)
+- [Emil Hvitfeldt](https://www.hvitfeldt.me/about/)
+- [Lucy D’Agostino McGowan](https://www.lucymcgowan.com/)
+- [Richard Iannone](https://randr.rocks/)
 
 My thanks to all of them, as well as RStudio, for their contributions to
-these materials and generally to the R community\!
+these materials and generally to the R community!
 
 ## Using these materials in your own courses
 
 The materials in these repository are open source and free to use with
 attribution (see license below). Please do let me know if you use them
-in any way\!
+in any way!
+
+## Quarto Project Profiles
+
+This repository is configured as a Quarto project with two profiles:
+
+### Dev Profile (Default)
+
+The default profile renders all `.qmd` files in the repository. To use
+it:
+
+``` bash
+quarto render
+```
+
+### Mastering-R Profile
+
+The `mastering-r` profile is designed for the Mastering R course and: -
+Renders only specific modules used in the course - Disables caching
+(`cache: false`) to ensure fresh renders - Runs `R/sync_mastering_r.R`
+as a post-render script
+
+To use the mastering-r profile:
+
+``` bash
+quarto render --profile mastering-r
+```
 
 [![forthebadge](https://forthebadge.com/images/badges/cc-by.svg)](https://creativecommons.org/licenses/by/4.0/)  
 This work is licensed under a [Creative Commons Attribution 4.0

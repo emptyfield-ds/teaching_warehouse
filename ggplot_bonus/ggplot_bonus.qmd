@@ -1,0 +1,103 @@
+---
+title: "<span style='color:#E69F00'>Data Visualization in R</span>"
+subtitle: "<span style='color:#56B4E9'>ggplot2 fun & plotting in base R</span> <br>"
+date: today
+format: 
+  kakashi-revealjs: 
+    theme: [default, theme.css]
+    highlight-style: github
+    code-line-numbers: false
+    scrollable: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320, fig.height = 4)
+library(tidyverse)
+```
+
+## Plots in Base R
+
+```{r}
+as_tibble(mtcars)
+```
+
+## `hist()`
+
+```{r, fig.height=4}
+hist(mtcars$mpg, breaks = 20)
+```
+
+## `plot()`
+
+```{r, fig.height=4}
+plot(mtcars$hp, mtcars$mpg)
+```
+
+## `plot()`
+
+```{r, fig.height=4, eval=FALSE}
+plot(mtcars$hp, mtcars$mpg)
+
+model <- lm(mpg ~ hp, data = mtcars)
+abline(model, lty = "dashed")
+```
+
+##
+
+```{r, fig.height=4, echo=FALSE}
+plot(mtcars$hp, mtcars$mpg)
+
+model <- lm(mpg ~ hp, data = mtcars)
+abline(model, lty = "dashed")
+```
+
+## Data Visualization Principles {.inverse .center}
+
+## Data Visualization Principles {.inverse .center}
+
+### **Simplify and focus**
+
+## Data Visualization Principles {.inverse .center}
+
+### ~~Simplify and focus~~
+### **Increase your text size**
+
+## Data Visualization Principles {.inverse .center}
+
+### ~~Simplify and focus~~
+### ~~Increase your text size~~
+### **Avoid pie charts (use bar charts)**
+
+## Data Visualization Principles {.inverse .center}
+
+### ~~Simplify and focus~~
+### ~~Increase your text size~~
+### ~~Avoid pie charts (use bar charts)~~
+### **Avoid line drawings (use fill/color)**
+
+## Data Visualization Principles {.inverse .center}
+
+### ~~Simplify and focus~~
+### ~~Increase your text size~~
+### ~~Avoid pie charts (use bar charts)~~
+### ~~Avoid line drawings (use fill/color)~~
+### **Stay 2D**
+
+## **Bonus!** {.inverse}
+
+::: {.incremental}
+1. Arranging plots
+
+2. Spatial plots
+
+3. Interactive plots
+
+4. Animated plots
+:::
+
+## {.inverse .takeaway}
+
+### **`plot()`, `hist()`, and friends are useful for quick plots and sometimes working with packages**
+
+### **ggplot2 is a powerful, extensible plotting system.**

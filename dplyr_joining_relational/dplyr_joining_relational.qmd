@@ -1,0 +1,201 @@
+---
+title: "Wrangling data with dplyr"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+library(tidyverse)
+```
+
+## {background-image="http://hexb.in/hexagons/dplyr.png" background-position="90% 10%"}
+
+```{r transform, include=FALSE}
+library(tidyverse)
+library(gapminder)
+```
+
+## The main verbs of `dplyr`
+
+## `select()`
+
+## `filter()`
+
+## `mutate()`
+
+## `arrange()`
+
+## `summarize()`
+
+## `group_by()`
+
+---
+
+## Joining data
+
+### Use `left_join()`, `right_join()`, `full_join()`, or `inner_join()` to join datasets
+### Use `semi_join()` or `anti_join()` to filter datasets against each other
+
+---
+
+```{r, include=FALSE}
+library(nycflights13)
+
+# Toy datasets to use
+
+superheroes <- tribble(
+       ~name, ~alignment,  ~gender,          ~publisher,
+   "Magneto",      "bad",   "male",            "Marvel",
+     "Storm",     "good", "female",            "Marvel",
+  "Mystique",      "bad", "female",            "Marvel",
+    "Batman",     "good",   "male",                "DC",
+     "Joker",      "bad",   "male",                "DC",
+  "Catwoman",      "bad", "female",                "DC",
+   "Hellboy",     "good",   "male", "Dark Horse Comics"
+  )
+
+publishers <- tribble(
+  ~publisher, ~yr_founded,
+        "DC",       1934L,
+    "Marvel",       1939L,
+     "Image",       1992L
+  )
+
+```
+
+
+```{r}
+superheroes
+```
+
+```{r}
+publishers
+```
+
+---
+
+## Joining data
+
+```{r}
+superheroes |> 
+  left_join(publishers, by = "publisher")
+```
+
+---
+
+## Joining data
+
+```{r}
+publishers |> 
+  left_join(superheroes, by = "publisher")
+```
+
+---
+
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/images/left-join.gif)
+
+---
+
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/images/right-join.gif)
+
+---
+
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/images/full-join.gif)
+
+---
+
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/images/inner-join.gif)
+
+---
+
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/images/semi-join.gif)
+
+---
+
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/images/anti-join.gif)
+---
+
+## SQL with dplyr
+
+```{r}
+# install.packages("RSQLite")
+
+library(dbplyr)
+library(DBI)
+
+con <- DBI::dbConnect(RSQLite::SQLite(), path = ":dbname:")
+copy_to(con, gapminder, "gapminder")
+
+gapminder_tbl <- tbl(con, "gapminder")
+```
+
+---
+
+```{r}
+gapminder_tbl
+```
+
+---
+
+## dplyr works out-of-box with numerous types of databases
+
+```{r}
+gapminder_tbl |>
+  summarize(
+    first = min(year, na.rm = TRUE), 
+    last = max(year, na.rm = TRUE), 
+    n = n(), 
+    n_countries = n_distinct(country)
+   )
+```
+
+---
+
+## dplyr works out-of-box with numerous types of databases
+
+```{r}
+gapminder_tbl |>
+  summarize(
+    first = min(year, na.rm = TRUE), 
+    last = max(year, na.rm = TRUE), 
+    n = n(), 
+    n_countries = n_distinct(country)
+   ) |> 
+  show_query()
+```
+
+. . .
+
+::: {.fragment}
+## <SQL>
+### SELECT MIN(`` `year` ``) AS `` `first` ``, MAX(`` `year` ``) AS `` `last` ``, COUNT() AS `` `n` ``, COUNT(DISTINCT `` `country` ``) AS `` `n_countries` ``
+### FROM `` `gapminder` `` `
+:::
+
+---
+
+## use `collect()` to pull to local data frame
+
+```{r}
+local_df <- gapminder_tbl |>
+  summarize(
+    first = min(year, na.rm = TRUE), 
+    last = max(year, na.rm = TRUE), 
+    n = n(), 
+    n_countries = n_distinct(country)
+   ) |> 
+  collect()
+
+local_df
+```
+
+---
+
+# Disconnect
+
+```{r}
+dbDisconnect(con)
+```
+

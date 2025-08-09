@@ -41,17 +41,18 @@ measurements$blood_glucose
 
 ## Your Turn 2
 
-### Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. Give the new columns the name pattern `column_function`, e.g. `bp.1s_mean` (hint: `{.fn}` will give you the function name, and `{.col}` will give you the column name)
+Use `starts_with()` from `tidyselect()` to calculate the average `bp` columns in `diabetes`, grouped by `gender`. 
+
+**Stretch goal**: Give the new columns the name pattern `column_function`, e.g. `bp.1s_mean` (hint: In the `.names` argument, `{.fn}` will give you the function name, and `{.col}` will give you the column name. See `?across`)
 
 ```{r}
 diabetes |> 
   group_by(______) |> 
   summarise(across(
     starts_with("__"), 
-    list(____ = mean), 
-    na.rm = TRUE, 
-    .names = "_______")
-  )
+    list(mean = ____), 
+    na.rm = TRUE
+  ))
 ```
 
 
@@ -151,7 +152,7 @@ diabetes |>
 
 ```{r}
 gapminder_countries <- ____(gapminder, gapminder$country)
-models <- map(________, ~ ________)
+models <- map(________, ________)
 preds <- map2(________, ________, ________)
 
 # Look at the first six elements of the list 

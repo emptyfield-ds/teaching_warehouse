@@ -452,7 +452,7 @@ knitr::include_graphics("img/native-pipe.png")
 
 ### Filter only countries that are in the continent of Oceania.
 ### Select the `country`, `year` and `lifeExp` columns  
-### Arrange the results so that the highest life expetency is at the top.
+### Arrange the results so that the highest life expectancy is at the top.
 
 ## *Your turn 6*
 

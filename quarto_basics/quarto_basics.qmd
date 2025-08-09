@@ -27,7 +27,7 @@ knitr::include_graphics("img/quarto.png")
 Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.
 :::
 
----
+## 
 
 ```{r}
 #| echo: false
@@ -77,7 +77,7 @@ knitr::include_graphics("img/render_button.png")
 ```
 
 
----
+## 
 
 ```{r}
 #| echo: false
@@ -210,8 +210,6 @@ Option       | Effect
 
 See the [Quarto documentation](https://quarto.org/docs/reference/cells/cells-knitr.html)
 
----
-
 ## Other languages {.extra-large}
 
 . . .
@@ -257,8 +255,6 @@ gapminder |>
 ```
 ### Render the document
 
----
-
 ## *Your Turn 4*
   
 ### Add `echo: false` to the code chunk you created and re-render. What's the difference in the output? 
@@ -287,8 +283,6 @@ knitr::include_graphics("img/inline-highlighted.jpg")
 ### Remove `eval: false` so that Quarto evaluates the code.
 ### Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
 ### Use inline code to describe the data set in the text below the code chunk and re-render.
-
----
 
 ## Quarto
 
@@ -327,15 +321,11 @@ Format       | Outputs
 `beamer`   | Beamer Slides (PDF)
 `pptx`   | Powerpoint Slides
 
----
-
 ## *Your Turn 6*
 
 #### Set figure chunk options to the code chunk below, such as `dpi`, `fig.width`, and `fig.height.` Run `knitr::opts_chunk$get()` in the console to see the defaults.
 #### Add your name to the YAML header using `author: Your Name`.
 #### Change `format: html` to use the `toc: true` and `code-fold: true` options and re-render 
-
----
 
 ## Parameters
 
