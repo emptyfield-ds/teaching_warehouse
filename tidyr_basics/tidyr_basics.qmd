@@ -9,7 +9,7 @@ format: "kakashi-revealjs"
 #| label: setup
 #| include: false
 options(
-  tibble.max_extra_cols = 6, 
+  tibble.max_extra_cols = 6,
   tibble.width = 60
 )
 library(tidyverse)
@@ -17,7 +17,7 @@ library(tidyverse)
 
 ## **tidyr**
 
-<!-- 
+<!--
 TODO: Update the art slide when Allison makes a pivot version
 ```{r}
 #| out.height: 70%
@@ -25,19 +25,21 @@ TODO: Update the art slide when Allison makes a pivot version
 #| echo: false
 knitr::include_graphics("img/tidyr_spread_gather.png")
 ```
-.pull-right[Art by Allison Horst]
+::: {style="text-align: right;"}
+Art by Allison Horst
+:::
 -->
 
 
 ![](img/tidyr.png){.absolute top=0 right=0 width=140}
 
 :::{.large}
-Functions for tidying data. 
+Functions for tidying data.
 
 What is tidy data?
 :::
 
-. . . 
+. . .
 
 :::{.extra-large}
 > “Tidy datasets are all alike, but every messy dataset is messy in its own way.” — Hadley Wickham
@@ -106,10 +108,10 @@ knitr::include_graphics("img/new_data_alert_lotr.png")
 #| output-location: slide
 lotr |>
   pivot_longer(
-    names_to = "sex", 
-    values_to = "words", 
-    cols = female:male 
-  ) 
+    names_to = "sex",
+    values_to = "words",
+    cols = female:male
+  )
 ```
 
 ---
@@ -160,9 +162,9 @@ Animation by Mara Averick
 #| output-location: fragment
 lotr |>
   pivot_longer(
-    names_to = "sex", 
-    values_to = "words", 
-    cols = female:male 
+    names_to = "sex",
+    values_to = "words",
+    cols = female:male
   ) |>
   pivot_wider(
     names_from = race,
@@ -172,9 +174,9 @@ lotr |>
 
 ## *Your Turn 2* {.small}
 
-### Use `pivot_wider()` to reorganize `table2` into four columns: `country`, `year`, `cases`, and `population.` 
+### Use `pivot_wider()` to reorganize `table2` into four columns: `country`, `year`, `cases`, and `population.`
 ### Create a new variable called `prevalence` that divides `cases` by `population` multiplied by 100000.
-###  Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom. 
+###  Pass the data frame to a ggplot. Make a scatter plot with `year` on the x axis and `prevalence` on the y axis. Set the color aesthetic (`aes()`) to `country`. Use `size = 2` for the points. Add a line geom.
 
 ```{r}
 #| eval: false
@@ -187,10 +189,10 @@ table2
 #| code-line-numbers: "3-4,6"
 table2 |>
   pivot_wider(
-    names_from = type, 
-    values_from = count 
-  ) |> 
-  mutate(prevalence = (cases / population) * 100000) 
+    names_from = type,
+    values_from = count
+  ) |>
+  mutate(prevalence = (cases / population) * 100000)
 ```
 
 ## *Your Turn 2*
@@ -204,10 +206,10 @@ table2 |>
     values_from = count
   ) |>
   mutate(prevalence = (cases / population) * 100000) |>
-  ggplot(aes(x = year, y = prevalence, color = country)) + 
-  geom_point(size = 2) + 
-  geom_line() + 
-  scale_x_continuous(breaks = c(1999L, 2000L)) 
+  ggplot(aes(x = year, y = prevalence, color = country)) +
+  geom_point(size = 2) +
+  geom_line() +
+  scale_x_continuous(breaks = c(1999L, 2000L))
 ```
 
 ## *Your Turn 3*
@@ -226,10 +228,10 @@ who
 #| output-location: slide
 who |>
   pivot_longer(
-    names_to = "codes", 
-    values_to = "n", 
-    cols = 5:60 
-  ) |> 
+    names_to = "codes",
+    values_to = "n",
+    cols = 5:60
+  ) |>
   select(country, year, codes, n)
 ```
 
@@ -238,8 +240,8 @@ who |>
 ```{r}
 #| eval: false
 separate(
-  <DATA>, 
-  <VARIABLE>, 
+  <DATA>,
+  <VARIABLE>,
   into = c("<VARIABLE1>", "<VARIABLE2>")
 )
 
@@ -255,7 +257,7 @@ unite(<DATA>, <VARIABLES>)
 cases <- tribble(
    ~id,     ~sex_age,
    "1",    "male_56",
-   "2",  "female_77",    
+   "2",  "female_77",
    "3",  "female_49"
 )
 separate(_______, _______, into = c("_______", "_______"))
@@ -269,10 +271,10 @@ separate(_______, _______, into = c("_______", "_______"))
 cases <- tribble(
    ~id,     ~sex_age,
    "1",    "male_56",
-   "2",  "female_77",    
+   "2",  "female_77",
    "3",  "female_49"
 )
-separate(cases, sex_age, into = c("sex", "age")) 
+separate(cases, sex_age, into = c("sex", "age"))
 ```
 
 ## *Your Turn 4*
@@ -283,15 +285,15 @@ separate(cases, sex_age, into = c("sex", "age"))
 cases <- tribble(
    ~id,     ~sex_age,
    "1",    "male_56",
-   "2",  "female_77",    
+   "2",  "female_77",
    "3",  "female_49"
 )
 separate(
-  cases, 
-  sex_age, 
-  into = c("sex", "age"), 
+  cases,
+  sex_age,
+  into = c("sex", "age"),
   convert = TRUE
-) 
+)
 ```
 
 ## *Your Turn 5: Challenge!* {.small}
@@ -302,7 +304,7 @@ separate(
 ### Pivot the columns into 2 new columns called `year` and `incidence`
 ### Add a new variable called `race`. Remember that each data set corresponds to a single race.
 ### Bind the data sets together using `bind_rows()` from the dplyr package. Either save it as a new object or pipe the result directly into the ggplot2 code.
-### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic. 
+### Plot the data using the code below. Fill in the blanks to have `year` on the x-axis, `incidence` on the y-axis, and `race` as the color aesthetic.
 
 ## *Your Turn 5: No solution* 😈
 
@@ -313,28 +315,28 @@ separate(
 #| dpi: 320.0
 breast_ca_black <- read_csv("breast_ca_black.csv")
 breast_ca_white <- read_csv("breast_ca_white.csv")
-breast_ca_black <- breast_ca_black |> 
+breast_ca_black <- breast_ca_black |>
   pivot_longer(
-    names_to = "year", 
-    values_to = "incidence", 
+    names_to = "year",
+    values_to = "incidence",
     cols = everything()
-  ) |> 
+  ) |>
   mutate(race = "black")
 
-breast_ca_white <- breast_ca_white |> 
+breast_ca_white <- breast_ca_white |>
   pivot_longer(
-    names_to = "year", 
-    values_to = "incidence", 
+    names_to = "year",
+    values_to = "incidence",
     cols = everything()
-  ) |> 
+  ) |>
   mutate(race = "white")
 
 breast_ca <- bind_rows(breast_ca_black, breast_ca_white)
 
-breast_ca |> 
-  ggplot(aes(x = year, y = incidence, color = race, group = race)) + 
+breast_ca |>
+  ggplot(aes(x = year, y = incidence, color = race, group = race)) +
   geom_point() +
-  geom_line() + 
+  geom_line() +
   scale_x_discrete(breaks = seq(1975, 2011, by = 5)) # show years by fives
 ```
 
@@ -349,7 +351,7 @@ lotr |>
     names_to = "sex",
     values_to = "count",
     cols = c(female, male)
-  ) |> 
+  ) |>
   uncount(count)
 ```
 

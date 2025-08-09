@@ -2,16 +2,7 @@
 title: "Dynamic documents in R"
 subtitle: "reproducible research with R Markdown"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: false
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
 
 ```{r}
@@ -60,9 +51,7 @@ background-position: 93% 10%
 background-image: url(https://lovecrafts.cdn.prismic.io/lovecrafts/01ed5aac2502cbbc4a262429747693741283bb8e_handsknitting6.jpg)
 background-position: 50% 50%
 
-class: middle, center
-<br>
-# <span style="color:#474747">knitting</span>
+## <span style="color:#474747">knitting</span>
 
 ---
 
@@ -70,9 +59,7 @@ class: middle, center
 
 ## Create a new R Markdown file. Go to File > New File > R Markdown. Press OK. Save the file and press the "Knit" button above.
 
----
-
-class: middle
+##
 
 ```{r}
 #| echo: false
@@ -81,10 +68,7 @@ class: middle
 knitr::include_graphics("img/rmarkdown_components.png")
 ```
 
----
-
-background-image: url(http://hexb.in/hexagons/rmarkdown.png)
-background-position: 93% 10%
+## {background-image="http://hexb.in/hexagons/rmarkdown.png" background-position="93% 10%"}
 
 ## R Markdown
 
@@ -92,9 +76,7 @@ background-position: 93% 10%
 ## Code
 ## Metadata
 
----
-background-image: url(http://hexb.in/hexagons/rmarkdown.png)
-background-position: 93% 10%
+## {background-image="http://hexb.in/hexagons/rmarkdown.png" background-position="93% 10%"}
 
 ## R Markdown
 
@@ -147,9 +129,7 @@ http://example.com
 
 ```
 
----
-
-class: center, middle, inverse
+## {background-color="#23373B"}
 
 ## *Learn more about Markdown Syntax with the ten-twenty minute tutorial on markdown at https://commonmark.org/help/tutorial.*
 
@@ -161,10 +141,7 @@ class: center, middle, inverse
 
 ## Use Visual R Markdown to stylize the text from the [Gapminder website](https://www.gapminder.org/data/documentation/gd001/) below. Experiment with bolding, italicizing, making lists, etc.
 
----
-
-background-image: url(http://hexb.in/hexagons/rmarkdown.png)
-background-position: 93% 10%
+## {background-image="http://hexb.in/hexagons/rmarkdown.png" background-position="93% 10%"}
 
 ## R Markdown
 
@@ -307,10 +284,7 @@ knitr::include_graphics("img/inline_code_highlight.png")
 ### Use `summarize()` and `n_distinct()` to get the the number of unique years in gapminder and save the results as `n_years`.
 ### Use inline code to describe the data set in the text below the code chunk and re-knit.
 
----
-
-background-image: url(http://hexb.in/hexagons/rmarkdown.png)
-background-position: 93% 10%
+## {background-image="http://hexb.in/hexagons/rmarkdown.png" background-position="93% 10%"}
 
 ## R Markdown
 
@@ -425,7 +399,7 @@ params:
 ---
 ```
 
---
+. . .
 
 ```{r}
 #| eval: false
@@ -479,7 +453,7 @@ gapminder |>
 
 ## **`[@citation-label]`**
 
---
+. . .
 
 ## Or just use Visual R Markdown's citation wizard!
 
@@ -516,9 +490,7 @@ csl: file.csl
 ## blogdown
 ## these slides!
 
----
-
-class: inverse, center
+## {background-color="#23373B"}
 
 # Resources
 ## [R Markdown](https://bookdown.org/yihui/rmarkdown/): A comprehensive but friendly introduction to R Markdown and friends. Free online.

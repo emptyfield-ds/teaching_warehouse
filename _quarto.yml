@@ -1,1 +1,9 @@
-project:title:"r_teaching_warehouse"
+project:
+  title: "r_teaching_warehouse"
+  render:
+    - "*.qmd"
+
+profile:
+  default: dev
+  group:
+    - [dev, mastering-r]

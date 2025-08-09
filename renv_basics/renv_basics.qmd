@@ -2,16 +2,7 @@
 title: "Reproducing package environments"
 subtitle: "using renv to lock packages"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: ["default", "theme.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      navigation:
-        scroll: false 
+format: "kakashi-revealjs"
 ---
 
 ```{r}
@@ -47,12 +38,7 @@ Warning message:
 Please use `tibble::rownames_to_column()` instead.
 ```
 
----
-background-image: url(img/renv.svg)
-background-position: 93% 10%
-background-size: 220px 220px
-
-# *renv*
+## *renv* {background-image="img/renv.svg" background-position="93% 10%" background-size="220px 220px"}
 
 <br><br><br>
 
@@ -68,10 +54,7 @@ background-size: 220px 220px
 
 ## Successor to [packrat](https://rstudio.github.io/packrat/)
 
----
-class: inverse
-
-# How does renv help?
+## How does renv help? {.dark-slide}
 
 1. Each project gets it's own library (*isolated*)
 
@@ -208,14 +191,13 @@ knitr::include_graphics("img/renv-init-01.png")
 
 ## Your Turn 1
 
-.pull-left[
+:::: {.columns}
 
+::: {.column width="50%"}
 ### Packages in project library
+:::
 
-]
-
-.pull-right[
-
+::: {.column width="50%"}
 ```{r}
 #| label: renv-init-02.png
 #| echo: false
@@ -223,8 +205,9 @@ knitr::include_graphics("img/renv-init-01.png")
 #| fig.align: center
 knitr::include_graphics("img/renv-init-02.png")
 ```
+:::
 
-]
+::::
 
 ---
 
@@ -323,8 +306,9 @@ knitr::include_graphics("img/renv-snapshot-01.png")
 
 ## Your Turn 2
 
-.pull-left[
+:::: {.columns}
 
+::: {.column width="50%"}
 ```{r}
 #| label: plot-dot-r-03.png
 #| echo: false
@@ -332,21 +316,20 @@ knitr::include_graphics("img/renv-snapshot-01.png")
 #| fig.align: center
 knitr::include_graphics("img/plot-dot-r-file-03.png")
 ```
+:::
 
-]
-
---
-
-.pull-right[
-
+::: {.column width="50%"}
+::: {.fragment}
 ```{r}
 #| label: plot-dot-r-04.png
 #| echo: false
 #| fig.align: center
 knitr::include_graphics("img/plot-dot-r-file-04.png")
 ```
+:::
+:::
 
-]
+::::
 
 ---
 
@@ -383,11 +366,7 @@ knitr::include_graphics("img/renv-snapshot-03.png")
 ```
 
 
----
-
-class: inverse
-
-# renv workflow
+## renv workflow {.dark-slide}
 
 1. Create a project
 2. `renv::init()`
@@ -395,11 +374,7 @@ class: inverse
 4. `renv::snapshot()`
 5. Iterate
 
----
-
-class: inverse
-
-# Restoring project states
+## Restoring project states {.dark-slide}
 
 1. Copy project
 2. `renv::restore()`
@@ -428,7 +403,7 @@ class: inverse
 ## ~~`require(`~~**`dplyr`**~~`)`~~
 ## ~~`requireNamespace("`~~**`devtools`**~~`")`~~
 
---
+. . .
 
 ## Recent updates to renv also support **`tar_option_set()`**!
 
@@ -437,7 +412,7 @@ class: inverse
 ## Using renv with targets
 ## *`tar_renv()`* 
 
---
+. . .
 
 ## Still helpful with recent updates because of interactive and suggested packages
 
@@ -511,8 +486,9 @@ knitr::include_graphics("img/renv-dependencies-02.png")
 
 ## Your Turn 3
 
-.pull-left[
+:::: {.columns}
 
+::: {.column width="50%"}
 ### `tar_renv()`
 
 ```{r}
@@ -520,13 +496,10 @@ knitr::include_graphics("img/renv-dependencies-02.png")
 #| echo: false
 knitr::include_graphics("img/tar-renv.png")
 ```
+:::
 
-]
-
---
-
-.pull-right[
-
+::: {.column width="50%"}
+::: {.fragment}
 ### `_targets_packages.R`
 
 ```{r}
@@ -534,8 +507,10 @@ knitr::include_graphics("img/tar-renv.png")
 #| echo: false
 knitr::include_graphics("img/targets-packages.png")
 ```
+:::
+:::
 
-]
+::::
 
 ---
 
@@ -569,11 +544,7 @@ knitr::include_graphics("img/renv-init-04.png")
 knitr::include_graphics("img/renv-init-09.png")
 ```
 
----
-
-class: inverse, left
-
-# Resources
+## Resources {.dark-slide}
 ## [renv: Getting started](https://rstudio.github.io/renv/articles/renv.html): A brief introduction to renv and its workflows
 ## [renv: Project Environments for R (blog)](https://blog.rstudio.com/2019/11/06/renv-project-environments-for-r/): An RStudio blog post introducing renv
 ## [renv: Project Environments for R (talk)](https://www.rstudio.com/resources/rstudioconf-2020/renv-project-environments-for-r/): A talk on renv from rstudio::conf() 2020 

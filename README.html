@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<h1 id="r-teaching-warehouse">R Teaching Warehouse</h1>
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+<p>This is a warehouse of teaching materials that I have developed
+(sometimes with others) over the years to use in courses and workshops;
+I keep the latest versions of these materials here. For more details on
+my courses, <a href="https://malco.io/training/">visit my
+website</a>.</p>
+<p>Many elements of these materials were inspired by the <a href="https://github.com/rstudio/master-the-tidyverse">Master the
+Tidyverse</a> workshop offered by RStudio but generally focus more on
+the needs of health researchers. The Shiny materials here were heavily
+influenced by the <a href="https://github.com/dtkaplan/shinymark">full
+day Shiny workshop</a> offered by RStudio. Additionally, many of my
+amazing collaborators have influenced or contributed to this work:</p>
+<ul>
+<li><a href="https://corinne-riddell.github.io/">Corinne
+Riddell</a></li>
+<li><a href="https://www.martinfrigaard.io/">Martin Frigaard</a></li>
+<li><a href="https://www.hvitfeldt.me/about/">Emil Hvitfeldt</a></li>
+<li><a href="https://www.lucymcgowan.com/">Lucy D’Agostino
+McGowan</a></li>
+<li><a href="https://randr.rocks/">Richard Iannone</a></li>
+</ul>
+<p>My thanks to all of them, as well as RStudio, for their contributions
+to these materials and generally to the R community!</p>
+<h2 id="using-these-materials-in-your-own-courses">Using these materials
+in your own courses</h2>
+<p>The materials in these repository are open source and free to use
+with attribution (see license below). Please do let me know if you use
+them in any way!</p>
+<h2 id="quarto-project-profiles">Quarto Project Profiles</h2>
+<p>This repository is configured as a Quarto project with two
+profiles:</p>
+<h3 id="dev-profile-default">Dev Profile (Default)</h3>
+<p>The default profile renders all <code>.qmd</code> files in the
+repository. To use it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div>
+<h3 id="mastering-r-profile">Mastering-R Profile</h3>
+<p>The <code>mastering-r</code> profile is designed for the Mastering R
+course and: - Renders only specific modules used in the course -
+Disables caching (<code>cache: false</code>) to ensure fresh renders -
+Runs <code>R/sync_mastering_r.R</code> as a post-render script</p>
+<p>To use the mastering-r profile:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">quarto</span> render <span class="at">--profile</span> mastering-r</span></code></pre></div>
+<p><a href="https://creativecommons.org/licenses/by/4.0/"><img role="img" aria-label="forthebadge" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMzAuMzc1IiBoZWlnaHQ9IjM1LjA1OSIgdmlld0JveD0iMCAwIDIzMC4zNzUgMzUuMDU5Ij4KICA8dGl0bGU+Y2MtYnk8L3RpdGxlPgogIDxnPgogICAgPHJlY3QgeD0iMjEuODEzIiB3aWR0aD0iMjA4LjU2MyIgaGVpZ2h0PSIzNSIgc3R5bGU9ImZpbGw6ICMxYzFjMWQiLz4KICAgIDxyZWN0IHk9IjAuMDI5IiB3aWR0aD0iMTg0LjMzMyIgaGVpZ2h0PSIzNSIgc3R5bGU9ImZpbGw6ICNiMGFlYWYiLz4KICAgIDxnPgogICAgICA8cGF0aCBkPSJNMjAzLjg3NCwxMy44NDZhMi41LDIuNSwwLDAsMSwxLjEyOC43MzgsMS43MTcsMS43MTcsMCwwLDEsLjQsMS4xMjgsMS43ODIsMS43ODIsMCwwLDEtLjM4NCwxLjEyOCwxLjk4OCwxLjk4OCwwLDAsMS0xLjA0NC42ODQsMi4wMzQsMi4wMzQsMCwwLDEsMS4yMy43MzgsMi4xNjIsMi4xNjIsMCwwLDEsLjQ2MiwxLjM4NSwxLjk4NywxLjk4NywwLDAsMS0uNDA4LDEuMjQyLDIuNTc2LDIuNTc2LDAsMCwxLTEuMTU4LjgyMkE0Ljg3MSw0Ljg3MSwwLDAsMSwyMDIuMzUsMjJoLTQuMzA4VjEzLjU4OGg0LjEyOEE1LjExNSw1LjExNSwwLDAsMSwyMDMuODc0LDEzLjg0NlptLTEuMjQ4LDIuODQ0YS42ODkuNjg5LDAsMCwwLC4yMTYtLjUzNC42MzcuNjM3LDAsMCwwLS4yMTYtLjUxLjg3Mi44NzIsMCwwLDAtLjU4OC0uMTg2aC0xLjUxMnYxLjQyOGgxLjUxMkEuODM4LjgzOCwwLDAsMCwyMDIuNjI1LDE2LjY5Wm0uMTc0LDMuMjM0YS43LjcsMCwwLDAsLjI4Mi0uNTg4LjYzLjYzLDAsMCwwLS4yODItLjU0NiwxLjI0OSwxLjI0OSwwLDAsMC0uNzYyLS4xODdoLTEuNTEydjEuNTI0aDEuNTEyQTEuMTc2LDEuMTc2LDAsMCwwLDIwMi44LDE5LjkyNFoiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik0yMTcuMTIxLDEzLjU4OCwyMTQuMSwxOS4zMzZWMjJoLTIuNVYxOS4zODRsLTMuMDg0LTUuOGgyLjVsMS44MzYsMy40MzIsMS43ODgtMy40MzJaIiBzdHlsZT0iZmlsbDogI2ZmZiIvPgogICAgPC9nPgogICAgPGc+CiAgICAgIDxwYXRoIGQ9Ik0yMC4zNzcsMTkuMjIzYTMuMDgsMy4wOCwwLDAsMS0xLjAwOCwyLjEzLDMuNDM2LDMuNDM2LDAsMCwxLTIuMzM4Ljc2NSwzLjMyNywzLjMyNywwLDAsMS0xLjgtLjQ4MywzLjE3MywzLjE3MywwLDAsMS0xLjItMS4zNzQsNC45NTgsNC45NTgsMCwwLDEtLjQzOS0yLjA2OHYtLjhhNC45OTQsNC45OTQsMCwwLDEsLjQyOC0yLjEyNywzLjIyNCwzLjIyNCwwLDAsMSwxLjIyOC0xLjQxOCwzLjQyNCwzLjQyNCwwLDAsMSwxLjg0OS0uNSwzLjMsMy4zLDAsMCwxLDIuMjczLjc2NSwzLjIsMy4yLDAsMCwxLDEsMi4xNjVIMTguOWEyLjEwNywyLjEwNywwLDAsMC0uNTM2LTEuMzI3LDEuNzcyLDEuNzcyLDAsMCwwLTEuMjYzLS40MDcsMS43MzEsMS43MzEsMCwwLDAtMS40ODUuNzA3LDMuNTM0LDMuNTM0LDAsMCwwLS41MywyLjA3NHYuNzU2YTMuNzQ2LDMuNzQ2LDAsMCwwLC41LDIuMTExLDEuNjQyLDEuNjQyLDAsMCwwLDEuNDUuNzI4LDEuOTE3LDEuOTE3LDAsMCwwLDEuMzEzLS4zOTMsMi4wNDcsMi4wNDcsMCwwLDAsLjU1Ny0xLjMwN1oiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik0yNy40NzYsMTguNzE5SDI1LjgyNFYyMkgyNC4zNDFWMTMuNDY5aDNhMy40ODksMy40ODksMCwwLDEsMi4yNzkuNjYzLDIuMzQ0LDIuMzQ0LDAsMCwxLC44LDEuOTE3LDIuNCwyLjQsMCwwLDEtLjQxMywxLjQzNCwyLjYyMywyLjYyMywwLDAsMS0xLjE1MS44ODlsMS45MTYsMy41NTNWMjJIMjkuMTg3Wm0tMS42NTItMS4yaDEuNTIzYTEuNjk0LDEuNjk0LDAsMCwwLDEuMTcyLS4zNzgsMS4zMTgsMS4zMTgsMCwwLDAsLjQyMi0xLjAzNCwxLjQsMS40LDAsMCwwLS4zOS0xLjA2MSwxLjY1NSwxLjY1NSwwLDAsMC0xLjE2My0uMzg3SDI1LjgyNFoiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik0zOS40NTYsMTguMTkxaC0zLjVWMjAuOGg0LjFWMjJIMzQuNDY5VjEzLjQ2OWg1LjUzN3YxLjJIMzUuOTUyVjE3LjAyaDMuNVoiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik00OC42NywyMC4wMTRoLTMuM0w0NC42NzQsMjJINDMuMTMzbDMuMjIzLTguNTMxaDEuMzNMNTAuOTE0LDIySDQ5LjM2N1ptLTIuODg5LTEuMmgyLjQ3M2wtMS4yMzYtMy41MzlaIiBzdHlsZT0iZmlsbDogI2ZmZiIvPgogICAgICA8cGF0aCBkPSJNNTkuOTgyLDE0LjY2NGgtMi42NlYyMkg1NS44NTFWMTQuNjY0SDUzLjIxNHYtMS4yaDYuNzY4WiIgc3R5bGU9ImZpbGw6ICNmZmYiLz4KICAgICAgPHBhdGggZD0iTTY1LjMwNiwyMkg2My44MjlWMTMuNDY5aDEuNDc3WiIgc3R5bGU9ImZpbGw6ICNmZmYiLz4KICAgICAgPHBhdGggZD0iTTcyLjc3MywyMC4xNDNsMi4xNjgtNi42NzRINzYuNTdMNzMuNSwyMkg3Mi4wNjRsLTMuMDU5LTguNTMxaDEuNjIzWiIgc3R5bGU9ImZpbGw6ICNmZmYiLz4KICAgICAgPHBhdGggZD0iTTg1LjE1OCwxOC4xOTFoLTMuNVYyMC44aDQuMVYyMkg4MC4xNzFWMTMuNDY5aDUuNTM3djEuMkg4MS42NTRWMTcuMDJoMy41WiIgc3R5bGU9ImZpbGw6ICNmZmYiLz4KICAgICAgPHBhdGggZD0iTTEwMS43MzQsMTkuMjIzYTMuMDgsMy4wOCwwLDAsMS0xLjAwOCwyLjEzLDMuNDM2LDMuNDM2LDAsMCwxLTIuMzM4Ljc2NSwzLjMyNywzLjMyNywwLDAsMS0xLjgtLjQ4MywzLjE3MywzLjE3MywwLDAsMS0xLjItMS4zNzQsNC45NTgsNC45NTgsMCwwLDEtLjQzOS0yLjA2OHYtLjhhNC45OTQsNC45OTQsMCwwLDEsLjQyOC0yLjEyN0EzLjIyNCwzLjIyNCwwLDAsMSw5Ni42MSwxMy44NWEzLjQyNCwzLjQyNCwwLDAsMSwxLjg0OS0uNSwzLjMsMy4zLDAsMCwxLDIuMjczLjc2NSwzLjIsMy4yLDAsMCwxLDEsMi4xNjVoLTEuNDc3YTIuMTA3LDIuMTA3LDAsMCwwLS41MzYtMS4zMjcsMS43NzIsMS43NzIsMCwwLDAtMS4yNjMtLjQwNywxLjczMSwxLjczMSwwLDAsMC0xLjQ4NS43MDcsMy41MzQsMy41MzQsMCwwLDAtLjUzLDIuMDc0di43NTZhMy43NDYsMy43NDYsMCwwLDAsLjUsMi4xMTEsMS42NDIsMS42NDIsMCwwLDAsMS40NS43MjgsMS45MTcsMS45MTcsMCwwLDAsMS4zMTMtLjM5MywyLjA0NywyLjA0NywwLDAsMCwuNTU3LTEuMzA3WiIgc3R5bGU9ImZpbGw6ICNmZmYiLz4KICAgICAgPHBhdGggZD0iTTExMi41MDgsMTcuOTU3YTUuMjM0LDUuMjM0LDAsMCwxLS40MzQsMi4yLDMuMjc4LDMuMjc4LDAsMCwxLTEuMjM5LDEuNDUzLDMuNjM1LDMuNjM1LDAsMCwxLTMuNywwLDMuMzI5LDMuMzI5LDAsMCwxLTEuMjU0LTEuNDQ0QTUuMDcsNS4wNywwLDAsMSwxMDUuNDMsMTh2LS40OGE1LjE4OSw1LjE4OSwwLDAsMSwuNDQyLTIuMiwzLjMyNSwzLjMyNSwwLDAsMSwxLjI0OC0xLjQ2MiwzLjY0MywzLjY0MywwLDAsMSwzLjctLjAwNiwzLjI4MywzLjI4MywwLDAsMSwxLjI0NSwxLjQ0MSw1LjE3OCw1LjE3OCwwLDAsMSwuNDQ1LDIuMTg4Wm0tMS40ODItLjQ0NWEzLjcyOSwzLjcyOSwwLDAsMC0uNTM2LTIuMTc0LDEuODkyLDEuODkyLDAsMCwwLTMuMDIzLDAsMy42NTcsMy42NTcsMCwwLDAtLjU1NCwyLjEzdi40OTJhMy43LDMuNywwLDAsMCwuNTQ4LDIuMTc0LDEuNzY0LDEuNzY0LDAsMCwwLDEuNTIxLjc2OCwxLjc0MywxLjc0MywwLDAsMCwxLjUxNS0uNzUsMy43ODEsMy43ODEsMCwwLDAsLjUzLTIuMTkxWiIgc3R5bGU9ImZpbGw6ICNmZmYiLz4KICAgICAgPHBhdGggZD0iTTExOC41NDYsMTMuNDY5bDIuNDYxLDYuNTM5LDIuNDU1LTYuNTM5aDEuOTE2VjIySDEyMy45VjE5LjE4OGwuMTQ2LTMuNzYyTDEyMS41MjgsMjJoLTEuMDYxbC0yLjUxNC02LjU2OC4xNDYsMy43NTZWMjJoLTEuNDc3VjEzLjQ2OVoiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik0xMzEuNjkxLDEzLjQ2OWwyLjQ2MSw2LjUzOSwyLjQ1NS02LjUzOWgxLjkxNlYyMmgtMS40NzdWMTkuMTg4bC4xNDYtMy43NjJMMTM0LjY3NCwyMmgtMS4wNjFMMTMxLjEsMTUuNDMybC4xNDYsMy43NTZWMjJIMTI5Ljc3VjEzLjQ2OVoiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik0xNDkuNzI1LDE3Ljk1N2E1LjIzNCw1LjIzNCwwLDAsMS0uNDM0LDIuMiwzLjI3OCwzLjI3OCwwLDAsMS0xLjIzOSwxLjQ1MywzLjYzNSwzLjYzNSwwLDAsMS0zLjcsMCwzLjMyOSwzLjMyOSwwLDAsMS0xLjI1NC0xLjQ0NEE1LjA3LDUuMDcsMCwwLDEsMTQyLjY0NiwxOHYtLjQ4YTUuMTg5LDUuMTg5LDAsMCwxLC40NDItMi4yLDMuMzI1LDMuMzI1LDAsMCwxLDEuMjQ4LTEuNDYyLDMuNjQzLDMuNjQzLDAsMCwxLDMuNy0uMDA2LDMuMjgzLDMuMjgzLDAsMCwxLDEuMjQ1LDEuNDQxLDUuMTc4LDUuMTc4LDAsMCwxLC40NDUsMi4xODhabS0xLjQ4Mi0uNDQ1YTMuNzI5LDMuNzI5LDAsMCwwLS41MzYtMi4xNzQsMS44OTIsMS44OTIsMCwwLDAtMy4wMjMsMCwzLjY1NywzLjY1NywwLDAsMC0uNTU0LDIuMTN2LjQ5MmEzLjcsMy43LDAsMCwwLC41NDgsMi4xNzQsMS43NjQsMS43NjQsMCwwLDAsMS41MjEuNzY4LDEuNzQzLDEuNzQzLDAsMCwwLDEuNTE1LS43NSwzLjc4MSwzLjc4MSwwLDAsMCwuNTMtMi4xOTFaIiBzdHlsZT0iZmlsbDogI2ZmZiIvPgogICAgICA8cGF0aCBkPSJNMTYwLjYwOCwyMmgtMS40ODJsLTMuOC02LjA1M1YyMmgtMS40ODJWMTMuNDY5aDEuNDgybDMuODE0LDYuMDc2VjEzLjQ2OWgxLjQ3MVoiIHN0eWxlPSJmaWxsOiAjZmZmIi8+CiAgICAgIDxwYXRoIGQ9Ik0xNjkuNDU5LDE5LjhhMS4wMywxLjAzLDAsMCwwLS40LS44NjcsNC43NTksNC43NTksMCwwLDAtMS40MjctLjYxNUE2Ljg5LDYuODksMCwwLDEsMTY2LDE3LjYyOWEyLjE4OSwyLjE4OSwwLDAsMS0xLjE2Ni0xLjkxLDIuMDc5LDIuMDc5LDAsMCwxLC44NDEtMS43LDMuNCwzLjQsMCwwLDEsMi4xODMtLjY2OCwzLjY4NywzLjY4NywwLDAsMSwxLjU4OC4zMjgsMi42MDYsMi42MDYsMCwwLDEsMS4xLjkzNSwyLjQsMi40LDAsMCwxLC40LDEuMzQ1aC0xLjQ3N2ExLjMyMSwxLjMyMSwwLDAsMC0uNDE5LTEuMDM3LDEuNzM4LDEuNzM4LDAsMCwwLTEuMi0uMzc1LDEuODEyLDEuODEyLDAsMCwwLTEuMTI4LjMwOSwxLjAyOSwxLjAyOSwwLDAsMC0uNC44NjQuOTMxLjkzMSwwLDAsMCwuNDM0Ljc3OSw1LjAwNiw1LjAwNiwwLDAsMCwxLjQzLjYwNiw2LjU0LDYuNTQsMCwwLDEsMS42LjY3MywyLjU0NCwyLjU0NCwwLDAsMSwuODg1Ljg2NywyLjI1OCwyLjI1OCwwLDAsMSwuMjgxLDEuMTQ2LDIuMDMsMi4wMywwLDAsMS0uODE3LDEuNywzLjU0NSwzLjU0NSwwLDAsMS0yLjIxOC42Myw0LjE2OCw0LjE2OCwwLDAsMS0xLjctLjM0M0EyLjg1OSwyLjg1OSwwLDAsMSwxNjUsMjAuODI4YTIuMzU4LDIuMzU4LDAsMCwxLS40MzEtMS40MDZoMS40ODJhMS4zOCwxLjM4LDAsMCwwLC40OCwxLjEyNSwyLjEsMi4xLDAsMCwwLDEuMzc3LjQsMS44MjgsMS44MjgsMCwwLDAsMS4xNjMtLjMxM0ExLjAxMSwxLjAxMSwwLDAsMCwxNjkuNDU5LDE5LjhaIiBzdHlsZT0iZmlsbDogI2ZmZiIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="forthebadge" /></a><br />
+This work is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
+Attribution 4.0 International License</a>.</p>
+
+</body>
+</html>

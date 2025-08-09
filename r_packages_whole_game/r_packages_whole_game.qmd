@@ -1,0 +1,56 @@
+---
+title: "R Packages: Whole Game"
+format: "kakashi-revealjs"
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, tibble.max_extra_cols = 6, tibble.width = 60)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", dpi = 320)
+```
+
+# We're going to make a package *right now* {background-color="#23373B"}
+
+## **`usethis::create_package("mbmisc2")`** {background-color="#23373B"}
+
+## **`library(devtools)`** {background-color="#23373B"}
+## **`library(usethis)`**
+
+## **`use_r("labs_wrap")`** {background-color="#23373B"}
+### Copy the code in **`mbmisc2_files/labs_wrap.R`** 
+
+# **`use_package("ggplot2")`**
+# **`use_package("tibble")`**
+# **`use_package("dplyr")`**
+# **`use_package("stringr")`**
+# **`use_pipe()`**
+
+## {background-color="#23373B"} 
+
+# `r emojifont::emoji("hammer")` **Build**
+# `r emojifont::emoji("heavy_check_mark")` **R CMD Check**
+
+## {background-color="#23373B"} 
+
+# **Edit DESCRIPTION**
+
+## {background-color="#23373B"}
+### **`use_mit_license("Your Name")`**
+
+## {background-color="#23373B"} 
+
+# **`use_roxygen_md()`**
+# Copy the code in **`mbmisc2_files/roxygen.R`**
+## **`document()`** {background-color="#23373B"}
+
+## `r emojifont::emoji("hammer")` **Build** {background-color="#23373B"}
+## `r emojifont::emoji("heavy_check_mark")` **R CMD Check**
+
+## **`use_test("labs_wrap")`** {background-color="#23373B"}
+### Copy the code in **`mbmisc2_files/tests.R`**
+### **`test()`**
+
+## **`use_git()`** {background-color="#23373B"}
+## **`use_github()`**
+
+# Resources {background-color="#23373B"}
+## [R Packages, 2nd Edition](https://r-pkgs.org/): The work-in-progress second edition of R Packages. Uses the most cutting edge tools to make your life easier. Free online.
+## [R Packages, 1st Edition](http://r-pkgs.had.co.nz/): The first edition of R Packages. Still very good! Free online.

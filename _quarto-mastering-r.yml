@@ -1,0 +1,22 @@
+project:
+  post-render: R/sync_mastering_r.R
+  render:
+    - intro/intro.qmd
+    - reading_data/reading_data.qmd
+    - dplyr_5verbs/dplyr_5verbs.qmd
+    - ggplot_basics/ggplot_basics.qmd
+    - ggplot_customizing/ggplot_customizing.qmd
+    - ggplot_recreate_challenge/ggplot_recreate_challenge.qmd
+    - tidyr_basics/tidyr_basics.qmd
+    - modeling_and_broom/modeling_and_broom.qmd
+    - types_and_functions/types_and_functions.qmd
+    - purrr_basics/purrr_basics.qmd
+    - quarto_basics/quarto_basics.qmd
+    - quarto_whole_game/quarto_whole_game.qmd
+    - py_quarto_basics/py_quarto_basics.qmd
+    - py_quarto_whole_game/py_quarto_whole_game.qmd
+    - ds_whole_game/ds_whole_game.qmd
+    - tidy_tuesday/tidy_tuesday.qmd
+
+execute:
+  cache: false
