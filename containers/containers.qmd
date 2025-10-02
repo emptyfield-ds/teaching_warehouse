@@ -1,0 +1,464 @@
+---
+title: "Introduction to Containers with Docker"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6,
+  tibble.width = 60
+)
+```
+
+# **Levels of Code Durability** {background-color="#23373B"}
+
+## Level 0
+- Run code in an interactive environment like R console or Notebook
+- *Half-life*: a few days
+
+## Level 1
+- Write code down in the sequence it was run.
+- *Half-life*: a few weeks, maybe months
+
+## Level 2
+- Locking software versions
+- *Half-life*: a few years
+
+## Level 3
+- Locking entire computational environment
+- *Half-life*: unknown, maybe decades, possibly significantly less
+
+## **Goals**
+
+- Get as high up this ladder as possible by *default*, e.g., easy to reach Level 2 on every project.
+- Make it clear how and when to reach higher or lower levels.
+
+
+## Containers for Reproducible Research {background-color="#23373B" .large}
+
+Package managers manage packages within R and Python, but not the underlying system dependencies
+
+Containers give us:
+
+. . .
+
+**Same environment** everywhere
+
+. . .
+
+**Portable** across systems
+
+## What is Docker? {.large}
+
+![](img/docker-logo.png){.absolute top=0 right=0 width=120}
+
+. . .
+
+*Dockerfiles* are **recipes** for images. They are text files that contain instructions on how to build an image.
+
+. . .
+
+*Images* are what we create containers from. These are like a batch of dough made from a recipe. We can make many loaves of bread from the same dough!
+
+. . .
+
+*Containers* are **lightweight, portable** environments. These are like individual loaves of bread baked from the dough. They're what you actually eat!
+
+. . .
+
+Registries (like Docker Hub) are **repositories** for sharing images. These are like bakeries where you can get pre-made bread!
+
+## Docker Architecture
+
+```{mermaid}
+%%| fig-width: 8
+%%| fig-height: 6
+flowchart LR
+    D[Dockerfile] --> I[Image]
+    I --> C[Container]
+    I <--> R[Registry]
+```
+
+## Basic Docker Commands
+
+### `docker run container_name`
+
+```{bash}
+#| eval: false
+docker run hello-world
+```
+
+## Docker Command Structure
+
+```{bash}
+#| eval: false
+docker run [OPTIONS] IMAGE [COMMAND]
+```
+
+. . .
+
+`-it` = interactive + terminal
+
+. . .
+
+`--rm` = remove container when done
+
+. . .
+
+`-v` = mount volumes
+
+## Basic Docker Commands
+
+### `docker run -it container_name command`
+
+```{bash}
+#| eval: false
+docker run -it ubuntu:20.04 bash
+```
+
+## Basic Docker Commands
+
+### R images
+
+```{bash}
+#| eval: false
+docker run -it --rm rocker/r-ver:4.5.1
+```
+
+### Python images
+
+```{bash}
+#| eval: false
+docker run -it --rm python:3.12
+```
+
+## *Your Turn 1* (`exercises_r.qmd`, `exercises_py.qmd`)
+
+### Verify Docker is installed
+
+### Run an interactive R or Python session in a container
+
+### Check the version inside the container
+
+## Dockerfiles {background-color="#23373B" .large}
+
+. . .
+
+**Instructions** for building images
+
+. . .
+
+**Layer by layer** construction
+
+. . .
+
+**Cached** for efficiency
+
+## Anatomy of a Dockerfile
+
+```{dockerfile}
+#| eval: false
+#| code-line-numbers: "|1|3-4|6|8"
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt-get update && apt-get install -y python3
+
+CMD ["python3", "--version"]
+```
+
+## Dockerfile Instructions
+
+Instruction | Purpose
+----------- | -------
+`FROM` | Base image
+`RUN` | Execute commands
+`COPY` | Copy files into image
+`ARG` | Set argument variables
+`ENV` | Set environment variables
+`CMD` | Default command
+`WORKDIR` | Set working directory
+
+## Building Images
+
+:::{.large}
+- `docker build -t my-image .`
+- `docker run my-image`
+- `docker images`
+:::
+
+## *Your Turn 2*
+
+### Create a Dockerfile with Ubuntu base image
+
+### Set environment variables
+
+### Add a simple CMD instruction
+
+### Build and run your container
+
+## Installing Software in Containers {.large}
+
+. . .
+
+These are Linux systems, so use package managers like `apt`, `yum`, or `apk` to install software
+
+. . .
+
+**Combine commands** to reduce layers
+
+## Efficient RUN Commands
+
+### Multiple layers
+
+```{dockerfile}
+#| eval: false
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y git
+```
+
+## Efficient RUN Commands
+
+### Single layer
+
+```{dockerfile}
+#| eval: false
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+## *Your Turn 3*
+
+### Copy the Quarto installation script
+
+### Install Quarto in your container
+
+### Verify the installation
+
+## Working with Files {background-color="#23373B" .large}
+
+. . .
+
+`COPY`: files into image at **build time**
+
+. . .
+
+`Volumes`: mount directories at **run time**
+
+. . .
+
+**Data persistence** and **code sharing**
+
+## COPY Instruction
+
+### `COPY source destination`
+
+```{dockerfile}
+#| eval: false
+COPY script.py /project/script.py
+COPY . /project/
+# Copy with permissions
+COPY --chmod=755 script.sh /usr/local/bin/
+```
+
+## Volume Mounts
+
+```{bash}
+#| eval: false
+docker run -v $(pwd):/work my-image
+```
+
+## Volume Mounts
+
+```{bash}
+#| eval: false
+docker run -v $(pwd)/data:/data:ro my-image
+```
+
+## Volume Mounts
+
+```{bash}
+#| eval: false
+docker run \
+  -v $(pwd)/figures:/figures \
+  -v $(pwd)/outputs:/outputs \
+  my-image
+```
+
+## `stanfordhpds` images
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/docker-hub.png")
+```
+
+## *Your Turn 4*
+
+### Start fresh with the `stanfordhpds/base` base image
+
+### Install R with rig or Python with uv
+
+### Copy and run your analysis script
+
+### Mount a volume for outputs
+
+# Dependency Management {background-color="#23373B"}
+
+## R with renv
+
+```{dockerfile}
+#| eval: false
+#| code-line-numbers: "|1-2|3|5"
+COPY renv.lock renv.lock
+COPY renv/activate.R renv/activate.R
+RUN echo "source('renv/activate.R')" > .Rprofile
+
+RUN R -e "renv::restore()"
+```
+
+## Python with uv
+
+```{dockerfile}
+#| eval: false
+#| code-line-numbers: "|1-2|4"
+COPY pyproject.toml pyproject.toml
+COPY uv.lock uv.lock
+
+RUN uv sync
+```
+
+## *Your Turn 5*
+
+### Copy dependency files to your container
+
+### Restore the environment
+
+### Build and test
+
+# Pipeline Tools in Containers {background-color="#23373B" .large}
+
+## targets Pipeline
+
+```{dockerfile}
+#| eval: false
+COPY _targets.R _targets.R
+COPY R/ R/
+
+CMD ["R", "-e", "targets::tar_make()"]
+```
+
+## Make Pipeline
+
+```{dockerfile}
+#| eval: false
+COPY Makefile Makefile
+COPY scripts/ scripts/
+
+CMD ["make", "all"]
+```
+
+## *Your Turn 6*
+
+### Add pipeline files to your container
+
+### Change CMD to run the pipeline
+
+### Mount necessary directories for outputs
+
+## Docker Compose {.large}
+
+. . .
+
+**Multi-container** applications
+
+. . .
+
+**Declarative** configuration in YAML
+
+. . .
+
+**Simplified** commands
+
+## compose.yml
+
+```{yaml}
+#| eval: false
+#| code-line-numbers: "|1-2|3|4|5-7|8"
+services:
+  analysis:
+    image: my-analysis
+    build: .
+    volumes:
+      - ./data:/data
+      - ./outputs:/outputs
+    command: ["make", "all"]
+```
+
+## Docker Compose Commands
+
+:::{.large}
+- `docker compose up`
+
+- `docker compose up --build`
+
+- `docker compose down`
+:::
+
+## *Your Turn 7*
+
+### Create a compose.yml file
+
+### Define your service
+
+### Run with docker compose
+
+## Cleanup Commands
+
+- `docker stop $(docker ps -a -q)`
+- `docker system prune -a`
+- `docker system df`
+
+## *Your Turn 8*
+
+### Stop any running containers
+
+### Clean up unused resources
+
+### Verify cleanup
+
+## Accessing containers via IDEs
+
+### *RStudio*:
+
+[The Rocker Project](https://rocker-project.org/) or our `rstudio` flavors of `stanfordhpds` images
+
+### *VS Code*:
+
+[Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers)
+
+### *Positron*:
+
+[Remote SSH](https://www.andrewheiss.com/blog/2025/07/05/positron-ssh-docker/)
+
+## Useful Base Images
+
+- **[The Rocker Project](https://www.rocker-project.org/)** - R and RStudio images
+
+- **[Python Docker Images](https://hub.docker.com/_/python)** - Official Python images
+
+- **[uv Images](https://docs.astral.sh/uv/guides/integration/docker/#available-images)** - Quickly install uv
+
+## Resources {background-color="#23373B" .extra-large}
+
+[docs.docker.com](https://docs.docker.com/)
+[Best practices for Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+[Using uv with Docker](https://docs.astral.sh/uv/guides/integration/docker/)
+[Using renv with Docker](https://rstudio.github.io/renv/articles/docker.html)
