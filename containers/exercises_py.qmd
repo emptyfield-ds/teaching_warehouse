@@ -1,0 +1,282 @@
+---
+title: "Introduction to Containers with Docker: Python"
+format: html
+engine: jupyter
+---
+
+```{python}
+#| label: setup
+# this loads the `copy_dockerfile_template()` helper function we'll use in this exercise
+from helpers import copy_dockerfile_template
+```
+
+
+## Your Turn 1
+
+First, run a simple Docker image to make sure you have Docker installed and running on your machine.
+
+```
+docker run --rm hello-world
+```
+
+Now, let's run an interactive Python session using the official Python image.
+
+In terminal, run:
+
+```
+docker run -it --rm python:3.12
+```
+
+This opens a Python session inside the container. Run the following command to verify the Python version:
+
+```python
+import sys
+print(sys.version)
+```
+
+## Your Turn 2
+
+Add the following to `Dockerfile`:
+
+- Use ubuntu:20.04 as the base image
+
+Include the following, filling in the blank for the command to update and install packages:
+
+```
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+___ apt-get update && apt-get upgrade -y && \
+    apt-get install -y \
+    software-properties-common \
+    gdebi-core \
+    unzip \
+    sudo \
+    locales \
+    && locale-gen en_US.UTF-8
+```
+
+- Add a command to echo "Hello from my Ubuntu container!" when the container starts:
+
+```
+___ ["echo", "Hello from my Ubuntu container!"]
+```
+
+- Build the Docker image with the tag `my_ubuntu_container`
+- Run the container from the image you just built:
+
+```
+docker run --rm my_ubuntu_container
+```
+
+
+
+## Your Turn 3
+
+*Something not quite working from the last exercise? Run this code to update your Dockerfile and catch up*
+
+```{python}
+#| eval: false
+#| echo: false
+copy_dockerfile_template("your_turn_3_py.Dockerfile")
+```
+
+Let's continue building on the Dockerfile from Your Turn 2.
+
+- copy `install-quarto.sh` to the container
+- install Quarto using the script by including this in the Dockerfile:
+
+```
+# make the script executable and run it with the
+# desired version set as an environment variable
+RUN chmod +x install-quarto.sh && \
+    QUARTO_VERSION=${QUARTO_VERSION} install-quarto.sh
+```
+
+- rebuild the Docker image with the tag `my_ubuntu_quarto`
+- run the container from the image you just built, starting an interactive bash session:
+
+```
+docker run -it --rm my_ubuntu_quarto bash
+```
+
+- inside the container, verify Quarto is installed by running:
+
+```
+quarto --version
+```
+
+- Modify the Dockerfile to use Quarto version 1.8.0
+- rebuild the Docker image and verify the Quarto version again
+
+## Your Turn 4
+
+For this exercise, we'll start from scratch on our `Dockerfile` using a base image that is already suited to our goals. You can find the solution to the previous exercise in `templates/your_turn_4_py.Dockerfile`.
+
+- Remove everything from the existing `Dockerfile`
+- Use `stanfordhpds/base:latest` as the base image
+- Add a `RUN` command to install Python with uv: `uv python install 3.12`
+- Initialize a uv project and install matplotlib and seaborn with the following commands:
+
+```
+RUN uv init --no-readme
+RUN uv add matplotlib seaborn pandas
+```
+
+- Copy the file `penguins.py` to the container using the `COPY` command.
+- Set the `CMD` to run the `penguins.py` script when the container starts:
+
+```
+CMD ["uv", "run", "python", "penguins.py"]
+```
+
+- Build the Docker image with the tag `my_py_container`
+- Run the container from the image you just built, mounting the `figures/` directory to `/figures/` in the container:
+
+```
+docker run --rm -v $(pwd)/figures:/figures my_py_container
+```
+
+## Your Turn 5
+
+*Something not quite working from the last exercise? Run this code to update your Dockerfile and catch up*
+
+```{python}
+#| eval: false
+#| echo: false
+copy_dockerfile_template("your_turn_5_py.Dockerfile")
+```
+
+Now, let's extend the Dockerfile from Your Turn 4 to use uv for managing our Python package dependencies.
+
+- Add the following lines to the Dockerfile to copy the uv project files to the container:
+
+```
+COPY pyproject.toml pyproject.toml
+COPY uv.lock uv.lock
+```
+
+Then, install the dependencies by adding this line to the Dockerfile:
+
+```
+RUN uv sync
+```
+
+- Keep your CMD from Your Turn 4 to run the `penguins.py` script when the container starts.
+- Build the Docker image with the tag `my_py_uv_container`
+- Run the container from the image you just built
+
+```
+docker run --rm -v $(pwd)/figures:/figures my_py_uv_container
+```
+
+## Your Turn 6
+
+*Something not quite working from the last exercise? Run this code to update your Dockerfile and catch up*
+
+```{python}
+#| eval: false
+#| echo: false
+copy_dockerfile_template("your_turn_6_py.Dockerfile")
+```
+
+Now, let's add a make pipeline to execute our project inside the container.
+
+- Modify the `Dockerfile` from Your Turn 5 to include the following changes:
+  - Copy the make-related files to the container:
+
+    ```
+    COPY Makefile Makefile
+    COPY scripts/ scripts/
+    ```
+
+  - Change the `CMD` to run the make pipeline instead of the `penguins.py` script:
+
+    ```
+    CMD ["make", "all"]
+    ```
+- Build the Docker image with the tag `my_py_make_container`
+- Run the container from the image you just built with the `outputs` directory mounted to the container:
+
+```
+docker run --rm -v $(pwd)/outputs:/outputs -v $(pwd)/figures:/figures my_py_make_container
+```
+
+## Your Turn 7
+
+*Something not quite working from the last exercise? Run this code to update your Dockerfile and catch up*
+
+```{python}
+#| eval: false
+#| echo: false
+copy_dockerfile_template("your_turn_7_py.Dockerfile")
+```
+
+Create a new file called `compose.yml`. Inside, include the following content. Fill in the blanks as needed, calling the service `py_make` and using the image `my_py_make_container`.
+
+```yaml
+services:
+  ____:
+    image: ____
+    # this says use the Dockerfile in the current directory (`.`) to build the image
+    build: .
+    ____:
+      - ./outputs:/outputs
+      - ./figures:/figures
+    command: ["make", "all"]
+```
+
+- Now, use Docker Compose to build and run the service defined in `compose.yml`:
+
+```
+docker compose up --build
+```
+
+
+## Your Turn 8
+
+*Something not quite working from the last exercise? Run this code to update your Dockerfile and catch up*
+
+```{python}
+#| eval: false
+#| echo: false
+copy_dockerfile_template("your_turn_8_py.Dockerfile")
+```
+
+Let's now clean up our docker space by removing unused images and containers, as well as stopping any running containers.
+
+- First, compose down any running services:
+
+```
+docker compose down
+```
+
+- Then, stop any running containers we made during these exercises. First, list running containers with:
+
+```
+docker ps
+docker stop <container_id>
+```
+
+- Next, remove unused images and containers using the following command:
+
+```
+docker system prune -a
+```
+
+- Finally, verify that all unused images and containers have been removed:
+
+```
+docker images
+docker ps -a
+```
+
+
+***
+
+# Take aways
+
+* Docker enables reproducible environments for data analysis projects
+* Using containers can simplify dependency management
+* Docker Compose helps manage multi-container applications but also just make it easier to run single containers in a specific way
+* Clean up Docker resources regularly to save space and memory

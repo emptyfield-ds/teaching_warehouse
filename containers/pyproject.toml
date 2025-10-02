@@ -1,0 +1,8 @@
+[project]
+name = "containers"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "matplotlib>=3.10.6",
+    "seaborn>=0.13.2",
+]

@@ -1,0 +1,23 @@
+---
+title: "Introduction to Containers with Docker"
+date: "today"
+format: "kakashi-revealjs"
+---
+
+## {background-color="#23373B"}
+
+1.
+
+## Running images
+
+- rocker, python
+
+## *Your Turn 1* (`exercises_r.qmd`, `exercises_py.qmd`)
+
+## Other useful images
+
+- [rocker](https://www.rocker-project.org/) - R and RStudio images
+- [python](https://hub.docker.com/_/python) - Python images
+- [uv](https://hub.docker.com/_/python) - Efficient installation of uv
+
+## Resources {background-color="#23373B"}
