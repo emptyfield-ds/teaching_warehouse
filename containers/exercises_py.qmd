@@ -53,8 +53,11 @@ ___ apt-get update && apt-get upgrade -y && \
     unzip \
     sudo \
     locales \
+    wget \
     && locale-gen en_US.UTF-8
 ```
+
+*Note: We're adding `wget` here because it will be needed for installing Quarto in Your Turn 3.*
 
 - Add a command to echo "Hello from my Ubuntu container!" when the container starts:
 
@@ -83,14 +86,14 @@ copy_dockerfile_template("your_turn_3_py.Dockerfile")
 
 Let's continue building on the Dockerfile from Your Turn 2.
 
-- copy `install-quarto.sh` to the container
+- copy `install_quarto.sh` to the container
 - install Quarto using the script by including this in the Dockerfile:
 
 ```
 # make the script executable and run it with the
 # desired version set as an environment variable
-RUN chmod +x install-quarto.sh && \
-    QUARTO_VERSION=${QUARTO_VERSION} install-quarto.sh
+RUN chmod +x install_quarto.sh && \
+    QUARTO_VERSION=${QUARTO_VERSION} ./install_quarto.sh
 ```
 
 - rebuild the Docker image with the tag `my_ubuntu_quarto`
@@ -116,10 +119,11 @@ For this exercise, we'll start from scratch on our `Dockerfile` using a base ima
 - Remove everything from the existing `Dockerfile`
 - Use `stanfordhpds/base:latest` as the base image
 - Add a `RUN` command to install Python with uv: `uv python install 3.12`
-- Initialize a uv project and install matplotlib and seaborn with the following commands:
+- Set the working directory and initialize a uv project with the following commands:
 
 ```
-RUN uv init --no-readme
+WORKDIR /workspace
+RUN uv init --bare
 RUN uv add matplotlib seaborn pandas
 ```
 
@@ -127,14 +131,14 @@ RUN uv add matplotlib seaborn pandas
 - Set the `CMD` to run the `penguins.py` script when the container starts:
 
 ```
-CMD ["uv", "run", "python", "penguins.py"]
+CMD ["uv", "run", "penguins.py"]
 ```
 
 - Build the Docker image with the tag `my_py_container`
-- Run the container from the image you just built, mounting the `figures/` directory to `/figures/` in the container:
+- Run the container from the image you just built, mounting the `figures/` directory to `/workspace/figures/` in the container:
 
 ```
-docker run --rm -v $(pwd)/figures:/figures my_py_container
+docker run --rm -v $(pwd)/figures:/workspace/figures my_py_container
 ```
 
 ## Your Turn 5
@@ -167,7 +171,7 @@ RUN uv sync
 - Run the container from the image you just built
 
 ```
-docker run --rm -v $(pwd)/figures:/figures my_py_uv_container
+docker run --rm -v $(pwd)/figures:/workspace/figures my_py_uv_container
 ```
 
 ## Your Turn 6
@@ -183,11 +187,10 @@ copy_dockerfile_template("your_turn_6_py.Dockerfile")
 Now, let's add a make pipeline to execute our project inside the container.
 
 - Modify the `Dockerfile` from Your Turn 5 to include the following changes:
-  - Copy the make-related files to the container:
+  - Copy the Makefile to the container:
 
     ```
     COPY Makefile Makefile
-    COPY scripts/ scripts/
     ```
 
   - Change the `CMD` to run the make pipeline instead of the `penguins.py` script:
@@ -199,7 +202,7 @@ Now, let's add a make pipeline to execute our project inside the container.
 - Run the container from the image you just built with the `outputs` directory mounted to the container:
 
 ```
-docker run --rm -v $(pwd)/outputs:/outputs -v $(pwd)/figures:/figures my_py_make_container
+docker run --rm -v $(pwd)/outputs:/workspace/outputs -v $(pwd)/figures:/workspace/figures my_py_make_container
 ```
 
 ## Your Turn 7
@@ -221,8 +224,8 @@ services:
     # this says use the Dockerfile in the current directory (`.`) to build the image
     build: .
     ____:
-      - ./outputs:/outputs
-      - ./figures:/figures
+      - ./outputs:/workspace/outputs
+      - ./figures:/workspace/figures
     command: ["make", "all"]
 ```
 

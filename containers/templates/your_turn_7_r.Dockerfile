@@ -1,7 +1,9 @@
 # Your Turn 7: Same as Your Turn 6
 FROM stanfordhpds/base:latest
 
-RUN rig add R 4.5.1
+WORKDIR /workspace
+
+RUN rig add 4.5.1
 
 COPY renv.lock renv.lock
 COPY renv/activate.R renv/activate.R

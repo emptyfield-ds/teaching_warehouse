@@ -12,11 +12,12 @@ RUN apt-get update && apt-get upgrade -y && \
     unzip \
     sudo \
     locales \
+    wget \
     && locale-gen en_US.UTF-8
 
-COPY install-quarto.sh install-quarto.sh
+COPY install_quarto.sh install_quarto.sh
 
-RUN chmod +x install-quarto.sh && \
-    QUARTO_VERSION=${QUARTO_VERSION} install-quarto.sh
+RUN chmod +x install_quarto.sh && \
+    QUARTO_VERSION=${QUARTO_VERSION} ./install_quarto.sh
 
 CMD ["echo", "Hello from my Ubuntu container!"]

@@ -9,7 +9,7 @@
 <link href="containers_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.32">
 
-  <meta name="dcterms.date" content="2025-09-29">
+  <meta name="dcterms.date" content="2025-10-02">
   <title>Introduction to Containers with Docker</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,6 +28,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="containers_files/libs/revealjs/dist/theme/quarto-0e215b1d0b119f822379d859800dff50.css">
   <link href="containers_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -121,6 +187,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="containers_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="containers_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="containers_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -132,25 +201,446 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2025-09-29</p>
+  <p class="date">2025-10-02</p>
 </section>
-<section id="section" class="slide level2" data-background-color="#23373B">
-<h2></h2>
-<ol type="1">
-<li class="fragment">Do less</li>
-<li class="fragment">Benchmark and experiment</li>
-<li class="fragment">Vectorize</li>
-<li class="fragment">Profile to find bottlenecks</li>
-<li class="fragment">Parallelize</li>
-</ol>
+<section>
+<section id="levels-of-code-durability" class="title-slide slide level1 center" data-background-color="#23373B">
+<h1><strong>Levels of Code Durability</strong></h1>
+
+</section>
+<section id="level-0" class="slide level2">
+<h2>Level 0</h2>
+<ul>
+<li class="fragment">Run code in an interactive environment like R console or Notebook</li>
+<li class="fragment"><em>Half-life</em>: a few days</li>
+</ul>
+</section>
+<section id="level-1" class="slide level2">
+<h2>Level 1</h2>
+<ul>
+<li class="fragment">Write code down in the sequence it was run.</li>
+<li class="fragment"><em>Half-life</em>: a few weeks, maybe months</li>
+</ul>
+</section>
+<section id="level-2" class="slide level2">
+<h2>Level 2</h2>
+<ul>
+<li class="fragment">Locking software versions</li>
+<li class="fragment"><em>Half-life</em>: a few years</li>
+</ul>
+</section>
+<section id="level-3" class="slide level2">
+<h2>Level 3</h2>
+<ul>
+<li class="fragment">Locking entire computational environment</li>
+<li class="fragment"><em>Half-life</em>: unknown, maybe decades, possibly significantly less</li>
+</ul>
+</section>
+<section id="goals" class="slide level2">
+<h2><strong>Goals</strong></h2>
+<ul>
+<li class="fragment">Get as high up this ladder as possible by <em>default</em>, e.g., easy to reach Level 2 on every project.</li>
+<li class="fragment">Make it clear how and when to reach higher or lower levels.</li>
+</ul>
+</section>
+<section id="containers-for-reproducible-research" class="slide level2 large" data-background-color="#23373B">
+<h2>Containers for Reproducible Research</h2>
+<p>Package managers manage packages within R and Python, but not the underlying system dependencies</p>
+<p>Containers give us:</p>
+<div class="fragment">
+<p><strong>Same environment</strong> everywhere</p>
+</div>
+<div class="fragment">
+<p><strong>Portable</strong> across systems</p>
+</div>
+</section>
+<section id="what-is-docker" class="slide level2 large">
+<h2>What is Docker?</h2>
+<p><img data-src="img/docker-logo.png" class="absolute" style="top: 0px; right: 0px; width: 120px; "></p>
+<div class="fragment">
+<p><em>Dockerfiles</em> are <strong>recipes</strong> for images. They are text files that contain instructions on how to build an image.</p>
+</div>
+<div class="fragment">
+<p><em>Images</em> are what we create containers from. These are like a batch of dough made from a recipe. We can make many loaves of bread from the same dough!</p>
+</div>
+<div class="fragment">
+<p><em>Containers</em> are <strong>lightweight, portable</strong> environments. These are like individual loaves of bread baked from the dough. They’re what you actually eat!</p>
+</div>
+<div class="fragment">
+<p>Registries (like Docker Hub) are <strong>repositories</strong> for sharing images. These are like bakeries where you can get pre-made bread!</p>
+</div>
+</section>
+<section id="docker-architecture" class="slide level2">
+<h2>Docker Architecture</h2>
+<div class="cell" data-reveal="true" data-fig-width="8" data-fig-height="6" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    D[Dockerfile] --&gt; I[Image]
+    I --&gt; C[Container]
+    I &lt;--&gt; R[Registry]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="basic-docker-commands" class="slide level2">
+<h2>Basic Docker Commands</h2>
+<h3 id="docker-run-container_name"><code>docker run container_name</code></h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href=""></a><span class="ex">docker</span> run hello-world</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="docker-command-structure" class="slide level2">
+<h2>Docker Command Structure</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href=""></a><span class="ex">docker</span> run <span class="pp">[</span><span class="ss">OPTIONS</span><span class="pp">]</span> IMAGE <span class="pp">[</span><span class="ss">COMMAND</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><code>-it</code> = interactive + terminal</p>
+</div>
+<div class="fragment">
+<p><code>--rm</code> = remove container when done</p>
+</div>
+<div class="fragment">
+<p><code>-v</code> = mount volumes</p>
+</div>
+</section>
+<section id="basic-docker-commands-1" class="slide level2">
+<h2>Basic Docker Commands</h2>
+<h3 id="docker-run--it-container_name-command"><code>docker run -it container_name command</code></h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href=""></a><span class="ex">docker</span> run <span class="at">-it</span> ubuntu:20.04 bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="basic-docker-commands-2" class="slide level2">
+<h2>Basic Docker Commands</h2>
+<h3 id="r-images">R images</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href=""></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">--rm</span> rocker/r-ver:4.5.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h3 id="python-images">Python images</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href=""></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">--rm</span> python:3.12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="your-turn-1-exercises_r.qmd-exercises_py.qmd" class="slide level2">
 <h2><em>Your Turn 1</em> (<code>exercises_r.qmd</code>, <code>exercises_py.qmd</code>)</h2>
+<h3 id="verify-docker-is-installed">Verify Docker is installed</h3>
+<h3 id="run-an-interactive-r-or-python-session-in-a-container">Run an interactive R or Python session in a container</h3>
+<h3 id="check-the-version-inside-the-container">Check the version inside the container</h3>
 </section>
-<section id="resources" class="slide level2" data-background-color="#23373B">
-<h2>Resources</h2>
+<section id="dockerfiles" class="slide level2 large" data-background-color="#23373B">
+<h2>Dockerfiles</h2>
+<div class="fragment">
+<p><strong>Instructions</strong> for building images</p>
+</div>
+<div class="fragment">
+<p><strong>Layer by layer</strong> construction</p>
+</div>
+<div class="fragment">
+<p><strong>Cached</strong> for efficiency</p>
+</div>
+</section>
+<section id="anatomy-of-a-dockerfile" class="slide level2">
+<h2>Anatomy of a Dockerfile</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|1|3-4|6|8"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb6-1"><a href=""></a><span class="kw">FROM</span> ubuntu:20.04</span>
+<span id="cb6-2"><a href=""></a></span>
+<span id="cb6-3"><a href=""></a><span class="kw">ENV</span> DEBIAN_FRONTEND=noninteractive</span>
+<span id="cb6-4"><a href=""></a><span class="kw">ENV</span> TZ=UTC</span>
+<span id="cb6-5"><a href=""></a></span>
+<span id="cb6-6"><a href=""></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> python3</span>
+<span id="cb6-7"><a href=""></a></span>
+<span id="cb6-8"><a href=""></a><span class="kw">CMD</span> [<span class="st">"python3"</span>, <span class="st">"--version"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dockerfile-instructions" class="slide level2">
+<h2>Dockerfile Instructions</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Instruction</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>FROM</code></td>
+<td>Base image</td>
+</tr>
+<tr class="even">
+<td><code>RUN</code></td>
+<td>Execute commands</td>
+</tr>
+<tr class="odd">
+<td><code>COPY</code></td>
+<td>Copy files into image</td>
+</tr>
+<tr class="even">
+<td><code>ARG</code></td>
+<td>Set argument variables</td>
+</tr>
+<tr class="odd">
+<td><code>ENV</code></td>
+<td>Set environment variables</td>
+</tr>
+<tr class="even">
+<td><code>CMD</code></td>
+<td>Default command</td>
+</tr>
+<tr class="odd">
+<td><code>WORKDIR</code></td>
+<td>Set working directory</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="building-images" class="slide level2">
+<h2>Building Images</h2>
+<div class="large">
+<ul>
+<li class="fragment"><code>docker build -t my-image .</code></li>
+<li class="fragment"><code>docker run my-image</code></li>
+<li class="fragment"><code>docker images</code></li>
+</ul>
+</div>
+</section>
+<section id="your-turn-2" class="slide level2">
+<h2><em>Your Turn 2</em></h2>
+<h3 id="create-a-dockerfile-with-ubuntu-base-image">Create a Dockerfile with Ubuntu base image</h3>
+<h3 id="set-environment-variables">Set environment variables</h3>
+<h3 id="add-a-simple-cmd-instruction">Add a simple CMD instruction</h3>
+<h3 id="build-and-run-your-container">Build and run your container</h3>
+</section>
+<section id="installing-software-in-containers" class="slide level2 large">
+<h2>Installing Software in Containers</h2>
+<div class="fragment">
+<p>These are Linux systems, so use package managers like <code>apt</code>, <code>yum</code>, or <code>apk</code> to install software</p>
+</div>
+<div class="fragment">
+<p><strong>Combine commands</strong> to reduce layers</p>
+</div>
+</section>
+<section id="efficient-run-commands" class="slide level2">
+<h2>Efficient RUN Commands</h2>
+<h3 id="multiple-layers">Multiple layers</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb7-1"><a href=""></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update</span>
+<span id="cb7-2"><a href=""></a><span class="kw">RUN</span> <span class="ex">apt-get</span> install <span class="at">-y</span> curl</span>
+<span id="cb7-3"><a href=""></a><span class="kw">RUN</span> <span class="ex">apt-get</span> install <span class="at">-y</span> git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="efficient-run-commands-1" class="slide level2">
+<h2>Efficient RUN Commands</h2>
+<h3 id="single-layer">Single layer</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb8-1"><a href=""></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb8-2"><a href=""></a>    curl <span class="dt">\</span></span>
+<span id="cb8-3"><a href=""></a>    git <span class="dt">\</span></span>
+<span id="cb8-4"><a href=""></a>    <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-3" class="slide level2">
+<h2><em>Your Turn 3</em></h2>
+<h3 id="copy-the-quarto-installation-script">Copy the Quarto installation script</h3>
+<h3 id="install-quarto-in-your-container">Install Quarto in your container</h3>
+<h3 id="verify-the-installation">Verify the installation</h3>
+</section>
+<section id="working-with-files" class="slide level2 large" data-background-color="#23373B">
+<h2>Working with Files</h2>
+<div class="fragment">
+<p><code>COPY</code>: files into image at <strong>build time</strong></p>
+</div>
+<div class="fragment">
+<p><code>Volumes</code>: mount directories at <strong>run time</strong></p>
+</div>
+<div class="fragment">
+<p><strong>Data persistence</strong> and <strong>code sharing</strong></p>
+</div>
+</section>
+<section id="copy-instruction" class="slide level2">
+<h2>COPY Instruction</h2>
+<h3 id="copy-source-destination"><code>COPY source destination</code></h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb9-1"><a href=""></a><span class="kw">COPY</span> script.py /project/script.py</span>
+<span id="cb9-2"><a href=""></a><span class="kw">COPY</span> . /project/</span>
+<span id="cb9-3"><a href=""></a><span class="co"># Copy with permissions</span></span>
+<span id="cb9-4"><a href=""></a><span class="kw">COPY</span> <span class="op">--chmod=755</span> script.sh /usr/local/bin/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="volume-mounts" class="slide level2">
+<h2>Volume Mounts</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href=""></a><span class="ex">docker</span> run <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/work my-image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="volume-mounts-1" class="slide level2">
+<h2>Volume Mounts</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href=""></a><span class="ex">docker</span> run <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/data:/data:ro my-image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="volume-mounts-2" class="slide level2">
+<h2>Volume Mounts</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href=""></a><span class="ex">docker</span> run <span class="dt">\</span></span>
+<span id="cb12-2"><a href=""></a>  <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/figures:/figures <span class="dt">\</span></span>
+<span id="cb12-3"><a href=""></a>  <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/outputs:/outputs <span class="dt">\</span></span>
+<span id="cb12-4"><a href=""></a>  my-image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="stanfordhpds-images" class="slide level2">
+<h2><code>stanfordhpds</code> images</h2>
+
+<img data-src="img/docker-hub.png" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="your-turn-4" class="slide level2">
+<h2><em>Your Turn 4</em></h2>
+<h3 id="start-fresh-with-the-stanfordhpdsbase-base-image">Start fresh with the <code>stanfordhpds/base</code> base image</h3>
+<h3 id="install-r-with-rig-or-python-with-uv">Install R with rig or Python with uv</h3>
+<h3 id="copy-and-run-your-analysis-script">Copy and run your analysis script</h3>
+<h3 id="mount-a-volume-for-outputs">Mount a volume for outputs</h3>
+</section></section>
+<section>
+<section id="dependency-management" class="title-slide slide level1 center" data-background-color="#23373B">
+<h1>Dependency Management</h1>
 
 </section>
+<section id="r-with-renv" class="slide level2">
+<h2>R with renv</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|1-2|3|5"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb13-1"><a href=""></a><span class="kw">COPY</span> renv.lock renv.lock</span>
+<span id="cb13-2"><a href=""></a><span class="kw">COPY</span> renv/activate.R renv/activate.R</span>
+<span id="cb13-3"><a href=""></a><span class="kw">RUN</span> <span class="bu">echo</span> <span class="st">"source('renv/activate.R')"</span> <span class="op">&gt;</span> .Rprofile</span>
+<span id="cb13-4"><a href=""></a></span>
+<span id="cb13-5"><a href=""></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-e</span> <span class="st">"renv::restore()"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="python-with-uv" class="slide level2">
+<h2>Python with uv</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="|1-2|4"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb14-1"><a href=""></a><span class="kw">COPY</span> pyproject.toml pyproject.toml</span>
+<span id="cb14-2"><a href=""></a><span class="kw">COPY</span> uv.lock uv.lock</span>
+<span id="cb14-3"><a href=""></a></span>
+<span id="cb14-4"><a href=""></a><span class="kw">RUN</span> <span class="ex">uv</span> sync</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-5" class="slide level2">
+<h2><em>Your Turn 5</em></h2>
+<h3 id="copy-dependency-files-to-your-container">Copy dependency files to your container</h3>
+<h3 id="restore-the-environment">Restore the environment</h3>
+<h3 id="build-and-test">Build and test</h3>
+</section></section>
+<section>
+<section id="pipeline-tools-in-containers" class="title-slide slide level1 large center" data-background-color="#23373B">
+<h1>Pipeline Tools in Containers</h1>
+
+</section>
+<section id="targets-pipeline" class="slide level2">
+<h2>targets Pipeline</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb15-1"><a href=""></a><span class="kw">COPY</span> _targets.R _targets.R</span>
+<span id="cb15-2"><a href=""></a><span class="kw">COPY</span> R/ R/</span>
+<span id="cb15-3"><a href=""></a></span>
+<span id="cb15-4"><a href=""></a><span class="kw">CMD</span> [<span class="st">"R"</span>, <span class="st">"-e"</span>, <span class="st">"targets::tar_make()"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="make-pipeline" class="slide level2">
+<h2>Make Pipeline</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb16-1"><a href=""></a><span class="kw">COPY</span> Makefile Makefile</span>
+<span id="cb16-2"><a href=""></a><span class="kw">COPY</span> scripts/ scripts/</span>
+<span id="cb16-3"><a href=""></a></span>
+<span id="cb16-4"><a href=""></a><span class="kw">CMD</span> [<span class="st">"make"</span>, <span class="st">"all"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-6" class="slide level2">
+<h2><em>Your Turn 6</em></h2>
+<h3 id="add-pipeline-files-to-your-container">Add pipeline files to your container</h3>
+<h3 id="change-cmd-to-run-the-pipeline">Change CMD to run the pipeline</h3>
+<h3 id="mount-necessary-directories-for-outputs">Mount necessary directories for outputs</h3>
+</section>
+<section id="docker-compose" class="slide level2 large">
+<h2>Docker Compose</h2>
+<div class="fragment">
+<p><strong>Multi-container</strong> applications</p>
+</div>
+<div class="fragment">
+<p><strong>Declarative</strong> configuration in YAML</p>
+</div>
+<div class="fragment">
+<p><strong>Simplified</strong> commands</p>
+</div>
+</section>
+<section id="compose.yml" class="slide level2">
+<h2>compose.yml</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="|1-2|3|4|5-7|8"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href=""></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb17-2"><a href=""></a><span class="at">  </span><span class="fu">analysis</span><span class="kw">:</span></span>
+<span id="cb17-3"><a href=""></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> my-analysis</span></span>
+<span id="cb17-4"><a href=""></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb17-5"><a href=""></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb17-6"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./data:/data</span></span>
+<span id="cb17-7"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./outputs:/outputs</span></span>
+<span id="cb17-8"><a href=""></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"make"</span><span class="kw">,</span><span class="at"> </span><span class="st">"all"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="docker-compose-commands" class="slide level2">
+<h2>Docker Compose Commands</h2>
+<div class="large">
+<ul>
+<li class="fragment"><p><code>docker compose up</code></p></li>
+<li class="fragment"><p><code>docker compose up --build</code></p></li>
+<li class="fragment"><p><code>docker compose down</code></p></li>
+</ul>
+</div>
+</section>
+<section id="your-turn-7" class="slide level2">
+<h2><em>Your Turn 7</em></h2>
+<h3 id="create-a-compose.yml-file">Create a compose.yml file</h3>
+<h3 id="define-your-service">Define your service</h3>
+<h3 id="run-with-docker-compose">Run with docker compose</h3>
+</section>
+<section id="cleanup-commands" class="slide level2">
+<h2>Cleanup Commands</h2>
+<ul>
+<li class="fragment"><code>docker stop $(docker ps -a -q)</code></li>
+<li class="fragment"><code>docker system prune -a</code></li>
+<li class="fragment"><code>docker system df</code></li>
+</ul>
+</section>
+<section id="your-turn-8" class="slide level2">
+<h2><em>Your Turn 8</em></h2>
+<h3 id="stop-any-running-containers">Stop any running containers</h3>
+<h3 id="clean-up-unused-resources">Clean up unused resources</h3>
+<h3 id="verify-cleanup">Verify cleanup</h3>
+</section>
+<section id="accessing-containers-via-ides" class="slide level2">
+<h2>Accessing containers via IDEs</h2>
+<h3 id="rstudio"><strong>RStudio</strong>:</h3>
+<p><a href="https://rocker-project.org/">The Rocker Project</a> or our <code>rstudio</code> flavors of <code>stanfordhpds</code> images</p>
+<h3 id="vs-code"><strong>VS Code</strong>:</h3>
+<p><a href="https://code.visualstudio.com/docs/devcontainers/containers">Dev Containers</a></p>
+<h3 id="positron"><strong>Positron</strong>:</h3>
+<p><a href="https://www.andrewheiss.com/blog/2025/07/05/positron-ssh-docker/">Remote SSH</a></p>
+</section>
+<section id="useful-base-images" class="slide level2">
+<h2>Useful Base Images</h2>
+<ul>
+<li class="fragment"><p><strong><a href="https://www.rocker-project.org/">The Rocker Project</a></strong> - R and RStudio images</p></li>
+<li class="fragment"><p><strong><a href="https://hub.docker.com/_/python">Python Docker Images</a></strong> - Official Python images</p></li>
+<li class="fragment"><p><strong><a href="https://docs.astral.sh/uv/guides/integration/docker/#available-images">uv Images</a></strong> - Quickly install uv</p></li>
+</ul>
+</section>
+<section id="resources" class="slide level2 extra-large" data-background-color="#23373B">
+<h2>Resources</h2>
+<p><a href="https://docs.docker.com/">docs.docker.com</a> <a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best practices for Dockerfiles</a> <a href="https://docs.astral.sh/uv/guides/integration/docker/">Using uv with Docker</a> <a href="https://rstudio.github.io/renv/articles/docker.html">Using renv with Docker</a></p>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -366,6 +856,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

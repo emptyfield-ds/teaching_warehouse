@@ -1,6 +1,8 @@
 # Your Turn 5: Python with uv dependency management
 FROM stanfordhpds/base:latest
 
+WORKDIR /workspace
+
 RUN uv python install 3.12
 
 COPY pyproject.toml pyproject.toml

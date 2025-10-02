@@ -9,13 +9,15 @@ list(
   ),
   tar_target(
     penguins_figure,
-    ggsave(
-      "figures/penguins_targets.png",
-      plot = penguins_plot,
-      width = 6,
-      height = 4
-    ),
-    "figures/penguins_targets.png",
+    {
+      dir.create("figures", showWarnings = FALSE)
+      ggsave(
+        "figures/penguins_targets.png",
+        plot = penguins_plot,
+        width = 6,
+        height = 4
+      )
+    },
     format = "file"
   )
 )

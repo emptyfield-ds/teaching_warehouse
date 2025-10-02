@@ -50,8 +50,11 @@ ___ apt-get update && apt-get upgrade -y && \
     unzip \
     sudo \
     locales \
+    wget \
     && locale-gen en_US.UTF-8
 ```
+
+*Note: We're adding `wget` here because it will be needed for installing Quarto in Your Turn 3.*
 
 - Add a command to echo "Hello from my Ubuntu container!" when the container starts:
 
@@ -78,14 +81,14 @@ copy_dockerfile_template("your_turn_3_r.Dockerfile")
 
 Let's continue building on the Dockerfile from Your Turn 2.
 
-- copy `install-quarto.sh` to the container
+- copy `install_quarto.sh` to the container
 - install Quarto using the script by including this in the Dockerfile:
 
 ```
 # make the script executable and run it with the
 # desired version set as an environment variable
-RUN chmod +x install-quarto.sh && \
-    QUARTO_VERSION=${QUARTO_VERSION} install-quarto.sh
+RUN chmod +x install_quarto.sh && \
+    QUARTO_VERSION=${QUARTO_VERSION} ./install_quarto.sh
 ```
 
 - rebuild the Docker image with the tag `my_ubuntu_quarto`
@@ -110,7 +113,7 @@ For this exercise, we'll start from scratch on our `Dockerfile` using a base ima
 
 - Remove everything from the existing `Dockerfile`
 - Use `stanfordhpds/base:latest` as the base image
-- Add a `RUN` command to install R with rig: `rig add R 4.5.1`
+- Add a `RUN` command to install R with rig: `rig add 4.5.1`
 - Install the ggplot2 with the following command:
 
 ```
@@ -125,10 +128,10 @@ CMD ["Rscript", "penguins.R"]
 ```
 
 - Build the Docker image with the tag `my_r_container`
-- Run the container from the image you just built, mounting the `figures/` directory to `/figures/` in the container:
+- Run the container from the image you just built, mounting the `figures/` directory to `/workspace/figures/` in the container:
 
 ```
-docker run --rm -v $(pwd)/figures:/figures my_r_container
+docker run --rm -v $(pwd)/figures:/workspace/figures my_r_container
 ```
 
 ## Your Turn 5
@@ -162,7 +165,7 @@ RUN R -e "renv::restore()"
 - Run the container from the image you just built
 
 ```
-docker run --rm -v $(pwd)/figures:/figures my_r_renv_container
+docker run --rm -v $(pwd)/figures:/workspace/figures my_r_renv_container
 ```
 
 ## Your Turn 6
@@ -194,7 +197,7 @@ Now, let's add a targets pipeline to execute our project inside the container.
 - Run the container from the image you just built with the `_targets` directory mounted to the container:
 
 ```
-docker run --rm -v $(pwd)/_targets:/_targets -v $(pwd)/figures:/figures my_r_targets_container
+docker run --rm -v $(pwd)/_targets:/workspace/_targets -v $(pwd)/figures:/workspace/figures my_r_targets_container
 ```
 
 ## Your Turn 7
@@ -216,8 +219,8 @@ services:
     # this says use the Dockerfile in the current directory (`.`) to build the image
     build: .
     ____:
-      - ./_targets:/_targets
-      - ./figures:/figures
+      - ./_targets:/workspace/_targets
+      - ./figures:/workspace/figures
     command: ["R", "-e", "targets::tar_make()"]
 ```
 

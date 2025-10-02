@@ -1,6 +1,8 @@
 # Your Turn 7: Same as Your Turn 6
 FROM stanfordhpds/base:latest
 
+WORKDIR /workspace
+
 RUN uv python install 3.12
 
 COPY pyproject.toml pyproject.toml

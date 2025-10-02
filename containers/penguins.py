@@ -20,5 +20,5 @@ plt.ylabel("Body Mass (g)")
 plt.tight_layout()
 
 # Save the figure
-plt.savefig("/figures/penguins.png", dpi=300)
+plt.savefig("figures/penguins.png", dpi=300)
 plt.close()

@@ -1,6 +1,8 @@
 # Your Turn 6: Python with make pipeline
 FROM stanfordhpds/base:latest
 
+WORKDIR /workspace
+
 RUN uv python install 3.12
 
 COPY pyproject.toml pyproject.toml
