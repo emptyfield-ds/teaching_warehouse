@@ -1,0 +1,89 @@
+---
+title: "Reproducible Research on HPC: Python"
+format: html
+engine: jupyter
+---
+
+## Your Turn 1
+
+- Load the `gh` module and clone the repository: `gh repo clone emptyfield-ds/hpc_reproducibility`
+- Check out the file `python/sim_pt.py` to see the code we are going to run. You don't need to make any changes here.
+- Open `slurm/sim_pt.sbatch`. This is the Slurm sbatch file we are going to submit to the job scheduler.
+- Fill in the sbatch parameters. Remember you can't have spaces!
+  * Set the job name to whatever you like
+  * Use `sherrir,normal` for the partition
+  * For the output and the error, we are going to name them with file patterns: %x is the job name and %a is the array number. We'll put them in the `logs/` folder
+      - logs/%x_%a.out
+      - logs/%x_%a.err
+  * Use 1 node, 1 task, 4 cpus per task, 4G of memory, and set the job time to ten minutes (00:10:00)
+  * Use arrays to create 5 jobs
+- Load the most recent version of python
+- Run `python/sim_pt.py` with `python3` and pass it the Task ID and CPU count that we set. These are automatically available as two environmental variables:
+  * $SLURM_ARRAY_TASK_ID
+  * $SLURM_CPUS_PER_TASK
+- Use `sbatch` to submit the file to the job scheduler and use `squeue --me` to keep an eye on the jobs.
+- When the job has finished, review the `logs/` for errors and confirm the `results/`
+
+## Your Turn 2
+
+First, you will need to install the package we need for this script.
+
+In the terminal, run:
+
+```
+python/3.14
+python3 -m pip install --user polars
+```
+
+- Check out the file `python/sim_positivity.py` to see the code we are going to run for the rest of the exercises. You don't need to make any changes here.
+- Open `slurm/sim_pt.sbatch`. We'll use this file for the rest of the exercises
+- Set the job to use arrays `0-2`
+- Load the modules `python/3.14` and `py-numpy/2.3.5_py314`
+- Use the following command to run the script:
+
+```
+python3 python/sim_positivity.py \
+    --sims 10000 \
+    --subjects 1000 \
+    --gamma $CURRENT_GAMMA \
+    --out "results/sim_positivity_py_${SLURM_ARRAY_TASK_ID}.csv"
+```
+
+- Submit the job and review the logs and files when completed
+
+## Your Turn 3
+
+First, you will need to set up the virtual environment. In the terminal, run:
+
+```
+ml uv
+uv init --bare
+uv add polars numpy
+```
+
+Next, make the following changes to `slurm/sim_positivity.sbatch`:
+- Remove the numpy module and replace it with `ml uv`
+- Change the script execution to use `uv run` instead of `python3`
+
+ Submit the batch file and review the results and logs.
+
+## Your Turn 4
+
+Open `container_py.def`, and make the following changes:
+    - Use the docker image `python:3.14-slim`
+    - Copy the `pyproject.toml` and `uv.lock` files over to the container
+    - Restore the packages in the lock file with `uv sync`
+
+Next, build the container with `apptainer build`. The first argument is the name of the sif file you want to make, `container_py.sif`. The next is the name of the definition file to build it from.
+
+Let's make sure we can access the packages we installed from within the container. Open a shell into the container with:
+
+- `apptainer exec container_py.sif bash`
+
+First, activate the virtual environment with `source .venv/bin/activate` Then, open R with `python3`. Load polars to make sure it works. Exit python with `quit()` then exit the container with `exit`
+
+Next, make the following changes to `slurm/sim_positivity.sbatch`:
+- Remove the module load commands
+- Put `apptainer exec container_py.sif` in front of `uv run`. This will excecute the command from within the container.
+
+Submit the job and review the results and logs.

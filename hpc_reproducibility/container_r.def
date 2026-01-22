@@ -1,0 +1,25 @@
+Bootstrap: docker
+From: ______
+
+%files
+    ______ ______
+
+%post
+    # this is where we will install the packages with renv
+    mkdir -p /renv_lib
+
+    # Install renv
+    R -e "install.packages('renv')"
+
+    # Restore libraries globally so no activation is needed at runtime
+    R -e "______(lockfile = '/renv.lock', library = '/renv_lib', prompt = FALSE)"
+
+%environment
+    # This disables the local .Rprofile
+    # It prevents the host's renv from activating and creating the conflict.
+    export R_PROFILE_USER=/dev/null
+    # and also use the renv library as the package library
+    export R_LIBS_USER=/renv_lib
+
+%runscript
+    exec Rscript "$@"
