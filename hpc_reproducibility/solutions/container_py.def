@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: python:3.14-slim
+
+%files
+    pyproject.toml pyproject.toml
+    uv.lock uv.lock
+
+%post
+    apt-get update && apt-get install -y git curl
+    curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
+    uv sync
+
+%environment
+    # Force uv to use the container's virtual environment
+    export UV_PROJECT_ENVIRONMENT=/.venv
+
+%runscript
+    exec uv run "$@"

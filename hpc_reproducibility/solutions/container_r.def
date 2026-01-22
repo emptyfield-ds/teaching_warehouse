@@ -1,0 +1,23 @@
+Bootstrap: docker
+From: rocker/r-ver:4.4.2
+
+%files
+    renv.lock renv.lock
+
+%post
+    mkdir -p /renv_lib
+
+    # Install renv
+    R -e "install.packages('renv')"
+
+    # Restore libraries globally so no activation is needed at runtime
+    R -e "renv::restore(lockfile = '/renv.lock', library = '/renv_lib', prompt = FALSE)"
+
+%environment
+    # This disables the local .Rprofile
+    # It prevents the host's renv from activating and creating the conflict.
+    export R_PROFILE_USER=/dev/null
+    export R_LIBS_USER=/renv_lib
+
+%runscript
+    exec Rscript "$@"

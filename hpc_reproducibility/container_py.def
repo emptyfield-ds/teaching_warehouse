@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: _____
+
+%files
+    _____
+    _____
+
+%post
+    # install uv
+    apt-get update && apt-get install -y git curl
+    curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
+
+    _____
+
+%environment
+    # Force uv to use the container's virtual environment
+    export UV_PROJECT_ENVIRONMENT=/.venv
+
+%runscript
+    exec uv run "$@"

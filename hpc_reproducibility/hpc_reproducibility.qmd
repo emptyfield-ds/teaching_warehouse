@@ -1,0 +1,255 @@
+---
+title: "Reproducible Research on HPC"
+date: "`r Sys.Date()`"
+format: "kakashi-revealjs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(
+  tibble.max_extra_cols = 6,
+  tibble.width = 60
+)
+```
+
+# **Levels of Code Durability** {background-color="#23373B"}
+
+## Level 0
+- Run code in an interactive environment like R console or Notebook
+- *Half-life*: a few days
+
+## Level 1
+- Write code down in the sequence it was run.
+- *Half-life*: a few weeks, maybe months
+
+## Level 2
+- Locking software versions
+- *Half-life*: a few years
+
+## Level 3
+- Locking entire computational environment
+- *Half-life*: unknown, maybe decades, possibly significantly less
+
+## **Goals**
+
+- Get as high up this ladder as possible by *default*, e.g., easy to reach Level 2 on every project.
+- Make it clear how and when to reach higher or lower levels.
+
+# Sherlock HPC: A review {background-color="#23373B"}
+
+## SRCC Resources
+
+- SRCC offers monthly onboarding sessions, regular trainings around using Sherlock effectively, and office hours (see <https://www.sherlock.stanford.edu/docs/#support>)
+
+## When should I use Sherlock?
+
+- When you DO NOT have sensitive data. **Sherlock is not appropriate for a lot of our data!**
+- When a task is highly parallizable but requires more compute than your laptop to complete in a reasonable amount of time
+- Most of our current Sherlock usecases are for large-scale simulations with lots of parameters
+
+## The Anatomy of an HPC Cluster
+
+![](img/hpc-schematic.jpg)
+
+:::{.tiny}
+source: https://ekatsevi.github.io/statistical-computing/hpc-basics.html
+:::
+
+## Accessing Sherlock
+
+- From your local terminal via ssh: `ssh login.sherlock.stanford.edu`
+- OnDemand (shell access as well as IDE): <https://ondemand.sherlock.stanford.edu/>
+
+## OnDemand
+
+![](img/ondemand.png)
+
+## *Your Turn 0*
+
+### Access Sherlock however you like so that you have an active session
+
+## Modules
+
+- Most software--even software you are used to being constantly available--is available as a loadable module enviroment
+- Modules exist to offer multiple software versions simultaneously and abstract dependencies away from the OS
+- Sherlock uses `Lmod` to do this; you don't need to know anything about it but you might see it in warning or error messages
+
+## Modules
+
+```
+module load R
+ml python
+module spider <search_term>
+```
+
+Available modules: <https://www.sherlock.stanford.edu/docs/software/list/>
+
+## Workflows
+
+- Even though HPC systems come with some quirks, because storage follows you around, it *feels* like working on a single computer
+- Continue to use git to manage projects and files
+- Where possible, include Sherlock commands in a `Makefile` or other pipeline orchestration tool
+- Some useful modules avaialable: `uv`, `gh`
+
+## Data transfer
+
+- Where possible, use git
+- For larger files, consult SRCC's data transfer guide: <https://www.sherlock.stanford.edu/docs/storage/data-transfer/>
+
+## The Slurm Job Scheduler
+
+- While you can request compute nodes to do work on, the best way to make use of Sherlock is via batch jobs
+- Sherlock uses [Slurm](https://slurm.schedmd.com/) to manage jobs
+- When you submit jobs, you have to wait your turn for access to resources
+
+## Slurm parameters
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "|1|2|3|4|5|6|7|8|10-11"
+#| filename: script.sbatch
+#!/bin/bash
+#SBATCH --job-name=simulate_things
+#SBATCH --partition=sherrir,normal
+#SBATCH --output=logs/output.out
+#SBATCH --error=logs/errors.err
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=4G
+#SBATCH --time=01:00:00
+
+ml thing
+some_bash_command some_script
+```
+
+:::{.fragment}
+See the `sbatch` documentation: <https://slurm.schedmd.com/sbatch.html>
+:::
+
+## Arrays
+
+```{bash}
+#| eval: false
+#| code-line-numbers: "9"
+#| filename: script.sbatch
+#!/bin/bash
+#SBATCH --job-name=simulate_things
+#SBATCH --partition=sherrir,normal
+#SBATCH --output=logs/output.out
+#SBATCH --error=logs/errors.err
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=4G
+#SBATCH --time=01:00:00
+#SBATCH --array=0-5
+
+ml thing
+some_bash_command some_script
+```
+
+## Submitting jobs
+
+```bash
+sbatch script.sbatch
+```
+
+## Some useful variables to know
+
+- [Filename patterns](https://slurm.schedmd.com/sbatch.html#SECTION_FILENAME-PATTERN): `%a`, `%x`, `%j`
+- [Environmental variables](https://slurm.schedmd.com/sbatch.: html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES): `SLURM_ARRAY_TASK_ID`, `SLURM_CPUS_PER_TASK`, `SLURM_JOB_NAME`
+
+## *Your Turn 1*
+
+### Review `exercises_r.qmd` or `exercises_py.qmd` for the exercises
+
+# Reproducibility on HPC Clusters {background-color="#23373B"}
+
+## Modules and versions
+
+- The module system allows for ad-hoc version locking
+- Use the form `module/0.0.0`, e.g. `python/3.12`
+- Sherlock has some python packages available in the form `py-package/0.0.0.py_version`
+
+## Installing packages that are not modules
+
+- Load the module you want to install a package in, e.g. `ml python/3.12`
+- For Python: `python3 -m pip install --user package_name`
+- For R, start R and use `install.packages()`, which will set up a user library for you
+
+## *Your Turn 2*
+
+### Review `exercises_r.qmd` or `exercises_py.qmd` for the exercises
+
+# Package managers on Sherlock {background-color="#23373B"}
+
+## uv
+
+- First load Python, then `ml uv`... then use as usual!
+
+## renv
+
+- Follow the same workflow as installing packages, but use renv: `renv::init(bare = TRUE)` is a good choice for a lot of projects, then `install.packages()`  followed by `renv::snapshot()` to create a `renv.lock` file
+- I'm getting fond of running `renv::checkout(date = 'year-month-day')` first!
+
+## *Your Turn 3*
+
+### Review `exercises_r.qmd` or `exercises_py.qmd` for the exercises
+
+## What's the problem with modules?
+
+- By and large, admins of HPC clusters control which modules get installed
+- Pinned module versions can be removed
+
+# Containers on Sherlock {background-color="#23373B"}
+
+## Apptainer
+
+- Apptainer vs. Docker
+- Apptainer vs. Singularity
+- We'll keep it simple today... see the docs! <https://apptainer.org/docs/user/latest/>
+
+## Definition files
+
+```{bash}
+#| filename: container.def
+#| code-line-numbers: "|1-2|3-7|9-11|13-15|17-19"
+#| eval: false
+Bootstrap: docker
+From: stanfordhpds/python-uv
+
+%files
+  # move any files you need *for setup*
+  pyproject.toml pyproject.toml
+  uv.lock uv.lock
+
+%post
+  # run setup bash commands
+  uv sync
+
+%environment
+    # set any environmental variables you want set at runtime
+    export UV_PROJECT_ENVIRONMENT=/.venv
+
+%runscript
+    # run any bash commands in the container
+    exec uv run "$@"
+```
+
+## Building and running containers
+
+### `apptainer build container.sif container.def`
+
+### `apptainer run container.sif <your code file>`
+
+### `apptainer exec container.sif <any bash command>`
+
+- sif files are large and should not be committed. Put them in `$SCRATCH` or maybe `$GROUP_HOME`.
+
+## *Your Turn 4*
+
+### Review `exercises_r.qmd` or `exercises_py.qmd` for the exercises
+
+## Resources {background-color="#23373B" .extra-large}
+
+### Sherlock Documentation](https://www.sherlock.stanford.edu/docs/)
+
+### [Apptainer on Sherlock Workshop](https://github.com/stanford-sdss/package-management)
