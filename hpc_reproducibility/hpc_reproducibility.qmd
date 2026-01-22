@@ -250,6 +250,6 @@ From: stanfordhpds/python-uv
 
 ## Resources {background-color="#23373B" .extra-large}
 
-### Sherlock Documentation](https://www.sherlock.stanford.edu/docs/)
+### [Sherlock Documentation](https://www.sherlock.stanford.edu/docs/)
 
 ### [Apptainer on Sherlock Workshop](https://github.com/stanford-sdss/package-management)
