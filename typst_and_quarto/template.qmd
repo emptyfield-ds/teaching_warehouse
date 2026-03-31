@@ -1,0 +1,67 @@
+---
+___: "Lorem Ipsum Jr"
+___: "Dolor Sit Amet"
+___:
+  - text: "Consectetur, AD"
+  - text: "lorem@ipsum.com"
+    url: "mailto:lorem@ipsum.com"
+  - text: "(555) 012-3456"
+  - text: "lorem.ipsum.com"
+    url: "https://lorem.ipsum.com"
+  - text: "GitHub"
+    url: "https://github.com/loremipsum"
+___: >
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat.
+format:
+  resume-typst:
+    keep-typ: true
+---
+
+::: {.section title="Professional Experience"}
+```yaml
+entries:
+  - primary: Adipiscing Corp
+    secondary: Senior Ipsum, Dolor Sit Team
+    dates: 2022 -- Present
+    location: Consectetur, AD
+    bullets:
+      - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  - primary: Elit Industries
+    secondary: Tempor Incididunt
+    dates: 2019 -- 2022
+    location: Veniam, QN
+    bullets:
+      - Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      - Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+  - primary: Magna Aliqua Ltd
+    secondary: Ut Labore Associate
+    dates: 2017 -- 2019
+    location: Dolore, ME
+    bullets:
+      - Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.
+      - Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.
+```
+:::
+
+::: {.section title="Education"}
+```yaml
+entries:
+  - primary: Ph.D., Ipsum Dolor
+    secondary: Universitas Consectetur
+    dates: 2013 -- 2017
+    location: Adipiscing, EL
+  - primary: M.S., Sit Amet
+    secondary: Collegium Eiusmod
+    dates: 2011 -- 2013
+    location: Tempor, IN
+  - primary: B.A., Labore et Dolore, Magna Cum Laude
+    secondary: Academia Aliqua
+    dates: 2007 -- 2011
+    location: Veniam, QN
+```
+:::

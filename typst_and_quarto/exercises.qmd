@@ -1,0 +1,226 @@
+---
+title: "PDF Typsetting with Typst and Quarto"
+format: html
+---
+
+## Your Turn 1
+
+In `typst/resume.typ`, you will find the content for a resume. Preview the PDF using the typst extension or on the typst web app.
+
+Now, let's style the document a bit:
+
+- Set the `page` function to use the defaults listed below
+- Set the default font to "Libertinus Serif" and 10.5pt size
+- for headings, set the text to use `sans-font` (which is created with `#let` at the beginning of the document) and fill to use `accent-color`
+
+
+```typst
+___("us-letter", margin: (x: 2.2cm, y: 2cm), numbering: "1")
+set ___(font: ___, size: ___)
+set par(justify: false, leading: 0.6em)
+___ ___: ___ ___(font: ___, size: 24pt, weight: "bold", fill: ___)
+```
+
+Next, we are going to format the top part of the resume (the name through the summary).
+
+- Align the top part of the resume (the name through the summary) to center using `#align(center)[...]`.
+- Then, create three `#block()`s, which will create three vertical sections.
+    - `#block(above: 0pt, below: 12pt)[...]`
+        - Inside this block, put the name and header, `= Lorem Ipsum Jr`
+    - `#block(above: 0pt, below: 10pt)[...]`
+        - Inside this block, put the styled version of `#text(size: 11pt, style: "italic", fill: soft-color)[Dolor Sit Amet]`
+    - `#block(above: 0pt, below: 0pt)[...]`
+        - inside this block, but the below `#text()`, which styles the contact info
+
+```typst
+  #block(above: 0pt, below: 0pt)[
+    #text(size: 9.5pt)[
+      Consectetur, AD
+      #h(0.6em) | #h(0.6em)
+      #link("mailto:lorem@ipsum.com")[lorem\@ipsum.com]
+      #h(0.6em) | #h(0.6em)
+      (555) 012-3456
+      #h(0.6em) | #h(0.6em)
+      #link("https://lorem.ipsum.com")[lorem.ipsum.com]
+      #h(0.6em) | #h(0.6em)
+      #link("https://github.com/loremipsum")[GitHub]
+    ]
+  ]
+```
+
+- Finally, add the summary after the `#align()[...]` command so that it does not get centered (no need to change this):
+
+```typst
+// add a bit of vertical space
+// we could also put this section in a block
+#v(1.3em)
+
+// summary
+#text(size: 10pt, style: "italic")[
+  #lorem(40)
+]
+```
+
+## Your Turn 2
+
+Add the following `show` command to the document. This will style the level two headers. (`.where()` is a method that returns a selector to filter elements belonging to the function (here, `heading()`) that match the values of the given argument). The `it => {}` part is an annonymous function that returns the styled header.
+
+```typst
+#show heading.where(level: 2): it => {
+    v(0.8em)
+    text(
+        font: sans-font,
+        size: 10.5pt,
+        weight: "semibold",
+        fill: accent-color,
+        tracking: 1.5pt,
+    )[#upper(it.body)]
+}
+```
+
+- Create a new function called `render-section()`. The structure below will get you started.
+    - Use `#let` to create the function
+    - Use `#title` to add the section title the second level header
+    - Add a delineating line below the title header: `line(length: 100%, stroke: 0.5pt + rule-color)`
+
+```typst
+___ ___(title, entries) = {
+  // Heading is styled by the show rule; the line is structural to sections
+  [== ___]
+  v(-0.4em)
+  // add a nice line!
+  ___
+  v(0.2em)
+
+  // no need to change the rest of this. We're making a grid to style things like the primary title and dates
+  for (i, entry) in entries.enumerate() {
+    // grid(columns: (1fr, auto)) pushes dates/location to the right edge
+    // while primary/secondary text fills remaining space
+    grid(
+      columns: (1fr, auto),
+      text(weight: "bold", size: 10pt)[#entry.primary],
+      text(fill: soft-color, size: 9.5pt)[#entry.dates],
+    )
+    grid(
+      columns: (1fr, auto),
+      text(style: "italic", size: 9.5pt)[#entry.secondary],
+      text(fill: soft-color, size: 9pt)[#entry.location],
+    )
+
+    // Education entries omit "bullets", so this block is skipped for them
+    if "bullets" in entry and entry.bullets.len() > 0 {
+      v(0.1em)
+      for bullet in entry.bullets {
+        block(inset: (left: 1em, top: 0.05em, bottom: 0.05em))[
+          #text(size: 9.5pt)[- #bullet]
+        ]
+      }
+    }
+
+    // Tighter spacing between education entries (no bullets)
+    // than between experience entries (has bullets)
+    if i < entries.len() - 1 {
+      v(if "bullets" in entry { 0.5em } else { 0.3em })
+    }
+  }
+}
+```
+
+- Now, replace the two sections in the resume with their function equivalents
+
+```typst
+#______("______", (
+  (
+    primary: "Adipiscing Corp",
+    secondary: "Senior Ipsum, Dolor Sit Team",
+    dates: [2022 -- Present],
+    location: "Consectetur, AD",
+    bullets: (
+      lorem(15),
+      lorem(15),
+      lorem(15),
+    ),
+  ),
+  (
+    primary: "Elit Industries",
+    secondary: "Tempor Incididunt",
+    dates: [2019 -- 2022],
+    location: "Veniam, QN",
+    bullets: (
+      lorem(15),
+      lorem(15),
+    ),
+  ),
+  (
+    primary: "Magna Aliqua Ltd",
+    secondary: "Ut Labore Associate",
+    dates: [2017 -- 2019],
+    location: "Dolore, ME",
+    bullets: (
+      lorem(15),
+      lorem(15),
+    ),
+  ),
+))
+
+#______("______", (
+  (
+    primary: "Ph.D., Ipsum Dolor",
+    secondary: "Universitas Consectetur",
+    dates: [2013 -- 2017],
+    location: "Adipiscing, EL",
+  ),
+  (
+    primary: "M.S., Sit Amet",
+    secondary: "Collegium Eiusmod",
+    dates: [2011 -- 2013],
+    location: "Tempor, IN",
+  ),
+  (
+    primary: "B.A., Labore et Dolore, Magna Cum Laude",
+    secondary: "Academia Aliqua",
+    dates: [2007 -- 2011],
+    location: "Veniam, QN",
+  ),
+))
+```
+
+## Your Turn 3
+
+- In `typst/template.typ`, you will find a document with the variables we've set, the definition for `render-section()`, and, near the top, a new function to create the template.
+    - create a function called `cv()` that takes 5 arguments: `name: "", job_title: none, contact: (), summary: none, doc, `
+    - put all the set and show rules from `typst/resume.typ` into the function body
+    - return `doc` at the bottom of the function
+    - in `typst/resume.typ`, import `cv` and `render-section`
+    - in `typst/resume.typ`, replace the top section of the document (everything covered in `cv()`) with the following command:
+
+```typst
+#show: cv.with(
+  name: "Lorem Ipsum Jr",
+  job_title: "Dolor Sit Amet",
+  contact: (
+    [Consectetur, AD],
+    link("mailto:lorem@ipsum.com")[lorem\@ipsum.com],
+    [(555) 012-3456],
+    link("https://lorem.ipsum.com")[lorem.ipsum.com],
+    link("https://github.com/loremipsum")[GitHub],
+  ),
+  summary: lorem(40),
+)
+```
+
+## Your Turn 4
+
+Now, we're going to set up a Quarto template to use our typst layout. I already ran `quarto create extension format`, so you don't need to. In `_extensions/resume`, we have a few key files that Quarto creates: `_extension.yml`, `typst-show.typ`, and `typst-template.typ`. We also have `resume-filter.lua`, a Lua filter that helps converts content in the Quarto file to typst syntax. We don't strictly need this, but the filter helps the content feel a bit more Quarto-ish. Quarto also created `template.qmd`
+
+- Copy template you have been working on into `_extensions/resume/typst-template.typ`
+- In `template.qmd`, update the YAML to match the metadata names to the names of the arguments for the `cv()` function. Our goal is to take the metadata in the YAML and pass it to the `cv()` function in Typst.
+- Check out `_extensions/resume/typst-show.typ` and try to identify the parts being mapped from the YAML to the `cv()` function via Pandoc's templating syntax. Ok, it's kind of horrible to look at. It's mixing several systems together, after all. But this is where we go from Quarto metadata -> Typst command.
+- Now take a look at the content of the Quarto docment. It uses Pandoc divs and yaml to populate the content for the sections and their headers. This is just syntactic sugar powered by the Lua filter; we could have included this in the YAML at the top or otherwise used Typst directly with a raw Typst block (https://quarto.org/docs/output-formats/typst.html#raw-typst).
+- Render the document
+
+***
+
+# Take aways
+
+*
