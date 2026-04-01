@@ -11,14 +11,15 @@ Now, let's style the document a bit:
 
 - Set the `page` function to use the defaults listed below
 - Set the default font to "Libertinus Serif" and 10.5pt size
-- for headings, set the text to use `sans-font` (which is created with `#let` at the beginning of the document) and fill to use `accent-color`
+- For headings, set the text to use `sans-font` (which is created with `#let` at the beginning of the document) and fill to use `accent-color`. You will need a `show` rule for this part.
 
 
 ```typst
 ___("us-letter", margin: (x: 2.2cm, y: 2cm), numbering: "1")
 set ___(font: ___, size: ___)
 set par(justify: false, leading: 0.6em)
-___ ___: ___ ___(font: ___, size: 24pt, weight: "bold", fill: ___)
+// use a show-set rule
+______: ______(font: ___, size: 24pt, weight: "bold", fill: ___)
 ```
 
 Next, we are going to format the top part of the resume (the name through the summary).
@@ -30,7 +31,7 @@ Next, we are going to format the top part of the resume (the name through the su
     - `#block(above: 0pt, below: 10pt)[...]`
         - Inside this block, put the styled version of `#text(size: 11pt, style: "italic", fill: soft-color)[Dolor Sit Amet]`
     - `#block(above: 0pt, below: 0pt)[...]`
-        - inside this block, but the below `#text()`, which styles the contact info
+        - inside this block, put the below `#text()`, which styles the contact info
 
 ```typst
   #block(above: 0pt, below: 0pt)[
@@ -80,7 +81,7 @@ Add the following `show` command to the document. This will style the level two 
 
 - Create a new function called `render-section()`. The structure below will get you started.
     - Use `#let` to create the function
-    - Use `#title` to add the section title the second level header
+    - Use `#title` to add the section title as the second level header
     - Add a delineating line below the title header: `line(length: 100%, stroke: 0.5pt + rule-color)`
 
 ```typst
@@ -190,9 +191,9 @@ ___ ___(title, entries) = {
 - In `typst/template.typ`, you will find a document with the variables we've set, the definition for `render-section()`, and, near the top, a new function to create the template.
     - create a function called `cv()` that takes 5 arguments: `name: "", job_title: none, contact: (), summary: none, doc, `
     - put all the set and show rules from `typst/resume.typ` into the function body
-    - return `doc` at the bottom of the function
-    - in `typst/resume.typ`, import `cv` and `render-section`
-    - in `typst/resume.typ`, replace the top section of the document (everything covered in `cv()`) with the following command:
+    - return `doc` at the bottom of the function. The `doc` argument receives all the document content below the `#show` call; return it at the end so it renders.
+    - Now switch to `typst/resume.typ`: import `cv` and `render-section`
+    - Still in `typst/resume.typ`, replace the top section of the document (everything covered in `cv()`) with the following command:
 
 ```typst
 #show: cv.with(
