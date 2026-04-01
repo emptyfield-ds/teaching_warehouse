@@ -1,0 +1,18 @@
+title: Resume
+author: Malcolm Barrett
+version: 1.0.0
+quarto-required: ">=1.9.0"
+contributes:
+  formats:
+    typst:
+      template-partials:
+        - typst-template.typ
+        - typst-show.typ
+      filters:
+        - resume-filter.lua
+      margin:
+        x: 2.2cm
+        y: 2cm
+      papersize: us-letter
+      page-numbering: "1"
+
