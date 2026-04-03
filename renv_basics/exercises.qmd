@@ -12,34 +12,81 @@ library(tidyverse)
 
 ## Your Turn 1
 
-1. Create a new project (in RStudio: File > New Project, or create one in the console with `usethis::create_project("path/to/name_of_project")`). If you're working on the Cloud, you can find a fresh project here: https://rstudio.cloud/project/2602831
+1. Create a new project (in RStudio: File > New Project, or create one in the console with `usethis::create_project("path/to/name_of_project")`).
 
-2. Create a new file called `plot.R`. In that file, load `ggplot2` and create a plot with `quickplot(mpg$displ)`.
+2. Run `.libPaths()` to see where your package libraries are located
 
-3. What packages does your project depend on? Make a prediction, then run `renv::dependencies()` in the console (*not* in `plot.R`!) to see if you were right.
+3. Create a new file called `plot.R`. In that file, load `ggplot2` and create the plots below.
 
-4. In the console, initiate a `renv` environment with `renv::init()`. 
+```{r}
+hist_displ <- ggplot(mpg, aes(x = displ)) + geom_histogram()
+bar_cyl <- ggplot(mpg, aes(x = factor(cyl))) + geom_bar()
+```
 
-5. Open the file called `renv.lock`. What is this information?
+4. What packages does your project depend on? Make a prediction, then run `renv::dependencies()` in the console (*not* in `plot.R`!) to see if you were right.
+
+5. In the console, initiate a `renv` environment with `renv::init()`. If this is your first time using renv, you may be asked to provide consent.
+
+6. Open the file called `renv.lock`. What fields are recorded for each package? What repository is listed? What version of R is recorded?
+
+7. Run `.libPaths()` again. Where is this on your computer?
 
 ## Your Turn 2
 
-1. In `plot.R`, modify your code to load the `patchwork` library, then replace your previous plot with `quickplot(mpg$displ) + quickplot(as.factor(mpg$cyl))`
-2. Run `renv::status()` in the console
+1. In `plot.R`, modify your code to load the `patchwork` library, then create a new plot with `hist_displ + bar_cyl`. You will need to run `install.packages("patchwork")` in the console first (do not include this in your script).
+
+2. Run `renv::status()` in the console.
+
 3. Run `renv::snapshot()`. What's changed?
 
 ## Your Turn 3
 
-1. Create a new project. If you're working on the Cloud, you can find a fresh project here: https://rstudio.cloud/project/2602834
+1. Pick a recent date in the format "YYYY-MM-DD" (e.g. "2026-03-30"). A few days ago is usually good because Posit Package Manager will have had time to make an archive and build the binaries.
+
+2. Run `renv::checkout(date = <THE DATE YOU PICKED>, actions = c("snapshot", "restore"))`
+
+3. Walk through the interactive installation process then check the lock file. In particular, look for the Repositories field.
+
+> **Note**: `renv::checkout()` may upgrade renv itself. If you see an error about `..md5..` when restarting R, run `renv::activate()` in the console to fix it. (This appears to be a bug in renv 1.2.0's activate script generation.)
+
+### Stretch Goal: rig
+
+1. In the terminal (not the R console), run `rig resolve release` to see the current release version of R
+
+2. Check your version with R --version or compared to the lock file.
+
+3. If you have an older version of R compared to the current release version, install the latest with `rig add release` and set it to the default R version with `rig default release`
+
+4. If you completed step 3, restart your R session and run `renv::snapshot()`. Check the lock file's recorded R version.
+
+## Your Turn 4
+
+1. Install the usethis package
+
+2. Run `renv::dependencies()`. Is usethis in it? Why or why not? Hint: think about how `renv::dependencies()` discovers packages; what does it scan?
+
+3. Create a new `README` with `usethis::use_readme_rmd()`
+
+4. Consider everything we have done. What would another person (or you later in time) need to do to reproduce this project from scratch? Write down the instructions in the `README`. Hint: what command would someone run to restore the package environment? What other setup steps are needed?
+
+## Bonus Your Turn: targets and renv
+
+1. Create a new project.
+
 2. Load targets and run `tar_script()` in the console. Read `_targets.R` and predict what your dependencies are.
+
 3. Run `renv::dependencies()`
+
 4. Run `tar_renv()` and look at `_targets_packages.R`. What did targets do here? Why is that important? Run `renv::dependencies()` again and confirm that we can detect all of our dependencies.
+
 5. Run `renv::init()`
 
 # Take aways
 
-- `renv` locks your package environment to make it more reproducible when you update your packages  
+- `renv` locks your package environment to make it more reproducible when you update your packages
 
 - `init()` starts a `renv` environment, looking for packages that you use in your project via `dependencies()`; `snapshot()` updates your lock file; `restore()` restores the packages listed in your lock file
+
+- Use `checkout()`'s date argument to pin the packages to a certain day's snapshot of CRAN via Posit Package Manager.
 
 - When using `renv` with `targets`, use `tar_renv()` to automatically generate a file of packages that helps `renv` determine your dependencies.
