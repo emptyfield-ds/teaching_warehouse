@@ -1,0 +1,181 @@
+---
+title: "gt: Typst Rendering Examples"
+format:
+  typst:
+    keep-typ: true
+---
+
+```{r}
+#| include: false
+library(gt)
+```
+
+```{r}
+#| label: tbl-cohort
+#| tbl-cap: "Cohort summary statistics."
+
+cohort_df <- data.frame(
+  Characteristic = c(
+    "N",
+    "Age (mean)",
+    "Documented Sex Female (%)",
+    "Race/Ethnicity (%)",
+    "\u00a0\u00a0\u00a0White",
+    "\u00a0\u00a0\u00a0Black",
+    "\u00a0\u00a0\u00a0Hispanic",
+    "\u00a0\u00a0\u00a0Other",
+    "Region (%)",
+    "\u00a0\u00a0\u00a0Northeast",
+    "\u00a0\u00a0\u00a0Midwest",
+    "\u00a0\u00a0\u00a0West",
+    "\u00a0\u00a0\u00a0South",
+    "Stage at Diagnosis (%)",
+    "\u00a0\u00a0\u00a0I/II",
+    "\u00a0\u00a0\u00a0III",
+    "\u00a0\u00a0\u00a0IV"
+  ),
+  dev_cohort = c(
+    14760, 72.1, 45.4,
+    NA, 82.7, 8.8, 4.2, 4.2,
+    NA, 20.3, 13.6, 34.2, 31.9,
+    NA, 15.1, 34.0, 50.8
+  ),
+  val_cohort = c(
+    14620, 71.9, 46.8,
+    NA, 81.4, 8.9, 4.4, 5.3,
+    NA, 20.2, 13.2, 34.5, 32.2,
+    NA, 14.8, 33.1, 52.0
+  )
+)
+
+category_rows <- which(is.na(cohort_df$dev_cohort))
+
+gt(cohort_df) |>
+  cols_label(
+    dev_cohort = typst("*Development Cohort* \\ 2010--2011 Diagnosis"),
+    val_cohort = typst("*Validation Cohort* \\ 2012--2013 Diagnosis")
+  ) |>
+  fmt_number(columns = c(dev_cohort, val_cohort), decimals = 1) |>
+  fmt_integer(columns = c(dev_cohort, val_cohort), rows = 1, use_seps = TRUE) |>
+  sub_missing(columns = c(dev_cohort, val_cohort), missing_text = "") |>
+  cols_align(align = "left", columns = Characteristic) |>
+  cols_align(align = "right", columns = c(dev_cohort, val_cohort)) |>
+  cols_width(
+    Characteristic ~ px(200),
+    dev_cohort ~ px(160),
+    val_cohort ~ px(160)
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = Characteristic, rows = category_rows)
+  ) |>
+  tab_options(column_labels.font.weight = "bold")
+```
+
+
+```{r}
+#| label: tbl-performance
+#| tbl-cap: "**Performance for Baseline Unpenalized Regression, Novel Penalized Regressions, and Fair Reductions Methods.**"
+
+perf_df <- data.frame(
+  Method = c(
+    "Baseline",
+    "Group $alpha = 0.1$ \\ Pop $alpha = 0.1, 0.2$",
+    "Max $alpha = 0.1$",
+    "Group $alpha = 0.2, 0.3$",
+    "Max $alpha = 0.2, 0.3, 0.4, 0.5, 0.6$",
+    "Group $alpha = 0.4, 0.5, 0.6, 0.7,$ \\ #context h(measure([Group $alpha =$]).width + 0.3em) $0.8, 0.9, 0.99$ \\ Pop $alpha = 0.3, 0.4, 0.5, 0.6,$ \\ #context h(measure([Pop $alpha =$]).width + 0.3em) $0.7, 0.8, 0.9, 0.99$",
+    "Max $alpha = 0.7, 0.8, 0.9, 0.99$",
+    "ExpGrad, Ep $= 0.1$",
+    "ExpGrad, Ep $= 0.01$",
+    "Grid, CW $= 0.25$",
+    "Grid, CW $= 0.5$",
+    "Grid, CW $= 0.75$"
+  ),
+  Accuracy = c(0.95, 0.95, 0.95, 0.93, 0.94, 0.92, 0.91, 0.96, 0.93, 0.32, 0.11, 0.11),
+  Sensitivity = c(0.36, 0.37, 0.29, 0.38, 0.31, 0.39, 0.33, 0.15, 0.13, 0.90, 0.95, 0.95),
+  Mean = c(0.09, 0.02, 0.08, 0.03, 0.08, 0.02, 0.08, 0.04, 0.02, 0.01, 0.01, 0.01),
+  Black = c(0.06, 0.00, 0.06, 0.00, 0.07, 0.00, 0.08, 0.03, 0.01, 0.00, 0.02, 0.02),
+  Asian = c(0.24, 0.19, 0.17, 0.23, 0.11, 0.17, 0.00, 0.12, 0.10, 0.12, 0.00, 0.00),
+  HNW = c(0.07, 0.00, 0.07, 0.00, 0.08, 0.00, 0.13, 0.02, 0.00, 0.00, 0.00, 0.00)
+)
+
+gt(perf_df) |>
+  fmt_typst(columns = Method) |>
+  fmt_number(columns = c(Accuracy, Sensitivity, Mean, Black, Asian, HNW), decimals = 2) |>
+  tab_spanner(label = "Unfairness", columns = c(Mean, Black, Asian, HNW)) |>
+  cols_align(align = "left", columns = Method) |>
+  cols_align(align = "center", columns = c(Accuracy, Sensitivity, Mean, Black, Asian, HNW)) |>
+  cols_width(Method ~ px(200)) |>
+  tab_source_note(
+    typst(paste0(
+      "*Note:* Novel fair penalized regressions were defined based on the ",
+      "multi-group unfairness synthesis mechanism: population-weighted average ",
+      "(Pop), group-weighted average (Group), and maximum (Max) as well as ",
+      "fairness score weight ($alpha$). Fair reductions comparisons were ",
+      "exponentiated gradient (ExpGrad) or grid search (Grid) methods, varying ",
+      "constraint flexibility (Ep) or constraint weight (CW), respectively. ",
+      "'HNW' is Hispanic non-white."
+    ))
+  ) |>
+  tab_options(column_labels.font.weight = "bold")
+```
+
+```{r}
+#| label: tbl-regression
+#| tbl-cap: "Performance of Constrained and Penalized Regression Methods"
+
+reg_df <- data.frame(
+  Method = c(
+    "Average",
+    "Covariance",
+    "Net Compensation#super[$dagger$]",
+    "Weighted Average#super[$dagger.double$]",
+    "Mean Residual \\ Difference#super[$plus.circle$]",
+    "OLS"
+  ),
+  r2 = c(12.4, 12.4, 12.5, 12.6, 12.8, 12.9),
+  ratio_g = c(0.996, 0.996, 0.980, 0.964, 0.895, 0.837),
+  ratio_gc = c(1.001, 1.001, 1.006, 1.011, 1.032, 1.050),
+  comp_g = c(-46, -46, -232, -411, -1208, -1872),
+  comp_gc = c(4, 4, 34, 62, 188, 293),
+  mrd = c(-50, -50, -266, -473, -1396, -2165),
+  fair_cov = c(6, 6, 31, 56, 164, 256)
+)
+
+gt(reg_df) |>
+  fmt_typst(columns = Method) |>
+  fmt_percent(columns = r2, decimals = 1, scale_values = FALSE, rows = 1) |>
+  fmt_number(columns = r2, decimals = 1, rows = 2:6) |>
+  fmt_number(columns = c(ratio_g, ratio_gc), decimals = 3) |>
+  fmt_currency(columns = c(comp_g, comp_gc, mrd), rows = 1, decimals = 0) |>
+  fmt_integer(columns = c(comp_g, comp_gc, mrd), rows = 2:6) |>
+  fmt_integer(columns = fair_cov) |>
+  cols_label(
+    Method = "Method",
+    r2 = typst("$R^2$"),
+    ratio_g = typst("$g$"),
+    ratio_gc = typst("$g^c$"),
+    comp_g = typst("$g$"),
+    comp_gc = typst("$g^c$"),
+    mrd = typst("Mean \\ Residual \\ Difference"),
+    fair_cov = typst("Fair \\ Covariance")
+  ) |>
+  tab_spanner(label = typst("Predictive \\ Ratio"), columns = c(ratio_g, ratio_gc)) |>
+  tab_spanner(label = typst("Net \\ Compensation"), columns = c(comp_g, comp_gc)) |>
+  cols_align(align = "center", columns = c(r2, ratio_g, ratio_gc, comp_g, comp_gc, mrd, fair_cov)) |>
+  cols_align(align = "right", columns = Method) |>
+  tab_source_note(
+    typst(paste0(
+      "$dagger lambda = 10000$, $dagger.double alpha = 0.2$, $plus.circle lambda = 30000$ \\ ",
+      "_Note:_ Measures calculated based on cross-validated predicted values and ",
+      "sorted on net compensation. Best performing hyperparameters for each ",
+      "estimator (with respect to fairness measures) are displayed. Performance ",
+      "for covariance method was the same for all $m$. $g^c$ is the complement of g."
+    ))
+  ) |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    table_body.hlines.style = "none"
+  )
+```

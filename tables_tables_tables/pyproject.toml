@@ -1,0 +1,16 @@
+[project]
+name = "tables-tables-tables"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "great-tables",
+    "jupyter>=1.1.1",
+    "numpy>=2.4.4",
+    "palmerpenguins>=0.1.6",
+    "pandas>=3.0.2",
+    "polars>=1.39.3",
+    "pyarrow>=23.0.1",
+]
+
+[tool.uv.sources]
+great-tables = { git = "https://github.com/posit-dev/great-tables.git", rev = "refs/pull/825/head" }

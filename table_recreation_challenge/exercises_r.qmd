@@ -1,0 +1,65 @@
+---
+title: "Table Recreation Challenge: R"
+format: html
+---
+
+## Your Turn: Table Recreation Challenge
+
+Recreate the table shown in `recreation.png` using the data and labels below.
+
+### Hints
+
+You will need these functions not covered in the slides:
+
+- `fmt_markdown()`: render HTML markup in a column
+- `fmt_percent()`: format values as percentages
+- `fmt_currency()`: format values as currency
+- `cols_align()`: set column alignment
+- The `rows` argument in formatting functions lets you apply formatting to specific rows
+- `column_labels.font.weight` in `tab_options()` controls label boldness
+
+You may like to consult the gt reference: https://gt.rstudio.com/reference/index.html
+
+```{r}
+library(gt)
+
+reg_df <- data.frame(
+  Method = c(
+    "Average",
+    "Covariance",
+    "Net Compensation<sup>&dagger;</sup>",
+    "Weighted Average<sup>&Dagger;</sup>",
+    "Mean Residual<br>Difference<sup>&oplus;</sup>",
+    "OLS"
+  ),
+  r2 = c(12.4, 12.4, 12.5, 12.6, 12.8, 12.9),
+  ratio_g = c(0.996, 0.996, 0.980, 0.964, 0.895, 0.837),
+  ratio_gc = c(1.001, 1.001, 1.006, 1.011, 1.032, 1.050),
+  comp_g = c(-46, -46, -232, -411, -1208, -1872),
+  comp_gc = c(4, 4, 34, 62, 188, 293),
+  mrd = c(-50, -50, -266, -473, -1396, -2165),
+  fair_cov = c(6, 6, 31, 56, 164, 256)
+)
+
+r2_label <- html("R<sup>2</sup>")
+g_label <- html("<em>g</em>")
+gc_label <- html("<em>g</em><sup>c</sup>")
+mrd_label <- html("Mean<br>Residual<br>Difference")
+fair_cov_label <- html("Fair<br>Covariance")
+
+ratio_spanner <- html("Predictive<br>Ratio")
+comp_spanner <- html("Net<br>Compensation")
+
+source_note_text <- html(paste0(
+  "&dagger; &lambda; = 10000, &Dagger; &alpha; = 0.2, &oplus; &lambda; = 30000<br>",
+  "<em>Note:</em> Measures calculated based on cross-validated predicted values and ",
+  "sorted on net compensation. Best performing hyperparameters for each ",
+  "estimator (with respect to fairness measures) are displayed. Performance ",
+  "for covariance method was the same for all <em>m</em>. <em>g</em><sup>c</sup> is the complement of <em>g</em>."
+))
+```
+
+```{r}
+# Recreate the table from `recreation.png`
+
+```
