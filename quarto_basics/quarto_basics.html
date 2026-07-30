@@ -6,10 +6,10 @@
 <script src="quarto_basics_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="quarto_basics_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="quarto_basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="quarto_basics_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="quarto_basics_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
-  <meta name="dcterms.date" content="2025-08-09">
+  <meta name="dcterms.date" content="2026-07-30">
   <title>Dynamic documents in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="quarto_basics_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="quarto_basics_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -95,7 +98,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="quarto_basics_files/libs/revealjs/dist/theme/quarto-0e215b1d0b119f822379d859800dff50.css">
+  <link rel="stylesheet" href="quarto_basics_files/libs/revealjs/dist/theme/quarto-378ee3d603240085af4914d7b403490a.css">
   <link href="quarto_basics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="quarto_basics_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="quarto_basics_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -199,7 +202,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2025-08-09</p>
+  <p class="date">2026-07-30</p>
 </section>
 <section class="slide level2">
 
@@ -457,7 +460,7 @@ _italic_   __bold__</code></pre>
 </section>
 <section id="press-tab-to-autocomplete-chunk-options" class="slide level2">
 <h2>Press <code>tab</code> to autocomplete chunk options</h2>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -479,9 +482,9 @@ _italic_   __bold__</code></pre>
 <section id="your-turn-3" class="slide level2">
 <h2><em>Your Turn 3</em></h2>
 <h3 id="create-a-code-chunk.-you-can-type-it-in-manually-use-the-keyboard-short-cut-cmdctrl-optionalt-i-or-use-the-insert-button-above.-put-the-following-code-in-it">Create a code chunk. You can type it in manually, use the keyboard short-cut (Cmd/Ctrl + Option/Alt + I), or use the “Insert” button above. Put the following code in it:</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>gapminder <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>gapminder <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href=""></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href=""></a>   <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href=""></a>   <span class="fu">gt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h3 id="render-the-document">Render the document</h3>
 </section>
 <section id="your-turn-4" class="slide level2">
@@ -528,7 +531,7 @@ _italic_   __bold__</code></pre>
 <section id="yaml-metadata" class="slide level2">
 <h2>YAML Metadata</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|1,10|2|5-6|5,7-9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href=""></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|1,10|2|5-6|5,7-9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href=""></a><span class="pp">---</span></span>
 <span id="cb5-2"><a href=""></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Howl"</span></span>
 <span id="cb5-3"><a href=""></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Allen Ginsberg"</span></span>
 <span id="cb5-4"><a href=""></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"March 18, 1956"</span></span>
@@ -537,7 +540,7 @@ _italic_   __bold__</code></pre>
 <span id="cb5-7"><a href=""></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb5-8"><a href=""></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb5-9"><a href=""></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-10"><a href=""></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href=""></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="output-formats" class="slide level2">
@@ -594,28 +597,28 @@ _italic_   __bold__</code></pre>
 <section id="parameters" class="slide level2">
 <h2>Parameters</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href=""></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href=""></a><span class="pp">---</span></span>
 <span id="cb6-2"><a href=""></a><span class="fu">params</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb6-3"><a href=""></a><span class="at">  </span><span class="fu">param1</span><span class="kw">:</span><span class="at"> x</span></span>
 <span id="cb6-4"><a href=""></a><span class="at">  </span><span class="fu">param2</span><span class="kw">:</span><span class="at"> </span><span class="ch">y</span></span>
 <span id="cb6-5"><a href=""></a><span class="at">  </span><span class="fu">data</span><span class="kw">:</span><span class="at"> df</span></span>
-<span id="cb6-6"><a href=""></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a href=""></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <p><em>Calling parameters in R</em></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>params<span class="sc">$</span>param1</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>params<span class="sc">$</span>param1</span>
 <span id="cb7-2"><a href=""></a>params<span class="sc">$</span>param2</span>
-<span id="cb7-3"><a href=""></a>params<span class="sc">$</span>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href=""></a>params<span class="sc">$</span>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
 <p><em>From the Console</em></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>(</span>
 <span id="cb8-2"><a href=""></a>  <span class="st">"document.qmd"</span>, </span>
 <span id="cb8-3"><a href=""></a>  <span class="at">execute_params =</span> <span class="fu">list</span>(<span class="at">param1 =</span> <span class="fl">0.2</span>, <span class="at">param2 =</span> <span class="fl">0.3</span>)</span>
-<span id="cb8-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -623,14 +626,14 @@ _italic_   __bold__</code></pre>
 <h2><em>Your Turn 7</em></h2>
 <h3 id="change-the-params-option-in-the-yaml-header-to-use-a-different-continent.-re-render.">Change the <code>params</code> option in the YAML header to use a different continent. Re-render.</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>gapminder <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>gapminder <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href=""></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> params<span class="sc">$</span>continent) <span class="sc">|&gt;</span> </span>
 <span id="cb9-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country, <span class="at">color =</span> country)) <span class="sc">+</span></span>
 <span id="cb9-4"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
 <span id="cb9-5"><a href=""></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span></span>
 <span id="cb9-6"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="dv">14</span>) <span class="sc">+</span> </span>
 <span id="cb9-7"><a href=""></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.1</span>))) <span class="sc">+</span></span>
-<span id="cb9-8"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Continent:"</span>, params<span class="sc">$</span>continent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-8"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Continent:"</span>, params<span class="sc">$</span>continent))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="bibliographies-and-citations" class="slide level2">
@@ -650,10 +653,10 @@ _italic_   __bold__</code></pre>
 </section>
 <section id="including-bibliography-files-in-yaml" class="slide level2">
 <h2>Including bibliography files in YAML</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href=""></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href=""></a><span class="pp">---</span></span>
 <span id="cb10-2"><a href=""></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> file.bib</span></span>
 <span id="cb10-3"><a href=""></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> file.csl</span></span>
-<span id="cb10-4"><a href=""></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href=""></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><em>the Visual Editor can also manage this for you.</em></p>
 </div>
@@ -871,7 +874,7 @@ _italic_   __bold__</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -983,13 +986,14 @@ _italic_   __bold__</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
